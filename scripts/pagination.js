@@ -1,7 +1,8 @@
 /** @jsx React.DOM */
 
 var PAGE_NUM = 10;
-var MARGIN_PAGES = 2;
+var MARGIN_PAGES_DISPLAYED = 2;
+var PAGE_RANGE_DISPLAYED = 3;
 
 var PaginationBoxView = React.createClass({
     getInitialState: function() {
@@ -16,7 +17,7 @@ var PaginationBoxView = React.createClass({
         }
     },
     handleNextPage: function() {
-        if (this.state.selected < this.props.page_num - 1) {
+        if (this.state.selected < this.props.pageNum - 1) {
             this.handlePageSelected(this.state.selected + 1);
         }
     },
@@ -30,7 +31,9 @@ var PaginationBoxView = React.createClass({
                 <PaginationListView
                     onPageSelected={this.handlePageSelected}
                     selected={this.state.selected}
-                    page_num={this.props.page_num} />
+                    pageNum={this.props.pageNum}
+                    pageRangeDisplayed={this.props.pageRangeDisplayed}
+                    marginPagesDisplayed={this.props.marginPagesDisplayed} />
 
                 <li onClick={this.handleNextPage}>
                     Next
@@ -42,16 +45,59 @@ var PaginationBoxView = React.createClass({
 
 var PaginationListView = React.createClass({
     render: function() {
-        var items = _.range(1, this.props.page_num + 1).map(function(page, index) {
-            return (
-                <PageView
-                    onClick={this.props.onPageSelected.bind(null, index)}
-                    selected={this.props.selected === index}
-                    key={index}>
-                    {page}
-                </PageView>
-            )
-        }.bind(this));
+        if (this.props.pageNum <= this.props.pageRangeDisplayed) {
+
+            var items = _.range(1, this.props.pageNum + 1).map(function(page, index) {
+                return (
+                    <PageView
+                        onClick={this.props.onPageSelected.bind(null, index)}
+                        selected={this.props.selected === index}
+                        key={index}>
+                        {page}
+                    </PageView>
+                )
+            }.bind(this));
+
+        } else {
+
+            var leftSide = (this.props.pageRangeDisplayed/2);
+            var rightSide = (this.props.pageRangeDisplayed - leftSide);
+
+            if (this.props.selected > this.props.pageNum - this.props.pageRangeDisplayed/2) {
+                rightSide = this.props.pageNum - this.props.selected;
+                leftSide = this.props.pageRangeDisplayed - rightSide;
+            }
+            else if (this.props.selected < this.props.pageRangeDisplayed/2) {
+                leftSide = this.props.selected;
+                rightSide = this.props.pageRangeDisplayed - leftSide;
+            }
+
+            var items = []
+
+            _.range(1, this.props.pageNum + 1).map(function(page, index) {
+                var pageView = (
+                    <PageView
+                        onClick={this.props.onPageSelected.bind(null, index)}
+                        selected={this.props.selected === index}
+                        key={index}>
+                        {page}
+                        </PageView>
+                );
+
+                if (page <= this.props.pageRangeDisplayed) {
+                    items.push(pageView);
+                }
+                else if (page > this.props.pageNum - this.props.marginPagesDisplayed) {
+                    items.push(pageView);
+                }
+                else if ((page >= this.props.selected - leftSide) && (page <= this.props.selected + rightSide)) {
+                    items.push(pageView);
+                }
+                else if (items[-1]) {
+                    items.push(null);
+                }
+            }.bind(this));
+        }
 
         return (
             <ul className="pages">
@@ -66,7 +112,7 @@ var PageView = React.createClass({
         if (this.props.selected) {
             var cssClass = 'selected';
         }
-        return this.transferPropsTo(
+        return (
             <li className={cssClass}>
                 {this.props.children}
             </li>
@@ -74,17 +120,10 @@ var PageView = React.createClass({
     }
 });
 
-var Content = React.createClass({
-    render: function() {
-        return (
-            <div className="content">
-                <div>{this.props.page.content}</div>
-            </div>
-        );
-    }
-});
-
 React.renderComponent(
-    <PaginationBoxView page_num={PAGE_NUM} margin_pages={MARGIN_PAGES} />,
-    document.getElementById('pagination')
+    <PaginationBoxView
+        pageNum={PAGE_NUM}
+        pageRangeDisplayed={PAGE_RANGE_DISPLAYED}
+        marginPagesDisplayed={MARGIN_PAGES_DISPLAYED} />,
+    document.getElementById('react-pagination')
 );
