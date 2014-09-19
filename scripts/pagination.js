@@ -11,7 +11,7 @@ var PaginationBoxView = React.createClass({
         this.setState({selected: index});
     },
     handlePreviousPage: function() {
-        if (this.state.selected - 1 > 0) {
+        if (this.state.selected > 0) {
             this.handlePageSelected(this.state.selected - 1);
         }
     },
