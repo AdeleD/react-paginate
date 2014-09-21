@@ -6,22 +6,25 @@ var PaginationBoxView = React.createClass({
     },
     handlePageSelected: function(index) {
         this.setState({selected: index});
+        return false;
     },
     handlePreviousPage: function() {
         if (this.state.selected > 0) {
             this.handlePageSelected(this.state.selected - 1);
         }
+        return false;
     },
     handleNextPage: function() {
         if (this.state.selected < this.props.pageNum - 1) {
             this.handlePageSelected(this.state.selected + 1);
         }
+        return false;
     },
     render: function() {
         return (
             <div className="pagination">
                 <li onClick={this.handlePreviousPage}>
-                    {this.props.previousLabel}
+                    <a href="">{this.props.previousLabel}</a>
                 </li>
 
                 <PaginationListView
@@ -29,10 +32,11 @@ var PaginationBoxView = React.createClass({
                     selected={this.state.selected}
                     pageNum={this.props.pageNum}
                     pageRangeDisplayed={this.props.pageRangeDisplayed}
-                    marginPagesDisplayed={this.props.marginPagesDisplayed} />
+                    marginPagesDisplayed={this.props.marginPagesDisplayed}
+                    breakLabel = {this.props.breakLabel} />
 
                 <li onClick={this.handleNextPage}>
-                    {this.props.nextLabel}
+                    <a href="">{this.props.nextLabel}</a>
                 </li>
             </div>
         );
@@ -42,7 +46,7 @@ var PaginationBoxView = React.createClass({
 var PaginationListView = React.createClass({
     render: function() {
         if (this.props.pageNum <= this.props.pageRangeDisplayed) {
-            var items = _.range(1, this.props.pageNum + 1).map(function(page, index) {
+            items = _.range(1, this.props.pageNum + 1).map(function(page, index) {
                 return (
                     <PageView
                         onClick={this.props.onPageSelected.bind(null, index)}
@@ -53,8 +57,8 @@ var PaginationListView = React.createClass({
                 )
             }.bind(this));
         } else {
-            var leftSide = (this.props.pageRangeDisplayed/2);
-            var rightSide = (this.props.pageRangeDisplayed - leftSide);
+            var leftSide = (this.props.pageRangeDisplayed/2),
+                rightSide = (this.props.pageRangeDisplayed - leftSide);
 
             if (this.props.selected > this.props.pageNum - this.props.pageRangeDisplayed/2) {
                 rightSide = this.props.pageNum - this.props.selected;
@@ -65,7 +69,8 @@ var PaginationListView = React.createClass({
                 rightSide = this.props.pageRangeDisplayed - leftSide;
             }
 
-            var items = []
+            var items = [],
+                breaks = [];
 
             _.range(1, this.props.pageNum + 1).map(function(page, index) {
                 var pageView = (
@@ -89,7 +94,16 @@ var PaginationListView = React.createClass({
                 else if (items[-1]) {
                     items.push(null);
                 }
+                else {
+                    items.push(null);
+                    breaks.push(page);
+                }
             }.bind(this));
+        }
+
+        if (typeof(breaks) !== "undefined") {
+            items.splice(breaks[0], 0, this.props.breakLabel);
+            items.splice(breaks[breaks.length - 1], 0, this.props.breakLabel);
         }
 
         return (
@@ -107,17 +121,18 @@ var PageView = React.createClass({
         }
         return this.transferPropsTo(
             <li className={cssClass}>
-                {this.props.children}
+                <a href="">{this.props.children}</a>
             </li>
         );
     }
 });
 
-var PAGE_NUM = 10;
-var MARGIN_PAGES_DISPLAYED = 2;
-var PAGE_RANGE_DISPLAYED = 3;
-var PREVIOUS_LABEL = "Previous"
-var NEXT_LABEL = "Next"
+var PAGE_NUM = 10,
+    MARGIN_PAGES_DISPLAYED = 2,
+    PAGE_RANGE_DISPLAYED = 3,
+    PREVIOUS_LABEL = "Previous",
+    NEXT_LABEL = "Next",
+    BREAK_LABEL = "...";
 
 React.renderComponent(
     <PaginationBoxView
@@ -125,6 +140,7 @@ React.renderComponent(
         pageRangeDisplayed={PAGE_RANGE_DISPLAYED}
         marginPagesDisplayed={MARGIN_PAGES_DISPLAYED}
         previousLabel={PREVIOUS_LABEL}
-        nextLabel={NEXT_LABEL} />,
+        nextLabel={NEXT_LABEL}
+        breakLabel={BREAK_LABEL} />,
     document.getElementById('react-pagination')
 );
