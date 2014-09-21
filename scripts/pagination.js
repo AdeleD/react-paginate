@@ -1,6 +1,16 @@
 /** @jsx React.DOM */
 
 var PaginationBoxView = React.createClass({
+    getDefaultProps: function() {
+        return {
+            pageNum: 10,
+            pageRangeDisplayed: 2,
+            marginPagesDisplayed: 3,
+            previousLabel: "Previous",
+            nextLabel: "Next",
+            breakLabel: "..."
+        };
+    },
     getInitialState: function() {
         return {selected: 0};
     },
@@ -127,20 +137,7 @@ var PageView = React.createClass({
     }
 });
 
-var PAGE_NUM = 10,
-    MARGIN_PAGES_DISPLAYED = 2,
-    PAGE_RANGE_DISPLAYED = 3,
-    PREVIOUS_LABEL = "Previous",
-    NEXT_LABEL = "Next",
-    BREAK_LABEL = "...";
-
 React.renderComponent(
-    <PaginationBoxView
-        pageNum={PAGE_NUM}
-        pageRangeDisplayed={PAGE_RANGE_DISPLAYED}
-        marginPagesDisplayed={MARGIN_PAGES_DISPLAYED}
-        previousLabel={PREVIOUS_LABEL}
-        nextLabel={NEXT_LABEL}
-        breakLabel={BREAK_LABEL} />,
+    <PaginationBoxView />,
     document.getElementById('react-pagination')
 );
