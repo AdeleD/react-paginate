@@ -144,8 +144,3 @@ var PageView = React.createClass({
         );
     }
 });
-
-React.renderComponent(
-    <PaginationBoxView />,
-    document.getElementById('react-pagination')
-);
