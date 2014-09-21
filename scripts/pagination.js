@@ -1,9 +1,5 @@
 /** @jsx React.DOM */
 
-var PAGE_NUM = 10;
-var MARGIN_PAGES_DISPLAYED = 2;
-var PAGE_RANGE_DISPLAYED = 3;
-
 var PaginationBoxView = React.createClass({
     getInitialState: function() {
         return {selected: 0};
@@ -25,7 +21,7 @@ var PaginationBoxView = React.createClass({
         return (
             <div className="pagination">
                 <li onClick={this.handlePreviousPage}>
-                    Previous
+                    {this.props.previousLabel}
                 </li>
 
                 <PaginationListView
@@ -36,7 +32,7 @@ var PaginationBoxView = React.createClass({
                     marginPagesDisplayed={this.props.marginPagesDisplayed} />
 
                 <li onClick={this.handleNextPage}>
-                    Next
+                    {this.props.nextLabel}
                 </li>
             </div>
         );
@@ -46,7 +42,6 @@ var PaginationBoxView = React.createClass({
 var PaginationListView = React.createClass({
     render: function() {
         if (this.props.pageNum <= this.props.pageRangeDisplayed) {
-
             var items = _.range(1, this.props.pageNum + 1).map(function(page, index) {
                 return (
                     <PageView
@@ -57,9 +52,7 @@ var PaginationListView = React.createClass({
                     </PageView>
                 )
             }.bind(this));
-
         } else {
-
             var leftSide = (this.props.pageRangeDisplayed/2);
             var rightSide = (this.props.pageRangeDisplayed - leftSide);
 
@@ -112,7 +105,7 @@ var PageView = React.createClass({
         if (this.props.selected) {
             var cssClass = 'selected';
         }
-        return (
+        return this.transferPropsTo(
             <li className={cssClass}>
                 {this.props.children}
             </li>
@@ -120,10 +113,18 @@ var PageView = React.createClass({
     }
 });
 
+var PAGE_NUM = 10;
+var MARGIN_PAGES_DISPLAYED = 2;
+var PAGE_RANGE_DISPLAYED = 3;
+var PREVIOUS_LABEL = "Previous"
+var NEXT_LABEL = "Next"
+
 React.renderComponent(
     <PaginationBoxView
         pageNum={PAGE_NUM}
         pageRangeDisplayed={PAGE_RANGE_DISPLAYED}
-        marginPagesDisplayed={MARGIN_PAGES_DISPLAYED} />,
+        marginPagesDisplayed={MARGIN_PAGES_DISPLAYED}
+        previousLabel={PREVIOUS_LABEL}
+        nextLabel={NEXT_LABEL} />,
     document.getElementById('react-pagination')
 );
