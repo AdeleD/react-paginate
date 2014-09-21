@@ -1,6 +1,14 @@
 /** @jsx React.DOM */
 
 var PaginationBoxView = React.createClass({
+    propTypes: {
+        pageNum: React.PropTypes.number.isRequired,
+        pageRangeDisplayed: React.PropTypes.number.isRequired,
+        marginPagesDisplayed: React.PropTypes.number.isRequired,
+        previousLabel: React.PropTypes.string,
+        nextLabel: React.PropTypes.string,
+        breakLabel: React.PropTypes.string,
+    },
     getDefaultProps: function() {
         return {
             pageNum: 10,
