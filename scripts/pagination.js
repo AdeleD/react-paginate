@@ -40,7 +40,7 @@ var PaginationBoxView = React.createClass({
     },
     render: function() {
         return (
-            <div className="pagination">
+            <ul className="pagination">
                 <li onClick={this.handlePreviousPage}>
                     <a href="">{this.props.previousLabel}</a>
                 </li>
@@ -56,7 +56,7 @@ var PaginationBoxView = React.createClass({
                 <li onClick={this.handleNextPage}>
                     <a href="">{this.props.nextLabel}</a>
                 </li>
-            </div>
+            </ul>
         );
     }
 });
@@ -75,53 +75,51 @@ var PaginationListView = React.createClass({
                 )
             }.bind(this));
         } else {
-            var leftSide = (this.props.pageRangeDisplayed/2),
+            var leftSide = (this.props.pageRangeDisplayed / 2),
                 rightSide = (this.props.pageRangeDisplayed - leftSide);
 
-            if (this.props.selected > this.props.pageNum - this.props.pageRangeDisplayed/2) {
+            if (this.props.selected > this.props.pageNum - this.props.pageRangeDisplayed / 2) {
                 rightSide = this.props.pageNum - this.props.selected;
                 leftSide = this.props.pageRangeDisplayed - rightSide;
             }
-            else if (this.props.selected < this.props.pageRangeDisplayed/2) {
+            else if (this.props.selected < this.props.pageRangeDisplayed / 2) {
                 leftSide = this.props.selected;
                 rightSide = this.props.pageRangeDisplayed - leftSide;
             }
 
-            var items = [],
-                breaks = [];
+            var items = [];
 
-            _.range(1, this.props.pageNum + 1).map(function(page, index) {
+            for (var index=1; index <= this.props.pageNum; index++) {
                 var pageView = (
                     <PageView
                         onClick={this.props.onPageSelected.bind(null, index)}
-                        selected={this.props.selected === index}
+                        selected={this.props.selected === (index - 1)}
                         key={index}>
-                        {page}
+                        {index}
                         </PageView>
                 );
 
-                if (page <= this.props.pageRangeDisplayed) {
+                if (index <= this.props.pageRangeDisplayed) {
                     items.push(pageView);
+                    continue;
                 }
-                else if (page > this.props.pageNum - this.props.marginPagesDisplayed) {
+                if (index > this.props.pageNum - this.props.marginPagesDisplayed) {
                     items.push(pageView);
+                    continue;
                 }
-                else if ((page >= this.props.selected - leftSide) && (page <= this.props.selected + rightSide)) {
+                if ((index >= this.props.selected - leftSide) && (index <= this.props.selected + rightSide)) {
                     items.push(pageView);
+                    continue;
                 }
-                else if (items[-1]) {
+                if (items[items.length-1] !== null) {
                     items.push(null);
                 }
-                else {
-                    items.push(null);
-                    breaks.push(page);
-                }
-            }.bind(this));
+            }
         }
 
-        if (typeof(breaks) !== "undefined") {
-            items.splice(breaks[0], 0, this.props.breakLabel);
-            items.splice(breaks[breaks.length - 1], 0, this.props.breakLabel);
+        splitIndex = items.indexOf(null);
+        if (typeof(splitIndex) !== "undefined") {
+            items.splice(splitIndex, 0, <PageView>...</PageView>);
         }
 
         return (
