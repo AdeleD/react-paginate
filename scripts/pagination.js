@@ -111,15 +111,10 @@ var PaginationListView = React.createClass({
                     items.push(pageView);
                     continue;
                 }
-                if (items[items.length-1] !== null) {
-                    items.push(null);
+                if (items[items.length-1] !== this.props.breakLabel) {
+                    items.push(this.props.breakLabel);
                 }
             }
-        }
-
-        splitIndex = items.indexOf(null);
-        if (typeof(splitIndex) !== "undefined") {
-            items.splice(splitIndex, 0, <PageView>...</PageView>);
         }
 
         return (
