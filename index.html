@@ -1,23 +1,23 @@
 <html>
-  <head>
-    <title>React pagination</title>
-    <script type="text/javascript" src="build/underscore-1.7.0.min.js"></script>
-    <script type="text/javascript" src="build/react.js"></script>
-    <script type="text/javascript" src="build/JSXTransformer.js"></script>
-    <script type="text/javascript" src="build/jquery-1.11.1.min.js"></script>
+    <head>
+        <title>React pagination</title>
+        <script type="text/javascript" src="build/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="build/underscore-1.7.0.min.js"></script>
+        <script type="text/javascript" src="build/react.js"></script>
+        <script type="text/javascript" src="build/JSXTransformer.js"></script>
 
-    <link rel="stylesheet" href="styles/style.css">
-  </head>
-  <body>
-    <div id="react-pagination"></div>
-    <script type="text/jsx" src="scripts/pagination.js"></script>
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+    <body>
+        <div id="react-pagination"></div>
+        <script type="text/jsx" src="./components/bundle.js"></script>
 
-    <script type="text/jsx">
-      /** @jsx React.DOM */
-      React.renderComponent(
-        <PaginationBoxView />,
-        document.getElementById('react-pagination')
-      );
-    </script>
-  </body>
+        <script type="text/jsx">
+            /** @jsx React.DOM */
+            React.renderComponent(
+                <PaginationBoxView />,
+                document.getElementById('react-pagination')
+            );
+        </script>
+    </body>
 </html>

@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "react": "*",
+    "react-tools": "*",
+    "browserify": "^4.1.*"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
+  },
+  "devDependencies": {
+    "jest-cli": "~0.1.18"
+  }
+}
