@@ -26,7 +26,7 @@ var PaginationBoxView = React.createClass({
         return {selected: 0};
     },
     handlePageSelected: function(index) {
-        this.setState({selected: index - 1});
+        this.setState({selected: index});
         return false;
     },
     handlePreviousPage: function() {

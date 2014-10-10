@@ -40,11 +40,11 @@
         it('test click on a page item', function() {
             var list = TestUtils.findRenderedComponentWithType(pagination, PaginationListView);
 
-            var pageItem = pagination.getDOMNode().querySelector("li:nth-child(4)");
+            var pageItem = pagination.getDOMNode().querySelector("li:nth-child(3)");
 
             TestUtils.Simulate.click(pageItem);
 
-            expect(pagination.getDOMNode().querySelector(".selected a").textContent).toBe("9");
+            expect(pagination.getDOMNode().querySelector(".selected a").textContent).toBe("3");
         });
 
     });

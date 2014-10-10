@@ -31,13 +31,13 @@ var PaginationListView = React.createClass({
 
             var items = [];
 
-            for (var index=1; index <= this.props.pageNum; index++) {
+            for (var index=0; index < this.props.pageNum; index++) {
                 var pageView = (
                     <PageView
                         onClick={this.props.onPageSelected.bind(null, index)}
-                        selected={this.props.selected === (index - 1)}
+                        selected={this.props.selected === index}
                         key={index}>
-                        {index}
+                        {index + 1}
                         </PageView>
                 );
 
