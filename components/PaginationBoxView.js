@@ -29,7 +29,7 @@ var PaginationBoxView = React.createClass({
     handlePageSelected: function(index) {
         this.setState({selected: index});
 
-        if (typeof(this.props.clickCallback) !== "undefined" && typeof(this.props.clickCallback === "function"))
+        if (typeof(this.props.clickCallback) !== "undefined" && typeof(this.props.clickCallback) === "function")
             this.props.clickCallback({selected: index});
 
         return false;
