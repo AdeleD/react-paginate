@@ -11,6 +11,7 @@ var PaginationBoxView = React.createClass({
         previousLabel: React.PropTypes.string,
         nextLabel: React.PropTypes.string,
         breakLabel: React.PropTypes.string,
+        clickCallback: React.PropTypes.func
     },
     getDefaultProps: function() {
         return {
@@ -27,6 +28,10 @@ var PaginationBoxView = React.createClass({
     },
     handlePageSelected: function(index) {
         this.setState({selected: index});
+
+        if (typeof(this.props.clickCallback) !== "undefined" && typeof(this.props.clickCallback === "function"))
+            this.props.clickCallback({selected: index});
+
         return false;
     },
     handlePreviousPage: function() {
