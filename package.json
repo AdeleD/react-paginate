@@ -3,28 +3,24 @@
   "version": "0.1.0",
   "description": "A ReactJS component that create a pagination.",
   "repository": "https://github.com/AdeleD/react-pagination",
-  "main": "js/pagination.js",
   "dependencies": {
     "react": "~0.11.0"
   },
   "devDependencies": {
-    "browserify": "~6.1.0",
-    "envify": "~3.0.0",
-    "jest-cli": "~0.1.18",
+    "gulp": "~3.8.8",
+    "browserify": "~6.0.3",
+    "vinyl-source-stream": "~1.0.0",
     "reactify": "~0.14.0",
-    "uglify-js": "~2.4.15",
+    "require-dir": "~0.1.0",
     "watchify": "~2.0.0"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.js -v -d .",
-    "build": "NODE_ENV=production browserify . | uglifyjs -cm > js/bundle.min.js",
     "test": "jest"
   },
   "author": "Adèle Delamarche",
   "browserify": {
     "transform": [
-      "reactify",
-      "envify"
+      "reactify"
     ]
   },
   "jest": {

@@ -1,12 +1,12 @@
     /** @jsx React.DOM */
-    jest.dontMock('../components/PaginationBoxView.js');
-    jest.dontMock('../components/PaginationListView.js');
-    jest.dontMock('../components/PageView.js');
+    jest.dontMock('./../static/js/react/components/PaginationBoxView.js');
+    jest.dontMock('./../static/js/react/components/PaginationListView.js');
+    jest.dontMock('./../static/js/react/components/PageView.js');
 
     var React = require('react/addons');
-    var PaginationBoxView = require('../components/PaginationBoxView.js');
-    var PaginationListView = require('../components/PaginationListView.js');
-    var PageView = require('../components/PageView.js');
+    var PaginationBoxView = require('./../static/js/react/components/PaginationBoxView.js');
+    var PaginationListView = require('./../static/js/react/components/PaginationListView.js');
+    var PageView = require('./../static/js/react/components/PageView.js');
     var TestUtils = React.addons.TestUtils;
 
     describe('PaginationBoxView', function() {
