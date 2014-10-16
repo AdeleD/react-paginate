@@ -7,13 +7,13 @@ A ReactJS component to render a pagination.
 Getting started:
 ---------------------
 
-#### Installation
+#### Install
 
   * `npm install react-pagination`
 
 #### To load the component
 
-  * `var PaginationBoxView = require("react-pagination");`
+  * `var ReactPagination = require("react-pagination");`
 
 #### To run tests
 

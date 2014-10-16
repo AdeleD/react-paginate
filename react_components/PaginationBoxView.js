@@ -3,6 +3,7 @@
 var React = require('react');
 var PaginationListView = require("./PaginationListView");
 
+
 var PaginationBoxView = React.createClass({
     propTypes: {
         pageNum: React.PropTypes.number.isRequired,

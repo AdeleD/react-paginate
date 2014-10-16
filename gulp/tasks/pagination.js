@@ -5,7 +5,7 @@ var reactify = require('reactify');
 var config = require('../config')
 
 gulp.task('pagination', function() {
-    return browserify(config.pagination.src, {'standalone': 'ReactPagination'})
+    return browserify(config.pagination.src, {'fullPaths': true, 'standalone': 'react-pagination', 'debug': true})
         .transform(reactify)
         .bundle()
         .pipe(source('react-pagination.js'))

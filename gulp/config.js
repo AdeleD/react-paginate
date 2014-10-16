@@ -1,9 +1,9 @@
-var dest = "./static/build";
-var src = './static';
+var dest = "./build";
+var src = './react_components';
 
 module.exports = {
   pagination: {
-    src: src + "/js/pagination.js",
+    src: src + "/PaginationBoxView.js",
     dest: dest
   },
 };
