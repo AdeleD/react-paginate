@@ -9,11 +9,11 @@ Getting started:
 
 #### Install
 
-  * `npm install react-pagination`
+  * `npm install react-paginate`
 
 #### To load the component
 
-  * `var ReactPagination = require("react-pagination");`
+  * `var ReactPaginate = require("react-paginate");`
 
 #### To run tests
 
