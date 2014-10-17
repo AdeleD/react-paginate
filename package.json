@@ -1,12 +1,12 @@
 {
-  "name": "react-pagination",
+  "name": "react-paginate",
   "version": "0.1.2",
   "description": "A ReactJS component that create a pagination.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AdeleD/react-pagination"
+    "url": "https://github.com/AdeleD/react-paginate"
   },
-  "main": "./build/react-pagination.js",
+  "main": "./build/react-paginate.js",
   "dependencies": {
     "react": "~0.11.2"
   },
@@ -34,7 +34,7 @@
     ]
   },
   "bugs": {
-    "url": "https://github.com/AdeleD/react-pagination/issues"
+    "url": "https://github.com/AdeleD/react-paginate/issues"
   },
   "license": "BSD-2-Clause"
 }

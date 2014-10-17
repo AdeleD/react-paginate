@@ -8,6 +8,6 @@ gulp.task('pagination', function() {
     return browserify(config.pagination.src, {'fullPaths': true, 'standalone': 'react-pagination', 'debug': true})
         .transform(reactify)
         .bundle()
-        .pipe(source('react-pagination.js'))
+        .pipe(source('react-paginate.js'))
         .pipe(gulp.dest(config.pagination.dest));
 });
