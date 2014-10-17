@@ -1,5 +1,5 @@
-react-pagination
-================
+react-paginate
+==============
 
 A ReactJS component to render a pagination.
 

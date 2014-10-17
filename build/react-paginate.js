@@ -2,77 +2,21 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var PaginationListView = require("./PaginationListView");
+var PaginationBoxView = require('./PaginationBoxView');
 
-
-var PaginationBoxView = React.createClass({displayName: 'PaginationBoxView',
-    propTypes: {
-        pageNum: React.PropTypes.number.isRequired,
-        pageRangeDisplayed: React.PropTypes.number.isRequired,
-        marginPagesDisplayed: React.PropTypes.number.isRequired,
-        previousLabel: React.PropTypes.string,
-        nextLabel: React.PropTypes.string,
-        breakLabel: React.PropTypes.string,
-        clickCallback: React.PropTypes.func
-    },
-    getDefaultProps: function() {
-        return {
-            pageNum: 10,
-            pageRangeDisplayed: 2,
-            marginPagesDisplayed: 3,
-            previousLabel: "Previous",
-            nextLabel: "Next",
-            breakLabel: "..."
-        };
-    },
-    getInitialState: function() {
-        return {selected: 0};
-    },
-    handlePageSelected: function(index) {
-        this.setState({selected: index});
-
-        if (typeof(this.props.clickCallback) !== "undefined" && typeof(this.props.clickCallback) === "function")
-            this.props.clickCallback({selected: index});
-
-        return false;
-    },
-    handlePreviousPage: function() {
-        if (this.state.selected > 0) {
-            this.handlePageSelected(this.state.selected - 1);
-        }
-        return false;
-    },
-    handleNextPage: function() {
-        if (this.state.selected < this.props.pageNum - 1) {
-            this.handlePageSelected(this.state.selected + 1);
-        }
-        return false;
-    },
+var ReactPaginate = React.createClass({displayName: 'ReactPaginate',
     render: function() {
         return (
-            React.DOM.ul({className: "pagination"}, 
-                React.DOM.li({onClick: this.handlePreviousPage, className: "previous"}, 
-                    React.DOM.a({href: ""}, this.props.previousLabel)
-                ), 
-
-                PaginationListView({
-                    onPageSelected: this.handlePageSelected, 
-                    selected: this.state.selected, 
-                    pageNum: this.props.pageNum, 
-                    pageRangeDisplayed: this.props.pageRangeDisplayed, 
-                    marginPagesDisplayed: this.props.marginPagesDisplayed, 
-                    breakLabel: this.props.breakLabel}), 
-
-                React.DOM.li({onClick: this.handleNextPage, className: "next"}, 
-                    React.DOM.a({href: ""}, this.props.nextLabel)
-                )
+            React.DOM.nav(null, 
+                PaginationBoxView(null)
             )
         );
     }
 });
 
-module.exports = PaginationBoxView;
-},{"./PaginationListView":148,"react":146}],2:[function(require,module,exports){
+React.renderComponent(ReactPaginate(), document.getElementById('react-paginate'));
+
+},{"./PaginationBoxView":148,"react":146}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -18772,6 +18716,80 @@ var PageView = React.createClass({displayName: 'PageView',
 
 module.exports = PageView;
 },{"react":146}],148:[function(require,module,exports){
+/** @jsx React.DOM */
+
+var React = require('react');
+var PaginationListView = require("./PaginationListView");
+
+
+var PaginationBoxView = React.createClass({displayName: 'PaginationBoxView',
+    propTypes: {
+        pageNum: React.PropTypes.number.isRequired,
+        pageRangeDisplayed: React.PropTypes.number.isRequired,
+        marginPagesDisplayed: React.PropTypes.number.isRequired,
+        previousLabel: React.PropTypes.string,
+        nextLabel: React.PropTypes.string,
+        breakLabel: React.PropTypes.string,
+        clickCallback: React.PropTypes.func
+    },
+    getDefaultProps: function() {
+        return {
+            pageNum: 10,
+            pageRangeDisplayed: 2,
+            marginPagesDisplayed: 3,
+            previousLabel: "Previous",
+            nextLabel: "Next",
+            breakLabel: "..."
+        };
+    },
+    getInitialState: function() {
+        return {selected: 0};
+    },
+    handlePageSelected: function(index) {
+        this.setState({selected: index});
+
+        if (typeof(this.props.clickCallback) !== "undefined" && typeof(this.props.clickCallback) === "function")
+            this.props.clickCallback({selected: index});
+
+        return false;
+    },
+    handlePreviousPage: function() {
+        if (this.state.selected > 0) {
+            this.handlePageSelected(this.state.selected - 1);
+        }
+        return false;
+    },
+    handleNextPage: function() {
+        if (this.state.selected < this.props.pageNum - 1) {
+            this.handlePageSelected(this.state.selected + 1);
+        }
+        return false;
+    },
+    render: function() {
+        return (
+            React.DOM.ul({className: "pagination"}, 
+                React.DOM.li({onClick: this.handlePreviousPage, className: "previous"}, 
+                    React.DOM.a({href: ""}, this.props.previousLabel)
+                ), 
+
+                PaginationListView({
+                    onPageSelected: this.handlePageSelected, 
+                    selected: this.state.selected, 
+                    pageNum: this.props.pageNum, 
+                    pageRangeDisplayed: this.props.pageRangeDisplayed, 
+                    marginPagesDisplayed: this.props.marginPagesDisplayed, 
+                    breakLabel: this.props.breakLabel}), 
+
+                React.DOM.li({onClick: this.handleNextPage, className: "next"}, 
+                    React.DOM.a({href: ""}, this.props.nextLabel)
+                )
+            )
+        );
+    }
+});
+
+module.exports = PaginationBoxView;
+},{"./PaginationListView":149,"react":146}],149:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
