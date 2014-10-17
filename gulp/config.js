@@ -6,4 +6,8 @@ module.exports = {
     src: src + "/PaginationBoxView.js",
     dest: dest
   },
+  sample: {
+    src: "./sample/sample.jsx",
+    dest: "./sample"
+  }
 };
