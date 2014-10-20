@@ -7,7 +7,12 @@
     "type": "git",
     "url": "https://github.com/AdeleD/react-paginate"
   },
-  "keywords": [],
+  "keywords": [
+    "react-component",
+    "paginate",
+    "paginator",
+    "pagination"
+  ],
   "author": "Adèle Delamarche",
   "license": "BSD-2-Clause",
   "bugs": {
