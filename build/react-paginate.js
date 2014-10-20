@@ -4,17 +4,11 @@
 var React = require('react');
 var PaginationBoxView = require('./PaginationBoxView');
 
-var ReactPaginate = React.createClass({displayName: 'ReactPaginate',
-    render: function() {
-        return (
-            React.DOM.nav(null, 
-                PaginationBoxView(null)
-            )
-        );
-    }
-});
 
-React.renderComponent(ReactPaginate(), document.getElementById('react-paginate'));
+React.renderComponent(
+    PaginationBoxView(null),
+    document.getElementById('react-paginate')
+);
 
 },{"./PaginationBoxView":148,"react":146}],2:[function(require,module,exports){
 // shim for using process in browser
