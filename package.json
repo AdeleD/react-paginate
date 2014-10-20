@@ -1,6 +1,6 @@
 {
   "name": "react-paginate",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A ReactJS component that create a pagination.",
   "main": "./react_components/index.js",
   "repository": {
@@ -26,9 +26,9 @@
     "browserify": "~6.0.3",
     "vinyl-source-stream": "~1.0.0",
     "reactify": "~0.14.0",
-    "require-dir": "~0.1.0",
     "watchify": "~2.0.0",
-    "jest": "~0.1.37"
+    "jest-cli": "~0.1.18",
+    "react-tools": "~0.11.2"
   },
   "browserify": {
     "transform": [
