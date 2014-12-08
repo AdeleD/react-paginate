@@ -1,6 +1,6 @@
 {
   "name": "react-paginate",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A ReactJS component that create a pagination.",
   "main": "./react_components/index.js",
   "repository": {
@@ -19,7 +19,8 @@
     "url": "https://github.com/AdeleD/react-paginate/issues"
   },
   "dependencies": {
-    "react": "~0.11.2"
+    "react": "~0.11.2",
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "gulp": "~3.8.8",
