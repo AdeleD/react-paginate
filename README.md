@@ -4,23 +4,25 @@ react-paginate
 A ReactJS component to render a pagination.
 
 
+
 Getting started:
 ---------------------
 
-#### Install:
+##### Install:
 
 `npm install react-paginate`
 
-#### To load the component:
+##### To load the component:
 
 `var ReactPaginate = require("react-paginate");`
 
-#### To run tests:
+##### To run tests:
 
 `npm test`
 
 
-How to use it into your own project:
+
+Using it into your own project:
 ---------------------
 
 ```javascript
@@ -72,7 +74,6 @@ var MyComponent = React.createClass({
   }
 });
 
-
 var MyComponentList = React.createClass({
   render: function() {
     var items = this.props.data.map(function(item, index) {
@@ -89,7 +90,6 @@ var MyComponentList = React.createClass({
     );
   }
 });
-
 
 React.renderComponent(
     <MyCustomComponent
