@@ -20,7 +20,7 @@ Getting started:
 `npm test`
 
 
-How to use it in a real world project:
+How to use it into your own project:
 ---------------------
 
 ```javascript
@@ -55,14 +55,14 @@ var MyComponent = React.createClass({
   },
   render: function() {
     return (
-      <div className="commentBox">
+      <div className="my-component">
         <MyComponentList data={this.state.data} />
 
         <nav id="project-pagination">
             <ReactPaginate clickCallback={this.handlePageClick}
                            previousLabel={<span class="prev">Previous</span>}
                            nextLabel={<span class="prev">Next</span>}
-                           breakLabel={<span class="ellipsis">Previous</span>}
+                           breakLabel={<span class="ellipsis">...</span>}
                            pageNum={this.state.pageNum}
                            marginPagesDisplayed={2}
                            pageRangeDisplayed={2} />
@@ -81,7 +81,7 @@ var MyComponentList = React.createClass({
       );
     });
     return (
-      <div className="my-objects-list">
+      <div className="my-list">
         <ul>
           {items}
         </ul>
