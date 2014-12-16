@@ -25,7 +25,7 @@
             expect(pagination.getDOMNode().querySelector(".selected a").textContent).toBe("1");
 
             var pages = pagination.getDOMNode().querySelectorAll("li");
-            expect(pages.length).toEqual(7);
+            expect(pages.length).toEqual(8);
         });
 
         it('test previous and next buttons', function() {

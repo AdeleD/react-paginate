@@ -32,19 +32,20 @@ var PaginationListView = React.createClass({
         rightSide = this.props.pageRangeDisplayed - leftSide;
       }
 
-      var items = [];
+      var items = [],
+          index = 1;
 
-      for (var index=0; index < this.props.pageNum; index++) {
+      for (index = 1; index < this.props.pageNum + 1; index++) {
         var pageView = (
           <PageView
             onClick={this.props.onPageSelected.bind(null, index)}
             selected={this.props.selected === index}
             key={index}>
-            {index + 1}
+            {index}
             </PageView>
         );
 
-        if (index <= this.props.pageRangeDisplayed) {
+        if (index <= this.props.marginPagesDisplayed) {
           items.push(pageView);
           continue;
         }

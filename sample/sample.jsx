@@ -11,7 +11,12 @@ var App = React.createClass({
   render: function () {
     return (
       <nav>
-        <ReactPaginate />
+        <ReactPaginate previousLabel={"previous"}
+                       nextLabel={"next"}
+                       breakLabel={"..."}
+                       pageNum={20}
+                       marginPagesDisplayed={2}
+                       pageRangeDisplayed={5} />
       </nav>
     );
   }
