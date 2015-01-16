@@ -4,6 +4,15 @@ react-paginate
 A ReactJS component to render a pagination.
 
 
+By installing this component and writing only a little bit of CSS you can obtain this :
+
+<img src="./docs/img/pagination1.png" alt="Pagination sample 1" />
+
+or
+
+<img src="./docs/img/pagination2.png" alt="Pagination sample 2" />
+
+
 
 Getting started:
 ---------------------
