@@ -101,7 +101,7 @@ var MyComponentList = React.createClass({
 });
 
 React.renderComponent(
-    <MyCustomComponent url={'http://www.my-api-url.com/objects'}
+    <MyComponent url={'http://www.my-api-url.com/objects'}
                        perPage={10} />,
     container
 );
