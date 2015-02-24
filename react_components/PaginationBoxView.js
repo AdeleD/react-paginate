@@ -10,10 +10,11 @@ var PaginationBoxView = React.createClass({
     pageNum: React.PropTypes.number.isRequired,
     pageRangeDisplayed: React.PropTypes.number.isRequired,
     marginPagesDisplayed: React.PropTypes.number.isRequired,
-    previousLabel: React.PropTypes.renderable,
-    nextLabel: React.PropTypes.renderable,
-    breakLabel: React.PropTypes.renderable,
-    clickCallback: React.PropTypes.func
+    previousLabel: React.PropTypes.node,
+    nextLabel: React.PropTypes.node,
+    breakLabel: React.PropTypes.node,
+    clickCallback: React.PropTypes.func,
+    initialSelected: React.PropTypes.number
   },
   getDefaultProps: function() {
     return {
@@ -26,27 +27,28 @@ var PaginationBoxView = React.createClass({
     };
   },
   getInitialState: function() {
-    return {selected: 1};
+    return {selected: this.props.initialSelected ? this.props.initialSelected :1};
   },
-  handlePageSelected: function(index) {
-    this.setState({selected: index});
+  handlePageSelected: function(index, event) {
+    event.preventDefault();
+    if (this.state.selected !== index) {
+      this.setState({selected: index});
 
-    if (typeof(this.props.clickCallback) !== "undefined" && typeof(this.props.clickCallback) === "function")
+      if (typeof(this.props.clickCallback) !== "undefined" && typeof(this.props.clickCallback) === "function")
         this.props.clickCallback({selected: index});
-
-    return false;
+    }
   },
-  handlePreviousPage: function() {
+  handlePreviousPage: function(event) {
+    event.preventDefault();
     if (this.state.selected > 1) {
-      this.handlePageSelected(this.state.selected - 1);
+      this.handlePageSelected(this.state.selected - 1, event);
     }
-    return false;
   },
-  handleNextPage: function() {
+  handleNextPage: function(event) {
+    event.preventDefault();
     if (this.state.selected < this.props.pageNum) {
-      this.handlePageSelected(this.state.selected + 1);
+      this.handlePageSelected(this.state.selected + 1, event);
     }
-    return false;
   },
   render: function() {
     return (
