@@ -13,23 +13,28 @@
     "paginator",
     "pagination"
   ],
-  "author": "Adèle Delamarche",
+  "author": {
+    "name": "Adèle Delamarche"
+  },
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/AdeleD/react-paginate/issues"
   },
   "dependencies": {
-    "react": "~0.11.2",
     "underscore": "^1.7.0"
   },
   "devDependencies": {
-    "gulp": "~3.8.8",
     "browserify": "~6.0.3",
+    "gulp": "~3.8.8",
+    "jest-cli": "^0.2.2",
+    "react-tools": "~0.12.2",
+    "reactify": "1.0.0",
     "vinyl-source-stream": "~1.0.0",
-    "reactify": "~0.14.0",
-    "watchify": "~2.0.0",
-    "jest-cli": "~0.1.18",
-    "react-tools": "~0.11.2"
+    "watchify": "~2.1",
+    "react": "~0.12.2"
+  },
+  "peerDependencies": {
+
   },
   "browserify": {
     "transform": [
@@ -43,6 +48,31 @@
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
+    ],
+    "testPathDirs": [
+      "<rootDir>/__tests__"
     ]
-  }
+  },
+  "homepage": "https://github.com/AdeleD/react-paginate",
+  "_id": "react-paginate@0.1.11",
+  "dist": {
+    "shasum": "215b411fe450489d37956cee1b75b409333a2d72",
+    "tarball": "http://registry.npmjs.org/react-paginate/-/react-paginate-0.1.11.tgz"
+  },
+  "_from": "react-paginate@",
+  "_npmVersion": "1.4.6",
+  "_npmUser": {
+    "name": "adele",
+    "email": "adele.delamarche@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "adele",
+      "email": "adele.delamarche@gmail.com"
+    }
+  ],
+  "directories": {},
+  "_shasum": "215b411fe450489d37956cee1b75b409333a2d72",
+  "_resolved": "https://registry.npmjs.org/react-paginate/-/react-paginate-0.1.11.tgz",
+  "readme": "ERROR: No README data found!"
 }

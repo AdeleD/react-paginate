@@ -39,9 +39,9 @@
         });
 
         it('test click on a page item', function() {
-            var list = TestUtils.findRenderedComponentWithType(pagination, PaginationListView);
+            TestUtils.findRenderedComponentWithType(pagination, PaginationListView);
 
-            var pageItem = pagination.getDOMNode().querySelector("li:nth-child(3)");
+            var pageItem = pagination.getDOMNode().querySelector("li:nth-child(3)").querySelector("a");
 
             TestUtils.Simulate.click(pageItem);
 
