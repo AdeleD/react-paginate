@@ -52,27 +52,5 @@
     "testPathDirs": [
       "<rootDir>/__tests__"
     ]
-  },
-  "homepage": "https://github.com/AdeleD/react-paginate",
-  "_id": "react-paginate@0.1.11",
-  "dist": {
-    "shasum": "215b411fe450489d37956cee1b75b409333a2d72",
-    "tarball": "http://registry.npmjs.org/react-paginate/-/react-paginate-0.1.11.tgz"
-  },
-  "_from": "react-paginate@",
-  "_npmVersion": "1.4.6",
-  "_npmUser": {
-    "name": "adele",
-    "email": "adele.delamarche@gmail.com"
-  },
-  "maintainers": [
-    {
-      "name": "adele",
-      "email": "adele.delamarche@gmail.com"
-    }
-  ],
-  "directories": {},
-  "_shasum": "215b411fe450489d37956cee1b75b409333a2d72",
-  "_resolved": "https://registry.npmjs.org/react-paginate/-/react-paginate-0.1.11.tgz",
-  "readme": "ERROR: No README data found!"
+  }
 }
