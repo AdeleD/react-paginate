@@ -1,71 +1,35 @@
 'use strict';
 
-var gulp = require('gulp');
+var gulp       = require('gulp');
 var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var reactify = require('reactify');
-var watchify = require('watchify');
+var reactify   = require('reactify');
+var source     = require('vinyl-source-stream');
+var buffer     = require('vinyl-buffer');
+var uglify     = require('gulp-uglify');
 
-
-var dest = "./build";
-var src = './react_components';
-
-var config = {
-  pagination: {
-    src: src + "/index.js",
-    dest: dest
-  },
-  sample: {
-    src: "./sample/sample.jsx",
-    dest: "./sample"
-  }
-};
-
-
-gulp.task('default', ['pagination', 'sample', 'watch']);
-
-
-gulp.task('watch', function(){
-  bundler.on('update', function(){
-    gulp.start('pagination');
-  });
-  sampleBundler.on('update', function(){
-    gulp.start('sample');
-  });
+gulp.task('watch', function() {
+  gulp.watch('./react_components/*.js', ['app', 'sample']);
+  gulp.watch('./sample/sample.jsx', ['sample']);
 });
 
-
-var bundler = watchify(browserify(config.pagination.src, {
-  cache: {},
-  packageCache: {},
-  fullPaths: true,
-  standalone: 'react-paginate',
-  debug: true
-}));
-
-gulp.task('pagination', function() {
-    var browserifyStream = bundler.bundle()
-        .pipe(source('react-paginate.js'))
-        .pipe(gulp.dest(config.pagination.dest));
-
-    return browserifyStream;
+gulp.task('app', function() {
+  return browserify('./react_components/index.js')
+    .transform(reactify)
+    .bundle()
+    .pipe(source('react-paginate.js'))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest('./build'));
 });
 
-
-var sampleBundler = watchify(browserify(config.sample.src, {
-  cache: {},
-  packageCache: {},
-  fullPaths: true,
-  standalone: 'sample',
-  debug: true
-}));
-sampleBundler.transform(reactify);
-
-
-gulp.task('sample', function(){
-  var browserifyStream = sampleBundler.bundle()
+gulp.task('sample', function() {
+  return browserify('./sample/sample.jsx')
+    .transform(reactify)
+    .bundle()
     .pipe(source('sample.js'))
-    .pipe(gulp.dest(config.sample.dest));
-
-  return browserifyStream;
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest('./sample'));
 });
+
+gulp.task('default', ['app', 'sample']);
