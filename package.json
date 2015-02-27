@@ -26,6 +26,7 @@
   "devDependencies": {
     "browserify": "~6.0.3",
     "gulp": "~3.8.8",
+    "gulp-connect": "^2.2.0",
     "gulp-uglify": "^1.1.0",
     "jest-cli": "^0.2.2",
     "react": "~0.12.2",

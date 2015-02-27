@@ -6,6 +6,32 @@ var reactify   = require('reactify');
 var source     = require('vinyl-source-stream');
 var buffer     = require('vinyl-buffer');
 var uglify     = require('gulp-uglify');
+var connect    = require('gulp-connect');
+
+
+var SAMPLE_FILES = [
+  'sample/**/*.html',
+  'sample/**/*.css',
+  'sample/**/*.js'
+];
+
+
+gulp.task('connect', function() {
+  connect.server({
+    root: ['sample', 'styles'],
+    livereload: true
+  });
+});
+
+gulp.task('connect:reload', function() {
+  connect.reload();
+});
+
+gulp.task('connect:watch', function() {
+  gulp.watch('./react_components/*.js', ['app', 'sample', 'connect:reload']);
+  gulp.watch('./sample/sample.jsx', ['sample', 'connect:reload']);
+  gulp.watch(SAMPLE_FILES, ['connect:reload']);
+});
 
 gulp.task('watch', function() {
   gulp.watch('./react_components/*.js', ['app', 'sample']);
@@ -32,4 +58,5 @@ gulp.task('sample', function() {
     .pipe(gulp.dest('./sample'));
 });
 
+gulp.task('serve', ['connect', 'connect:watch'])
 gulp.task('default', ['app', 'sample']);
