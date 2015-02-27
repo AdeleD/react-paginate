@@ -1,5 +1,8 @@
 'use strict';
 
+var fs         = require('fs');
+var path       = require('path');
+var util       = require('util');
 var gulp       = require('gulp');
 var browserify = require('browserify');
 var reactify   = require('reactify');
@@ -8,13 +11,18 @@ var buffer     = require('vinyl-buffer');
 var uglify     = require('gulp-uglify');
 var connect    = require('gulp-connect');
 
-
-var SAMPLE_FILES = [
-  'sample/**/*.html',
-  'sample/**/*.css',
-  'sample/**/*.js'
-];
-
+var CONFIG = {
+  sample: {
+    files: {
+      data: path.join(__dirname, 'sample', 'data.json'),
+      assets: [
+        'sample/**/*.html',
+        'sample/**/*.css',
+        'sample/**/*.js'
+      ]
+    }
+  }
+};
 
 gulp.task('connect', function() {
   connect.server({
@@ -30,7 +38,18 @@ gulp.task('connect:reload', function() {
 gulp.task('connect:watch', function() {
   gulp.watch('./react_components/*.js', ['app', 'sample', 'connect:reload']);
   gulp.watch('./sample/sample.jsx', ['sample', 'connect:reload']);
-  gulp.watch(SAMPLE_FILES, ['connect:reload']);
+  gulp.watch(CONFIG.sample.files.assets, ['connect:reload']);
+});
+
+gulp.task('generate:data', function() {
+  var comments = [];
+  for (var i = 0; i < 200; i++) {
+    comments.push({
+      username : util.format('user-%s', i),
+      comment  : util.format('This is the comment #%d', i)
+    });
+  }
+  fs.writeFileSync(CONFIG.sample.files.data, JSON.stringify(comments, null, 2));
 });
 
 gulp.task('watch', function() {
