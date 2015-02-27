@@ -77,5 +77,5 @@ gulp.task('sample', function() {
     .pipe(gulp.dest('./sample'));
 });
 
-gulp.task('serve', ['connect', 'connect:watch'])
+gulp.task('serve', ['connect', 'generate:data', 'connect:watch'])
 gulp.task('default', ['app', 'sample']);
