@@ -26,31 +26,43 @@ var CommentList = React.createClass({
 });
 
 var App = React.createClass({
+
   loadCommentsFromServer: function() {
     $.ajax({
-      url: this.props.url,
-      data: {limit: this.props.perPage, offset: this.state.offset},
-      dataType: 'json',
-      type: 'GET',
+      url      : this.props.url,
+      data     : {limit: this.props.perPage, offset: this.state.offset},
+      dataType : 'json',
+      type     : 'GET',
+
       success: function(data) {
         this.setState({data: data.comments, pageNum: (data.meta.total_count / data.meta.limit)});
       }.bind(this),
+
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
   },
+
   handlePageClick: function(data) {
     var selected = data.selected;
-    this.setState({offset: Math.ceil((selected) * this.props.perPage)});
+    var offset = Math.ceil((selected - 1) * this.props.perPage);
+
+    this.setState({offset: offset}, function() {
+      this.loadCommentsFromServer();
+    }.bind(this));
+
     this.loadCommentsFromServer();
   },
+
   getInitialState: function() {
     return {data: [], offset: 0};
   },
+
   componentDidMount: function() {
     this.loadCommentsFromServer();
   },
+
   render: function () {
     return (
       <div className="commentBox">
