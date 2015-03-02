@@ -28,22 +28,22 @@ function getPaginatedItems(items, page) {
 
 app.get('/comments', function(req, res) {
 
-  var data         = JSON.parse(fs.readFileSync(DATA));
-  var items        = data.comments;
+  var items        = JSON.parse(fs.readFileSync(DATA));
   var page         = req.query.page ? parseInt(req.query.page, 10) : 0;
   var nextPage     = page + 1;
   var previousPage = (page < 1) ? 1 : page - 1;
 
   var meta = {
-    limit    : PER_PAGE,
-    next     : util.format('?limit=%s&page=%s', PER_PAGE, nextPage),
-    page     : req.query.page,
-    previous : util.format('?limit=%s&page=%s', PER_PAGE, previousPage)
+    limit       : PER_PAGE,
+    next        : util.format('?limit=%s&page=%s', PER_PAGE, nextPage),
+    page        : req.query.page,
+    previous    : util.format('?limit=%s&page=%s', PER_PAGE, previousPage),
+    total_count : items.length
   };
 
   var json = {
     meta     : meta,
-    comments : getPaginatedItems(items, page)
+    comments : getPaginatedItems(items, page),
   };
 
   return res.json(json);

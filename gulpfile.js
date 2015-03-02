@@ -26,24 +26,14 @@ var CONFIG = {
 
 gulp.task('generate:data', function(cb) {
 
-  var comments = {
-    'comments': [],
-  };
+  var comments = [];
 
   for (var i = 0; i < 200; i++) {
-    comments.comments.push({
+    comments.push({
       username : util.format('user-%s', i),
       comment  : util.format('This is the comment #%d', i)
     });
   }
-
-  comments.meta = {
-    limit: 10,
-    next: "?limit=10&offset=10",
-    offset: 0,
-    previous: null,
-    total_count: 200
-  };
 
   fs.writeFileSync(CONFIG.sample.files.data, JSON.stringify(comments, null, 2));
 
