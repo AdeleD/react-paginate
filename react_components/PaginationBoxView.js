@@ -6,50 +6,60 @@ var PaginationListView = require("./PaginationListView");
 
 
 var PaginationBoxView = React.createClass({
+
   propTypes: {
-    pageNum: React.PropTypes.number.isRequired,
-    pageRangeDisplayed: React.PropTypes.number.isRequired,
-    marginPagesDisplayed: React.PropTypes.number.isRequired,
-    previousLabel: React.PropTypes.node,
-    nextLabel: React.PropTypes.node,
-    breakLabel: React.PropTypes.node,
-    clickCallback: React.PropTypes.func,
-    initialSelected: React.PropTypes.number
+    pageNum              : React.PropTypes.number.isRequired,
+    pageRangeDisplayed   : React.PropTypes.number.isRequired,
+    marginPagesDisplayed : React.PropTypes.number.isRequired,
+    previousLabel        : React.PropTypes.node,
+    nextLabel            : React.PropTypes.node,
+    breakLabel           : React.PropTypes.node,
+    clickCallback        : React.PropTypes.func,
+    initialSelected      : React.PropTypes.number
   },
+
   getDefaultProps: function() {
     return {
-      pageNum: 10,
-      pageRangeDisplayed: 2,
-      marginPagesDisplayed: 3,
-      previousLabel: "Previous",
-      nextLabel: "Next",
-      breakLabel: "..."
+      pageNum              : 10,
+      pageRangeDisplayed   : 2,
+      marginPagesDisplayed : 3,
+      previousLabel        : "Previous",
+      nextLabel            : "Next",
+      breakLabel           : "..."
     };
   },
+
   getInitialState: function() {
-    return {selected: this.props.initialSelected ? this.props.initialSelected :1};
+    return {
+      selected: this.props.initialSelected ? this.props.initialSelected : 1
+    };
   },
+
   handlePageSelected: function(index, event) {
     event.preventDefault();
-    if (this.state.selected !== index) {
-      this.setState({selected: index});
 
-      if (typeof(this.props.clickCallback) !== "undefined" && typeof(this.props.clickCallback) === "function")
-        this.props.clickCallback({selected: index});
+    if (this.state.selected == index) return;
+
+    this.setState({selected: index});
+
+    if (typeof(this.props.clickCallback) !== "undefined" &&
+        typeof(this.props.clickCallback) === "function") {
+      this.props.clickCallback({selected: index});
     }
   },
+
   handlePreviousPage: function(event) {
     event.preventDefault();
-    if (this.state.selected > 1) {
-      this.handlePageSelected(this.state.selected - 1, event);
-    }
+    if (this.state.selected > 1) this.handlePageSelected(this.state.selected - 1, event);
   },
+
   handleNextPage: function(event) {
     event.preventDefault();
     if (this.state.selected < this.props.pageNum) {
       this.handlePageSelected(this.state.selected + 1, event);
     }
   },
+
   render: function() {
     return (
       <ul className="pagination">
