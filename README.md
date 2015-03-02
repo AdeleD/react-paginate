@@ -21,9 +21,11 @@ Getting started:
 
 `npm install react-paginate`
 
+
 ##### To load the component:
 
 `var ReactPaginate = require("react-paginate");`
+
 
 ##### To run tests:
 
@@ -38,14 +40,18 @@ To run the example:
 
 `git clone git@github.com:AdeleD/react-paginate.git`
 
+
 #### Install:
 
 `cd react-paginate`
+
 `make install`
+
 
 #### Start the server:
 
 `make serve`
+
 
 #### See the result:
 
