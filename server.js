@@ -19,31 +19,30 @@ app.use(serveStatic(ROOT_DIR));
 app.use(serveStatic(STYLES_DIR));
 
 
-function getPaginatedItems(items, page) {
-  page = page || 1;
-  var offset = (page - 1) * PER_PAGE;
+function getPaginatedItems(items, offset) {
   return items.slice(offset, offset + PER_PAGE);
 }
 
 
 app.get('/comments', function(req, res) {
 
-  var items        = JSON.parse(fs.readFileSync(DATA));
-  var page         = req.query.page ? parseInt(req.query.page, 10) : 0;
-  var nextPage     = page + 1;
-  var previousPage = (page < 1) ? 1 : page - 1;
+  var data           = JSON.parse(fs.readFileSync(DATA));
+  var items          = data.comments;
+  var offset         = req.query.offset ? parseInt(req.query.offset, 10) : 0;
+  var nextOffset     = offset + PER_PAGE;
+  var previousOffset = (offset - PER_PAGE < 1) ? 0 : offset - PER_PAGE;
 
   var meta = {
     limit       : PER_PAGE,
-    next        : util.format('?limit=%s&page=%s', PER_PAGE, nextPage),
-    page        : req.query.page,
-    previous    : util.format('?limit=%s&page=%s', PER_PAGE, previousPage),
+    next        : util.format('?limit=%s&offset=%s', PER_PAGE, nextOffset),
+    offset      : req.query.offset,
+    previous    : util.format('?limit=%s&offset=%s', PER_PAGE, previousOffset),
     total_count : items.length
   };
 
   var json = {
     meta     : meta,
-    comments : getPaginatedItems(items, page),
+    comments : getPaginatedItems(items, offset)
   };
 
   return res.json(json);

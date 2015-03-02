@@ -50,9 +50,6 @@ var App = React.createClass({
   },
   componentDidMount: function() {
     this.loadCommentsFromServer();
-    if (this.props.pollInterval > 0) {
-      setInterval(this.loadCommentsFromServer, this.props.pollInterval);
-    }
   },
   render: function () {
     return (
