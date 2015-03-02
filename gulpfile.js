@@ -42,13 +42,22 @@ gulp.task('connect:watch', function() {
 });
 
 gulp.task('generate:data', function() {
-  var comments = [];
+  var comments = {
+    'comments': [],
+  };
   for (var i = 0; i < 200; i++) {
-    comments.push({
+    comments.comments.push({
       username : util.format('user-%s', i),
       comment  : util.format('This is the comment #%d', i)
     });
   }
+  comments.meta = {
+    limit: 10,
+    next: "?limit=10&offset=10",
+    offset: 0,
+    previous: null,
+    total_count: 200
+  };
   fs.writeFileSync(CONFIG.sample.files.data, JSON.stringify(comments, null, 2));
 });
 
@@ -77,5 +86,5 @@ gulp.task('sample', function() {
     .pipe(gulp.dest('./sample'));
 });
 
-gulp.task('serve', ['connect', 'generate:data', 'connect:watch'])
+gulp.task('serve', ['connect', 'generate:data', 'connect:watch']);
 gulp.task('default', ['app', 'sample']);
