@@ -76,5 +76,5 @@ gulp.task('server:reload', function() {
   gulp.watch('./sample/sample.jsx', ['sample']);
 });
 
-gulp.task('serve', ['generate:data', 'server:watch']);
+gulp.task('serve', ['app', 'sample', 'generate:data', 'server:watch']);
 gulp.task('default', ['app', 'sample']);
