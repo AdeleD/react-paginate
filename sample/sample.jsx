@@ -28,7 +28,8 @@ var CommentList = React.createClass({
 var App = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
-      url: 'http://localhost:3000/comments',
+      url: this.props.url,
+      data: {limit: this.props.perPage, offset: this.state.offset},
       dataType: 'json',
       type: 'GET',
       success: function(data) {
@@ -63,14 +64,17 @@ var App = React.createClass({
                        pageNum={this.state.pageNum}
                        marginPagesDisplayed={2}
                        pageRangeDisplayed={5}
-                       clickCallback={this.handlePageClick} />
+                       clickCallback={this.handlePageClick}
+                       containerClassName={"pagination"}
+                       subContainerClassName={"pages pagination"}
+                       activeClass={"active"} />
       </div>
     );
   }
 });
 
 React.renderComponent(
-  <App url={'http://localhost:3000/comments'}
+  <App url={'http://localhost:3000/comments/'}
        author={'adele'}
        perPage={10} />,
   document.getElementById('react-paginate')

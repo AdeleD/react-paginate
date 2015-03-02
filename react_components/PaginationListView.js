@@ -14,6 +14,7 @@ var PaginationListView = React.createClass({
           <PageView
             onClick={this.props.onPageSelected.bind(null, index)}
             selected={this.props.selected === index}
+            activeClass={this.props.activeClass}
             key={index}>
             {page}
           </PageView>
@@ -40,6 +41,7 @@ var PaginationListView = React.createClass({
           <PageView
             onClick={this.props.onPageSelected.bind(null, index)}
             selected={this.props.selected === index}
+            activeClass={this.props.activeClass}
             key={index}>
             {index}
             </PageView>
@@ -64,7 +66,7 @@ var PaginationListView = React.createClass({
     }
 
     return (
-      <ul className="pages">
+      <ul className={this.props.subContainerClassName}>
         {items}
       </ul>
     );

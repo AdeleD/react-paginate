@@ -62,7 +62,7 @@ var PaginationBoxView = React.createClass({
 
   render: function() {
     return (
-      <ul className="pagination">
+      <ul className={this.props.containerClassName}>
         <li onClick={this.handlePreviousPage} className="previous">
           <a href="">{this.props.previousLabel}</a>
         </li>
@@ -73,7 +73,9 @@ var PaginationBoxView = React.createClass({
           pageNum={this.props.pageNum}
           pageRangeDisplayed={this.props.pageRangeDisplayed}
           marginPagesDisplayed={this.props.marginPagesDisplayed}
-          breakLabel = {this.props.breakLabel} />
+          breakLabel={this.props.breakLabel}
+          subContainerClassName={this.props.subContainerClassName}
+          activeClass={this.props.activeClass} />
 
         <li onClick={this.handleNextPage} className="next">
           <a href="">{this.props.nextLabel}</a>
