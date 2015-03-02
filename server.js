@@ -26,8 +26,7 @@ function getPaginatedItems(items, offset) {
 
 app.get('/comments', function(req, res) {
 
-  var data           = JSON.parse(fs.readFileSync(DATA));
-  var items          = data.comments;
+  var items          = JSON.parse(fs.readFileSync(DATA));
   var offset         = req.query.offset ? parseInt(req.query.offset, 10) : 0;
   var nextOffset     = offset + PER_PAGE;
   var previousOffset = (offset - PER_PAGE < 1) ? 0 : offset - PER_PAGE;

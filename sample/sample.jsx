@@ -71,7 +71,7 @@ var App = React.createClass({
 });
 
 React.renderComponent(
-  <App url={'http://localhost:3000/comments/'}
+  <App url={'http://localhost:3000/comments'}
        author={'adele'}
        perPage={10} />,
   document.getElementById('react-paginate')
