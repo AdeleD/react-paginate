@@ -28,7 +28,7 @@ var CommentList = React.createClass({
 var App = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
-      url: 'http://localhost:8080/data.json',
+      url: 'http://localhost:3000/comments',
       dataType: 'json',
       type: 'GET',
       success: function(data) {
@@ -70,7 +70,7 @@ var App = React.createClass({
 });
 
 React.renderComponent(
-  <App url={'http://localhost:8080/data.json'}
+  <App url={'http://localhost:3000/comments'}
        author={'adele'}
        perPage={10} />,
   document.getElementById('react-paginate')
