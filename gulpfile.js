@@ -9,7 +9,7 @@ var reactify   = require('reactify');
 var source     = require('vinyl-source-stream');
 var buffer     = require('vinyl-buffer');
 var uglify     = require('gulp-uglify');
-var connect    = require('gulp-connect');
+var nodemon    = require('gulp-nodemon');
 
 var CONFIG = {
   sample: {
@@ -24,33 +24,19 @@ var CONFIG = {
   }
 };
 
-gulp.task('connect', function() {
-  connect.server({
-    root: ['sample', 'styles'],
-    livereload: true
-  });
-});
+gulp.task('generate:data', function(cb) {
 
-gulp.task('connect:reload', function() {
-  connect.reload();
-});
-
-gulp.task('connect:watch', function() {
-  gulp.watch('./react_components/*.js', ['app', 'sample', 'connect:reload']);
-  gulp.watch('./sample/sample.jsx', ['sample', 'connect:reload']);
-  gulp.watch(CONFIG.sample.files.assets, ['connect:reload']);
-});
-
-gulp.task('generate:data', function() {
   var comments = {
     'comments': [],
   };
+
   for (var i = 0; i < 200; i++) {
     comments.comments.push({
       username : util.format('user-%s', i),
       comment  : util.format('This is the comment #%d', i)
     });
   }
+
   comments.meta = {
     limit: 10,
     next: "?limit=10&offset=10",
@@ -58,7 +44,11 @@ gulp.task('generate:data', function() {
     previous: null,
     total_count: 200
   };
+
   fs.writeFileSync(CONFIG.sample.files.data, JSON.stringify(comments, null, 2));
+
+  return cb();
+
 });
 
 gulp.task('watch', function() {
@@ -86,5 +76,15 @@ gulp.task('sample', function() {
     .pipe(gulp.dest('./sample'));
 });
 
-gulp.task('serve', ['connect', 'generate:data', 'connect:watch']);
+gulp.task('server:watch', function () {
+  nodemon({script: 'server.js'})
+    .on('restart', 'server:reload');
+});
+
+gulp.task('server:reload', function() {
+  gulp.watch('./react_components/*.js', ['app', 'sample']);
+  gulp.watch('./sample/sample.jsx', ['sample']);
+});
+
+gulp.task('serve', ['generate:data', 'server:watch']);
 gulp.task('default', ['app', 'sample']);
