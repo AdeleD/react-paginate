@@ -2,3 +2,4 @@
 node_modules/
 sample/vendor
 sample/data.json
+sample/sample.js
