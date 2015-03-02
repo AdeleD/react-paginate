@@ -46,7 +46,7 @@ var App = React.createClass({
 
   handlePageClick: function(data) {
     var selected = data.selected;
-    var offset = Math.ceil((selected - 1) * this.props.perPage);
+    var offset = Math.ceil(selected * this.props.perPage);
 
     this.setState({offset: offset}, function() {
       this.loadCommentsFromServer();
@@ -69,7 +69,7 @@ var App = React.createClass({
         <CommentList data={this.state.data} />
         <ReactPaginate previousLabel={"previous"}
                        nextLabel={"next"}
-                       breakLabel={"..."}
+                       breakLabel={<li className="break"><a href="">...</a></li>}
                        pageNum={this.state.pageNum}
                        marginPagesDisplayed={2}
                        pageRangeDisplayed={5}

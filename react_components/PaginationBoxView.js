@@ -35,16 +35,16 @@ var PaginationBoxView = React.createClass({
     };
   },
 
-  handlePageSelected: function(index, event) {
+  handlePageSelected: function(selected, event) {
     event.preventDefault();
 
-    if (this.state.selected == index) return;
+    if (this.state.selected === selected) return;
 
-    this.setState({selected: index});
+    this.setState({selected: selected});
 
     if (typeof(this.props.clickCallback) !== "undefined" &&
         typeof(this.props.clickCallback) === "function") {
-      this.props.clickCallback({selected: index});
+      this.props.clickCallback({selected: selected - 1});
     }
   },
 
