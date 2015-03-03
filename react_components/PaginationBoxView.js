@@ -7,14 +7,17 @@ var PaginationListView = require("./PaginationListView");
 var PaginationBoxView = React.createClass({
 
   propTypes: {
-    pageNum              : React.PropTypes.number.isRequired,
-    pageRangeDisplayed   : React.PropTypes.number.isRequired,
-    marginPagesDisplayed : React.PropTypes.number.isRequired,
-    previousLabel        : React.PropTypes.node,
-    nextLabel            : React.PropTypes.node,
-    breakLabel           : React.PropTypes.node,
-    clickCallback        : React.PropTypes.func,
-    initialSelected      : React.PropTypes.number
+    pageNum               : React.PropTypes.number.isRequired,
+    pageRangeDisplayed    : React.PropTypes.number.isRequired,
+    marginPagesDisplayed  : React.PropTypes.number.isRequired,
+    previousLabel         : React.PropTypes.node,
+    nextLabel             : React.PropTypes.node,
+    breakLabel            : React.PropTypes.node,
+    clickCallback         : React.PropTypes.func,
+    initialSelected       : React.PropTypes.number,
+    containerClassName    : React.PropTypes.string,
+    subContainerClassName : React.PropTypes.string,
+    activeClass           : React.PropTypes.string
   },
 
   getDefaultProps: function() {
