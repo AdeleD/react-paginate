@@ -50,7 +50,9 @@ var PaginationBoxView = React.createClass({
 
   handlePreviousPage: function(event) {
     event.preventDefault();
-    if (this.state.selected > 1) this.handlePageSelected(this.state.selected - 1, event);
+    if (this.state.selected > 1) {
+      this.handlePageSelected(this.state.selected - 1, event);
+    }
   },
 
   handleNextPage: function(event) {
@@ -63,7 +65,7 @@ var PaginationBoxView = React.createClass({
   render: function() {
     return (
       <ul className={this.props.containerClassName}>
-        <li onClick={this.handlePreviousPage} className="previous">
+        <li onClick={this.handlePreviousPage} className="previous" disabled={this.state.selected === 1 ? 'disabled' : false}>
           <a href="">{this.props.previousLabel}</a>
         </li>
 
@@ -77,7 +79,7 @@ var PaginationBoxView = React.createClass({
           subContainerClassName={this.props.subContainerClassName}
           activeClass={this.props.activeClass} />
 
-        <li onClick={this.handleNextPage} className="next">
+        <li onClick={this.handleNextPage} className="next" disabled={this.state.selected === this.props.pageNum ? 'disabled' : false}>
           <a href="">{this.props.nextLabel}</a>
         </li>
       </ul>

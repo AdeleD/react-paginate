@@ -12,7 +12,7 @@ var CommentList = React.createClass({
   render: function() {
     var commentNodes = this.props.data.map(function(comment, index) {
       return (
-        <div>{comment.comment}</div>
+        <div key={index}>{comment.comment}</div>
       );
     });
     return (
@@ -82,7 +82,7 @@ var App = React.createClass({
   }
 });
 
-React.renderComponent(
+React.render(
   <App url={'http://localhost:3000/comments'}
        author={'adele'}
        perPage={10} />,
