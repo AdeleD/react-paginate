@@ -33,7 +33,7 @@ var PaginationBoxView = React.createClass({
 
   getInitialState: function() {
     return {
-      selected: this.props.initialSelected ? this.props.initialSelected : 1
+      selected: this.props.initialSelected ? this.props.initialSelected : 0
     };
   },
 
@@ -46,20 +46,20 @@ var PaginationBoxView = React.createClass({
 
     if (typeof(this.props.clickCallback) !== "undefined" &&
         typeof(this.props.clickCallback) === "function") {
-      this.props.clickCallback({selected: selected - 1});
+      this.props.clickCallback({selected: selected});
     }
   },
 
   handlePreviousPage: function(event) {
     event.preventDefault();
-    if (this.state.selected > 1) {
+    if (this.state.selected > 0) {
       this.handlePageSelected(this.state.selected - 1, event);
     }
   },
 
   handleNextPage: function(event) {
     event.preventDefault();
-    if (this.state.selected < this.props.pageNum) {
+    if (this.state.selected < this.props.pageNum - 1) {
       this.handlePageSelected(this.state.selected + 1, event);
     }
   },
@@ -69,12 +69,12 @@ var PaginationBoxView = React.createClass({
 
     var previousClasses = cx({
       'previous': true,
-      'disabled': this.state.selected === 1
+      'disabled': this.state.selected === 0
     });
 
     var nextClasses = cx({
       'next': true,
-      'disabled': this.state.selected === this.props.pageNum
+      'disabled': this.state.selected === this.props.pageNum - 1
     });
 
     return (
