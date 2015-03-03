@@ -35,7 +35,7 @@ var App = React.createClass({
       type     : 'GET',
 
       success: function(data) {
-        this.setState({data: data.comments, pageNum: (data.meta.total_count / data.meta.limit)});
+        this.setState({data: data.comments, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)});
       }.bind(this),
 
       error: function(xhr, status, err) {
