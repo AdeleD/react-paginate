@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 'use strict';
 
 var _        = require("underscore");
@@ -15,9 +14,8 @@ var PaginationListView = React.createClass({
             onClick={this.props.onPageSelected.bind(null, index)}
             selected={this.props.selected === index}
             activeClass={this.props.activeClass}
-            key={index}>
-            {page}
-          </PageView>
+            key={index}
+            page={page} />
         )
       }.bind(this));
     } else {
@@ -42,9 +40,8 @@ var PaginationListView = React.createClass({
             onClick={this.props.onPageSelected.bind(null, index)}
             selected={this.props.selected === index}
             activeClass={this.props.activeClass}
-            key={index}>
-            {index}
-            </PageView>
+            key={index}
+            page={index} />
         );
 
         if (index <= this.props.marginPagesDisplayed) {

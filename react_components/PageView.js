@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 'use strict';
 
 var React = require('react');
@@ -11,7 +10,7 @@ var PageView = React.createClass({
     }
     return (
         <li className={cssClass}>
-            <a href="" {...this.props}>{this.props.children}</a>
+            <a {...this.props} href="">{this.props.page}</a>
         </li>
     );
   }
