@@ -1,10 +1,8 @@
-react-paginate
-==============
+# react-paginate
 
-A ReactJS component to render a pagination.
+**A ReactJS component to render a pagination.**
 
-
-By installing this component and writing only a little bit of CSS you can obtain this :
+By installing this component and writing only a little bit of CSS you can obtain this:
 
 <img src="./docs/img/pagination2.png" alt="Pagination sample 2" />
 
@@ -12,55 +10,58 @@ or
 
 <img src="./docs/img/pagination1.png" alt="Pagination sample 1" />
 
+## Installation
 
+Install `react-paginate` with [npm](https://www.npmjs.com/):
 
-Getting started:
----------------------
+```
+$ npm install react-paginate
+```
 
-##### Install:
+For [CommonJS](http://wiki.commonjs.org/wiki/CommonJS) users:
 
-`npm install react-paginate`
+```javascript
+var ReactPaginate = require('react-paginate');
+```
 
+Read the code of [sample/sample.jsx][1]. You will quickly understand
+how to make `react-paginate` work with a list of objects.
 
-##### To load the component:
+## Sample project (demo)
 
-`var ReactPaginate = require("react-paginate");`
+Clone the repository and move into:
 
+```console
+$ git clone git@github.com:AdeleD/react-paginate.git
+$ cd react-paginate
+```
 
-##### To run tests:
+Install dependencies:
 
-`npm test`
+```console
+$ make install
+```
 
+Run the server:
 
+```console
+$ make serve
+```
 
-To run the example:
----------------------
+Open your browser and go to `http://localhost:3000/`.
 
-##### Get the component:
+## Contribute
 
-`git clone git@github.com:AdeleD/react-paginate.git`
+1. [Submit an issue](https://github.com/AdeleD/react-paginate/issues)
+2. Fork the repository
+3. Create a dedicated branch (never ever work in `master`)
+4. Fix bugs or implement features
+5. Always write tests
 
+Run tests:
 
-#### Install:
+```console
+$ make test
+```
 
-`cd react-paginate`
-
-`make install`
-
-
-#### Start the server:
-
-`make serve`
-
-
-#### See the result:
-
-Open your browser and go to `http://localhost:3000/`
-
-
-
-Using it into your own project:
----------------------
-
-To know how to use react-paginate into your own projet, you can read the code of the example into the folder : `sample/sample.jsx`.
-You will understand how to make react-paginate work with a list of objects.
+[1]: https://github.com/AdeleD/react-paginate/blob/master/sample/sample.jsx
