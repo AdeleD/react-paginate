@@ -1,6 +1,6 @@
 'use strict';
 
-var React              = require('react');
+var React              = require('react/addons');
 var PaginationListView = require("./PaginationListView");
 
 
@@ -65,9 +65,21 @@ var PaginationBoxView = React.createClass({
   },
 
   render: function() {
+    var cx = React.addons.classSet;
+
+    var previousClasses = cx({
+      'previous': true,
+      'disabled': this.state.selected === 1
+    });
+
+    var nextClasses = cx({
+      'next': true,
+      'disabled': this.state.selected === this.props.pageNum
+    });
+
     return (
       <ul className={this.props.containerClassName}>
-        <li onClick={this.handlePreviousPage} className="previous" disabled={this.state.selected === 1 ? 'disabled' : false}>
+        <li onClick={this.handlePreviousPage} className={previousClasses}>
           <a href="">{this.props.previousLabel}</a>
         </li>
 
@@ -81,7 +93,7 @@ var PaginationBoxView = React.createClass({
           subContainerClassName={this.props.subContainerClassName}
           activeClass={this.props.activeClass} />
 
-        <li onClick={this.handleNextPage} className="next" disabled={this.state.selected === this.props.pageNum ? 'disabled' : false}>
+        <li onClick={this.handleNextPage} className={nextClasses}>
           <a href="">{this.props.nextLabel}</a>
         </li>
       </ul>
