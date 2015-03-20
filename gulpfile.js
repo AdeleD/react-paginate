@@ -18,7 +18,7 @@ var CONFIG = {
       assets: [
         'sample/**/*.html',
         'sample/**/*.css',
-        'sample/**/*.js'
+        'sample/**/*.jsx'
       ]
     }
   }
@@ -42,7 +42,7 @@ gulp.task('generate:data', function(cb) {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('./react_components/*.js', ['app', 'sample']);
+  gulp.watch('./react_components/*.jsx', ['app', 'sample']);
   gulp.watch('./sample/sample.jsx', ['sample']);
 });
 
@@ -71,7 +71,7 @@ gulp.task('server:watch', function () {
 });
 
 gulp.task('server:reload', function() {
-  gulp.watch('./react_components/*.js', ['app', 'sample']);
+  gulp.watch('./react_components/*.jsx', ['app', 'sample']);
   gulp.watch('./sample/sample.jsx', ['sample']);
 });
 

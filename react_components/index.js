@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./PaginationBoxView');
+module.exports = require('./PaginationBoxView.jsx');
