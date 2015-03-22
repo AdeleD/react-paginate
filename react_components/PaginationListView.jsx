@@ -4,11 +4,8 @@ var _        = require("underscore");
 var React    = require('react');
 var PageView = require("./PageView.jsx");
 
-
 var PaginationListView = React.createClass({
-
   render: function() {
-
     var items = {};
 
     if (this.props.pageNum <= this.props.pageRangeDisplayed) {
