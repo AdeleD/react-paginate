@@ -2,7 +2,7 @@
 
 var _        = require("underscore");
 var React    = require('react');
-var PageView = require("./PageView");
+var PageView = require("./PageView.jsx");
 
 
 var PaginationListView = React.createClass({

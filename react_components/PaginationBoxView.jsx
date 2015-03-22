@@ -1,8 +1,7 @@
 'use strict';
 
 var React              = require('react/addons');
-var PaginationListView = require("./PaginationListView");
-
+var PaginationListView = require("./PaginationListView.jsx");
 
 var PaginationBoxView = React.createClass({
 
