@@ -1,6 +1,7 @@
 'use strict';
 
-var React              = require('react/addons');
+var React              = require('react');
+var classNames         = require('classnames');
 var PaginationListView = require("./PaginationListView.jsx");
 
 var PaginationBoxView = React.createClass({
@@ -64,14 +65,12 @@ var PaginationBoxView = React.createClass({
   },
 
   render: function() {
-    var cx = React.addons.classSet;
-
-    var previousClasses = cx({
+    var previousClasses = classNames({
       'previous': true,
       'disabled': this.state.selected === 0
     });
 
-    var nextClasses = cx({
+    var nextClasses = classNames({
       'next': true,
       'disabled': this.state.selected === this.props.pageNum - 1
     });
