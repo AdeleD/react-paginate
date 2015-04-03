@@ -9,3 +9,7 @@ test:
 .PHONY: serve
 serve:
 	@gulp serve
+
+.PHONY: sample
+sample:
+	@bower i

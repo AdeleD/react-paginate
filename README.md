@@ -42,6 +42,12 @@ Install dependencies:
 $ make install
 ```
 
+Prepare the demo:
+
+```console
+$ make sample
+```
+
 Run the server:
 
 ```console

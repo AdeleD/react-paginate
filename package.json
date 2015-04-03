@@ -47,7 +47,6 @@
     ]
   },
   "scripts": {
-    "preinstall": "bower i",
     "test": "jest"
   },
   "jest": {
