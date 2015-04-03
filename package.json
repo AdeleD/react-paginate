@@ -21,11 +21,11 @@
     "url": "https://github.com/AdeleD/react-paginate/issues"
   },
   "dependencies": {
-    "underscore": "^1.7.0"
+    "underscore": "^1.7.0",
+    "classnames": "^1.2.0"
   },
   "devDependencies": {
     "browserify": "~6.0.3",
-    "classnames": "^1.2.0",
     "express": "^4.12.1",
     "gulp": "~3.8.8",
     "gulp-nodemon": "^1.0.5",
