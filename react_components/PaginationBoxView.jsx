@@ -100,7 +100,7 @@ var PaginationBoxView = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    if (typeof nextProps.forceSelected !== this.state.selected) {
+    if (typeof nextProps.forceSelected !== 'undefined' && typeof nextProps.forceSelected !== this.state.selected) {
       this.setState({ selected: nextProps.forceSelected });
     }
   }
