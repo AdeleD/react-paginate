@@ -15,6 +15,7 @@ var PaginationBoxView = React.createClass({
     breakLabel            : React.PropTypes.node,
     clickCallback         : React.PropTypes.func,
     initialSelected       : React.PropTypes.number,
+    forceSelected         : React.PropTypes.number,
     containerClassName    : React.PropTypes.string,
     subContainerClassName : React.PropTypes.string,
     activeClass           : React.PropTypes.string
@@ -96,6 +97,12 @@ var PaginationBoxView = React.createClass({
         </li>
       </ul>
     );
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (typeof nextProps.forceSelected !== 'undefined' && nextProps.forceSelected !== this.state.selected) {
+      this.setState({ selected: nextProps.forceSelected });
+    }
   }
 });
 
