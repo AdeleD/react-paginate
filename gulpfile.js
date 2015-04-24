@@ -48,16 +48,6 @@ gulp.task('watch', function() {
   gulp.watch('./sample/sample.jsx', ['sample']);
 });
 
-gulp.task('app', function() {
-  return browserify('./react_components/index.js')
-    .transform(reactify)
-    .bundle()
-    .pipe(source('react-paginate.js'))
-    .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest('./build'));
-});
-
 gulp.task('sample', function() {
   return browserify('./sample/sample.jsx')
     .transform(reactify)
