@@ -5,12 +5,11 @@ var path       = require('path');
 var util       = require('util');
 var gulp       = require('gulp');
 var browserify = require('browserify');
-var reactify   = require('reactify');
+var babelify   = require('babelify');
 var source     = require('vinyl-source-stream');
 var buffer     = require('vinyl-buffer');
 var uglify     = require('gulp-uglify');
 var nodemon    = require('gulp-nodemon');
-var concat     = require('gulp-concat');
 var babel      = require('gulp-babel');
 
 var CONFIG = {
@@ -50,7 +49,7 @@ gulp.task('watch', function() {
 
 gulp.task('sample', function() {
   return browserify('./sample/sample.jsx')
-    .transform(reactify)
+    .transform(babelify)
     .bundle()
     .pipe(source('sample.js'))
     .pipe(buffer())
