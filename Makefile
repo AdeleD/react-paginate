@@ -13,3 +13,7 @@ serve:
 .PHONY: sample
 sample:
 	@bower i
+
+.PHONY: dist
+dist:
+	@gulp dist

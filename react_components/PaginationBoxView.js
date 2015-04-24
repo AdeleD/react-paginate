@@ -2,7 +2,7 @@
 
 var React              = require('react');
 var classNames         = require('classnames');
-var PaginationListView = require("./PaginationListView.jsx");
+var PaginationListView = require('./PaginationListView');
 
 var PaginationBoxView = React.createClass({
 

@@ -10,6 +10,8 @@ var source     = require('vinyl-source-stream');
 var buffer     = require('vinyl-buffer');
 var uglify     = require('gulp-uglify');
 var nodemon    = require('gulp-nodemon');
+var concat     = require('gulp-concat');
+var babel      = require('gulp-babel');
 
 var CONFIG = {
   sample: {
@@ -42,7 +44,7 @@ gulp.task('generate:data', function(cb) {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('./react_components/*.jsx', ['app', 'sample']);
+  gulp.watch('./react_components/*.js', ['dist', 'sample']);
   gulp.watch('./sample/sample.jsx', ['sample']);
 });
 
@@ -65,15 +67,21 @@ gulp.task('sample', function() {
     .pipe(gulp.dest('./sample'));
 });
 
+gulp.task('dist', function() {
+  return gulp.src('./react_components/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('./dist/'));
+});
+
 gulp.task('server:watch', function () {
   nodemon({script: 'server.js'})
     .on('restart', 'server:reload');
 });
 
 gulp.task('server:reload', function() {
-  gulp.watch('./react_components/*.jsx', ['app', 'sample']);
+  gulp.watch('./react_components/*.js', ['dist', 'sample']);
   gulp.watch('./sample/sample.jsx', ['sample']);
 });
 
-gulp.task('serve', ['app', 'sample', 'generate:data', 'server:watch']);
-gulp.task('default', ['app', 'sample']);
+gulp.task('serve', ['dist', 'sample', 'generate:data', 'server:watch']);
+gulp.task('default', ['dist', 'sample']);

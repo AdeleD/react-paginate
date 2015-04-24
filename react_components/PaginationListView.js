@@ -1,8 +1,8 @@
 'use strict';
 
-var _        = require("underscore");
+var _        = require('underscore');
 var React    = require('react/addons');
-var PageView = require("./PageView.jsx");
+var PageView = require('./PageView');
 
 var PaginationListView = React.createClass({
   render: function() {
