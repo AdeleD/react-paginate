@@ -45,4 +45,13 @@ describe('PaginationBoxView', function() {
 
     expect(pagination.getDOMNode().querySelector(".selected a").textContent).toBe("3");
   });
+
+  it('test rendering only active page item', function() {
+    var smallPagination = TestUtils.renderIntoDocument(
+      <PaginationBoxView pageRangeDisplayed={0} marginPagesDisplayed={0} initialSelected={1} />
+    );
+    var pageItems = smallPagination.getDOMNode().querySelectorAll("li");
+    // Prev, current, next
+    expect(pageItems.length).toBe(3);
+  });
 });
