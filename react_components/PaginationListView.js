@@ -63,7 +63,7 @@ var PaginationListView = React.createClass({
           continue;
         }
 
-        if ((page >= this.props.selected - leftSide) && (index <= this.props.selected + rightSide)) {
+        if ((index >= this.props.selected - leftSide) && (index <= this.props.selected + rightSide)) {
           items[String(index)] = pageView;
           continue;
         }
