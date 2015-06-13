@@ -39,7 +39,7 @@ var PaginationBoxView = React.createClass({
     };
   },
 
-  callClickCallback: function callClickCallback() {
+  clickCallback: function clickCallback() {
     if (typeof this.props.clickCallback !== 'undefined' && typeof this.props.clickCallback === 'function') {
       this.props.clickCallback({ selected: this.state.selected });
     }
@@ -52,9 +52,7 @@ var PaginationBoxView = React.createClass({
 
     var needToUpdate = this.state.selected !== selected;
     if (needToUpdate) {
-      this.setState({ selected: selected }, this.callClickCallback);
-    } else {
-      this.callClickCallback();
+      this.setState({ selected: selected }, this.clickCallback);
     }
   },
 
