@@ -39,41 +39,55 @@ var PaginationBoxView = React.createClass({
     };
   },
 
-  handlePageSelected: function handlePageSelected(selected, event) {
-    event.preventDefault();
-
-    if (this.state.selected === selected) {
-      return;
-    }this.setState({ selected: selected });
-
+  clickCallback: function clickCallback() {
     if (typeof this.props.clickCallback !== 'undefined' && typeof this.props.clickCallback === 'function') {
-      this.props.clickCallback({ selected: selected });
+      this.props.clickCallback({ selected: this.state.selected });
     }
+  },
+
+  handlePageSelected: function handlePageSelected(selected, event) {
+    if (typeof event !== 'undefined') {
+      event.preventDefault();
+    }
+
+    if (this.state.selected === selected) return;
+
+    this.setState({ selected: selected }, this.clickCallback);
   },
 
   handlePreviousPage: function handlePreviousPage(event) {
     event.preventDefault();
+
     if (this.state.selected > 0) {
-      this.handlePageSelected(this.state.selected - 1, event);
+      this.setState(function (previousState, currentProps) {
+        return { selected: previousState.selected - 1 };
+      }, (function () {
+        this.handlePageSelected(this.state.selected);
+      }).bind(this));
     }
   },
 
   handleNextPage: function handleNextPage(event) {
     event.preventDefault();
+
     if (this.state.selected < this.props.pageNum - 1) {
-      this.handlePageSelected(this.state.selected + 1, event);
+      this.setState(function (previousState, currentProps) {
+        return { selected: previousState.selected + 1 };
+      }, (function () {
+        this.handlePageSelected(this.state.selected);
+      }).bind(this));
     }
   },
 
   render: function render() {
     var previousClasses = classNames({
-      previous: true,
-      disabled: this.state.selected === 0
+      'previous': true,
+      'disabled': this.state.selected === 0
     });
 
     var nextClasses = classNames({
-      next: true,
-      disabled: this.state.selected === this.props.pageNum - 1
+      'next': true,
+      'disabled': this.state.selected === this.props.pageNum - 1
     });
 
     return React.createElement(
