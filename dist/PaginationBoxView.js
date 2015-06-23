@@ -50,10 +50,9 @@ var PaginationBoxView = React.createClass({
       event.preventDefault();
     }
 
-    var pageChanged = this.state.selected !== selected;
-    if (pageChanged) {
-      this.setState({ selected: selected }, this.clickCallback);
-    }
+    if (this.state.selected === selected) return;
+
+    this.setState({ selected: selected }, this.clickCallback);
   },
 
   handlePreviousPage: function handlePreviousPage(event) {
