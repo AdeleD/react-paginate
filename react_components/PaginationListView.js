@@ -21,7 +21,7 @@ var PaginationListView = React.createClass({
       }.bind(this));
 
       pageViews.forEach(function(pageView, index) {
-        items[String(index)] = pageView;
+        items['key' + index] = pageView;
       });
 
     } else {
@@ -54,17 +54,17 @@ var PaginationListView = React.createClass({
         );
 
         if (page <= this.props.marginPagesDisplayed) {
-          items[String(index)] = pageView;
+          items['key' + index] = pageView;
           continue;
         }
 
         if (page > this.props.pageNum - this.props.marginPagesDisplayed) {
-          items[String(index)] = pageView;
+          items['key' + index] = pageView;
           continue;
         }
 
         if ((index >= this.props.selected - leftSide) && (index <= this.props.selected + rightSide)) {
-          items[String(index)] = pageView;
+          items['key' + index] = pageView;
           continue;
         }
 
@@ -73,7 +73,7 @@ var PaginationListView = React.createClass({
         var breakLabelValue = items[breakLabelKey];
 
         if (breakLabelValue !== this.props.breakLabel) {
-          items[String(index)] = this.props.breakLabel;
+          items['key' + index] = this.props.breakLabel;
         }
       }
     }
