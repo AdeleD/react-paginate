@@ -39,43 +39,29 @@ var PaginationBoxView = React.createClass({
     };
   },
 
-  clickCallback: function clickCallback() {
-    if (typeof this.props.clickCallback !== 'undefined' && typeof this.props.clickCallback === 'function') {
-      this.props.clickCallback({ selected: this.state.selected });
-    }
-  },
-
   handlePageSelected: function handlePageSelected(selected, event) {
-    if (typeof event !== 'undefined') {
-      event.preventDefault();
-    }
+    event.preventDefault();
 
     if (this.state.selected === selected) return;
 
-    this.setState({ selected: selected }, this.clickCallback);
+    this.setState({ selected: selected });
+
+    if (typeof this.props.clickCallback !== 'undefined' && typeof this.props.clickCallback === 'function') {
+      this.props.clickCallback({ selected: selected });
+    }
   },
 
   handlePreviousPage: function handlePreviousPage(event) {
     event.preventDefault();
-
     if (this.state.selected > 0) {
-      this.setState(function (previousState, currentProps) {
-        return { selected: previousState.selected - 1 };
-      }, (function () {
-        this.handlePageSelected(this.state.selected);
-      }).bind(this));
+      this.handlePageSelected(this.state.selected - 1, event);
     }
   },
 
   handleNextPage: function handleNextPage(event) {
     event.preventDefault();
-
     if (this.state.selected < this.props.pageNum - 1) {
-      this.setState(function (previousState, currentProps) {
-        return { selected: previousState.selected + 1 };
-      }, (function () {
-        this.handlePageSelected(this.state.selected);
-      }).bind(this));
+      this.handlePageSelected(this.state.selected + 1, event);
     }
   },
 
