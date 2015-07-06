@@ -9,12 +9,19 @@ var PageView = React.createClass({
 
   propTypes: {
     selected: React.PropTypes.bool,
-    cssClass: React.PropTypes.string
+    cssClass: React.PropTypes.string,
+    activeClass: React.PropTypes.string,
+    page: React.PropTypes.number.isRequired
+  },
+  getDefaultProps: function getDefaultProps() {
+    return {
+      activeClass: 'selected'
+    };
   },
   render: function render() {
     var cssClass = this.props.cssClass;
     if (this.props.selected) {
-      cssClass += ' ' + this.props.activeClass || 'selected';
+      cssClass += ' ' + this.props.activeClass;
     }
     return React.createElement(
       'li',
