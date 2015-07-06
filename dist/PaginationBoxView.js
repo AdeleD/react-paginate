@@ -19,7 +19,10 @@ var PaginationBoxView = React.createClass({
     forceSelected: React.PropTypes.number,
     containerClassName: React.PropTypes.string,
     subContainerClassName: React.PropTypes.string,
-    activeClass: React.PropTypes.string
+    activeClass: React.PropTypes.string,
+    pageClass: React.PropTypes.string,
+    firstPageClass: React.PropTypes.string,
+    lastPageClass: React.PropTypes.string
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -29,7 +32,10 @@ var PaginationBoxView = React.createClass({
       marginPagesDisplayed: 3,
       previousLabel: 'Previous',
       nextLabel: 'Next',
-      breakLabel: '...'
+      breakLabel: '...',
+      pageClass: 'page',
+      firstPageClass: 'first',
+      lastPageClass: 'last'
     };
   },
 
@@ -96,7 +102,10 @@ var PaginationBoxView = React.createClass({
         marginPagesDisplayed: this.props.marginPagesDisplayed,
         breakLabel: this.props.breakLabel,
         subContainerClassName: this.props.subContainerClassName,
-        activeClass: this.props.activeClass }),
+        activeClass: this.props.activeClass,
+        pageClass: this.props.pageClass,
+        firstPageClass: this.props.firstPageClass,
+        lastPageClass: this.props.lastPageClass }),
       React.createElement(
         'li',
         { onClick: this.handleNextPage, className: nextClasses },

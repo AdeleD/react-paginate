@@ -7,9 +7,14 @@ var React = require('react');
 var PageView = React.createClass({
   displayName: 'PageView',
 
+  propTypes: {
+    selected: React.PropTypes.bool,
+    cssClass: React.PropTypes.string
+  },
   render: function render() {
+    var cssClass = this.props.cssClass;
     if (this.props.selected) {
-      var cssClass = this.props.activeClass || 'selected';
+      cssClass += ' ' + this.props.activeClass || 'selected';
     }
     return React.createElement(
       'li',
