@@ -1,6 +1,5 @@
 'use strict';
 
-var _        = require('underscore');
 var React    = require('react/addons');
 var PageView = require('./PageView');
 
@@ -10,19 +9,13 @@ var PaginationListView = React.createClass({
 
     if (this.props.pageNum <= this.props.pageRangeDisplayed) {
 
-      var pageViews = _.range(0, this.props.pageNum).map(function(page) {
-        return (
-          <PageView
-            onClick={this.props.onPageSelected.bind(null, page)}
-            selected={this.props.selected === page}
-            activeClass={this.props.activeClass}
-            page={page + 1} />
-        )
-      }.bind(this));
-
-      pageViews.forEach(function(pageView, index) {
-        items['key' + index] = pageView;
-      });
+      for (var index = 0; index < this.props.pageNum; index++) {
+        items['key' + index] = <PageView
+          onClick={this.props.onPageSelected.bind(null, index)}
+          selected={this.props.selected === index}
+          activeClass={this.props.activeClass}
+          page={index + 1} />
+      }
 
     } else {
 
