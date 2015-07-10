@@ -21,7 +21,6 @@
     "url": "https://github.com/AdeleD/react-paginate/issues"
   },
   "dependencies": {
-    "underscore": "^1.7.0",
     "classnames": "^1.2.0"
   },
   "devDependencies": {
