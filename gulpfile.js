@@ -52,7 +52,6 @@ gulp.task('sample', function() {
     .transform(babelify)
     .bundle()
     .pipe(source('sample.js'))
-    .pipe(buffer())
     .pipe(gulp.dest('./sample'));
 });
 
