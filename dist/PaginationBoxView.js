@@ -19,6 +19,8 @@ var PaginationBoxView = React.createClass({
     forceSelected: React.PropTypes.number,
     containerClassName: React.PropTypes.string,
     subContainerClassName: React.PropTypes.string,
+    pageClass: React.PropTypes.string,
+    pageLinkClass: React.PropTypes.string,
     activeClass: React.PropTypes.string,
     previousLinkClass: React.PropTypes.string,
     nextLinkClass: React.PropTypes.string
@@ -86,7 +88,7 @@ var PaginationBoxView = React.createClass({
         { onClick: this.handlePreviousPage, className: previousClasses },
         React.createElement(
           'a',
-          { className: this.props.previousLinkClass, href: '' },
+          { href: '', className: this.props.previousLinkClass },
           this.props.previousLabel
         )
       ),
@@ -98,13 +100,15 @@ var PaginationBoxView = React.createClass({
         marginPagesDisplayed: this.props.marginPagesDisplayed,
         breakLabel: this.props.breakLabel,
         subContainerClassName: this.props.subContainerClassName,
+        pageClass: this.props.pageClass,
+        pageLinkClass: this.props.pageLinkClass,
         activeClass: this.props.activeClass }),
       React.createElement(
         'li',
         { onClick: this.handleNextPage, className: nextClasses },
         React.createElement(
           'a',
-          { className: this.props.nextLinkClass, href: '' },
+          { href: '', className: this.props.nextLinkClass },
           this.props.nextLabel
         )
       )

@@ -13,6 +13,8 @@ var PaginationListView = React.createClass({
         items['key' + index] = <PageView
           onClick={this.props.onPageSelected.bind(null, index)}
           selected={this.props.selected === index}
+          pageClass={this.props.pageClass}
+          pageLinkClass={this.props.pageLinkClass}
           activeClass={this.props.activeClass}
           page={index + 1} />
       }
@@ -42,6 +44,8 @@ var PaginationListView = React.createClass({
           <PageView
             onClick={this.props.onPageSelected.bind(null, index)}
             selected={this.props.selected === index}
+            pageClass={this.props.pageClass}
+            pageLinkClass={this.props.pageLinkClass}
             activeClass={this.props.activeClass}
             page={index + 1} />
         );

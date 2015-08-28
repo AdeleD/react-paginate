@@ -18,6 +18,8 @@ var PaginationBoxView = React.createClass({
     forceSelected         : React.PropTypes.number,
     containerClassName    : React.PropTypes.string,
     subContainerClassName : React.PropTypes.string,
+    pageClass             : React.PropTypes.string,
+    pageLinkClass         : React.PropTypes.string,
     activeClass           : React.PropTypes.string,
     previousLinkClass     : React.PropTypes.string,
     nextLinkClass         : React.PropTypes.string
@@ -81,7 +83,7 @@ var PaginationBoxView = React.createClass({
     return (
       <ul className={this.props.containerClassName}>
         <li onClick={this.handlePreviousPage} className={previousClasses}>
-          <a className={this.props.previousLinkClass} href="">{this.props.previousLabel}</a>
+          <a href="" className={this.props.previousLinkClass}>{this.props.previousLabel}</a>
         </li>
 
         <PaginationListView
@@ -92,10 +94,12 @@ var PaginationBoxView = React.createClass({
           marginPagesDisplayed={this.props.marginPagesDisplayed}
           breakLabel={this.props.breakLabel}
           subContainerClassName={this.props.subContainerClassName}
+          pageClass={this.props.pageClass}
+          pageLinkClass={this.props.pageLinkClass}
           activeClass={this.props.activeClass} />
 
         <li onClick={this.handleNextPage} className={nextClasses}>
-          <a className={this.props.nextLinkClass} href="">{this.props.nextLabel}</a>
+          <a href="" className={this.props.nextLinkClass}>{this.props.nextLabel}</a>
         </li>
       </ul>
     );
