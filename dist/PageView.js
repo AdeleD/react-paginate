@@ -12,10 +12,10 @@ var PageView = React.createClass({
     var cssClass = this.props.pageClass;
 
     if (this.props.selected) {
-      var activeClass = this.props.activeClass || 'selected';
-
       if (typeof cssClass !== 'undefined') {
-        cssClass = cssClass + ' ' + activeClass;
+        cssClass = cssClass + ' ' + this.props.activeClass;
+      } else {
+        cssClass = this.props.activeClass;
       }
     }
 

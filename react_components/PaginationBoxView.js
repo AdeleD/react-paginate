@@ -21,8 +21,11 @@ var PaginationBoxView = React.createClass({
     pageClass             : React.PropTypes.string,
     pageLinkClass         : React.PropTypes.string,
     activeClass           : React.PropTypes.string,
+    previousClass         : React.PropTypes.string,
+    nextClass             : React.PropTypes.string,
     previousLinkClass     : React.PropTypes.string,
-    nextLinkClass         : React.PropTypes.string
+    nextLinkClass         : React.PropTypes.string,
+    disabledClass         : React.PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -30,9 +33,13 @@ var PaginationBoxView = React.createClass({
       pageNum              : 10,
       pageRangeDisplayed   : 2,
       marginPagesDisplayed : 3,
+      activeClass          : "selected",
+      previousClass        : "previous",
+      nextClass            : "next",
       previousLabel        : "Previous",
       nextLabel            : "Next",
-      breakLabel           : "..."
+      breakLabel           : "...",
+      disabledClass        : "disabled"
     };
   },
 
@@ -70,15 +77,13 @@ var PaginationBoxView = React.createClass({
   },
 
   render: function() {
-    var previousClasses = classNames({
-      'previous': true,
-      'disabled': this.state.selected === 0
-    });
+    var disabled = this.props.disabledClass;
 
-    var nextClasses = classNames({
-      'next': true,
-      'disabled': this.state.selected === this.props.pageNum - 1
-    });
+    var previousClasses = classNames(this.props.previousClass,
+                                     {disabled: this.state.selected === 0});
+
+    var nextClasses = classNames(this.props.nextClass,
+                                 {disabled: this.state.selected === this.props.pageNum - 1});
 
     return (
       <ul className={this.props.containerClassName}>
@@ -96,7 +101,8 @@ var PaginationBoxView = React.createClass({
           subContainerClassName={this.props.subContainerClassName}
           pageClass={this.props.pageClass}
           pageLinkClass={this.props.pageLinkClass}
-          activeClass={this.props.activeClass} />
+          activeClass={this.props.activeClass}
+          disabledClass={this.props.disabledClass} />
 
         <li onClick={this.handleNextPage} className={nextClasses}>
           <a href="" className={this.props.nextLinkClass}>{this.props.nextLabel}</a>
