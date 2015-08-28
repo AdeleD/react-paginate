@@ -4,20 +4,20 @@ var React = require('react');
 
 var PageView = React.createClass({
   render: function() {
-    var linkClass = this.props.pageLinkClass;
-    var cssClass = this.props.pageClass;
+    var linkClassName = this.props.pageLinkClassName;
+    var cssClassName = this.props.pageClassName;
 
     if (this.props.selected) {
-      if (typeof(cssClass) !== 'undefined') {
-        cssClass = cssClass + ' ' + this.props.activeClass;
+      if (typeof(cssClassName) !== 'undefined') {
+        cssClassName = cssClassName + ' ' + this.props.activeClassName;
       } else {
-        cssClass = this.props.activeClass;
+        cssClassName = this.props.activeClassName;
       }
     }
 
     return (
-        <li className={cssClass}>
-            <a {...this.props} href="" className={linkClass}>
+        <li className={cssClassName}>
+            <a {...this.props} href="" className={linkClassName}>
               {this.props.page}
             </a>
         </li>

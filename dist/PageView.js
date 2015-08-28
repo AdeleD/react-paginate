@@ -8,23 +8,23 @@ var PageView = React.createClass({
   displayName: 'PageView',
 
   render: function render() {
-    var linkClass = this.props.pageLinkClass;
-    var cssClass = this.props.pageClass;
+    var linkClassName = this.props.pageLinkClassName;
+    var cssClassName = this.props.pageClassName;
 
     if (this.props.selected) {
-      if (typeof cssClass !== 'undefined') {
-        cssClass = cssClass + ' ' + this.props.activeClass;
+      if (typeof cssClassName !== 'undefined') {
+        cssClassName = cssClassName + ' ' + this.props.activeClassName;
       } else {
-        cssClass = this.props.activeClass;
+        cssClassName = this.props.activeClassName;
       }
     }
 
     return React.createElement(
       'li',
-      { className: cssClass },
+      { className: cssClassName },
       React.createElement(
         'a',
-        _extends({}, this.props, { href: '', className: linkClass }),
+        _extends({}, this.props, { href: '', className: linkClassName }),
         this.props.page
       )
     );

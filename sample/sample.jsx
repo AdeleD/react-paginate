@@ -75,7 +75,7 @@ var App = React.createClass({
                        clickCallback={this.handlePageClick}
                        containerClassName={"pagination"}
                        subContainerClassName={"pages pagination"}
-                       activeClass={"active"} />
+                       activeClassName={"active"} />
       </div>
     );
   }

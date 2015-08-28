@@ -19,14 +19,14 @@ var PaginationBoxView = React.createClass({
     forceSelected: React.PropTypes.number,
     containerClassName: React.PropTypes.string,
     subContainerClassName: React.PropTypes.string,
-    pageClass: React.PropTypes.string,
-    pageLinkClass: React.PropTypes.string,
-    activeClass: React.PropTypes.string,
-    previousClass: React.PropTypes.string,
-    nextClass: React.PropTypes.string,
-    previousLinkClass: React.PropTypes.string,
-    nextLinkClass: React.PropTypes.string,
-    disabledClass: React.PropTypes.string
+    pageClassName: React.PropTypes.string,
+    pageLinkClassName: React.PropTypes.string,
+    activeClassName: React.PropTypes.string,
+    previousClassName: React.PropTypes.string,
+    nextClassName: React.PropTypes.string,
+    previousLinkClassName: React.PropTypes.string,
+    nextLinkClassName: React.PropTypes.string,
+    disabledClassName: React.PropTypes.string
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -34,13 +34,13 @@ var PaginationBoxView = React.createClass({
       pageNum: 10,
       pageRangeDisplayed: 2,
       marginPagesDisplayed: 3,
-      activeClass: "selected",
-      previousClass: "previous",
-      nextClass: "next",
+      activeClassName: "selected",
+      previousClassName: "previous",
+      nextClassName: "next",
       previousLabel: "Previous",
       nextLabel: "Next",
       breakLabel: "...",
-      disabledClass: "disabled"
+      disabledClassName: "disabled"
     };
   },
 
@@ -77,11 +77,11 @@ var PaginationBoxView = React.createClass({
   },
 
   render: function render() {
-    var disabled = this.props.disabledClass;
+    var disabled = this.props.disabledClassName;
 
-    var previousClasses = classNames(this.props.previousClass, { disabled: this.state.selected === 0 });
+    var previousClasses = classNames(this.props.previousClassName, { disabled: this.state.selected === 0 });
 
-    var nextClasses = classNames(this.props.nextClass, { disabled: this.state.selected === this.props.pageNum - 1 });
+    var nextClasses = classNames(this.props.nextClassName, { disabled: this.state.selected === this.props.pageNum - 1 });
 
     return React.createElement(
       'ul',
@@ -91,7 +91,7 @@ var PaginationBoxView = React.createClass({
         { onClick: this.handlePreviousPage, className: previousClasses },
         React.createElement(
           'a',
-          { href: '', className: this.props.previousLinkClass },
+          { href: '', className: this.props.previousLinkClassName },
           this.props.previousLabel
         )
       ),
@@ -103,16 +103,16 @@ var PaginationBoxView = React.createClass({
         marginPagesDisplayed: this.props.marginPagesDisplayed,
         breakLabel: this.props.breakLabel,
         subContainerClassName: this.props.subContainerClassName,
-        pageClass: this.props.pageClass,
-        pageLinkClass: this.props.pageLinkClass,
-        activeClass: this.props.activeClass,
-        disabledClass: this.props.disabledClass }),
+        pageClassName: this.props.pageClassName,
+        pageLinkClassName: this.props.pageLinkClassName,
+        activeClassName: this.props.activeClassName,
+        disabledClassName: this.props.disabledClassName }),
       React.createElement(
         'li',
         { onClick: this.handleNextPage, className: nextClasses },
         React.createElement(
           'a',
-          { href: '', className: this.props.nextLinkClass },
+          { href: '', className: this.props.nextLinkClassName },
           this.props.nextLabel
         )
       )
