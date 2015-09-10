@@ -1,6 +1,7 @@
 'use strict';
 
 var React         = require('react');
+var ReactDom    = require('react/lib/ReactDOM');
 var ReactPaginate = require('./../react_components/react-paginate');
 var $             = require('jquery');
 
@@ -81,7 +82,7 @@ var App = React.createClass({
   }
 });
 
-React.render(
+ReactDom.render(
   <App url={'http://localhost:3000/comments'}
        author={'adele'}
        perPage={10} />,
