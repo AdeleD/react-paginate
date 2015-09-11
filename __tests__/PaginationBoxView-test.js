@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 jest.dontMock('./../react_components/react-paginate');
 jest.dontMock('./../react_components/PaginationBoxView');
 jest.dontMock('./../react_components/PaginationListView');
