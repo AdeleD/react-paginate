@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = require('./PaginationBoxView');
+import PaginationBoxView from './PaginationBoxView';
+
+module.exports = PaginationBoxView;

@@ -1,12 +1,12 @@
 'use strict';
 
-var React              = require('react');
-var classNames         = require('classnames');
-var PaginationListView = require('./PaginationListView');
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import PaginationListView from './PaginationListView';
 
-var PaginationBoxView = React.createClass({
 
-  propTypes: {
+export default class PaginationBoxView extends Component {
+  static propTypes = {
     pageNum               : React.PropTypes.number.isRequired,
     pageRangeDisplayed    : React.PropTypes.number.isRequired,
     marginPagesDisplayed  : React.PropTypes.number.isRequired,
@@ -26,30 +26,32 @@ var PaginationBoxView = React.createClass({
     previousLinkClassName : React.PropTypes.string,
     nextLinkClassName     : React.PropTypes.string,
     disabledClassName     : React.PropTypes.string
-  },
+  }
 
-  getDefaultProps: function() {
-    return {
-      pageNum              : 10,
-      pageRangeDisplayed   : 2,
-      marginPagesDisplayed : 3,
-      activeClassName      : "selected",
-      previousClassName    : "previous",
-      nextClassName        : "next",
-      previousLabel        : "Previous",
-      nextLabel            : "Next",
-      breakLabel           : "...",
-      disabledClassName    : "disabled"
+  static defaultProps = {
+    pageNum              : 10,
+    pageRangeDisplayed   : 2,
+    marginPagesDisplayed : 3,
+    activeClassName      : "selected",
+    previousClassName    : "previous",
+    nextClassName        : "next",
+    previousLabel        : "Previous",
+    nextLabel            : "Next",
+    breakLabel           : "...",
+    disabledClassName    : "disabled"
+  }
+
+  constructor(props) {
+    super(props);
+
+    console.log('here2');
+
+    this.state = {
+      selected: props.initialSelected ? props.initialSelected : 0
     };
-  },
+  }
 
-  getInitialState: function() {
-    return {
-      selected: this.props.initialSelected ? this.props.initialSelected : 0
-    };
-  },
-
-  handlePageSelected: function(selected, event) {
+  handlePageSelected(selected, event) {
     event.preventDefault();
 
     if (this.state.selected === selected) return;
@@ -60,29 +62,29 @@ var PaginationBoxView = React.createClass({
         typeof(this.props.clickCallback) === "function") {
       this.props.clickCallback({selected: selected});
     }
-  },
+  }
 
-  handlePreviousPage: function(event) {
+  handlePreviousPage(event) {
     event.preventDefault();
     if (this.state.selected > 0) {
       this.handlePageSelected(this.state.selected - 1, event);
     }
-  },
+  }
 
-  handleNextPage: function(event) {
+  handleNextPage(event) {
     event.preventDefault();
     if (this.state.selected < this.props.pageNum - 1) {
       this.handlePageSelected(this.state.selected + 1, event);
     }
-  },
+  }
 
-  render: function() {
-    var disabled = this.props.disabledClassName;
+  render() {
+    let disabled = this.props.disabledClassName;
 
-    var previousClasses = classNames(this.props.previousClassName,
+    let previousClasses = classNames(this.props.previousClassName,
                                      {disabled: this.state.selected === 0});
 
-    var nextClasses = classNames(this.props.nextClassName,
+    let nextClasses = classNames(this.props.nextClassName,
                                  {disabled: this.state.selected === this.props.pageNum - 1});
 
     return (
@@ -109,13 +111,11 @@ var PaginationBoxView = React.createClass({
         </li>
       </ul>
     );
-  },
+  }
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (typeof nextProps.forceSelected !== 'undefined' && nextProps.forceSelected !== this.state.selected) {
       this.setState({ selected: nextProps.forceSelected });
     }
   }
-});
-
-module.exports = PaginationBoxView;
+};

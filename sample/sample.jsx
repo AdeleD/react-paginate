@@ -1,19 +1,20 @@
 'use strict';
 
-var React         = require('react');
-var ReactPaginate = require('./../react_components/react-paginate');
-var $             = require('jquery');
+import React, { Component } from 'react';
+import ReactPaginate from './../react_components/react-paginate';
+import $ from 'jquery';
 
 window.React = React;
 
 
-var CommentList = React.createClass({
-  render: function() {
-    var commentNodes = this.props.data.map(function(comment, index) {
+export class CommentList extends Component {
+  render() {
+    let commentNodes = this.props.data.map(function(comment, index) {
       return (
         <div key={index}>{comment.comment}</div>
       );
     });
+
     return (
       <div id="project-comments" className="commentList">
         <ul>
@@ -22,11 +23,19 @@ var CommentList = React.createClass({
       </div>
     );
   }
-});
+};
 
-var App = React.createClass({
+export class App extends Component {
+  constructor(props) {
+    super(props);
 
-  loadCommentsFromServer: function() {
+    this.state = {
+      data: [],
+      offset: 0
+    }
+  }
+
+  loadCommentsFromServer() {
     $.ajax({
       url      : this.props.url,
       data     : {limit: this.props.perPage, offset: this.state.offset},
@@ -41,28 +50,24 @@ var App = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  },
+  }
 
-  handlePageClick: function(data) {
-    var selected = data.selected;
-    var offset = Math.ceil(selected * this.props.perPage);
+  handlePageClick(data) {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.props.perPage);
 
     this.setState({offset: offset}, function() {
       this.loadCommentsFromServer();
     }.bind(this));
 
     this.loadCommentsFromServer();
-  },
+  }
 
-  getInitialState: function() {
-    return {data: [], offset: 0};
-  },
-
-  componentDidMount: function() {
+  componentDidMount() {
     this.loadCommentsFromServer();
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <div className="commentBox">
         <CommentList data={this.state.data} />
@@ -79,7 +84,7 @@ var App = React.createClass({
       </div>
     );
   }
-});
+};
 
 React.render(
   <App url={'http://localhost:3000/comments'}

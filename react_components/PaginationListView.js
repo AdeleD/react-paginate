@@ -1,15 +1,16 @@
 'use strict';
 
-var React    = require('react/addons');
-var PageView = require('./PageView');
+import React, { Component } from 'react/addons';
+import PageView from './PageView';
 
-var PaginationListView = React.createClass({
-  render: function() {
-    var items = {};
+
+export default class PaginationListView extends Component {
+  render() {
+    let items = {};
 
     if (this.props.pageNum <= this.props.pageRangeDisplayed) {
 
-      for (var index = 0; index < this.props.pageNum; index++) {
+      for (let index = 0; index < this.props.pageNum; index++) {
         items['key' + index] = <PageView
           onClick={this.props.onPageSelected.bind(null, index)}
           selected={this.props.selected === index}
@@ -21,8 +22,8 @@ var PaginationListView = React.createClass({
 
     } else {
 
-      var leftSide  = (this.props.pageRangeDisplayed / 2);
-      var rightSide = (this.props.pageRangeDisplayed - leftSide);
+      let leftSide  = (this.props.pageRangeDisplayed / 2);
+      let rightSide = (this.props.pageRangeDisplayed - leftSide);
 
       if (this.props.selected > this.props.pageNum - this.props.pageRangeDisplayed / 2) {
         rightSide = this.props.pageNum - this.props.selected;
@@ -33,14 +34,14 @@ var PaginationListView = React.createClass({
         rightSide = this.props.pageRangeDisplayed - leftSide;
       }
 
-      var index;
-      var page;
+      let index;
+      let page;
 
       for (index = 0; index < this.props.pageNum; index++) {
 
         page = index + 1;
 
-        var pageView = (
+        let pageView = (
           <PageView
             onClick={this.props.onPageSelected.bind(null, index)}
             selected={this.props.selected === index}
@@ -65,9 +66,9 @@ var PaginationListView = React.createClass({
           continue;
         }
 
-        var keys            = Object.keys(items);
-        var breakLabelKey   = keys[keys.length - 1];
-        var breakLabelValue = items[breakLabelKey];
+        let keys            = Object.keys(items);
+        let breakLabelKey   = keys[keys.length - 1];
+        let breakLabelValue = items[breakLabelKey];
 
         if (breakLabelValue !== this.props.breakLabel) {
           items['key' + index] = this.props.breakLabel;
@@ -81,6 +82,4 @@ var PaginationListView = React.createClass({
       </ul>
     );
   }
-});
-
-module.exports = PaginationListView;
+};

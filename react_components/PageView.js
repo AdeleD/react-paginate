@@ -1,11 +1,11 @@
 'use strict';
 
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
 
-var PageView = React.createClass({
-  render: function() {
-    var linkClassName = this.props.pageLinkClassName;
-    var cssClassName = this.props.pageClassName;
+export class PageView extends Component {
+  render() {
+    let linkClassName = this.props.pageLinkClassName;
+    let cssClassName = this.props.pageClassName;
 
     if (this.props.selected) {
       if (typeof(cssClassName) !== 'undefined') {
@@ -23,6 +23,4 @@ var PageView = React.createClass({
         </li>
     );
   }
-});
-
-module.exports = PageView;
+};
