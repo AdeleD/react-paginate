@@ -16,7 +16,7 @@
   "author": {
     "name": "Adèle Delamarche"
   },
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AdeleD/react-paginate/issues"
   },
