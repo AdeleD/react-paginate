@@ -52,7 +52,11 @@ export class App extends Component {
     });
   }
 
-  handlePageClick(data) {
+  componentDidMount() {
+    this.loadCommentsFromServer();
+  }
+
+  handlePageClick = (data) => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.props.perPage);
 
@@ -60,10 +64,6 @@ export class App extends Component {
       this.loadCommentsFromServer();
     }.bind(this));
 
-    this.loadCommentsFromServer();
-  }
-
-  componentDidMount() {
     this.loadCommentsFromServer();
   }
 

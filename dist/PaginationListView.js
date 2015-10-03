@@ -22,8 +22,8 @@ var _PageView = require('./PageView');
 
 var _PageView2 = _interopRequireDefault(_PageView);
 
-var PaginationListView = (function (_React$Component) {
-  _inherits(PaginationListView, _React$Component);
+var PaginationListView = (function (_Component) {
+  _inherits(PaginationListView, _Component);
 
   function PaginationListView() {
     _classCallCheck(this, PaginationListView);
@@ -109,7 +109,7 @@ var PaginationListView = (function (_React$Component) {
   }]);
 
   return PaginationListView;
-})(_reactAddons2['default'].Component);
+})(_reactAddons.Component);
 
 exports['default'] = PaginationListView;
 ;

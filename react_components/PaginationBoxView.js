@@ -1,31 +1,31 @@
 'use strict';
 
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import PaginationListView from './PaginationListView';
 
 
-export default class PaginationBoxView extends React.Component {
+export default class PaginationBoxView extends Component {
   static propTypes = {
-    pageNum               : React.PropTypes.number.isRequired,
-    pageRangeDisplayed    : React.PropTypes.number.isRequired,
-    marginPagesDisplayed  : React.PropTypes.number.isRequired,
-    previousLabel         : React.PropTypes.node,
-    nextLabel             : React.PropTypes.node,
-    breakLabel            : React.PropTypes.node,
-    clickCallback         : React.PropTypes.func,
-    initialSelected       : React.PropTypes.number,
-    forceSelected         : React.PropTypes.number,
-    containerClassName    : React.PropTypes.string,
-    subContainerClassName : React.PropTypes.string,
-    pageClassName         : React.PropTypes.string,
-    pageLinkClassName     : React.PropTypes.string,
-    activeClassName       : React.PropTypes.string,
-    previousClassName     : React.PropTypes.string,
-    nextClassName         : React.PropTypes.string,
-    previousLinkClassName : React.PropTypes.string,
-    nextLinkClassName     : React.PropTypes.string,
-    disabledClassName     : React.PropTypes.string
+    pageNum               : PropTypes.number.isRequired,
+    pageRangeDisplayed    : PropTypes.number.isRequired,
+    marginPagesDisplayed  : PropTypes.number.isRequired,
+    previousLabel         : PropTypes.node,
+    nextLabel             : PropTypes.node,
+    breakLabel            : PropTypes.node,
+    clickCallback         : PropTypes.func,
+    initialSelected       : PropTypes.number,
+    forceSelected         : PropTypes.number,
+    containerClassName    : PropTypes.string,
+    subContainerClassName : PropTypes.string,
+    pageClassName         : PropTypes.string,
+    pageLinkClassName     : PropTypes.string,
+    activeClassName       : PropTypes.string,
+    previousClassName     : PropTypes.string,
+    nextClassName         : PropTypes.string,
+    previousLinkClassName : PropTypes.string,
+    nextLinkClassName     : PropTypes.string,
+    disabledClassName     : PropTypes.string
   }
 
   static defaultProps = {
@@ -49,8 +49,22 @@ export default class PaginationBoxView extends React.Component {
     };
   }
 
-  handlePageSelected(selected, event) {
-    event.preventDefault();
+  handlePreviousPage = evt => {
+    evt.preventDefault();
+    if (this.state.selected > 0) {
+      this.handlePageSelected(this.state.selected - 1, evt);
+    }
+  }
+
+  handleNextPage = evt => {
+    evt.preventDefault();
+    if (this.state.selected < this.props.pageNum - 1) {
+      this.handlePageSelected(this.state.selected + 1, evt);
+    }
+  }
+
+  handlePageSelected = (selected, evt) => {
+    evt.preventDefault();
 
     if (this.state.selected === selected) return;
 
@@ -59,20 +73,6 @@ export default class PaginationBoxView extends React.Component {
     if (typeof(this.props.clickCallback) !== "undefined" &&
         typeof(this.props.clickCallback) === "function") {
       this.props.clickCallback({selected: selected});
-    }
-  }
-
-  handlePreviousPage(event) {
-    event.preventDefault();
-    if (this.state.selected > 0) {
-      this.handlePageSelected(this.state.selected - 1, event);
-    }
-  }
-
-  handleNextPage(event) {
-    event.preventDefault();
-    if (this.state.selected < this.props.pageNum - 1) {
-      this.handlePageSelected(this.state.selected + 1, event);
     }
   }
 
