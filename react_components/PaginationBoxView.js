@@ -1,11 +1,11 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import PaginationListView from './PaginationListView';
 
 
-export default class PaginationBoxView extends Component {
+export default class PaginationBoxView extends React.Component {
   static propTypes = {
     pageNum               : React.PropTypes.number.isRequired,
     pageRangeDisplayed    : React.PropTypes.number.isRequired,
@@ -43,8 +43,6 @@ export default class PaginationBoxView extends Component {
 
   constructor(props) {
     super(props);
-
-    console.log('here2');
 
     this.state = {
       selected: props.initialSelected ? props.initialSelected : 0

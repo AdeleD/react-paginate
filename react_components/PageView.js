@@ -1,8 +1,8 @@
 'use strict';
 
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 
-export class PageView extends Component {
+export default class PageView extends React.Component {
   render() {
     let linkClassName = this.props.pageLinkClassName;
     let cssClassName = this.props.pageClassName;

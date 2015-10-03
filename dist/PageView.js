@@ -20,8 +20,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var PageView = (function (_Component) {
-  _inherits(PageView, _Component);
+var PageView = (function (_React$Component) {
+  _inherits(PageView, _React$Component);
 
   function PageView() {
     _classCallCheck(this, PageView);
@@ -56,7 +56,8 @@ var PageView = (function (_Component) {
   }]);
 
   return PageView;
-})(_react.Component);
+})(_react2['default'].Component);
 
-exports.PageView = PageView;
+exports['default'] = PageView;
 ;
+module.exports = exports['default'];

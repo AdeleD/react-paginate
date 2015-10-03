@@ -1,10 +1,10 @@
 'use strict';
 
-import React, { Component } from 'react/addons';
+import React from 'react/addons';
 import PageView from './PageView';
 
 
-export default class PaginationListView extends Component {
+export default class PaginationListView extends React.Component {
   render() {
     let items = {};
 

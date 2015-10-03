@@ -26,8 +26,8 @@ var _PaginationListView = require('./PaginationListView');
 
 var _PaginationListView2 = _interopRequireDefault(_PaginationListView);
 
-var PaginationBoxView = (function (_Component) {
-  _inherits(PaginationBoxView, _Component);
+var PaginationBoxView = (function (_React$Component) {
+  _inherits(PaginationBoxView, _React$Component);
 
   _createClass(PaginationBoxView, null, [{
     key: 'propTypes',
@@ -74,8 +74,6 @@ var PaginationBoxView = (function (_Component) {
     _classCallCheck(this, PaginationBoxView);
 
     _get(Object.getPrototypeOf(PaginationBoxView.prototype), 'constructor', this).call(this, props);
-
-    console.log('here2');
 
     this.state = {
       selected: props.initialSelected ? props.initialSelected : 0
@@ -165,7 +163,7 @@ var PaginationBoxView = (function (_Component) {
   }]);
 
   return PaginationBoxView;
-})(_react.Component);
+})(_react2['default'].Component);
 
 exports['default'] = PaginationBoxView;
 ;
