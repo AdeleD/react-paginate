@@ -140,8 +140,7 @@ var PaginationBoxView = (function (_Component) {
           pageClassName: this.props.pageClassName,
           pageLinkClassName: this.props.pageLinkClassName,
           activeClassName: this.props.activeClassName,
-          disabledClassName: this.props.disabledClassName
-        }),
+          disabledClassName: this.props.disabledClassName }),
         _react2['default'].createElement(
           'li',
           { onClick: this.handleNextPage, className: nextClasses },

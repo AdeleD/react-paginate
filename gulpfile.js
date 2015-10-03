@@ -42,11 +42,6 @@ gulp.task('generate:data', function(cb) {
 
 });
 
-gulp.task('watch', function() {
-  gulp.watch('./react_components/*.js', ['dist', 'sample']);
-  gulp.watch('./sample/sample.jsx', ['sample']);
-});
-
 gulp.task('sample', function() {
   return browserify('./sample/sample.jsx')
     .transform(babelify)
