@@ -1,55 +1,50 @@
-jest.dontMock('./../react_components/react-paginate');
-jest.dontMock('./../react_components/PaginationBoxView');
-jest.dontMock('./../react_components/PaginationListView');
-jest.dontMock('./../react_components/PageView');
+import React from 'react/addons';
+import PaginationBoxView from './../react_components/PaginationBoxView';
+import PaginationListView from './../react_components/PaginationListView';
+import PageView from './../react_components/PageView';
+const TestUtils = React.addons.TestUtils;
 
-var React = require('react/addons');
-var PaginationBoxView = require('./../react_components/PaginationBoxView');
-var PaginationListView = require('./../react_components/PaginationListView');
-var PageView = require('./../react_components/PageView');
-var TestUtils = React.addons.TestUtils;
-
-describe('PaginationBoxView', function() {
-  var pagination = TestUtils.renderIntoDocument(
+describe('PaginationBoxView', () => {
+  const pagination = TestUtils.renderIntoDocument(
     <PaginationBoxView />
   );
 
-  it('should render a pagination component', function() {
-    expect(pagination.getDOMNode().nodeName).toEqual("UL");
+  it('should render a pagination component', () => {
+    expect(React.findDOMNode(pagination).nodeName).toEqual("UL");
 
     TestUtils.scryRenderedComponentsWithType(pagination, PaginationListView);
 
-    expect(pagination.getDOMNode().querySelector(".selected a").textContent).toBe("1");
+    expect(React.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
 
-    var pages = pagination.getDOMNode().querySelectorAll("li");
+    const pages = React.findDOMNode(pagination).querySelectorAll("li");
     expect(pages.length).toEqual(8);
   });
 
-  it('test previous and next buttons', function() {
+  it('test previous and next buttons', () => {
     TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(pagination, 'next'));
 
-    expect(pagination.getDOMNode().querySelector(".selected a").textContent).toBe("2");
+    expect(React.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("2");
 
     TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(pagination, 'previous'));
 
-    expect(pagination.getDOMNode().querySelector(".selected a").textContent).toBe("1");
+    expect(React.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
   });
 
-  it('test click on a page item', function() {
+  it('test click on a page item', () => {
     TestUtils.findRenderedComponentWithType(pagination, PaginationListView);
 
-    var pageItem = pagination.getDOMNode().querySelector("li:nth-child(3)").querySelector("a");
+    const pageItem = React.findDOMNode(pagination).querySelector("li:nth-child(3)").querySelector("a");
 
     TestUtils.Simulate.click(pageItem);
 
-    expect(pagination.getDOMNode().querySelector(".selected a").textContent).toBe("3");
+    expect(React.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("3");
   });
 
   it('test rendering only active page item', function() {
-    var smallPagination = TestUtils.renderIntoDocument(
+    const smallPagination = TestUtils.renderIntoDocument(
       <PaginationBoxView pageRangeDisplayed={0} marginPagesDisplayed={0} initialSelected={1} />
     );
-    var pageItems = smallPagination.getDOMNode().querySelectorAll("li");
+    const pageItems = React.findDOMNode(smallPagination).querySelectorAll("li");
     // Prev, current, next
     expect(pageItems.length).toBe(3);
   });

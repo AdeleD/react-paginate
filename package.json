@@ -32,7 +32,7 @@
     "gulp-babel": "^5.1.0",
     "gulp-nodemon": "^1.0.5",
     "gulp-uglify": "^1.1.0",
-    "jest-cli": "^0.2.2",
+    "jest-cli": "^0.5.8",
     "jquery": "^2.1.3",
     "react": "~0.13.1",
     "serve-static": "^1.9.1",
@@ -42,17 +42,21 @@
   },
   "peerDependencies": {},
   "scripts": {
-    "test": "jest"
+    "test": "BABEL_JEST_STAGE=0 jest"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "testFileExtensions": ["es6", "js"],
-    "moduleFileExtensions": ["js", "json", "es6"],
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react"
+    "testFileExtensions": [
+      "js"
     ],
-    "testPathDirs": [
-      "<rootDir>/__tests__"
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "testDirectoryName": "__tests__",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/react_components"
     ]
   }
 }

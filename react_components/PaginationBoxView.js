@@ -79,11 +79,11 @@ export default class PaginationBoxView extends Component {
   render() {
     let disabled = this.props.disabledClassName;
 
-    let previousClasses = classNames(this.props.previousClassName,
-                                     {disabled: this.state.selected === 0});
+    const previousClasses = classNames(this.props.previousClassName,
+                                       {disabled: this.state.selected === 0});
 
-    let nextClasses = classNames(this.props.nextClassName,
-                                 {disabled: this.state.selected === this.props.pageNum - 1});
+    const nextClasses = classNames(this.props.nextClassName,
+                                   {disabled: this.state.selected === this.props.pageNum - 1});
 
     return (
       <ul className={this.props.containerClassName}>
