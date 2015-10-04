@@ -22,11 +22,15 @@ describe('PaginationBoxView', () => {
   });
 
   it('test previous and next buttons', () => {
-    TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(pagination, 'next'));
+    let elmts = TestUtils.scryRenderedDOMComponentsWithTag(pagination, 'li');
+    let previous = elmts[0];
+    let next = elmts[elmts.length - 1];
+
+    TestUtils.Simulate.click(next);
 
     expect(React.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("2");
 
-    TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithClass(pagination, 'previous'));
+    TestUtils.Simulate.click(previous);
 
     expect(React.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
   });
