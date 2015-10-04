@@ -42,11 +42,11 @@ export class App extends Component {
       dataType : 'json',
       type     : 'GET',
 
-      success: function(data) {
+      success: data => {
         this.setState({data: data.comments, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)});
       }.bind(this),
 
-      error: function(xhr, status, err) {
+      error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
@@ -60,7 +60,7 @@ export class App extends Component {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.props.perPage);
 
-    this.setState({offset: offset}, function() {
+    this.setState({offset: offset}, () => {
       this.loadCommentsFromServer();
     }.bind(this));
 
