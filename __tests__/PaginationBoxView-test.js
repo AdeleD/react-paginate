@@ -4,6 +4,7 @@ import PaginationListView from './../react_components/PaginationListView';
 import PageView from './../react_components/PageView';
 const TestUtils = React.addons.TestUtils;
 
+
 describe('PaginationBoxView', () => {
   const pagination = TestUtils.renderIntoDocument(
     <PaginationBoxView />
