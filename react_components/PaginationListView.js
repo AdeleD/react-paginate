@@ -1,6 +1,7 @@
 'use strict';
 
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
+import createFragment from 'react-addons-create-fragment';
 import PageView from './PageView';
 
 
@@ -78,7 +79,7 @@ export default class PaginationListView extends Component {
 
     return (
       <ul className={this.props.subContainerClassName}>
-        {React.addons.createFragment(items)}
+        {createFragment(items)}
       </ul>
     );
   }

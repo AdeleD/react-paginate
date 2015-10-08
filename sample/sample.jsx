@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import ReactPaginate from './../react_components/react-paginate';
 import $ from 'jquery';
 
@@ -86,7 +87,7 @@ export class App extends Component {
   }
 };
 
-React.render(
+ReactDOM.render(
   <App url={'http://localhost:3000/comments'}
        author={'adele'}
        perPage={10} />,

@@ -14,9 +14,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _reactAddons = require('react/addons');
+var _react = require('react');
 
-var _reactAddons2 = _interopRequireDefault(_reactAddons);
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsCreateFragment = require('react-addons-create-fragment');
+
+var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
 var _PageView = require('./PageView');
 
@@ -39,7 +43,7 @@ var PaginationListView = (function (_Component) {
       if (this.props.pageNum <= this.props.pageRangeDisplayed) {
 
         for (var index = 0; index < this.props.pageNum; index++) {
-          items['key' + index] = _reactAddons2['default'].createElement(_PageView2['default'], {
+          items['key' + index] = _react2['default'].createElement(_PageView2['default'], {
             onClick: this.props.onPageSelected.bind(null, index),
             selected: this.props.selected === index,
             pageClassName: this.props.pageClassName,
@@ -67,7 +71,7 @@ var PaginationListView = (function (_Component) {
 
           page = index + 1;
 
-          var pageView = _reactAddons2['default'].createElement(_PageView2['default'], {
+          var pageView = _react2['default'].createElement(_PageView2['default'], {
             onClick: this.props.onPageSelected.bind(null, index),
             selected: this.props.selected === index,
             pageClassName: this.props.pageClassName,
@@ -100,16 +104,16 @@ var PaginationListView = (function (_Component) {
         }
       }
 
-      return _reactAddons2['default'].createElement(
+      return _react2['default'].createElement(
         'ul',
         { className: this.props.subContainerClassName },
-        _reactAddons2['default'].addons.createFragment(items)
+        (0, _reactAddonsCreateFragment2['default'])(items)
       );
     }
   }]);
 
   return PaginationListView;
-})(_reactAddons.Component);
+})(_react.Component);
 
 exports['default'] = PaginationListView;
 ;
