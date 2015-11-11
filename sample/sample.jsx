@@ -64,8 +64,6 @@ export class App extends Component {
     this.setState({offset: offset}, () => {
       this.loadCommentsFromServer();
     }.bind(this));
-
-    this.loadCommentsFromServer();
   }
 
   render() {
