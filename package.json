@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "babel-jest": "^5.3.0",
+    "babel-preset-stage-0": "^6.1.18",
     "babelify": "^6.0.2",
     "browserify": "~6.0.3",
     "express": "^4.12.1",
