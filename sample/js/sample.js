@@ -1,8 +1,6 @@
-'use strict';
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ReactPaginate from './../react_components/react-paginate';
+import ReactPaginate from 'react-paginate';
 import $ from 'jquery';
 
 window.React = React;
@@ -45,11 +43,11 @@ export class App extends Component {
 
       success: data => {
         this.setState({data: data.comments, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)});
-      }.bind(this),
+      },
 
       error: (xhr, status, err) => {
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }
     });
   }
 
@@ -63,7 +61,7 @@ export class App extends Component {
 
     this.setState({offset: offset}, () => {
       this.loadCommentsFromServer();
-    }.bind(this));
+    });
   }
 
   render() {
