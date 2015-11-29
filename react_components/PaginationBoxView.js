@@ -47,6 +47,9 @@ export default class PaginationBoxView extends Component {
     this.state = {
       selected: props.initialSelected ? props.initialSelected : 0
     };
+
+    // Call the callback with the initialSelected item:
+    this.callCallback(this.state.selected);
   }
 
   handlePreviousPage = evt => {
@@ -70,9 +73,14 @@ export default class PaginationBoxView extends Component {
 
     this.setState({selected: selected});
 
+    // Call the callback with the new selected item:
+    this.callCallback(selected);
+  }
+
+  callCallback = (selectedItem) => {
     if (typeof(this.props.clickCallback) !== "undefined" &&
         typeof(this.props.clickCallback) === "function") {
-      this.props.clickCallback({selected: selected});
+      this.props.clickCallback({selected: selectedItem});
     }
   }
 
