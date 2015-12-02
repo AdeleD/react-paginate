@@ -47,9 +47,13 @@ export default class PaginationBoxView extends Component {
     this.state = {
       selected: props.initialSelected ? props.initialSelected : 0
     };
+  }
 
+  componentDidMount() {
     // Call the callback with the initialSelected item:
-    this.callCallback(this.state.selected);
+    if (typeof(this.props.initialSelected) !== 'undefined') {
+      this.callCallback(this.props.initialSelected);
+    }
   }
 
   handlePreviousPage = evt => {

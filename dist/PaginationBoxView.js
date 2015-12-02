@@ -111,12 +111,17 @@ var PaginationBoxView = (function (_Component) {
     this.state = {
       selected: props.initialSelected ? props.initialSelected : 0
     };
-
-    // Call the callback with the initialSelected item:
-    this.callCallback(this.state.selected);
   }
 
   _createClass(PaginationBoxView, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // Call the callback with the initialSelected item:
+      if (typeof this.props.initialSelected !== 'undefined') {
+        this.callCallback(this.props.initialSelected);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var disabled = this.props.disabledClassName;
