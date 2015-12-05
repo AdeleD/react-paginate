@@ -71,7 +71,12 @@ export default class PaginationBoxView extends Component {
   }
 
   handlePageSelected = (selected, evt) => {
-    evt.preventDefault();
+    if (evt.preventDefault) {
+      evt.preventDefault();
+    } else {
+      evt.returnValue = false;
+      event.cancelBubble = true;
+    }
 
     if (this.state.selected === selected) return;
 
