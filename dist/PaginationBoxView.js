@@ -142,18 +142,22 @@ var PaginationBoxView = (function (_Component) {
             this.props.previousLabel
           )
         ),
-        _react2['default'].createElement(_PaginationListView2['default'], {
-          onPageSelected: this.handlePageSelected,
-          selected: this.state.selected,
-          pageNum: this.props.pageNum,
-          pageRangeDisplayed: this.props.pageRangeDisplayed,
-          marginPagesDisplayed: this.props.marginPagesDisplayed,
-          breakLabel: this.props.breakLabel,
-          subContainerClassName: this.props.subContainerClassName,
-          pageClassName: this.props.pageClassName,
-          pageLinkClassName: this.props.pageLinkClassName,
-          activeClassName: this.props.activeClassName,
-          disabledClassName: this.props.disabledClassName }),
+        _react2['default'].createElement(
+          'li',
+          null,
+          _react2['default'].createElement(_PaginationListView2['default'], {
+            onPageSelected: this.handlePageSelected,
+            selected: this.state.selected,
+            pageNum: this.props.pageNum,
+            pageRangeDisplayed: this.props.pageRangeDisplayed,
+            marginPagesDisplayed: this.props.marginPagesDisplayed,
+            breakLabel: this.props.breakLabel,
+            subContainerClassName: this.props.subContainerClassName,
+            pageClassName: this.props.pageClassName,
+            pageLinkClassName: this.props.pageLinkClassName,
+            activeClassName: this.props.activeClassName,
+            disabledClassName: this.props.disabledClassName })
+        ),
         _react2['default'].createElement(
           'li',
           { onClick: this.handleNextPage, className: nextClasses },
