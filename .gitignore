@@ -1,6 +1,6 @@
 *.log
 .DS_Store
 node_modules/
-sample/vendor
-sample/data.json
-sample/sample.js
+build/*
+sample/data/data.json
+sample/build/*
