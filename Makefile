@@ -1,19 +1,16 @@
 .PHONY: install
 install:
-	@npm i
+	@npm install
 
 .PHONY: test
 test:
 	@npm test
 
-.PHONY: serve
-serve:
-	@gulp serve
-
 .PHONY: sample
 sample:
-	@bower i
+	cd sample && webpack
+	node sample/data.js
 
-.PHONY: dist
-dist:
-	@gulp dist
+.PHONY: serve
+serve:
+	node sample/server.js

@@ -33,7 +33,6 @@
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
     "express": "^4.12.1",
-    "gulp": "~3.8.8",
     "jest-cli": "^0.5.8",
     "jquery": "^2.1.3",
     "react": "^0.14.0",
@@ -48,8 +47,8 @@
   "scripts": {
     "test": "BABEL_JEST_STAGE=0 jest",
     "webpack": "webpack",
-    "start": "webpack-dev-server --hot --inline",
-    "serve": "node sample/server.js"
+    "install": "npm run webpack",
+    "start": "webpack-dev-server --hot --inline"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",

@@ -21,10 +21,10 @@ $ npm install react-paginate
 For [CommonJS](http://wiki.commonjs.org/wiki/CommonJS) users:
 
 ```javascript
-var ReactPaginate = require('react-paginate');
+import ReactPaginate from 'react-paginate';
 ```
 
-Read the code of [sample/sample.jsx][1]. You will quickly understand
+Read the code of [sample/js/sample.js][1]. You will quickly understand
 how to make `react-paginate` work with a list of objects.
 
 ## Sample project (demo)
@@ -61,8 +61,9 @@ Open your browser and go to `http://localhost:3000/`.
 1. [Submit an issue](https://github.com/AdeleD/react-paginate/issues)
 2. Fork the repository
 3. Create a dedicated branch (never ever work in `master`)
-4. Fix bugs or implement features
-5. Always write tests
+4. Run `npm start`
+5. Fix bugs or implement features
+6. Always write tests
 
 Run tests:
 
@@ -70,4 +71,4 @@ Run tests:
 $ make test
 ```
 
-[1]: https://github.com/AdeleD/react-paginate/blob/master/sample/sample.jsx
+[1]: https://github.com/AdeleD/react-paginate/blob/master/sample/js/sample.js

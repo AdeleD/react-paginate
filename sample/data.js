@@ -6,7 +6,7 @@ var util       = require('util');
 var gulp       = require('gulp');
 
 
-gulp.task('generate:data', function(cb) {
+function generateSampleData() {
 
   var comments = [];
 
@@ -17,9 +17,9 @@ gulp.task('generate:data', function(cb) {
     });
   }
 
-  fs.writeFileSync(path.join(__dirname, 'sample', 'data.json'),
+  fs.writeFileSync(path.join(__dirname, 'data', 'data.json'),
                    JSON.stringify(comments, null, 2));
 
-  return cb();
+};
 
-});
+generateSampleData();
