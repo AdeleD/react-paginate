@@ -11,7 +11,9 @@ module.exports = {
     entry: path.resolve(dir_js, 'index.js'),
     output: {
         path: dir_build,
-        filename: 'bundle.js'
+        library: 'ReactPaginate',
+        libraryTarget: 'umd',
+        filename: 'react-paginate.js'
     },
     devServer: {
         contentBase: dir_build,
@@ -31,6 +33,16 @@ module.exports = {
             }
         ]
     },
+    externals: [
+        {
+            react: {
+                root: 'React',
+                amd: 'react',
+                commonjs: 'react',
+                commonjs2: 'react'
+            }
+        }
+    ],
     stats: {
         colors: true
     },
