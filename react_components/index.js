@@ -1,5 +1,3 @@
-export PaginationBoxView from './PaginationBoxView'
-export PaginationListView from './PaginationListView';
-export PageView from './PageView';
+import PaginationBoxView from './PaginationBoxView';
 
-export default from './PaginationBoxView'
+module.exports = PaginationBoxView;
