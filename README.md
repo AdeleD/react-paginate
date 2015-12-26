@@ -83,9 +83,10 @@ Open your browser and go to `http://localhost:3000/`.
 1. [Submit an issue](https://github.com/AdeleD/react-paginate/issues)
 2. Fork the repository
 3. Create a dedicated branch (never ever work in `master`)
-4. Run `npm start`
-5. Fix bugs or implement features
-6. Always write tests
+4. The first time, run the command: 'webpack' into the directory
+5. Run `npm start`
+6. Fix bugs or implement features
+7. Always write tests
 
 Run tests:
 
