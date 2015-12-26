@@ -9,10 +9,10 @@ var dir_html = path.resolve(__dirname, 'html');
 var dir_build = path.resolve(__dirname, 'build');
 
 module.exports = {
-    entry: path.resolve(dir_js, 'sample.js'),
+    entry: path.resolve(dir_js, 'demo.js'),
     output: {
         path: dir_build,
-        filename: 'sample.js',
+        filename: 'demo.js',
         publicPath: 'build'
     },
     devServer: {

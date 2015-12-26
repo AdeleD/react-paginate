@@ -57,21 +57,21 @@ export default class PaginationBoxView extends Component {
   }
 
   handlePreviousPage = evt => {
-    evt.preventDefault();
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     if (this.state.selected > 0) {
       this.handlePageSelected(this.state.selected - 1, evt);
     }
   }
 
   handleNextPage = evt => {
-    evt.preventDefault();
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     if (this.state.selected < this.props.pageNum - 1) {
       this.handlePageSelected(this.state.selected + 1, evt);
     }
   }
 
   handlePageSelected = (selected, evt) => {
-    evt.preventDefault();
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 
     if (this.state.selected === selected) return;
 

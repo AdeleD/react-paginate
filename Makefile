@@ -6,11 +6,11 @@ install:
 test:
 	@npm test
 
-.PHONY: sample
-sample:
-	cd sample && webpack
-	node sample/data.js
+.PHONY: demo
+demo:
+	cd demo && webpack
+	node demo/data.js
 
 .PHONY: serve
 serve:
-	node sample/server.js
+	node demo/server.js

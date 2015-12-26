@@ -6,7 +6,7 @@ var util       = require('util');
 var gulp       = require('gulp');
 
 
-function generateSampleData() {
+function generateData() {
 
   var comments = [];
 
@@ -22,4 +22,4 @@ function generateSampleData() {
 
 };
 
-generateSampleData();
+generateData();
