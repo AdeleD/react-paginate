@@ -52,6 +52,32 @@ $ make serve
 
 Open your browser and go to `http://localhost:3000/`.
 
+<img src="./docs/img/react-paginate.gif" alt="Pagination demo" />
+
+## Props
+
+| Name | Type | Description |
+| --- | --- | --- | --- |
+| `pageNum` | `Number` | **Required.** The current page number. |
+| `pageRangeDisplayed` | `Number` | **Required.** The range of pages displayed. |
+| `marginPagesDisplayed` | `Number` | **Required.** The number of pages to display for margins. |
+| `previousLabel` | `Node` | Label for the `previous` button. |
+| `nextLabel` | `Node` | Label for the `next` button. |
+| `breakLabel` | `Node` | Label for ellipsis. |
+| `clickCallback` | `Function` | The method to call when a page is clicked. |
+| `initialSelected` | `Number` | The initial page selected. |
+| `forceSelected` | `Number` | To override selected page with parent prop. |
+| `containerClassName` | `String` | The classname of the pagination container. |
+| `subContainerClassName` | `String` | The classname of the pagination subcontainer. |
+| `pageClassName` | `String` | The classname on tag `li` of each page element. |
+| `pageLinkClassName` | `String` | The classname on tag `a` of each page element. |
+| `activeClassName` | `String` | The classname for the active page. |
+| `previousClassName` | `String` | The classname on tag `li` of the `previous` button. |
+| `nextClassName` | `String` | The classname on tag `li` of the `next` button. |
+| `previousLinkClassName` | `String` | The classname on tag `a` of the `previous` button. |
+| `nextLinkClassName` | `String` | The classname on tag `a` of the `next` button. |
+| `disabledClassName` | `String` | The classname for disabled `previous` and `next` buttons. |
+
 ## Contribute
 
 1. [Submit an issue](https://github.com/AdeleD/react-paginate/issues)
