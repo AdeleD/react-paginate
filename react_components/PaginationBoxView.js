@@ -61,14 +61,14 @@ export default class PaginationBoxView extends Component {
     if (this.state.selected > 0) {
       this.handlePageSelected(this.state.selected - 1, evt);
     }
-  }
+  };
 
   handleNextPage = evt => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     if (this.state.selected < this.props.pageNum - 1) {
       this.handlePageSelected(this.state.selected + 1, evt);
     }
-  }
+  };
 
   handlePageSelected = (selected, evt) => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
@@ -79,14 +79,14 @@ export default class PaginationBoxView extends Component {
 
     // Call the callback with the new selected item:
     this.callCallback(selected);
-  }
+  };
 
   callCallback = (selectedItem) => {
     if (typeof(this.props.clickCallback) !== "undefined" &&
         typeof(this.props.clickCallback) === "function") {
       this.props.clickCallback({selected: selectedItem});
     }
-  }
+  };
 
   render() {
     let disabled = this.props.disabledClassName;
