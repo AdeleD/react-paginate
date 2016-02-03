@@ -17,7 +17,13 @@ function generateData() {
     });
   }
 
-  fs.writeFileSync(path.join(__dirname, 'data', 'data.json'),
+  var dataDir = path.join(__dirname, 'data');
+  try {
+    fs.mkdirSync(dataDir);
+  } catch (e) {
+    if (e.code != 'EEXIST') throw e;
+  }
+  fs.writeFileSync(path.join(dataDir, 'data.json'),
                    JSON.stringify(comments, null, 2));
 
 };
