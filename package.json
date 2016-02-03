@@ -26,6 +26,7 @@
     "react-dom": "^0.14.6"
   },
   "devDependencies": {
+    "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-jest": "^6.0.1",
     "babel-loader": "^6.2.1",
