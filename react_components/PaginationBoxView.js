@@ -100,7 +100,7 @@ export default class PaginationBoxView extends Component {
     return (
       <ul className={this.props.containerClassName}>
         <li onClick={this.handlePreviousPage} className={previousClasses}>
-          <a href="" className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
+          <a href="#" className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
         </li>
 
         <li>
@@ -119,7 +119,7 @@ export default class PaginationBoxView extends Component {
         </li>
 
         <li onClick={this.handleNextPage} className={nextClasses}>
-          <a href="" className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
+          <a href="#" className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
         </li>
       </ul>
     );
