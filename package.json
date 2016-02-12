@@ -33,6 +33,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
+    "coveralls": "^2.11.6",
     "express": "^4.13.4",
     "jest-cli": "^0.8.2",
     "jquery": "^2.2.0",
@@ -47,6 +48,8 @@
   "peerDependencies": {},
   "scripts": {
     "test": "BABEL_JEST_STAGE=0 jest",
+    "travis": "BABEL_JEST_STAGE=0 jest --no-cache --coverage && npm run-script coveralls",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "prepublish": "babel ./react_components --out-dir ./dist --source-maps --presets es2015,stage-0,react",
     "start": "webpack-dev-server --hot --inline",
     "demo": "webpack"
