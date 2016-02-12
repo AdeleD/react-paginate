@@ -8,7 +8,7 @@ test:
 
 .PHONY: demo
 demo:
-	cd demo && webpack
+	cd demo && npm run demo
 	node demo/data.js
 
 .PHONY: serve

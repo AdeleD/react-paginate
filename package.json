@@ -48,7 +48,8 @@
   "scripts": {
     "test": "BABEL_JEST_STAGE=0 jest",
     "prepublish": "babel ./react_components --out-dir ./dist --source-maps --presets es2015,stage-0,react",
-    "start": "webpack-dev-server --hot --inline"
+    "start": "webpack-dev-server --hot --inline",
+    "demo": "webpack"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
