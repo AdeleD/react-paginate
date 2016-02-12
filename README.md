@@ -1,4 +1,5 @@
 # react-paginate
+[![Build Status](https://travis-ci.org/AdeleD/react-paginate.svg?branch=master)](https://travis-ci.org/AdeleD/react-paginate)
 
 **A ReactJS component to render a pagination.**
 
