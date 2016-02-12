@@ -25,7 +25,7 @@ describe('PaginationBoxView', () => {
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
 
     const pages = ReactDOM.findDOMNode(pagination).querySelectorAll("li");
-    expect(pages.length).toEqual(8);
+    expect(pages.length).toEqual(9);
   });
 
   it('test previous and next buttons', () => {
@@ -58,6 +58,6 @@ describe('PaginationBoxView', () => {
     );
     const pageItems = ReactDOM.findDOMNode(smallPagination).querySelectorAll("li");
     // Prev, current, next
-    expect(pageItems.length).toBe(3);
+    expect(pageItems.length).toBe(4);
   });
 });
