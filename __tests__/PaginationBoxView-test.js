@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PaginationBoxView from './../react_components/PaginationBoxView';
-import PaginationListView from './../react_components/PaginationListView';
-import PageView from './../react_components/PageView';
+
+jest.dontMock('./../react_components/PaginationBoxView');
+jest.dontMock('./../react_components/PaginationListView');
+jest.dontMock('./../react_components/PageView');
+
+const PaginationBoxView = require('./../react_components/PaginationBoxView').default;
+const PaginationListView = require('./../react_components/PaginationListView').default;
+const PageView = require('./../react_components/PageView').default;
+
 import ReactTestUtils from 'react-addons-test-utils';
 
 
@@ -19,7 +25,7 @@ describe('PaginationBoxView', () => {
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
 
     const pages = ReactDOM.findDOMNode(pagination).querySelectorAll("li");
-    expect(pages.length).toEqual(8);
+    expect(pages.length).toEqual(9);
   });
 
   it('test previous and next buttons', () => {
@@ -52,6 +58,6 @@ describe('PaginationBoxView', () => {
     );
     const pageItems = ReactDOM.findDOMNode(smallPagination).querySelectorAll("li");
     // Prev, current, next
-    expect(pageItems.length).toBe(3);
+    expect(pageItems.length).toBe(4);
   });
 });
