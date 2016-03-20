@@ -64,33 +64,33 @@ var PaginationListView = function (_Component) {
           rightSide = this.props.pageRangeDisplayed - leftSide;
         }
 
-        var index = undefined;
-        var page = undefined;
+        var _index = void 0;
+        var page = void 0;
 
-        for (index = 0; index < this.props.pageNum; index++) {
+        for (_index = 0; _index < this.props.pageNum; _index++) {
 
-          page = index + 1;
+          page = _index + 1;
 
           var pageView = _react2.default.createElement(_PageView2.default, {
-            onClick: this.props.onPageSelected.bind(null, index),
-            selected: this.props.selected === index,
+            onClick: this.props.onPageSelected.bind(null, _index),
+            selected: this.props.selected === _index,
             pageClassName: this.props.pageClassName,
             pageLinkClassName: this.props.pageLinkClassName,
             activeClassName: this.props.activeClassName,
-            page: index + 1 });
+            page: _index + 1 });
 
           if (page <= this.props.marginPagesDisplayed) {
-            items['key' + index] = pageView;
+            items['key' + _index] = pageView;
             continue;
           }
 
           if (page > this.props.pageNum - this.props.marginPagesDisplayed) {
-            items['key' + index] = pageView;
+            items['key' + _index] = pageView;
             continue;
           }
 
-          if (index >= this.props.selected - leftSide && index <= this.props.selected + rightSide) {
-            items['key' + index] = pageView;
+          if (_index >= this.props.selected - leftSide && _index <= this.props.selected + rightSide) {
+            items['key' + _index] = pageView;
             continue;
           }
 
@@ -99,7 +99,7 @@ var PaginationListView = function (_Component) {
           var breakLabelValue = items[breakLabelKey];
 
           if (breakLabelValue !== this.props.breakLabel) {
-            items['key' + index] = this.props.breakLabel;
+            items['key' + _index] = this.props.breakLabel;
           }
         }
       }

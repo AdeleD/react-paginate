@@ -127,13 +127,6 @@ var PaginationBoxView = function (_Component) {
         )
       );
     }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (typeof nextProps.forceSelected !== 'undefined' && nextProps.forceSelected !== this.state.selected) {
-        this.setState({ selected: nextProps.forceSelected });
-      }
-    }
   }]);
 
   return PaginationBoxView;
