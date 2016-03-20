@@ -45,7 +45,9 @@ export default class PaginationBoxView extends Component {
     super(props);
 
     this.state = {
-      selected: props.initialSelected ? props.initialSelected : 0
+      selected: props.initialSelected ? props.initialSelected : 
+                props.forceSelected   ? props.forceSelected : 
+                0 
     };
   }
 

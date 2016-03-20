@@ -66,7 +66,7 @@ var PaginationBoxView = function (_Component) {
     };
 
     _this.state = {
-      selected: props.initialSelected ? props.initialSelected : 0
+      selected: props.initialSelected ? props.initialSelected : props.forceSelected ? props.forceSelected : 0
     };
     return _this;
   }
