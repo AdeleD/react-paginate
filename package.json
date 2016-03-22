@@ -21,7 +21,9 @@
     "url": "https://github.com/AdeleD/react-paginate/issues"
   },
   "dependencies": {
-    "classnames": "^1.2.2",
+    "classnames": "^1.2.2"
+  },
+  "peerDependencies": {
     "react-addons-create-fragment": "^0.14.7",
     "react-dom": "^0.14.7"
   },
@@ -44,7 +46,6 @@
     "webpack-dev-middleware": "^1.5.1",
     "webpack-dev-server": "^1.14.1"
   },
-  "peerDependencies": {},
   "scripts": {
     "test": "BABEL_JEST_STAGE=0 jest",
     "prepublish": "babel ./react_components --out-dir ./dist --source-maps --presets es2015,stage-0,react",
