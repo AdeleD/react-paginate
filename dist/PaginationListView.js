@@ -18,6 +18,10 @@ var _PageView = require('./PageView');
 
 var _PageView2 = _interopRequireDefault(_PageView);
 
+var _BreakView = require('./BreakView');
+
+var _BreakView2 = _interopRequireDefault(_BreakView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66,6 +70,7 @@ var PaginationListView = function (_Component) {
 
         var _index = void 0;
         var page = void 0;
+        var breakView = void 0;
 
         for (_index = 0; _index < this.props.pageNum; _index++) {
 
@@ -98,8 +103,10 @@ var PaginationListView = function (_Component) {
           var breakLabelKey = keys[keys.length - 1];
           var breakLabelValue = items[breakLabelKey];
 
-          if (breakLabelValue !== this.props.breakLabel) {
-            items['key' + _index] = this.props.breakLabel;
+          if (breakLabelValue !== breakView) {
+            breakView = _react2.default.createElement(_BreakView2.default, { breakLabel: this.props.breakLabel });
+
+            items['key' + _index] = breakView;
           }
         }
       }

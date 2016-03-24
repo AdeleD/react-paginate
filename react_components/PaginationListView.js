@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import createFragment from 'react-addons-create-fragment';
 import PageView from './PageView';
+import BreakView from './BreakView';
 
 
 export default class PaginationListView extends Component {
@@ -37,6 +38,7 @@ export default class PaginationListView extends Component {
 
       let index;
       let page;
+      let breakView;
 
       for (index = 0; index < this.props.pageNum; index++) {
 
@@ -71,8 +73,12 @@ export default class PaginationListView extends Component {
         let breakLabelKey   = keys[keys.length - 1];
         let breakLabelValue = items[breakLabelKey];
 
-        if (breakLabelValue !== this.props.breakLabel) {
-          items['key' + index] = this.props.breakLabel;
+        if (breakLabelValue !== breakView) {
+          breakView = (
+            <BreakView breakLabel={this.props.breakLabel} />
+          );
+
+          items['key' + index] = breakView;
         }
       }
     }
