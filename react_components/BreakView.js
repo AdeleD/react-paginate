@@ -7,7 +7,7 @@ export default class BreakView extends React.Component {
     let label = this.props.breakLabel;
 
     return (
-      <li>
+      <li className="break">
         {label}
       </li>
     );

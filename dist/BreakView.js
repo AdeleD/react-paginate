@@ -34,7 +34,7 @@ var BreakView = function (_React$Component) {
 
       return _react2.default.createElement(
         'li',
-        null,
+        { className: 'break' },
         label
       );
     }
