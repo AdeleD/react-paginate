@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 jest.dontMock('./../react_components/PaginationBoxView');
-jest.dontMock('./../react_components/PaginationListView');
 jest.dontMock('./../react_components/PageView');
 jest.dontMock('./../react_components/BreakView');
 
 const PaginationBoxView = require('./../react_components/PaginationBoxView').default;
-const PaginationListView = require('./../react_components/PaginationListView').default;
 const PageView = require('./../react_components/PageView').default;
 const BreakView = require('./../react_components/BreakView').default;
 
@@ -22,7 +20,7 @@ describe('PaginationBoxView', () => {
   it('should render a pagination component', () => {
     expect(ReactDOM.findDOMNode(pagination).nodeName).toEqual("UL");
 
-    ReactTestUtils.scryRenderedComponentsWithType(pagination, PaginationListView);
+    ReactTestUtils.scryRenderedComponentsWithType(pagination, PaginationBoxView);
 
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
 
@@ -45,7 +43,7 @@ describe('PaginationBoxView', () => {
   });
 
   it('test click on a page item', () => {
-    ReactTestUtils.findRenderedComponentWithType(pagination, PaginationListView);
+    ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
 
     const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3)").querySelector("a");
 
