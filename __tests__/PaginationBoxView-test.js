@@ -22,10 +22,13 @@ describe('PaginationBoxView', () => {
 
     ReactTestUtils.scryRenderedComponentsWithType(pagination, PaginationBoxView);
 
+    expect(ReactDOM.findDOMNode(pagination).querySelector("li:first-child a").textContent).toBe("Previous");
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
+    expect(ReactDOM.findDOMNode(pagination).querySelector("li:last-child a").textContent).toBe("Next");
 
     const pages = ReactDOM.findDOMNode(pagination).querySelectorAll("li");
-    expect(pages.length).toEqual(10);
+    // 3*2 margins + 1 break label + previous & next buttons == 9:
+    expect(pages.length).toEqual(9);
   });
 
   it('test previous and next buttons', () => {
@@ -49,16 +52,20 @@ describe('PaginationBoxView', () => {
 
     ReactTestUtils.Simulate.click(pageItem);
 
-    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("3");
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("2");
   });
 
   it('test rendering only active page item', function() {
     const smallPagination = ReactTestUtils.renderIntoDocument(
-      <PaginationBoxView pageRangeDisplayed={0} marginPagesDisplayed={0} initialSelected={1} />
+      <PaginationBoxView
+        initialSelected={0}
+        pageRangeDisplayed={0}
+        marginPagesDisplayed={0}
+        breakLabel={null} />
     );
 
     const pageItems = ReactDOM.findDOMNode(smallPagination).querySelectorAll("li");
-    // Prev, current, next
-    expect(pageItems.length).toBe(5);
+    // Prev, selected page, next
+    expect(pageItems.length).toBe(3);
   });
 });
