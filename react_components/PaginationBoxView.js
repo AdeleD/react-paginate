@@ -184,13 +184,13 @@ export default class PaginationBoxView extends Component {
     return (
       <ul className={this.props.containerClassName}>
         <li onClick={this.handlePreviousPage} className={previousClasses}>
-          <a href="" className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
+          <a className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
         </li>
 
         {createFragment(this.pagination())}
 
         <li onClick={this.handleNextPage} className={nextClasses}>
-          <a href="" className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
+          <a className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
         </li>
       </ul>
     );
