@@ -100,7 +100,7 @@ export default class PaginationBoxView extends Component {
 
       for (let index = 0; index < this.props.pageNum; index++) {
         items['key' + index] = <PageView
-          onClick={this.props.onPageSelected.bind(null, index)}
+          onClick={this.handlePageSelected.bind(null, index)}
           selected={this.state.selected === index}
           pageClassName={this.props.pageClassName}
           pageLinkClassName={this.props.pageLinkClassName}

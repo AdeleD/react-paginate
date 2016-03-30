@@ -80,7 +80,7 @@ var PaginationBoxView = function (_Component) {
 
         for (var index = 0; index < _this.props.pageNum; index++) {
           items['key' + index] = _react2.default.createElement(_PageView2.default, {
-            onClick: _this.props.onPageSelected.bind(null, index),
+            onClick: _this.handlePageSelected.bind(null, index),
             selected: _this.state.selected === index,
             pageClassName: _this.props.pageClassName,
             pageLinkClassName: _this.props.pageLinkClassName,
