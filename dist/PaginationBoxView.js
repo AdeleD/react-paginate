@@ -161,6 +161,13 @@ var PaginationBoxView = function (_Component) {
       }
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.forceSelected !== nextProps.forceSelected) {
+        this.setState({ selected: nextProps.forceSelected });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var disabled = this.props.disabledClassName;
