@@ -73,6 +73,10 @@ var PaginationBoxView = function (_Component) {
       }
     };
 
+    _this.isPageSelected = function (index) {
+      return _this.state.selected === index;
+    };
+
     _this.pagination = function () {
       var items = {};
 
@@ -81,7 +85,7 @@ var PaginationBoxView = function (_Component) {
         for (var index = 0; index < _this.props.pageNum; index++) {
           items['key' + index] = _react2.default.createElement(_PageView2.default, {
             onClick: _this.handlePageSelected.bind(null, index),
-            selected: _this.state.selected === index,
+            selected: _this.isPageSelected(index),
             pageClassName: _this.props.pageClassName,
             pageLinkClassName: _this.props.pageLinkClassName,
             activeClassName: _this.props.activeClassName,
@@ -110,7 +114,7 @@ var PaginationBoxView = function (_Component) {
 
           var pageView = _react2.default.createElement(_PageView2.default, {
             onClick: _this.handlePageSelected.bind(null, _index),
-            selected: _this.state.selected === _index,
+            selected: _this.isPageSelected(_index),
             pageClassName: _this.props.pageClassName,
             pageLinkClassName: _this.props.pageLinkClassName,
             activeClassName: _this.props.activeClassName,
@@ -158,6 +162,19 @@ var PaginationBoxView = function (_Component) {
       // Call the callback with the initialSelected item:
       if (typeof this.props.initialSelected !== 'undefined') {
         this.callCallback(this.props.initialSelected);
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (typeof nextProps.forceSelected === 'undefined') {
+        return;
+      }
+
+      if (nextProps.forceSelected !== this.state.selected) {
+        this.setState({
+          selected: nextProps.forceSelected
+        });
       }
     }
   }, {
