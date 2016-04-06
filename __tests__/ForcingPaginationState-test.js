@@ -56,36 +56,66 @@ describe('prop initialSelected', () => {
 });
 
 describe('prop forceSelected', () => {
-  it('should not override initialSelected on first render', () => {
-    const initialSelectedPageIndex = 1;
-    const forcedPagination = ReactTestUtils.renderIntoDocument(
-      <PaginationBoxView
-        pageNum={2}
-        initialSelected={initialSelectedPageIndex}
-        forceSelected={initialSelectedPageIndex - 1}
-      />
-    );
+  describe('on first render', () => {
+    it('should not override initialSelected', () => {
+      const initialSelectedPageIndex = 1;
+      const forcedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageNum={2}
+          initialSelected={initialSelectedPageIndex}
+          forceSelected={initialSelectedPageIndex - 1}
+        />
+      );
 
-    const actualSelected =
-      ReactDOM.findDOMNode(forcedPagination).querySelector('.selected a');
-    const expectedSelectedPageLabel = initialSelectedPageIndex + 1 + '';
+      const actualSelected =
+        ReactDOM.findDOMNode(forcedPagination).querySelector('.selected a');
+      const expectedSelectedPageLabel = initialSelectedPageIndex + 1 + '';
 
-    expect(actualSelected.textContent).toBe(expectedSelectedPageLabel);
+      expect(actualSelected.textContent).toBe(expectedSelectedPageLabel);
+    });
+
+    it('should set selected page if initialSelected is NOT specified', () => {
+      const initialSelectedPageIndex = 1;
+      const forcedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageNum={2}
+          forceSelected={initialSelectedPageIndex}
+        />
+      );
+
+      const actualSelected =
+        ReactDOM.findDOMNode(forcedPagination).querySelector('.selected a');
+      const expectedSelectedPageLabel = initialSelectedPageIndex + 1 + '';
+
+      expect(actualSelected.textContent).toBe(expectedSelectedPageLabel);
+    });
   });
 
-  it('should set selected page on first render if initialSelected is NOT specified', () => {
-    const initialSelectedPageIndex = 1;
-    const forcedPagination = ReactTestUtils.renderIntoDocument(
-      <PaginationBoxView
-        pageNum={2}
-        forceSelected={initialSelectedPageIndex}
-      />
-    );
+  describe('on change', () => {
+    it('should change selected page', () => {
+      let domNode = document.createElement('div');
+      const expectedSelectedPageIndex = 1;
+      const forcedPagination = ReactDOM.render(
+        <PaginationBoxView
+          pageNum={2}
+          forceSelected={0}
+        />,
+        domNode
+      );
 
-    const actualSelected =
-      ReactDOM.findDOMNode(forcedPagination).querySelector('.selected a');
-    const expectedSelectedPageLabel = initialSelectedPageIndex + 1 + '';
+      ReactDOM.render(
+        <PaginationBoxView
+          pageNum={2}
+          forceSelected={expectedSelectedPageIndex}
+        />,
+        domNode
+      );
 
-    expect(actualSelected.textContent).toBe(expectedSelectedPageLabel);
+      const actualSelected =
+        ReactDOM.findDOMNode(forcedPagination).querySelector('.selected a');
+      const expectedSelectedPageLabel = expectedSelectedPageIndex + 1 + '';
+
+      expect(actualSelected.textContent).toBe(expectedSelectedPageLabel);
+    });
   });
 });

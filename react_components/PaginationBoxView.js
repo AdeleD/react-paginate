@@ -61,6 +61,18 @@ export default class PaginationBoxView extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (typeof(nextProps.forceSelected) === 'undefined') {
+      return;
+    }
+
+    if (nextProps.forceSelected !== this.state.selected) {
+      this.setState({
+        selected: nextProps.forceSelected
+      });
+    }
+  }
+
   handlePreviousPage = evt => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     if (this.state.selected > 0) {
@@ -93,6 +105,10 @@ export default class PaginationBoxView extends Component {
     }
   };
 
+  isPageSelected = (index) => {
+    return this.state.selected === index;
+  };
+
   pagination = () => {
     let items = {};
 
@@ -101,7 +117,7 @@ export default class PaginationBoxView extends Component {
       for (let index = 0; index < this.props.pageNum; index++) {
         items['key' + index] = <PageView
           onClick={this.handlePageSelected.bind(null, index)}
-          selected={this.state.selected === index}
+          selected={this.isPageSelected(index)}
           pageClassName={this.props.pageClassName}
           pageLinkClassName={this.props.pageLinkClassName}
           activeClassName={this.props.activeClassName}
@@ -133,7 +149,7 @@ export default class PaginationBoxView extends Component {
         let pageView = (
           <PageView
             onClick={this.handlePageSelected.bind(null, index)}
-            selected={this.state.selected === index}
+            selected={this.isPageSelected(index)}
             pageClassName={this.props.pageClassName}
             pageLinkClassName={this.props.pageLinkClassName}
             activeClassName={this.props.activeClassName}
