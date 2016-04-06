@@ -12,7 +12,7 @@ const PaginationBoxView =
   require('./../react_components/PaginationBoxView').default;
 
 describe('prop initialSelected', () => {
-  it('should force selected page when first rendering the pagination', () => {
+  it('should force selected page on first render', () => {
     const initialSelectedPageIndex = 1;
     const forcedPagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
@@ -45,6 +45,41 @@ describe('prop initialSelected', () => {
         initialSelected={initialSelectedPageIndex + 1}
       />,
       domNode
+    );
+
+    const actualSelected =
+      ReactDOM.findDOMNode(forcedPagination).querySelector('.selected a');
+    const expectedSelectedPageLabel = initialSelectedPageIndex + 1 + '';
+
+    expect(actualSelected.textContent).toBe(expectedSelectedPageLabel);
+  });
+});
+
+describe('prop forceSelected', () => {
+  it('should not override initialSelected on first render', () => {
+    const initialSelectedPageIndex = 1;
+    const forcedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageNum={2}
+        initialSelected={initialSelectedPageIndex}
+        forceSelected={initialSelectedPageIndex - 1}
+      />
+    );
+
+    const actualSelected =
+      ReactDOM.findDOMNode(forcedPagination).querySelector('.selected a');
+    const expectedSelectedPageLabel = initialSelectedPageIndex + 1 + '';
+
+    expect(actualSelected.textContent).toBe(expectedSelectedPageLabel);
+  });
+
+  it('should set selected page on first render if initialSelected is NOT specified', () => {
+    const initialSelectedPageIndex = 1;
+    const forcedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageNum={2}
+        forceSelected={initialSelectedPageIndex}
+      />
     );
 
     const actualSelected =
