@@ -216,7 +216,6 @@ PaginationBoxView.propTypes = {
   initialSelected: _react.PropTypes.number,
   forceSelected: _react.PropTypes.number,
   containerClassName: _react.PropTypes.string,
-  subContainerClassName: _react.PropTypes.string,
   pageClassName: _react.PropTypes.string,
   pageLinkClassName: _react.PropTypes.string,
   activeClassName: _react.PropTypes.string,

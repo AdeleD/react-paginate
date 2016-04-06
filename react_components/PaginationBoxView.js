@@ -20,7 +20,6 @@ export default class PaginationBoxView extends Component {
     initialSelected       : PropTypes.number,
     forceSelected         : PropTypes.number,
     containerClassName    : PropTypes.string,
-    subContainerClassName : PropTypes.string,
     pageClassName         : PropTypes.string,
     pageLinkClassName     : PropTypes.string,
     activeClassName       : PropTypes.string,
