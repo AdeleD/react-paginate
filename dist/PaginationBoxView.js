@@ -184,7 +184,7 @@ var PaginationBoxView = function (_Component) {
           { onClick: this.handlePreviousPage, className: previousClasses },
           _react2.default.createElement(
             'a',
-            { href: '', className: this.props.previousLinkClassName },
+            { className: this.props.previousLinkClassName },
             this.props.previousLabel
           )
         ),
@@ -194,7 +194,7 @@ var PaginationBoxView = function (_Component) {
           { onClick: this.handleNextPage, className: nextClasses },
           _react2.default.createElement(
             'a',
-            { href: '', className: this.props.nextLinkClassName },
+            { className: this.props.nextLinkClassName },
             this.props.nextLabel
           )
         )
