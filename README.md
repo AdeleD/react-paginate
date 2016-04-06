@@ -73,7 +73,6 @@ Open your browser and go to `http://localhost:3000/`.
 | `initialSelected` | `Number` | The initial page selected. |
 | `forceSelected` | `Number` | To override selected page with parent prop. |
 | `containerClassName` | `String` | The classname of the pagination container. |
-| `subContainerClassName` | `String` | The classname of the pagination subcontainer. |
 | `pageClassName` | `String` | The classname on tag `li` of each page element. |
 | `pageLinkClassName` | `String` | The classname on tag `a` of each page element. |
 | `activeClassName` | `String` | The classname for the active page. |
