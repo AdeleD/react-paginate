@@ -167,11 +167,7 @@ var PaginationBoxView = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (typeof nextProps.forceSelected === 'undefined') {
-        return;
-      }
-
-      if (nextProps.forceSelected !== this.state.selected) {
+      if (nextProps.forceSelected !== this.props.forceSelected) {
         this.setState({
           selected: nextProps.forceSelected
         });
