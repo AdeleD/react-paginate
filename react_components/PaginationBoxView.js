@@ -61,6 +61,12 @@ export default class PaginationBoxView extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.forceSelected !== nextProps.forceSelected) {
+      this.setState({selected: nextProps.forceSelected});
+    }
+  }
+
   handlePreviousPage = evt => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     if (this.state.selected > 0) {
