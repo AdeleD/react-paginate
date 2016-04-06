@@ -19,6 +19,8 @@
   "unused" : "vars",  // vars: Require all defined variables be used, but not
                       //       function parameters
 
+  "esversion" : 6,
+
   "globals": {
     "after": false,
     "afterEach": false,
