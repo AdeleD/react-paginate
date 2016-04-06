@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactTestUtils from 'react-addons-test-utils';
 
 jest.dontMock('./../react_components/PaginationBoxView');
 jest.dontMock('./../react_components/PageView');
@@ -7,11 +8,6 @@ jest.dontMock('./../react_components/BreakView');
 
 const PaginationBoxView =
   require('./../react_components/PaginationBoxView').default;
-const PageView = require('./../react_components/PageView').default;
-const BreakView = require('./../react_components/BreakView').default;
-
-import ReactTestUtils from 'react-addons-test-utils';
-
 
 describe('PaginationBoxView', () => {
   const pagination = ReactTestUtils.renderIntoDocument(
