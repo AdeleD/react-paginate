@@ -28,6 +28,8 @@ var _BreakView2 = _interopRequireDefault(_BreakView);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -172,9 +174,9 @@ var PaginationBoxView = function (_Component) {
     value: function render() {
       var disabled = this.props.disabledClassName;
 
-      var previousClasses = (0, _classnames2.default)(this.props.previousClassName, { disabled: this.state.selected === 0 });
+      var previousClasses = (0, _classnames2.default)(this.props.previousClassName, _defineProperty({}, disabled, this.state.selected === 0));
 
-      var nextClasses = (0, _classnames2.default)(this.props.nextClassName, { disabled: this.state.selected === this.props.pageNum - 1 });
+      var nextClasses = (0, _classnames2.default)(this.props.nextClassName, _defineProperty({}, disabled, this.state.selected === this.props.pageNum - 1));
 
       return _react2.default.createElement(
         'ul',

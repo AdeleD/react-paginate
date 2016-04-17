@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 jest.dontMock('./../react_components/PaginationBoxView');
 jest.dontMock('./../react_components/PageView');
 jest.dontMock('./../react_components/BreakView');
+jest.dontMock('classnames');
 
 const PaginationBoxView = require('./../react_components/PaginationBoxView').default;
 const PageView = require('./../react_components/PageView').default;
@@ -67,5 +68,32 @@ describe('PaginationBoxView', () => {
     const pageItems = ReactDOM.findDOMNode(smallPagination).querySelectorAll("li");
     // Prev, selected page, next
     expect(pageItems.length).toBe(3);
+  });
+
+  it('accepts disabledClassName prop to set class on disabled previous and next buttons', function() {
+    const expectedClassName = "disabledClassNameForTest";
+    const disabledPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageNum={5}
+        pageRangeDisplayed={5}
+        marginPagesDisplayed={0}
+        disabledClassName={expectedClassName} />
+    );
+
+    // Test that the previous button uses the proper disabled class
+    const firstPage = ReactDOM.findDOMNode(disabledPagination).querySelector("li:nth-child(2)").querySelector("a");
+    ReactTestUtils.Simulate.click(firstPage);
+    expect(ReactDOM.findDOMNode(disabledPagination)
+      .querySelector("li:nth-child(1)")
+      .classList.contains(expectedClassName))
+      .toBe(true);
+
+    // Test that the next button uses the proper disabled class
+    const lastPage = ReactDOM.findDOMNode(disabledPagination).querySelector("li:nth-child(6)").querySelector("a");
+    ReactTestUtils.Simulate.click(lastPage);
+    expect(ReactDOM.findDOMNode(disabledPagination)
+      .querySelector("li:nth-child(7)")
+      .classList.contains(expectedClassName))
+      .toBe(true);
   });
 });
