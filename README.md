@@ -81,6 +81,7 @@ Open your browser and go to `http://localhost:3000/`.
 | `previousLinkClassName` | `String` | The classname on tag `a` of the `previous` button. |
 | `nextLinkClassName` | `String` | The classname on tag `a` of the `next` button. |
 | `disabledClassName` | `String` | The classname for disabled `previous` and `next` buttons. |
+| `breakClassName` | `String` | The classname on tag `li` of break page element. |
 
 ## Contribute
 

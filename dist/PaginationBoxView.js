@@ -138,7 +138,10 @@ var PaginationBoxView = function (_Component) {
           var breakLabelValue = items[breakLabelKey];
 
           if (_this.props.breakLabel && breakLabelValue !== breakView) {
-            breakView = _react2.default.createElement(_BreakView2.default, { breakLabel: _this.props.breakLabel });
+            breakView = _react2.default.createElement(_BreakView2.default, {
+              breakLabel: _this.props.breakLabel,
+              className: _this.props.breakClassName
+            });
 
             items['key' + _index] = breakView;
           }
@@ -225,7 +228,8 @@ PaginationBoxView.propTypes = {
   nextClassName: _react.PropTypes.string,
   previousLinkClassName: _react.PropTypes.string,
   nextLinkClassName: _react.PropTypes.string,
-  disabledClassName: _react.PropTypes.string
+  disabledClassName: _react.PropTypes.string,
+  breakClassName: _react.PropTypes.string
 };
 PaginationBoxView.defaultProps = {
   pageNum: 10,
