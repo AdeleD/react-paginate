@@ -61,7 +61,7 @@ export default class PaginationBoxView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.forceSelected !== nextProps.forceSelected) {
+    if (typeof(nextProps.forceSelected) !== 'undefined' && this.props.forceSelected !== nextProps.forceSelected) {
       this.setState({selected: nextProps.forceSelected});
     }
   }
