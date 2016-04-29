@@ -44,7 +44,8 @@
     "serve-static": "^1.10.2",
     "webpack": "^1.12.14",
     "webpack-dev-middleware": "^1.5.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "react-addons-create-fragment": "^15.0.1"
   },
   "scripts": {
     "test": "BABEL_JEST_STAGE=0 jest",
