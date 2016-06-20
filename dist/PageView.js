@@ -14,6 +14,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -34,6 +36,10 @@ var PageView = function (_React$Component) {
     value: function render() {
       var linkClassName = this.props.pageLinkClassName;
       var cssClassName = this.props.pageClassName;
+      var _props = this.props;
+      var onClick = _props.onClick;
+
+      var props = _objectWithoutProperties(_props, ['onClick']);
 
       if (this.props.selected) {
         if (typeof cssClassName !== 'undefined') {
@@ -45,10 +51,10 @@ var PageView = function (_React$Component) {
 
       return _react2.default.createElement(
         'li',
-        { className: cssClassName },
+        { onClick: onClick, className: cssClassName },
         _react2.default.createElement(
           'a',
-          _extends({}, this.props, { className: linkClassName }),
+          _extends({}, props, { className: linkClassName }),
           this.props.page
         )
       );
