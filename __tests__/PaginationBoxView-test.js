@@ -48,7 +48,7 @@ describe('PaginationBoxView', () => {
   it('test click on a page item', () => {
     ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
 
-    const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3)").querySelector("a");
+    const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3)");
 
     ReactTestUtils.Simulate.click(pageItem);
 
