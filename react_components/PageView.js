@@ -6,7 +6,7 @@ export default class PageView extends React.Component {
   render() {
     let linkClassName = this.props.pageLinkClassName;
     let cssClassName = this.props.pageClassName;
-    let {onClick, ...props} = this.props;
+    let onClick = this.props.onClick;
 
     if (this.props.selected) {
       if (typeof(cssClassName) !== 'undefined') {
@@ -18,7 +18,7 @@ export default class PageView extends React.Component {
 
     return (
         <li onClick={onClick} className={cssClassName}>
-            <a {...props} className={linkClassName}>
+            <a className={linkClassName}>
               {this.props.page}
             </a>
         </li>
