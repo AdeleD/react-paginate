@@ -68,4 +68,17 @@ describe('PaginationBoxView', () => {
     // Prev, selected page, next
     expect(pageItems.length).toBe(3);
   });
+
+  it('should render href attribute in items', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView initialSelected={1} linkBuilder={(page) => '/page/' + page }/>
+    );
+
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+      .getAttribute('href')).toEqual('/page/3');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+      .getAttribute('href')).toEqual('/page/1');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
+      .getAttribute('href')).toEqual(null);
+  });
 });

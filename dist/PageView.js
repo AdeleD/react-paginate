@@ -30,9 +30,10 @@ var PageView = function (_React$Component) {
   _createClass(PageView, [{
     key: 'render',
     value: function render() {
-      var linkClassName = this.props.pageLinkClassName;
       var cssClassName = this.props.pageClassName;
+      var linkClassName = this.props.pageLinkClassName;
       var onClick = this.props.onClick;
+      var href = this.props.href;
 
       if (this.props.selected) {
         if (typeof cssClassName !== 'undefined') {
@@ -47,7 +48,7 @@ var PageView = function (_React$Component) {
         { onClick: onClick, className: cssClassName },
         _react2.default.createElement(
           'a',
-          { className: linkClassName },
+          { className: linkClassName, href: href },
           this.props.page
         )
       );
