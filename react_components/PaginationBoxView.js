@@ -17,6 +17,7 @@ export default class PaginationBoxView extends Component {
     nextLabel             : PropTypes.node,
     breakLabel            : PropTypes.node,
     clickCallback         : PropTypes.func,
+    linkBuilder           : PropTypes.func,
     initialSelected       : PropTypes.number,
     forceSelected         : PropTypes.number,
     containerClassName    : PropTypes.string,
@@ -91,6 +92,16 @@ export default class PaginationBoxView extends Component {
     this.callCallback(selected);
   };
 
+  linkBuilder(pageIndex) {
+    if (this.props.linkBuilder &&
+      pageIndex !== this.state.selected &&
+      pageIndex >= 0 &&
+      pageIndex < this.props.pageNum
+    ) {
+      return this.props.linkBuilder(pageIndex + 1);
+    }
+  }
+
   callCallback = (selectedItem) => {
     if (typeof(this.props.clickCallback) !== "undefined" &&
         typeof(this.props.clickCallback) === "function") {
@@ -98,19 +109,24 @@ export default class PaginationBoxView extends Component {
     }
   };
 
+  getPageElement(index) {
+    return <PageView
+      onClick={this.handlePageSelected.bind(null, index)}
+      selected={this.state.selected === index}
+      pageClassName={this.props.pageClassName}
+      pageLinkClassName={this.props.pageLinkClassName}
+      activeClassName={this.props.activeClassName}
+      href={this.linkBuilder(index)}
+      page={index + 1} />
+  }
+
   pagination = () => {
     let items = {};
 
     if (this.props.pageNum <= this.props.pageRangeDisplayed) {
 
       for (let index = 0; index < this.props.pageNum; index++) {
-        items['key' + index] = <PageView
-          onClick={this.handlePageSelected.bind(null, index)}
-          selected={this.state.selected === index}
-          pageClassName={this.props.pageClassName}
-          pageLinkClassName={this.props.pageLinkClassName}
-          activeClassName={this.props.activeClassName}
-          page={index + 1} />
+        items['key' + index] = this.getPageElement(index);
       }
 
     } else {
@@ -135,15 +151,7 @@ export default class PaginationBoxView extends Component {
 
         page = index + 1;
 
-        let pageView = (
-          <PageView
-            onClick={this.handlePageSelected.bind(null, index)}
-            selected={this.state.selected === index}
-            pageClassName={this.props.pageClassName}
-            pageLinkClassName={this.props.pageLinkClassName}
-            activeClassName={this.props.activeClassName}
-            page={index + 1} />
-        );
+        let pageView = this.getPageElement(index);
 
         if (page <= this.props.marginPagesDisplayed) {
           items['key' + index] = pageView;
@@ -189,13 +197,17 @@ export default class PaginationBoxView extends Component {
     return (
       <ul className={this.props.containerClassName}>
         <li onClick={this.handlePreviousPage} className={previousClasses}>
-          <a className={this.props.previousLinkClassName}>{this.props.previousLabel}</a>
+          <a className={this.props.previousLinkClassName} href={this.linkBuilder(this.state.selected - 1)}>
+            {this.props.previousLabel}
+          </a>
         </li>
 
         {createFragment(this.pagination())}
 
         <li onClick={this.handleNextPage} className={nextClasses}>
-          <a className={this.props.nextLinkClassName}>{this.props.nextLabel}</a>
+          <a className={this.props.nextLinkClassName} href={this.linkBuilder(this.state.selected + 1)}>
+            {this.props.nextLabel}
+          </a>
         </li>
       </ul>
     );
