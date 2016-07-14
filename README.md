@@ -69,6 +69,7 @@ Open your browser and go to `http://localhost:3000/`.
 | `previousLabel` | `Node` | Label for the `previous` button. |
 | `nextLabel` | `Node` | Label for the `next` button. |
 | `breakLabel` | `Node` | Label for ellipsis. |
+| `breakClassName` | `String` | The classname on tag `li` of the ellipsis element. |
 | `clickCallback` | `Function` | The method to call when a page is clicked. |
 | `initialSelected` | `Number` | The initial page selected. |
 | `forceSelected` | `Number` | To override selected page with parent prop. |
@@ -81,7 +82,6 @@ Open your browser and go to `http://localhost:3000/`.
 | `previousLinkClassName` | `String` | The classname on tag `a` of the `previous` button. |
 | `nextLinkClassName` | `String` | The classname on tag `a` of the `next` button. |
 | `disabledClassName` | `String` | The classname for disabled `previous` and `next` buttons. |
-| `breakClassName` | `String` | The classname on tag `li` of break page element. |
 
 ## Contribute
 
