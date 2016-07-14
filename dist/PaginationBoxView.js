@@ -140,7 +140,7 @@ var PaginationBoxView = function (_Component) {
           if (_this.props.breakLabel && breakLabelValue !== breakView) {
             breakView = _react2.default.createElement(_BreakView2.default, {
               breakLabel: _this.props.breakLabel,
-              className: _this.props.breakClassName
+              breakClassName: _this.props.breakClassName
             });
 
             items['key' + _index] = breakView;
