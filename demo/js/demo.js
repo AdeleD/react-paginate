@@ -4,7 +4,6 @@ import ReactPaginate from 'react-paginate';
 import $ from 'jquery';
 
 window.React = React;
-window.ReactDOM = ReactDOM;
 
 
 export class CommentList extends Component {
@@ -66,15 +65,13 @@ export class App extends Component {
   };
 
   render() {
-    let stepan = <ReactPaginate breakClassName={"break me"}/>
-    window.stepan = stepan
     return (
       <div className="commentBox">
         <CommentList data={this.state.data} />
-        { stepan }
         <ReactPaginate previousLabel={"previous"}
                        nextLabel={"next"}
                        breakLabel={<a href="">...</a>}
+                       breakClassName={"break-me"}
                        pageNum={this.state.pageNum}
                        marginPagesDisplayed={2}
                        pageRangeDisplayed={5}
