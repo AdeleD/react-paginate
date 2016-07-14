@@ -70,10 +70,10 @@ describe('PaginationBoxView', () => {
 
   it('test breakClassName rendering', function() {
     const smallPagination = ReactTestUtils.renderIntoDocument(
-      <PaginationBoxView breakClassName={"break me"}/>
+      <PaginationBoxView breakClassName={"break-me"}/>
     );
 
-    const breakPage = ReactDOM.findDOMNode(smallPagination).querySelectorAll(".break.me");
-    expect(breakPage.length).toBe(1);
+    const breakItem = ReactDOM.findDOMNode(smallPagination).querySelectorAll(".break-me");
+    expect(breakItem.length).toBe(1);
   });
 });
