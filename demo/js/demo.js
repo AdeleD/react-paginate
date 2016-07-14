@@ -71,6 +71,7 @@ export class App extends Component {
         <ReactPaginate previousLabel={"previous"}
                        nextLabel={"next"}
                        breakLabel={<a href="">...</a>}
+                       breakClassName={"break-me"}
                        pageNum={this.state.pageNum}
                        marginPagesDisplayed={2}
                        pageRangeDisplayed={5}
