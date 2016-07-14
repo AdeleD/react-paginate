@@ -169,7 +169,7 @@ export default class PaginationBoxView extends Component {
           breakView = (
             <BreakView
               breakLabel={this.props.breakLabel}
-              className={this.props.breakClassName}
+              breakClassName={this.props.breakClassName}
             />
           );
 
