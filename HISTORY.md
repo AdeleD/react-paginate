@@ -1,6 +1,6 @@
 ## >= 3.0.0
 
-`clickCallback` isn't called during initialization anymore.
+`clickCallback` (`onPageChange`) isn't called during initialization anymore.
 
 
 ## >= 1.0.0
