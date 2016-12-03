@@ -1,3 +1,8 @@
+## >= 3.0.0
+
+`clickCallback` isn't called during initialization anymore.
+
+
 ## >= 1.0.0
 
 HTML Structure:
@@ -13,6 +18,7 @@ HTML Structure:
   <li><a href="#"><span>»</span></a></li>
 </ul>
 ```
+
 
 ## <= 0.5.7
 
