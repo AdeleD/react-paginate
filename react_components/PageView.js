@@ -17,7 +17,7 @@ export default class PageView extends React.Component {
     }
 
     return (
-        <li onClick={onClick} className={cssClassName}>
+        <li onClick={onClick} className={cssClassName} tabIndex="0" onKeyPress={onClick}>
             <a className={linkClassName}>
               {this.props.page}
             </a>
