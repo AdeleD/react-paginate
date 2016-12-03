@@ -44,10 +44,10 @@ var PageView = function (_React$Component) {
 
       return _react2.default.createElement(
         'li',
-        { onClick: onClick, className: cssClassName },
+        { className: cssClassName },
         _react2.default.createElement(
           'a',
-          { className: linkClassName },
+          { onClick: onClick, className: linkClassName },
           this.props.page
         )
       );
