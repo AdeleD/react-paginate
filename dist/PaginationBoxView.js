@@ -158,14 +158,6 @@ var PaginationBoxView = function (_Component) {
   }
 
   _createClass(PaginationBoxView, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // Call the callback with the initialSelected item:
-      if (typeof this.props.initialSelected !== 'undefined') {
-        this.callCallback(this.props.initialSelected);
-      }
-    }
-  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (typeof nextProps.forceSelected !== 'undefined' && this.props.forceSelected !== nextProps.forceSelected) {
