@@ -63,7 +63,7 @@ Open your browser and go to `http://localhost:3000/`.
 
 | Name | Type | Description |
 | --- | --- | --- | --- |
-| `pageNum` | `Number` | **Required.** The total number of pages. |
+| `pageCount` | `Number` | **Required.** The total number of pages. |
 | `pageRangeDisplayed` | `Number` | **Required.** The range of pages displayed. |
 | `marginPagesDisplayed` | `Number` | **Required.** The number of pages to display for margins. |
 | `previousLabel` | `Node` | Label for the `previous` button. |

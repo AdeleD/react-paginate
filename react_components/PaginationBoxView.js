@@ -10,7 +10,7 @@ import BreakView from './BreakView';
 
 export default class PaginationBoxView extends Component {
   static propTypes = {
-    pageNum               : PropTypes.number.isRequired,
+    pageCount             : PropTypes.number.isRequired,
     pageRangeDisplayed    : PropTypes.number.isRequired,
     marginPagesDisplayed  : PropTypes.number.isRequired,
     previousLabel         : PropTypes.node,
@@ -32,7 +32,7 @@ export default class PaginationBoxView extends Component {
   };
 
   static defaultProps = {
-    pageNum              : 10,
+    pageCount            : 10,
     pageRangeDisplayed   : 2,
     marginPagesDisplayed : 3,
     activeClassName      : "selected",
@@ -69,7 +69,7 @@ export default class PaginationBoxView extends Component {
 
   handleNextPage = evt => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-    if (this.state.selected < this.props.pageNum - 1) {
+    if (this.state.selected < this.props.pageCount - 1) {
       this.handlePageSelected(this.state.selected + 1, evt);
     }
   };
@@ -95,9 +95,9 @@ export default class PaginationBoxView extends Component {
   pagination = () => {
     let items = {};
 
-    if (this.props.pageNum <= this.props.pageRangeDisplayed) {
+    if (this.props.pageCount <= this.props.pageRangeDisplayed) {
 
-      for (let index = 0; index < this.props.pageNum; index++) {
+      for (let index = 0; index < this.props.pageCount; index++) {
         items['key' + index] = <PageView
           onClick={this.handlePageSelected.bind(null, index)}
           selected={this.state.selected === index}
@@ -112,8 +112,8 @@ export default class PaginationBoxView extends Component {
       let leftSide  = (this.props.pageRangeDisplayed / 2);
       let rightSide = (this.props.pageRangeDisplayed - leftSide);
 
-      if (this.state.selected > this.props.pageNum - this.props.pageRangeDisplayed / 2) {
-        rightSide = this.props.pageNum - this.state.selected;
+      if (this.state.selected > this.props.pageCount - this.props.pageRangeDisplayed / 2) {
+        rightSide = this.props.pageCount - this.state.selected;
         leftSide  = this.props.pageRangeDisplayed - rightSide;
       }
       else if (this.state.selected < this.props.pageRangeDisplayed / 2) {
@@ -125,7 +125,7 @@ export default class PaginationBoxView extends Component {
       let page;
       let breakView;
 
-      for (index = 0; index < this.props.pageNum; index++) {
+      for (index = 0; index < this.props.pageCount; index++) {
 
         page = index + 1;
 
@@ -144,7 +144,7 @@ export default class PaginationBoxView extends Component {
           continue;
         }
 
-        if (page > this.props.pageNum - this.props.marginPagesDisplayed) {
+        if (page > this.props.pageCount - this.props.marginPagesDisplayed) {
           items['key' + index] = pageView;
           continue;
         }
@@ -181,7 +181,7 @@ export default class PaginationBoxView extends Component {
                                        {[disabled]: this.state.selected === 0});
 
     const nextClasses = classNames(this.props.nextClassName,
-                                   {[disabled]: this.state.selected === this.props.pageNum - 1});
+                                   {[disabled]: this.state.selected === this.props.pageCount - 1});
 
     return (
       <ul className={this.props.containerClassName}>

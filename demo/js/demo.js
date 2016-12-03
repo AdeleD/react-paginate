@@ -42,7 +42,7 @@ export class App extends Component {
       type     : 'GET',
 
       success: data => {
-        this.setState({data: data.comments, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)});
+        this.setState({data: data.comments, pageCount: Math.ceil(data.meta.total_count / data.meta.limit)});
       },
 
       error: (xhr, status, err) => {
@@ -72,7 +72,7 @@ export class App extends Component {
                        nextLabel={"next"}
                        breakLabel={<a href="">...</a>}
                        breakClassName={"break-me"}
-                       pageNum={this.state.pageNum}
+                       pageCount={this.state.pageCount}
                        marginPagesDisplayed={2}
                        pageRangeDisplayed={5}
                        onPageChange={this.handlePageClick}
