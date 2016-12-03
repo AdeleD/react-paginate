@@ -1,12 +1,12 @@
 ## >= 4.0.0
 
-* Some variable has been renamed:
+* Some variable have been renamed:
   * `clickCallback` -> `onPageChange`
   * `initialSelected` -> `initialPage`
   * `forceSelected` -> `forcePage`
   * `pageNum` -> `pageCount`
 
-* `onClick` events has been moved on `<a>` tags (previously on `<li>`s).
+* `onClick` events have been moved on `<a>` tags (previously on `<li>`s).
 
 
 ## >= 3.0.0
