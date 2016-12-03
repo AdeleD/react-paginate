@@ -47,7 +47,10 @@ var PageView = function (_React$Component) {
         { className: cssClassName },
         _react2.default.createElement(
           'a',
-          { onClick: onClick, className: linkClassName },
+          { onClick: onClick,
+            className: linkClassName,
+            tabIndex: '0',
+            onKeyPress: onClick },
           this.props.page
         )
       );
