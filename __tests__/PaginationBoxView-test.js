@@ -31,7 +31,7 @@ describe('PaginationBoxView', () => {
   });
 
   it('test previous and next buttons', () => {
-    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(pagination, 'li');
+    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(pagination, 'a');
     let previous = elmts[0];
     let next = elmts[elmts.length - 1];
 
@@ -47,7 +47,7 @@ describe('PaginationBoxView', () => {
   it('test click on a page item', () => {
     ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
 
-    const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3)");
+    const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3) a");
 
     ReactTestUtils.Simulate.click(pageItem);
 
