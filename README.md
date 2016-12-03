@@ -71,7 +71,7 @@ Open your browser and go to `http://localhost:3000/`.
 | `breakLabel` | `Node` | Label for ellipsis. |
 | `breakClassName` | `String` | The classname on tag `li` of the ellipsis element. |
 | `onPageChange` | `Function` | The method to call when a page is clicked. |
-| `initialSelected` | `Number` | The initial page selected. |
+| `initialPage` | `Number` | The initial page selected. |
 | `forceSelected` | `Number` | To override selected page with parent prop. |
 | `containerClassName` | `String` | The classname of the pagination container. |
 | `pageClassName` | `String` | The classname on tag `li` of each page element. |

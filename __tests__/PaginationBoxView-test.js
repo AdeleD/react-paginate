@@ -57,7 +57,7 @@ describe('PaginationBoxView', () => {
   it('test rendering only active page item', function() {
     const smallPagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
-        initialSelected={0}
+        initialPage={0}
         pageRangeDisplayed={0}
         marginPagesDisplayed={0}
         breakLabel={null} />
