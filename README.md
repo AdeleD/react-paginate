@@ -70,7 +70,7 @@ Open your browser and go to `http://localhost:3000/`.
 | `nextLabel` | `Node` | Label for the `next` button. |
 | `breakLabel` | `Node` | Label for ellipsis. |
 | `breakClassName` | `String` | The classname on tag `li` of the ellipsis element. |
-| `onPageChange` | `Function` | The method to call when a page is clicked. |
+| `onPageChange` | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument. |
 | `initialPage` | `Number` | The initial page selected. |
 | `forcePage` | `Number` | To override selected page with parent prop. |
 | `containerClassName` | `String` | The classname of the pagination container. |
