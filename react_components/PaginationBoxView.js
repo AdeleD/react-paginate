@@ -18,7 +18,7 @@ export default class PaginationBoxView extends Component {
     breakLabel            : PropTypes.node,
     onPageChange          : PropTypes.func,
     initialPage           : PropTypes.number,
-    forceSelected         : PropTypes.number,
+    forcePage             : PropTypes.number,
     containerClassName    : PropTypes.string,
     pageClassName         : PropTypes.string,
     pageLinkClassName     : PropTypes.string,
@@ -49,14 +49,14 @@ export default class PaginationBoxView extends Component {
 
     this.state = {
       selected: props.initialPage ? props.initialPage :
-                props.forceSelected   ? props.forceSelected :
+                props.forcePage   ? props.forcePage :
                 0
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (typeof(nextProps.forceSelected) !== 'undefined' && this.props.forceSelected !== nextProps.forceSelected) {
-      this.setState({selected: nextProps.forceSelected});
+    if (typeof(nextProps.forcePage) !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
+      this.setState({selected: nextProps.forcePage});
     }
   }
 
