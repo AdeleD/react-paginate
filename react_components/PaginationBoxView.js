@@ -54,6 +54,13 @@ export default class PaginationBoxView extends Component {
     };
   }
 
+  componentDidMount() {
+    // Call the callback with the initialPage item:
+    if (typeof(this.props.initialPage) !== 'undefined') {
+      this.callCallback(this.props.initialPage);
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (typeof(nextProps.forcePage) !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
       this.setState({selected: nextProps.forcePage});
