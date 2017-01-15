@@ -19,6 +19,7 @@ export default class PaginationBoxView extends Component {
     onPageChange          : PropTypes.func,
     initialPage           : PropTypes.number,
     forcePage             : PropTypes.number,
+    disableInitialCallback: PropTypes.bool,
     containerClassName    : PropTypes.string,
     pageClassName         : PropTypes.string,
     pageLinkClassName     : PropTypes.string,
@@ -32,16 +33,17 @@ export default class PaginationBoxView extends Component {
   };
 
   static defaultProps = {
-    pageCount            : 10,
-    pageRangeDisplayed   : 2,
-    marginPagesDisplayed : 3,
-    activeClassName      : "selected",
-    previousClassName    : "previous",
-    nextClassName        : "next",
-    previousLabel        : "Previous",
-    nextLabel            : "Next",
-    breakLabel           : "...",
-    disabledClassName    : "disabled"
+    pageCount             : 10,
+    pageRangeDisplayed    : 2,
+    marginPagesDisplayed  : 3,
+    activeClassName       : "selected",
+    previousClassName     : "previous",
+    nextClassName         : "next",
+    previousLabel         : "Previous",
+    nextLabel             : "Next",
+    breakLabel            : "...",
+    disabledClassName     : "disabled",
+    disableInitialCallback: false
   };
 
   constructor(props) {
@@ -56,7 +58,7 @@ export default class PaginationBoxView extends Component {
 
   componentDidMount() {
     // Call the callback with the initialPage item:
-    if (typeof(this.props.initialPage) !== 'undefined') {
+    if (typeof(this.props.initialPage) !== 'undefined' && !this.props.disableInitialCallback) {
       this.callCallback(this.props.initialPage);
     }
   }
