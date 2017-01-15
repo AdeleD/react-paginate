@@ -76,4 +76,27 @@ describe('PaginationBoxView', () => {
     const breakItem = ReactDOM.findDOMNode(smallPagination).querySelectorAll(".break-me");
     expect(breakItem.length).toBe(1);
   });
+
+  describe('prop disableInitialCallback', () => {
+    it('test when true', function() {
+      const onPageChange = jest.fn();
+      const smallPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          disableInitialCallback={true}
+          initialPage={5}
+          onPageChange={onPageChange}
+        />
+      );
+
+      expect(onPageChange).not.toHaveBeenCalled();
+    });
+    it('test when false', function() {
+      const onPageChange = jest.fn();
+      const smallPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView initialPage={5} onPageChange={onPageChange} />
+      );
+
+      expect(onPageChange).toHaveBeenCalled();
+    });
+  });
 });
