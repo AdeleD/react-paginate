@@ -161,7 +161,7 @@ var PaginationBoxView = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // Call the callback with the initialPage item:
-      if (typeof this.props.initialPage !== 'undefined') {
+      if (typeof this.props.initialPage !== 'undefined' && !this.props.disableInitialCallback) {
         this.callCallback(this.props.initialPage);
       }
     }
@@ -226,6 +226,7 @@ PaginationBoxView.propTypes = {
   onPageChange: _react.PropTypes.func,
   initialPage: _react.PropTypes.number,
   forcePage: _react.PropTypes.number,
+  disableInitialCallback: _react.PropTypes.bool,
   containerClassName: _react.PropTypes.string,
   pageClassName: _react.PropTypes.string,
   pageLinkClassName: _react.PropTypes.string,
@@ -247,7 +248,8 @@ PaginationBoxView.defaultProps = {
   previousLabel: "Previous",
   nextLabel: "Next",
   breakLabel: "...",
-  disabledClassName: "disabled"
+  disabledClassName: "disabled",
+  disableInitialCallback: false
 };
 exports.default = PaginationBoxView;
 ;
