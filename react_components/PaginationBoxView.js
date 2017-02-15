@@ -135,6 +135,7 @@ export default class PaginationBoxView extends Component {
           pageClassName={this.props.pageClassName}
           pageLinkClassName={this.props.pageLinkClassName}
           activeClassName={this.props.activeClassName}
+          extraAriaContext={this.props.extraAriaContext}
           page={index + 1} />
       }
 
