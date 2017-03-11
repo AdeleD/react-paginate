@@ -11,7 +11,6 @@ const BreakView = require('./../react_components/BreakView').default;
 
 import ReactTestUtils from 'react-addons-test-utils';
 
-
 describe('PaginationBoxView', () => {
   const pagination = ReactTestUtils.renderIntoDocument(
     <PaginationBoxView />
@@ -32,7 +31,7 @@ describe('PaginationBoxView', () => {
   });
 
   it('test previous and next buttons', () => {
-    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(pagination, 'li');
+    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(pagination, 'a');
     let previous = elmts[0];
     let next = elmts[elmts.length - 1];
 
@@ -48,7 +47,7 @@ describe('PaginationBoxView', () => {
   it('test click on a page item', () => {
     ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
 
-    const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3)");
+    const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3) a");
 
     ReactTestUtils.Simulate.click(pageItem);
 
@@ -58,7 +57,7 @@ describe('PaginationBoxView', () => {
   it('test rendering only active page item', function() {
     const smallPagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
-        initialSelected={0}
+        initialPage={0}
         pageRangeDisplayed={0}
         marginPagesDisplayed={0}
         breakLabel={null} />
@@ -71,7 +70,9 @@ describe('PaginationBoxView', () => {
 
   it('should render href attribute in items', function() {
     const linkedPagination = ReactTestUtils.renderIntoDocument(
-      <PaginationBoxView initialSelected={1} linkBuilder={(page) => '/page/' + page }/>
+      <PaginationBoxView
+        initialPage={1}
+        hrefBuilder={(page) => '/page/' + page }/>
     );
 
     expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
@@ -80,5 +81,37 @@ describe('PaginationBoxView', () => {
       .getAttribute('href')).toEqual('/page/1');
     expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
       .getAttribute('href')).toEqual(null);
+  });
+
+  it('test breakClassName rendering', function() {
+    const smallPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView breakClassName={"break-me"}/>
+    );
+
+    const breakItem = ReactDOM.findDOMNode(smallPagination).querySelectorAll(".break-me");
+    expect(breakItem.length).toBe(1);
+  });
+
+  describe('prop disableInitialCallback', () => {
+    it('test when true', function() {
+      const onPageChange = jest.fn();
+      const smallPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          disableInitialCallback={true}
+          initialPage={5}
+          onPageChange={onPageChange}
+        />
+      );
+
+      expect(onPageChange).not.toHaveBeenCalled();
+    });
+    it('test when false', function() {
+      const onPageChange = jest.fn();
+      const smallPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView initialPage={5} onPageChange={onPageChange} />
+      );
+
+      expect(onPageChange).toHaveBeenCalled();
+    });
   });
 });

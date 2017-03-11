@@ -42,7 +42,7 @@ export class App extends Component {
       type     : 'GET',
 
       success: data => {
-        this.setState({data: data.comments, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)});
+        this.setState({data: data.comments, pageCount: Math.ceil(data.meta.total_count / data.meta.limit)});
       },
 
       error: (xhr, status, err) => {
@@ -71,10 +71,11 @@ export class App extends Component {
         <ReactPaginate previousLabel={"previous"}
                        nextLabel={"next"}
                        breakLabel={<a href="">...</a>}
-                       pageNum={this.state.pageNum}
+                       breakClassName={"break-me"}
+                       pageCount={this.state.pageCount}
                        marginPagesDisplayed={2}
                        pageRangeDisplayed={5}
-                       clickCallback={this.handlePageClick}
+                       onPageChange={this.handlePageClick}
                        containerClassName={"pagination"}
                        subContainerClassName={"pages pagination"}
                        activeClassName={"active"} />

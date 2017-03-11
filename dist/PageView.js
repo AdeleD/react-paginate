@@ -24,7 +24,7 @@ var PageView = function (_React$Component) {
   function PageView() {
     _classCallCheck(this, PageView);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageView).apply(this, arguments));
+    return _possibleConstructorReturn(this, (PageView.__proto__ || Object.getPrototypeOf(PageView)).apply(this, arguments));
   }
 
   _createClass(PageView, [{
@@ -45,10 +45,14 @@ var PageView = function (_React$Component) {
 
       return _react2.default.createElement(
         'li',
-        { onClick: onClick, className: cssClassName },
+        { className: cssClassName },
         _react2.default.createElement(
           'a',
-          { className: linkClassName, href: href },
+          { onClick: onClick,
+            className: linkClassName,
+            href: href,
+            tabIndex: '0',
+            onKeyPress: onClick },
           this.props.page
         )
       );

@@ -1,4 +1,5 @@
 # react-paginate
+[![NPM](https://nodei.co/npm/react-paginate.png?downloads=true)](https://nodei.co/npm/react-paginate/)
 [![Build Status](https://travis-ci.org/AdeleD/react-paginate.svg?branch=master)](https://travis-ci.org/AdeleD/react-paginate)
 
 **A ReactJS component to render a pagination.**
@@ -16,7 +17,7 @@ or
 Install `react-paginate` with [npm](https://www.npmjs.com/):
 
 ```
-$ npm install react-paginate
+$ npm install react-paginate --save
 ```
 
 For [CommonJS](http://wiki.commonjs.org/wiki/CommonJS) users:
@@ -63,15 +64,17 @@ Open your browser and go to `http://localhost:3000/`.
 
 | Name | Type | Description |
 | --- | --- | --- | --- |
-| `pageNum` | `Number` | **Required.** The total number of pages. |
+| `pageCount` | `Number` | **Required.** The total number of pages. |
 | `pageRangeDisplayed` | `Number` | **Required.** The range of pages displayed. |
 | `marginPagesDisplayed` | `Number` | **Required.** The number of pages to display for margins. |
 | `previousLabel` | `Node` | Label for the `previous` button. |
 | `nextLabel` | `Node` | Label for the `next` button. |
 | `breakLabel` | `Node` | Label for ellipsis. |
-| `clickCallback` | `Function` | The method to call when a page is clicked. |
-| `initialSelected` | `Number` | The initial page selected. |
-| `forceSelected` | `Number` | To override selected page with parent prop. |
+| `breakClassName` | `String` | The classname on tag `li` of the ellipsis element. |
+| `onPageChange` | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument. |
+| `initialPage` | `Number` | The initial page selected. |
+| `forcePage` | `Number` | To override selected page with parent prop. |
+| `disableInitialCallback` | `boolean` | Disable `onPageChange` callback with initial page. Default: `false` |
 | `containerClassName` | `String` | The classname of the pagination container. |
 | `pageClassName` | `String` | The classname on tag `li` of each page element. |
 | `pageLinkClassName` | `String` | The classname on tag `a` of each page element. |
@@ -81,6 +84,7 @@ Open your browser and go to `http://localhost:3000/`.
 | `previousLinkClassName` | `String` | The classname on tag `a` of the `previous` button. |
 | `nextLinkClassName` | `String` | The classname on tag `a` of the `next` button. |
 | `disabledClassName` | `String` | The classname for disabled `previous` and `next` buttons. |
+| `hrefBuilder` | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element. |
 
 ## Contribute
 
