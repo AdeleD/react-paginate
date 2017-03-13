@@ -1,3 +1,9 @@
+## >= 4.2.0
+
+A new prop `hrefBuilder` has been added.
+It allows to add custom href attributes on `<a>` tags of the component.
+
+
 ## >= 4.0.0
 
 * Some variable have been renamed:
