@@ -1,7 +1,7 @@
 ## >= 4.2.0
 
-A new prop `hrefBuilder` has been added.
-It allows to add custom href attributes on `<a>` tags of the component.
+* A new prop `hrefBuilder` has been added. It allows to add custom `href` attributes on `<a>` tags of the component.
+* Packages `react` and `react-addons-create-fragment` are now dependencies (see package.json).
 
 
 ## >= 4.0.0
