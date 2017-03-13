@@ -68,6 +68,34 @@ describe('PaginationBoxView', () => {
     expect(pageItems.length).toBe(3);
   });
 
+  it('should render href attribute in items if hrefBuilder is specified', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={1}
+        hrefBuilder={(page) => '/page/' + page } />
+    );
+
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+      .getAttribute('href')).toBe('/page/3');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+      .getAttribute('href')).toBe('/page/1');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
+      .getAttribute('href')).toBe(null);
+  });
+
+  it('should not render href attribute in items if hrefBuilder is not specified', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView />
+    );
+
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+      .hasAttribute('href')).toBe(false);
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+      .hasAttribute('href')).toBe(false);
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
+      .hasAttribute('href')).toBe(false);
+  });
+
   it('test breakClassName rendering', function() {
     const smallPagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView breakClassName={"break-me"}/>

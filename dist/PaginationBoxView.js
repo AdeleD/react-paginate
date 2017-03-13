@@ -110,13 +110,7 @@ var PaginationBoxView = function (_Component) {
 
           page = _index + 1;
 
-          var pageView = _react2.default.createElement(_PageView2.default, {
-            onClick: _this.handlePageSelected.bind(null, _index),
-            selected: _this.state.selected === _index,
-            pageClassName: _this.props.pageClassName,
-            pageLinkClassName: _this.props.pageLinkClassName,
-            activeClassName: _this.props.activeClassName,
-            page: _index + 1 });
+          var pageView = _this.getPageElement(_index);
 
           if (page <= _this.props.marginPagesDisplayed) {
             items['key' + _index] = pageView;
@@ -173,6 +167,25 @@ var PaginationBoxView = function (_Component) {
       }
     }
   }, {
+    key: 'hrefBuilder',
+    value: function hrefBuilder(pageIndex) {
+      if (this.props.hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < this.props.pageCount) {
+        return this.props.hrefBuilder(pageIndex + 1);
+      }
+    }
+  }, {
+    key: 'getPageElement',
+    value: function getPageElement(index) {
+      return _react2.default.createElement(_PageView2.default, {
+        onClick: this.handlePageSelected.bind(null, index),
+        selected: this.state.selected === index,
+        pageClassName: this.props.pageClassName,
+        pageLinkClassName: this.props.pageLinkClassName,
+        activeClassName: this.props.activeClassName,
+        href: this.hrefBuilder(index),
+        page: index + 1 });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var disabled = this.props.disabledClassName;
@@ -191,6 +204,7 @@ var PaginationBoxView = function (_Component) {
             'a',
             { onClick: this.handlePreviousPage,
               className: this.props.previousLinkClassName,
+              href: this.hrefBuilder(this.state.selected - 1),
               tabIndex: '0',
               onKeyPress: this.handlePreviousPage },
             this.props.previousLabel
@@ -204,6 +218,7 @@ var PaginationBoxView = function (_Component) {
             'a',
             { onClick: this.handleNextPage,
               className: this.props.nextLinkClassName,
+              href: this.hrefBuilder(this.state.selected + 1),
               tabIndex: '0',
               onKeyPress: this.handleNextPage },
             this.props.nextLabel
@@ -223,6 +238,7 @@ PaginationBoxView.propTypes = {
   previousLabel: _react.PropTypes.node,
   nextLabel: _react.PropTypes.node,
   breakLabel: _react.PropTypes.node,
+  hrefBuilder: _react.PropTypes.func,
   onPageChange: _react.PropTypes.func,
   initialPage: _react.PropTypes.number,
   forcePage: _react.PropTypes.number,

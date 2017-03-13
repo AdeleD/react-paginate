@@ -4,9 +4,10 @@ import React from 'react';
 
 export default class PageView extends React.Component {
   render() {
-    let linkClassName = this.props.pageLinkClassName;
     let cssClassName = this.props.pageClassName;
-    let onClick = this.props.onClick;
+    const linkClassName = this.props.pageLinkClassName;
+    const onClick = this.props.onClick;
+    const href = this.props.href;
 
     if (this.props.selected) {
       if (typeof(cssClassName) !== 'undefined') {
@@ -20,6 +21,7 @@ export default class PageView extends React.Component {
         <li className={cssClassName}>
             <a onClick={onClick}
                className={linkClassName}
+               href={href}
                tabIndex="0"
                onKeyPress={onClick}>
               {this.props.page}
