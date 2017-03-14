@@ -1,9 +1,6 @@
 /* global __dirname */
-
 var path = require('path');
-
 var webpack = require('webpack');
-
 var dir_js = path.resolve(__dirname, 'react_components');
 var dir_build = path.resolve(__dirname, 'build');
 
