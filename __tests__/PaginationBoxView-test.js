@@ -81,6 +81,20 @@ describe('PaginationBoxView', () => {
       .getAttribute('href')).toBe('/page/1');
     expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
       .getAttribute('href')).toBe(null);
+
+    const linkedPaginationWithPageCount = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageCount={5}
+        pageRangeDisplayed={10}
+        initialPage={1}
+        hrefBuilder={(page) => '/pagexx/' + page }
+      />
+    );
+
+    expect(
+      ReactDOM.findDOMNode(linkedPaginationWithPageCount)
+        .querySelector('li:nth-child(2) a').getAttribute('href')
+    ).toBe('/pagexx/1');
   });
 
   it('should not render href attribute in items if hrefBuilder is not specified', function() {

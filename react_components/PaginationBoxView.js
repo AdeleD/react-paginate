@@ -129,13 +129,7 @@ export default class PaginationBoxView extends Component {
     if (this.props.pageCount <= this.props.pageRangeDisplayed) {
 
       for (let index = 0; index < this.props.pageCount; index++) {
-        items['key' + index] = <PageView
-          onClick={this.handlePageSelected.bind(null, index)}
-          selected={this.state.selected === index}
-          pageClassName={this.props.pageClassName}
-          pageLinkClassName={this.props.pageLinkClassName}
-          activeClassName={this.props.activeClassName}
-          page={index + 1} />
+        items['key' + index] = this.getPageElement(index);
       }
 
     } else {
