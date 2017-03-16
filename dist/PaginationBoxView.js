@@ -105,25 +105,26 @@ var PaginationBoxView = function (_Component) {
         var _index = void 0;
         var page = void 0;
         var breakView = void 0;
+        var createPageView = function createPageView(index) {
+          return _this.getPageElement(index);
+        };
 
         for (_index = 0; _index < _this.props.pageCount; _index++) {
 
           page = _index + 1;
 
-          var pageView = _this.getPageElement(_index);
-
           if (page <= _this.props.marginPagesDisplayed) {
-            items['key' + _index] = pageView;
+            items['key' + _index] = createPageView(_index);
             continue;
           }
 
           if (page > _this.props.pageCount - _this.props.marginPagesDisplayed) {
-            items['key' + _index] = pageView;
+            items['key' + _index] = createPageView(_index);
             continue;
           }
 
           if (_index >= _this.state.selected - leftSide && _index <= _this.state.selected + rightSide) {
-            items['key' + _index] = pageView;
+            items['key' + _index] = createPageView(_index);
             continue;
           }
 
