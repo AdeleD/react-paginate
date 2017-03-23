@@ -61,7 +61,7 @@ Open your browser and go to `http://localhost:3000/`.
 <img src="./docs/img/react-paginate.gif" alt="Pagination demo" />
 
 ## Props
-
+```
 | Name | Type | Description |
 | --- | --- | --- | --- |
 | `pageCount` | `Number` | **Required.** The total number of pages. |
@@ -85,7 +85,7 @@ Open your browser and go to `http://localhost:3000/`.
 | `nextLinkClassName` | `String` | The classname on tag `a` of the `next` button. |
 | `disabledClassName` | `String` | The classname for disabled `previous` and `next` buttons. |
 | `hrefBuilder` | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element. |
-
+```
 ## Contribute
 
 1. [Submit an issue](https://github.com/AdeleD/react-paginate/issues)
