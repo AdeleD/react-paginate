@@ -84,7 +84,7 @@ Open your browser and go to `http://localhost:3000/`.
 | `nextLinkClassName`       | `String`    | The classname on tag `a` of the `next` button.                                                |
 | `disabledClassName`       | `String`    | The classname for disabled `previous` and `next` buttons.                                     |
 | `hrefBuilder`             | `Function`  | The method is called to generate the `href` attribute value on tag `a` of each page element.  |
-| `extraAriaContext`        | `string`    | Extra context to add to the `aria-label` HTML attribute.                                      |
+| `extraAriaContext`        | `String`    | Extra context to add to the `aria-label` HTML attribute.                                      |
 
 ## Contribute
 

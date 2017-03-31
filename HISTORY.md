@@ -1,3 +1,9 @@
+## >= 4.3.0
+
+* The HTML attribute `aria-label` has been added.
+* A new prop `extraAriaContext` allows to add some extra text to the end of the `aria-label` to provide additional context to the users.
+
+
 ## >= 4.2.0
 
 * A new prop `hrefBuilder` has been added. It allows to add custom `href` attributes on `<a>` tags of the component.
