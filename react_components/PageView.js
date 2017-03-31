@@ -8,8 +8,13 @@ export default class PageView extends React.Component {
     const linkClassName = this.props.pageLinkClassName;
     const onClick = this.props.onClick;
     const href = this.props.href;
+    let ariaLabel = 'Page ' + this.props.page +
+      (this.props.extraAriaContext ? ' ' + this.props.extraAriaContext : '');
+    let ariaCurrent = null;
 
     if (this.props.selected) {
+      ariaCurrent = 'page';
+      ariaLabel = 'Page ' + this.props.page + ' is your current page';
       if (typeof(cssClassName) !== 'undefined') {
         cssClassName = cssClassName + ' ' + this.props.activeClassName;
       } else {
@@ -23,6 +28,8 @@ export default class PageView extends React.Component {
                className={linkClassName}
                href={href}
                tabIndex="0"
+               aria-label={ariaLabel}
+               aria-current={ariaCurrent}
                onKeyPress={onClick}>
               {this.props.page}
             </a>
