@@ -42,7 +42,7 @@ var PaginationBoxView = function (_Component) {
   function PaginationBoxView(props) {
     _classCallCheck(this, PaginationBoxView);
 
-    var _this = _possibleConstructorReturn(this, (PaginationBoxView.__proto__ || Object.getPrototypeOf(PaginationBoxView)).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PaginationBoxView).call(this, props));
 
     _this.handlePreviousPage = function (evt) {
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
@@ -81,13 +81,7 @@ var PaginationBoxView = function (_Component) {
       if (_this.props.pageCount <= _this.props.pageRangeDisplayed) {
 
         for (var index = 0; index < _this.props.pageCount; index++) {
-          items['key' + index] = _react2.default.createElement(_PageView2.default, {
-            onClick: _this.handlePageSelected.bind(null, index),
-            selected: _this.state.selected === index,
-            pageClassName: _this.props.pageClassName,
-            pageLinkClassName: _this.props.pageLinkClassName,
-            activeClassName: _this.props.activeClassName,
-            page: index + 1 });
+          items['key' + index] = _this.getPageElement(index);
         }
       } else {
 
@@ -182,6 +176,7 @@ var PaginationBoxView = function (_Component) {
         pageClassName: this.props.pageClassName,
         pageLinkClassName: this.props.pageLinkClassName,
         activeClassName: this.props.activeClassName,
+        extraAriaContext: this.props.extraAriaContext,
         href: this.hrefBuilder(index),
         page: index + 1 });
     }

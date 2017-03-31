@@ -24,7 +24,7 @@ var PageView = function (_React$Component) {
   function PageView() {
     _classCallCheck(this, PageView);
 
-    return _possibleConstructorReturn(this, (PageView.__proto__ || Object.getPrototypeOf(PageView)).apply(this, arguments));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageView).apply(this, arguments));
   }
 
   _createClass(PageView, [{
@@ -34,8 +34,12 @@ var PageView = function (_React$Component) {
       var linkClassName = this.props.pageLinkClassName;
       var onClick = this.props.onClick;
       var href = this.props.href;
+      var ariaLabel = 'Page ' + this.props.page + (this.props.extraAriaContext ? ' ' + this.props.extraAriaContext : '');
+      var ariaCurrent = null;
 
       if (this.props.selected) {
+        ariaCurrent = 'page';
+        ariaLabel = 'Page ' + this.props.page + ' is your current page';
         if (typeof cssClassName !== 'undefined') {
           cssClassName = cssClassName + ' ' + this.props.activeClassName;
         } else {
@@ -52,6 +56,8 @@ var PageView = function (_React$Component) {
             className: linkClassName,
             href: href,
             tabIndex: '0',
+            'aria-label': ariaLabel,
+            'aria-current': ariaCurrent,
             onKeyPress: onClick },
           this.props.page
         )

@@ -24,7 +24,7 @@ var BreakView = function (_React$Component) {
   function BreakView() {
     _classCallCheck(this, BreakView);
 
-    return _possibleConstructorReturn(this, (BreakView.__proto__ || Object.getPrototypeOf(BreakView)).apply(this, arguments));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(BreakView).apply(this, arguments));
   }
 
   _createClass(BreakView, [{
