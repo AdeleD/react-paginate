@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "prop-types": "^15.5.3",
     "react": "^15.0.0",
     "react-addons-create-fragment": "^15.0.0"
   },
