@@ -6,11 +6,11 @@
 
 By installing this component and writing only a little bit of CSS you can obtain this:
 
-<img src="./docs/img/pagination2.png" alt="Pagination demo 2" />
+<img src="https://cloud.githubusercontent.com/assets/2084833/24840237/7accb75a-1d1e-11e7-9abb-818431398b91.png" alt="Pagination demo 2" />
 
 or
 
-<img src="./docs/img/pagination1.png" alt="Pagination demo 1" />
+<img src="https://cloud.githubusercontent.com/assets/2084833/24840230/594e4ea4-1d1e-11e7-8b34-bde943b4793d.png" alt="Pagination demo 1" />
 
 ## Installation
 
@@ -56,9 +56,9 @@ Run the server:
 $ make serve
 ```
 
-Open your browser and go to `http://localhost:3000/`.
+Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 
-<img src="./docs/img/react-paginate.gif" alt="Pagination demo" />
+<img src="https://cloud.githubusercontent.com/assets/2084833/24840241/7c95b7b2-1d1e-11e7-97e3-83b9c7a1f832.gif" alt="Pagination demo" />
 
 ## Props
 | Name                      | Type        | Description                                                                                   |
