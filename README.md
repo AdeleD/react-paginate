@@ -17,7 +17,7 @@ or
 Install `react-paginate` with [npm](https://www.npmjs.com/):
 
 ```
-$ npm install react-paginate --save
+$ npm install react-paginate react-addons-create-fragment --save
 ```
 
 For [CommonJS](http://wiki.commonjs.org/wiki/CommonJS) users:
