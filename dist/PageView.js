@@ -24,7 +24,7 @@ var PageView = function (_React$Component) {
   function PageView() {
     _classCallCheck(this, PageView);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(PageView).apply(this, arguments));
+    return _possibleConstructorReturn(this, (PageView.__proto__ || Object.getPrototypeOf(PageView)).apply(this, arguments));
   }
 
   _createClass(PageView, [{

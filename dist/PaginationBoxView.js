@@ -10,6 +10,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -42,7 +46,7 @@ var PaginationBoxView = function (_Component) {
   function PaginationBoxView(props) {
     _classCallCheck(this, PaginationBoxView);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PaginationBoxView).call(this, props));
+    var _this = _possibleConstructorReturn(this, (PaginationBoxView.__proto__ || Object.getPrototypeOf(PaginationBoxView)).call(this, props));
 
     _this.handlePreviousPage = function (evt) {
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
@@ -227,27 +231,27 @@ var PaginationBoxView = function (_Component) {
 }(_react.Component);
 
 PaginationBoxView.propTypes = {
-  pageCount: _react.PropTypes.number.isRequired,
-  pageRangeDisplayed: _react.PropTypes.number.isRequired,
-  marginPagesDisplayed: _react.PropTypes.number.isRequired,
-  previousLabel: _react.PropTypes.node,
-  nextLabel: _react.PropTypes.node,
-  breakLabel: _react.PropTypes.node,
-  hrefBuilder: _react.PropTypes.func,
-  onPageChange: _react.PropTypes.func,
-  initialPage: _react.PropTypes.number,
-  forcePage: _react.PropTypes.number,
-  disableInitialCallback: _react.PropTypes.bool,
-  containerClassName: _react.PropTypes.string,
-  pageClassName: _react.PropTypes.string,
-  pageLinkClassName: _react.PropTypes.string,
-  activeClassName: _react.PropTypes.string,
-  previousClassName: _react.PropTypes.string,
-  nextClassName: _react.PropTypes.string,
-  previousLinkClassName: _react.PropTypes.string,
-  nextLinkClassName: _react.PropTypes.string,
-  disabledClassName: _react.PropTypes.string,
-  breakClassName: _react.PropTypes.string
+  pageCount: _propTypes2.default.number.isRequired,
+  pageRangeDisplayed: _propTypes2.default.number.isRequired,
+  marginPagesDisplayed: _propTypes2.default.number.isRequired,
+  previousLabel: _propTypes2.default.node,
+  nextLabel: _propTypes2.default.node,
+  breakLabel: _propTypes2.default.node,
+  hrefBuilder: _propTypes2.default.func,
+  onPageChange: _propTypes2.default.func,
+  initialPage: _propTypes2.default.number,
+  forcePage: _propTypes2.default.number,
+  disableInitialCallback: _propTypes2.default.bool,
+  containerClassName: _propTypes2.default.string,
+  pageClassName: _propTypes2.default.string,
+  pageLinkClassName: _propTypes2.default.string,
+  activeClassName: _propTypes2.default.string,
+  previousClassName: _propTypes2.default.string,
+  nextClassName: _propTypes2.default.string,
+  previousLinkClassName: _propTypes2.default.string,
+  nextLinkClassName: _propTypes2.default.string,
+  disabledClassName: _propTypes2.default.string,
+  breakClassName: _propTypes2.default.string
 };
 PaginationBoxView.defaultProps = {
   pageCount: 10,
