@@ -2,15 +2,15 @@
 
 import React from 'react';
 
-export default class BreakView extends React.Component {
-  render() {
-    let label = this.props.breakLabel;
-    let className = this.props.breakClassName || 'break';
+const BreakView = (props) => {
+  const label = props.breakLabel;
+  const className = props.breakClassName || 'break';
 
-    return (
-      <li className={className}>
-        {label}
-      </li>
-    );
-  }
-};
+  return (
+    <li className={className}>
+      {label}
+    </li>
+  );
+}
+
+export default BreakView;
