@@ -168,7 +168,7 @@ export default class PaginationBoxView extends Component {
           continue;
         }
 
-        if ((index >= this.state.selected - leftSide) && (index <= this.state.selected + rightSide)) {
+        if ((index >= this.state.selected - leftSide) && (index < this.state.selected + rightSide)) {
           items['key' + index] = pageView;
           continue;
         }
