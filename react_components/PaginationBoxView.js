@@ -151,25 +151,24 @@ export default class PaginationBoxView extends Component {
       let index;
       let page;
       let breakView;
+      let createPageView = (index) => this.getPageElement(index);
 
       for (index = 0; index < this.props.pageCount; index++) {
 
         page = index + 1;
 
-        let pageView = this.getPageElement(index);
-
         if (page <= this.props.marginPagesDisplayed) {
-          items['key' + index] = pageView;
+          items['key' + index] = createPageView(index);
           continue;
         }
 
         if (page > this.props.pageCount - this.props.marginPagesDisplayed) {
-          items['key' + index] = pageView;
+          items['key' + index] = createPageView(index);
           continue;
         }
 
         if ((index >= this.state.selected - leftSide) && (index <= this.state.selected + rightSide)) {
-          items['key' + index] = pageView;
+          items['key' + index] = createPageView(index);
           continue;
         }
 
