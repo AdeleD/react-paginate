@@ -23,8 +23,10 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.5.7",
-    "react": "^15.0.0",
     "react-addons-create-fragment": "^15.0.0"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -54,7 +56,9 @@
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
     },
-    "testPathDirs": ["__tests__"],
+    "testPathDirs": [
+      "__tests__"
+    ],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",
