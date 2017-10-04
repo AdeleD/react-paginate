@@ -31,34 +31,7 @@ how to make `react-paginate` work with a list of objects.
 
 ## Demo
 
-Clone the repository and move into:
-
-```console
-$ git clone git@github.com:AdeleD/react-paginate.git
-$ cd react-paginate
-```
-
-Install dependencies:
-
-```console
-$ make install
-```
-
-Prepare the demo:
-
-```console
-$ make demo
-```
-
-Run the server:
-
-```console
-$ make serve
-```
-
-Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
-
-<img src="https://cloud.githubusercontent.com/assets/2084833/24840241/7c95b7b2-1d1e-11e7-97e3-83b9c7a1f832.gif" alt="Pagination demo" />
+The demo is currently broken, we will reupload instructions if it gets fixed.
 
 ## Props
 | Name                      | Type        | Description                                                                                   |
