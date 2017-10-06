@@ -1,3 +1,8 @@
+## >= 5.0.0
+
+* Compatibility with React v16.0
+
+
 ## >= 4.3.0
 
 * The HTML attribute `aria-label` has been added.
