@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import createFragment from 'react-addons-create-fragment';
 import PageView from './PageView';
 import BreakView from './BreakView';
 
@@ -126,12 +125,12 @@ export default class PaginationBoxView extends Component {
   }
 
   pagination = () => {
-    let items = {};
+    const items = [];
 
     if (this.props.pageCount <= this.props.pageRangeDisplayed) {
 
       for (let index = 0; index < this.props.pageCount; index++) {
-        items['key' + index] = this.getPageElement(index);
+        items.push(this.getPageElement(index));
       }
 
     } else {
@@ -158,37 +157,34 @@ export default class PaginationBoxView extends Component {
         page = index + 1;
 
         if (page <= this.props.marginPagesDisplayed) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
         if (page > this.props.pageCount - this.props.marginPagesDisplayed) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
         if ((index >= this.state.selected - leftSide) && (index <= this.state.selected + rightSide)) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
-        let keys            = Object.keys(items);
-        let breakLabelKey   = keys[keys.length - 1];
-        let breakLabelValue = items[breakLabelKey];
-
-        if (this.props.breakLabel && breakLabelValue !== breakView) {
+        if (this.props.breakLabel && items[items.length - 1] !== breakView) {
           breakView = (
             <BreakView
               breakLabel={this.props.breakLabel}
               breakClassName={this.props.breakClassName}
             />
           );
-
-          items['key' + index] = breakView;
+          items.push(breakView);
         }
       }
     }
 
+    // TODO Use new JSX syntax for fragments, when available:
+    // https://github.com/facebook/jsx/issues/84
     return items;
   };
 
@@ -213,7 +209,7 @@ export default class PaginationBoxView extends Component {
           </a>
         </li>
 
-        {createFragment(this.pagination())}
+        {this.pagination()}
 
         <li className={nextClasses}>
           <a onClick={this.handleNextPage}
