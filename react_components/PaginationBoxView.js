@@ -114,6 +114,7 @@ export default class PaginationBoxView extends Component {
 
   getPageElement(index) {
     return <PageView
+      key={index}
       onClick={this.handlePageSelected.bind(null, index)}
       selected={this.state.selected === index}
       pageClassName={this.props.pageClassName}
@@ -174,6 +175,7 @@ export default class PaginationBoxView extends Component {
         if (this.props.breakLabel && items[items.length - 1] !== breakView) {
           breakView = (
             <BreakView
+              key={index}
               breakLabel={this.props.breakLabel}
               breakClassName={this.props.breakClassName}
             />
