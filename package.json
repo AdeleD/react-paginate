@@ -51,7 +51,7 @@
     "test": "BABEL_JEST_STAGE=0 jest",
     "prepublish": "babel ./react_components --out-dir ./dist --source-maps --presets es2015,stage-0,react",
     "start": "webpack-dev-server --hot --inline",
-    "demo": "webpack"
+    "demo": "cd demo && webpack && node data.js && node server.js"
   },
   "jest": {
     "transform": {
