@@ -18,10 +18,6 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _reactAddonsCreateFragment = require('react-addons-create-fragment');
-
-var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
-
 var _PageView = require('./PageView');
 
 var _PageView2 = _interopRequireDefault(_PageView);
@@ -80,12 +76,12 @@ var PaginationBoxView = function (_Component) {
     };
 
     _this.pagination = function () {
-      var items = {};
+      var items = [];
 
       if (_this.props.pageCount <= _this.props.pageRangeDisplayed) {
 
         for (var index = 0; index < _this.props.pageCount; index++) {
-          items['key' + index] = _this.getPageElement(index);
+          items.push(_this.getPageElement(index));
         }
       } else {
 
@@ -112,35 +108,33 @@ var PaginationBoxView = function (_Component) {
           page = _index + 1;
 
           if (page <= _this.props.marginPagesDisplayed) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
           if (page > _this.props.pageCount - _this.props.marginPagesDisplayed) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
           if (_index >= _this.state.selected - leftSide && _index <= _this.state.selected + rightSide) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
-          var keys = Object.keys(items);
-          var breakLabelKey = keys[keys.length - 1];
-          var breakLabelValue = items[breakLabelKey];
-
-          if (_this.props.breakLabel && breakLabelValue !== breakView) {
+          if (_this.props.breakLabel && items[items.length - 1] !== breakView) {
             breakView = _react2.default.createElement(_BreakView2.default, {
+              key: _index,
               breakLabel: _this.props.breakLabel,
               breakClassName: _this.props.breakClassName
             });
-
-            items['key' + _index] = breakView;
+            items.push(breakView);
           }
         }
       }
 
+      // TODO Use new JSX syntax for fragments, when available:
+      // https://github.com/facebook/jsx/issues/84
       return items;
     };
 
@@ -176,6 +170,7 @@ var PaginationBoxView = function (_Component) {
     key: 'getPageElement',
     value: function getPageElement(index) {
       return _react2.default.createElement(_PageView2.default, {
+        key: index,
         onClick: this.handlePageSelected.bind(null, index),
         selected: this.state.selected === index,
         pageClassName: this.props.pageClassName,
@@ -210,7 +205,7 @@ var PaginationBoxView = function (_Component) {
             this.props.previousLabel
           )
         ),
-        (0, _reactAddonsCreateFragment2.default)(this.pagination()),
+        this.pagination(),
         _react2.default.createElement(
           'li',
           { className: nextClasses },
