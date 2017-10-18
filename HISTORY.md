@@ -1,3 +1,7 @@
+## 5.0.1
+
+* Delete the dependency on `react-addons-create-fragment`
+
 ## >= 5.0.0
 
 * Compatibility with React v16.0
