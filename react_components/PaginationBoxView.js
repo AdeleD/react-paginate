@@ -31,7 +31,9 @@ export default class PaginationBoxView extends Component {
     previousLinkClassName : PropTypes.string,
     nextLinkClassName     : PropTypes.string,
     disabledClassName     : PropTypes.string,
-    breakClassName        : PropTypes.string
+    breakClassName        : PropTypes.string,
+    extraAriaContext      : PropTypes.string,
+    ariaLabelBuilder      : PropTypes.func
   };
 
   static defaultProps = {
@@ -106,6 +108,20 @@ export default class PaginationBoxView extends Component {
     }
   }
 
+  ariaLabelBuilder(pageIndex) {
+    const selected = pageIndex === this.state.selected;
+    if (this.props.ariaLabelBuilder &&
+      pageIndex >= 0 &&
+      pageIndex < this.props.pageCount) {
+      let label = this.props.ariaLabelBuilder(pageIndex + 1, selected);
+      // perhaps deprecate warning in future?
+      if (this.props.extraAriaContext && !selected) {
+        label = label + ' ' + this.props.extraAriaContext;
+      }
+      return label;
+    }
+  }
+
   callCallback = (selectedItem) => {
     if (typeof(this.props.onPageChange) !== "undefined" &&
         typeof(this.props.onPageChange) === "function") {
@@ -122,6 +138,7 @@ export default class PaginationBoxView extends Component {
       activeClassName={this.props.activeClassName}
       extraAriaContext={this.props.extraAriaContext}
       href={this.hrefBuilder(index)}
+      ariaLabel={this.ariaLabelBuilder(index)}
       page={index + 1} />
   }
 
