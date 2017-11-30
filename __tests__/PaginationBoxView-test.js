@@ -399,6 +399,41 @@ describe('Test pagination behaviour', () => {
     expect(rightElements.length).toBe(6);
     expect(breakElements.length).toBe(1);
   });
+
+  it('should use ariaLabelBuilder for rendering aria-labels if ariaLabelBuilder is specified', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={1}
+        pageCount={3}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={2}
+        ariaLabelBuilder={(page, selected) => selected ? 'Current page' : 'Goto page ' + page } />
+    );
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:nth-last-child(2) a')
+      .getAttribute('aria-label')).toBe('Goto page 3');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:nth-child(2) a')
+      .getAttribute('aria-label')).toBe('Goto page 1');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
+      .getAttribute('aria-label')).toBe('Current page');
+  });
+
+  it('test ariaLabelBuilder works with extraAriaContext', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={1}
+        pageCount={3}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={2}
+        ariaLabelBuilder={(page, selected) => selected ? 'Current page' : 'Goto page ' + page }
+        extraAriaContext="foobar" />
+    );
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:nth-last-child(2) a')
+      .getAttribute('aria-label')).toBe('Goto page 3 foobar');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:nth-child(2) a')
+      .getAttribute('aria-label')).toBe('Goto page 1 foobar');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
+      .getAttribute('aria-label')).toBe('Current page');
+  });
 });
 
 describe('Test default props', () => {

@@ -9,19 +9,18 @@ const PageView = props => {
 
   const onClick = props.onClick;
   const href = props.href;
-
-  let ariaLabel =
-    'Page ' +
-    props.page +
+  let ariaLabel = props.ariaLabel || 'Page ' + props.page +
     (props.extraAriaContext ? ' ' + props.extraAriaContext : '');
   let ariaCurrent = null;
 
   if (props.selected) {
     ariaCurrent = 'page';
-    ariaLabel = 'Page ' + props.page + ' is your current page';
+    
+    ariaLabel = props.ariaLabel || 'Page ' + props.page + ' is your current page';
 
     if (typeof pageClassName !== 'undefined') {
       pageClassName = pageClassName + ' ' + props.activeClassName;
+
     } else {
       pageClassName = props.activeClassName;
     }
