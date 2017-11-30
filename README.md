@@ -85,6 +85,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `disabledClassName`       | `String`    | The classname for disabled `previous` and `next` buttons.                                     |
 | `hrefBuilder`             | `Function`  | The method is called to generate the `href` attribute value on tag `a` of each page element.  |
 | `extraAriaContext`        | `String`    | Extra context to add to the `aria-label` HTML attribute.                                      |
+| `ariaLabelBuilder`        | `Function`  | The method is called to generate the `aria-label` attribute value on each page link           |
 
 ## Contribute
 
