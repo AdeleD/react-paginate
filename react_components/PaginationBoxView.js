@@ -185,8 +185,6 @@ export default class PaginationBoxView extends Component {
       }
     }
 
-    // TODO Use new JSX syntax for fragments, when available:
-    // https://github.com/facebook/jsx/issues/84
     return items;
   };
 
