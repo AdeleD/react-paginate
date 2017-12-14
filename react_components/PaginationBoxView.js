@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import createFragment from 'react-addons-create-fragment';
 import PageView from './PageView';
 import BreakView from './BreakView';
 
@@ -115,6 +114,7 @@ export default class PaginationBoxView extends Component {
 
   getPageElement(index) {
     return <PageView
+      key={index}
       onClick={this.handlePageSelected.bind(null, index)}
       selected={this.state.selected === index}
       pageClassName={this.props.pageClassName}
@@ -179,6 +179,7 @@ export default class PaginationBoxView extends Component {
         if (this.props.breakLabel && breakLabelValue !== breakView) {
           breakView = (
             <BreakView
+              key="breakView"
               breakLabel={this.props.breakLabel}
               breakClassName={this.props.breakClassName}
             />
@@ -191,6 +192,13 @@ export default class PaginationBoxView extends Component {
 
     return items;
   };
+
+  renderPagination() {
+    const pages = this.pagination();
+    return Object.keys(pages).map((key) => {
+        return pages[key];
+    });
+  }
 
   render() {
     let disabled = this.props.disabledClassName;
@@ -213,7 +221,7 @@ export default class PaginationBoxView extends Component {
           </a>
         </li>
 
-        {createFragment(this.pagination())}
+        {this.renderPagination()}
 
         <li className={nextClasses}>
           <a onClick={this.handleNextPage}
