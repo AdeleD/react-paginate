@@ -21,11 +21,20 @@ const PageView = (props) => {
     }
   }
 
+  let rel = null;
+  if (props.selectedPage === props.page) {
+    rel = 'prev';
+  }
+  if (props.selectedPage === props.page - 2) {
+    rel = 'next';
+  }
+
   return (
       <li className={cssClassName}>
           <a onClick={onClick}
              className={linkClassName}
              href={href}
+             rel={rel}
              tabIndex="0"
              aria-label={ariaLabel}
              aria-current={ariaCurrent}

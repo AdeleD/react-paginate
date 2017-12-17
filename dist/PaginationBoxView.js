@@ -178,6 +178,7 @@ var PaginationBoxView = function (_Component) {
       return _react2.default.createElement(_PageView2.default, {
         onClick: this.handlePageSelected.bind(null, index),
         selected: this.state.selected === index,
+        selectedPage: this.state.selected,
         pageClassName: this.props.pageClassName,
         pageLinkClassName: this.props.pageLinkClassName,
         activeClassName: this.props.activeClassName,
@@ -205,6 +206,7 @@ var PaginationBoxView = function (_Component) {
             { onClick: this.handlePreviousPage,
               className: this.props.previousLinkClassName,
               href: this.hrefBuilder(this.state.selected - 1),
+              rel: this.state.selected !== 0 ? "prev" : null,
               tabIndex: '0',
               onKeyPress: this.handlePreviousPage },
             this.props.previousLabel
@@ -219,6 +221,7 @@ var PaginationBoxView = function (_Component) {
             { onClick: this.handleNextPage,
               className: this.props.nextLinkClassName,
               href: this.hrefBuilder(this.state.selected + 1),
+              rel: this.state.selected !== this.props.pageCount - 1 ? "next" : null,
               tabIndex: '0',
               onKeyPress: this.handleNextPage },
             this.props.nextLabel

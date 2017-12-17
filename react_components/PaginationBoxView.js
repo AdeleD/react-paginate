@@ -117,6 +117,7 @@ export default class PaginationBoxView extends Component {
     return <PageView
       onClick={this.handlePageSelected.bind(null, index)}
       selected={this.state.selected === index}
+      selectedPage={this.state.selected}
       pageClassName={this.props.pageClassName}
       pageLinkClassName={this.props.pageLinkClassName}
       activeClassName={this.props.activeClassName}
@@ -207,6 +208,7 @@ export default class PaginationBoxView extends Component {
           <a onClick={this.handlePreviousPage}
              className={this.props.previousLinkClassName}
              href={this.hrefBuilder(this.state.selected - 1)}
+             rel={this.state.selected !== 0 ? "prev" : null}
              tabIndex="0"
              onKeyPress={this.handlePreviousPage}>
             {this.props.previousLabel}
@@ -219,6 +221,7 @@ export default class PaginationBoxView extends Component {
           <a onClick={this.handleNextPage}
              className={this.props.nextLinkClassName}
              href={this.hrefBuilder(this.state.selected + 1)}
+             rel={this.state.selected !== this.props.pageCount - 1 ? "next" : null}
              tabIndex="0"
              onKeyPress={this.handleNextPage}>
             {this.props.nextLabel}
