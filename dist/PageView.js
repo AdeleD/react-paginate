@@ -28,6 +28,15 @@ var PageView = function PageView(props) {
     }
   }
 
+  var selectedPage = props.selectedPage;
+  var rel = null;
+  if (selectedPage === props.page + 1) {
+    rel = 'prev';
+  }
+  if (selectedPage === props.page - 1) {
+    rel = 'next';
+  }
+
   return _react2.default.createElement(
     'li',
     { className: cssClassName },
@@ -36,6 +45,7 @@ var PageView = function PageView(props) {
       { onClick: onClick,
         className: linkClassName,
         href: href,
+        rel: rel,
         tabIndex: '0',
         'aria-label': ariaLabel,
         'aria-current': ariaCurrent,

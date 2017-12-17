@@ -178,6 +178,7 @@ var PaginationBoxView = function (_Component) {
       return _react2.default.createElement(_PageView2.default, {
         onClick: this.handlePageSelected.bind(null, index),
         selected: this.state.selected === index,
+        selectedPage: this.state.selected,
         pageClassName: this.props.pageClassName,
         pageLinkClassName: this.props.pageLinkClassName,
         activeClassName: this.props.activeClassName,

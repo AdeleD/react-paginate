@@ -96,6 +96,29 @@ describe('PaginationBoxView', () => {
       .hasAttribute('href')).toBe(false);
   });
 
+  it('should render rel attribute in items', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={1}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={1} />
+    );
+
+    const linksWithRelPrev = ReactDOM.findDOMNode(linkedPagination).querySelectorAll('li a[rel="prev"]');
+    expect(linksWithRelPrev.length).toBe(2);
+    const linksWithRelNext = ReactDOM.findDOMNode(linkedPagination).querySelectorAll('li a[rel="next"]');
+    expect(linksWithRelNext.length).toBe(2);
+
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+      .rel).toBe('next');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+      .rel).toBe('prev');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected + li a')
+      .rel).toBe('next');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child + li a')
+      .rel).toBe('prev');
+  });
+
   it('test breakClassName rendering', function() {
     const smallPagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView breakClassName={"break-me"}/>
