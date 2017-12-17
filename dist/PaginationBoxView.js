@@ -206,6 +206,7 @@ var PaginationBoxView = function (_Component) {
             { onClick: this.handlePreviousPage,
               className: this.props.previousLinkClassName,
               href: this.hrefBuilder(this.state.selected - 1),
+              rel: this.state.selected !== 0 ? "prev" : null,
               tabIndex: '0',
               onKeyPress: this.handlePreviousPage },
             this.props.previousLabel
@@ -220,6 +221,7 @@ var PaginationBoxView = function (_Component) {
             { onClick: this.handleNextPage,
               className: this.props.nextLinkClassName,
               href: this.hrefBuilder(this.state.selected + 1),
+              rel: this.state.selected !== this.props.pageCount - 1 ? "next" : null,
               tabIndex: '0',
               onKeyPress: this.handleNextPage },
             this.props.nextLabel

@@ -28,12 +28,11 @@ var PageView = function PageView(props) {
     }
   }
 
-  var selectedPage = props.selectedPage;
   var rel = null;
-  if (selectedPage === props.page + 1) {
+  if (props.selectedPage === props.page) {
     rel = 'prev';
   }
-  if (selectedPage === props.page - 1) {
+  if (props.selectedPage === props.page - 2) {
     rel = 'next';
   }
 
