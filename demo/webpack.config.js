@@ -1,9 +1,5 @@
 /* global __dirname */
-
 var path = require('path');
-
-var webpack = require('webpack');
-
 var dir_js = path.resolve(__dirname, 'js');
 var dir_html = path.resolve(__dirname, 'html');
 var dir_build = path.resolve(__dirname, 'build');

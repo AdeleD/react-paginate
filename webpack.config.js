@@ -1,6 +1,5 @@
 /* global __dirname */
 var path = require('path');
-var webpack = require('webpack');
 var dir_js = path.resolve(__dirname, 'react_components');
 var dir_build = path.resolve(__dirname, 'build');
 
@@ -24,9 +23,6 @@ module.exports = {
             {
                 loader: 'babel-loader',
                 test: dir_js,
-                query: {
-                    presets: ['es2015', 'react', 'stage-0'],
-                },
             }
         ]
     },
