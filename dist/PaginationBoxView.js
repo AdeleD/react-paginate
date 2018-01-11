@@ -18,10 +18,6 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _reactAddonsCreateFragment = require('react-addons-create-fragment');
-
-var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
-
 var _PageView = require('./PageView');
 
 var _PageView2 = _interopRequireDefault(_PageView);
@@ -132,6 +128,7 @@ var PaginationBoxView = function (_Component) {
 
           if (_this.props.breakLabel && breakLabelValue !== breakView) {
             breakView = _react2.default.createElement(_BreakView2.default, {
+              key: 'breakView',
               breakLabel: _this.props.breakLabel,
               breakClassName: _this.props.breakClassName
             });
@@ -176,6 +173,7 @@ var PaginationBoxView = function (_Component) {
     key: 'getPageElement',
     value: function getPageElement(index) {
       return _react2.default.createElement(_PageView2.default, {
+        key: index,
         onClick: this.handlePageSelected.bind(null, index),
         selected: this.state.selected === index,
         pageClassName: this.props.pageClassName,
@@ -184,6 +182,14 @@ var PaginationBoxView = function (_Component) {
         extraAriaContext: this.props.extraAriaContext,
         href: this.hrefBuilder(index),
         page: index + 1 });
+    }
+  }, {
+    key: 'renderPagination',
+    value: function renderPagination() {
+      var pages = this.pagination();
+      return Object.keys(pages).map(function (key) {
+        return pages[key];
+      });
     }
   }, {
     key: 'render',
@@ -210,7 +216,7 @@ var PaginationBoxView = function (_Component) {
             this.props.previousLabel
           )
         ),
-        (0, _reactAddonsCreateFragment2.default)(this.pagination()),
+        this.renderPagination(),
         _react2.default.createElement(
           'li',
           { className: nextClasses },
