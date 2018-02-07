@@ -21,13 +21,13 @@ describe('PaginationBoxView', () => {
 
     ReactTestUtils.scryRenderedComponentsWithType(pagination, PaginationBoxView);
 
-    expect(ReactDOM.findDOMNode(pagination).querySelector("li:first-child a").textContent).toBe("Previous");
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
     expect(ReactDOM.findDOMNode(pagination).querySelector("li:last-child a").textContent).toBe("Next");
 
     const pages = ReactDOM.findDOMNode(pagination).querySelectorAll("li");
-    // 3*2 margins + 1 break label + previous & next buttons == 9:
-    expect(pages.length).toEqual(9);
+    // being on first page selected
+    // 3*2 margins + 1 break label + next == 8:
+    expect(pages.length).toEqual(8);
   });
 
   it('test previous and next buttons', () => {
@@ -51,7 +51,7 @@ describe('PaginationBoxView', () => {
 
     ReactTestUtils.Simulate.click(pageItem);
 
-    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("2");
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("3");
   });
 
   it('test rendering only active page item', function() {
@@ -65,7 +65,7 @@ describe('PaginationBoxView', () => {
 
     const pageItems = ReactDOM.findDOMNode(smallPagination).querySelectorAll("li");
     // Prev, selected page, next
-    expect(pageItems.length).toBe(3);
+    expect(pageItems.length).toBe(2);
   });
 
   it('should render href attribute in items if hrefBuilder is specified', function() {
