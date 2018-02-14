@@ -149,7 +149,7 @@ export default class PaginationBoxView extends Component {
       breakClassName
     } = this.props;
 
-    const {selected } = this.state;
+    const { selected } = this.state;
 
     if (pageCount <= pageRangeDisplayed) {
 
