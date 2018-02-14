@@ -1,3 +1,9 @@
+## >= 5.1.0
+
+* Refactor using destructuring
+* Upgrade react-hot-loader to version 3.0.0 (dev dependency)
+
+
 ## >= 5.0.0
 
 * Compatibility with React v16.0
