@@ -1,1 +1,1 @@
-{"version":3,"sources":["../react_components/index.js"],"names":[],"mappings":";;AAAA;;;;;;AAEA,OAAO,OAAP","file":"index.js","sourcesContent":["import PaginationBoxView from './PaginationBoxView';\n\nmodule.exports = PaginationBoxView;\n"]}
+{"version":3,"sources":["../react_components/index.js"],"names":["module","exports"],"mappings":";;AAAA;;;;;;AAEAA,OAAOC,OAAP","file":"index.js","sourcesContent":["import PaginationBoxView from './PaginationBoxView';\n\nmodule.exports = PaginationBoxView;\n"]}
