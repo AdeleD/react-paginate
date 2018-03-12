@@ -77,12 +77,14 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `containerClassName`      | `String`    | The classname of the pagination container.                                                    |
 | `pageClassName`           | `String`    | The classname on tag `li` of each page element.                                               |
 | `pageLinkClassName`       | `String`    | The classname on tag `a` of each page element.                                                |
-| `activeClassName`         | `String`    | The classname for the active page.                                                            |
+| `activeClassName`         | `String`    | The classname on tag `li` for the active page.                                                |
+| `activeLinkClassName`     | `String`    | The classname on tag `a` for the active page.                                                 |
 | `previousClassName`       | `String`    | The classname on tag `li` of the `previous` button.                                           |
-| `nextClassName`           | `String`    | The classname on tag `li` of the `next` button.                                               |
 | `previousLinkClassName`   | `String`    | The classname on tag `a` of the `previous` button.                                            |
+| `nextClassName`           | `String`    | The classname on tag `li` of the `next` button.                                               |
 | `nextLinkClassName`       | `String`    | The classname on tag `a` of the `next` button.                                                |
-| `disabledClassName`       | `String`    | The classname for disabled `previous` and `next` buttons.                                     |
+| `disabledClassName`       | `String`    | The classname on tag `li` for disabled `previous` and `next` buttons.                         |
+| `disabledLinkClassName`   | `String`    | The classname on tag `a` for disabled `previous` and `next` buttons.                          |
 | `hrefBuilder`             | `Function`  | The method is called to generate the `href` attribute value on tag `a` of each page element.  |
 | `extraAriaContext`        | `String`    | Extra context to add to the `aria-label` HTML attribute.                                      |
 

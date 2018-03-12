@@ -26,11 +26,13 @@ export default class PaginationBoxView extends Component {
     pageClassName         : PropTypes.string,
     pageLinkClassName     : PropTypes.string,
     activeClassName       : PropTypes.string,
+    activeLinkClassName   : PropTypes.string,
     previousClassName     : PropTypes.string,
     nextClassName         : PropTypes.string,
     previousLinkClassName : PropTypes.string,
     nextLinkClassName     : PropTypes.string,
     disabledClassName     : PropTypes.string,
+    disabledLinkClassName : PropTypes.string,
     breakClassName        : PropTypes.string
   };
 
@@ -125,6 +127,7 @@ export default class PaginationBoxView extends Component {
       pageClassName,
       pageLinkClassName,
       activeClassName,
+      activeLinkClassName,
       extraAriaContext
     } = this.props;
 
@@ -134,6 +137,7 @@ export default class PaginationBoxView extends Component {
       pageClassName={pageClassName}
       pageLinkClassName={pageLinkClassName}
       activeClassName={activeClassName}
+      activeLinkClassName={activeLinkClassName}
       extraAriaContext={extraAriaContext}
       href={this.hrefBuilder(index)}
       page={index + 1} />
@@ -218,6 +222,7 @@ export default class PaginationBoxView extends Component {
   render() {
     const {
       disabledClassName,
+      disabledLinkClassName,
       previousClassName,
       nextClassName,
       pageCount,
@@ -231,17 +236,24 @@ export default class PaginationBoxView extends Component {
     const { selected } = this.state;
     
     let disabled = disabledClassName;
+    let disabledLink = disabledLinkClassName;
     const previousClasses = classNames(previousClassName,
                                        {[disabled]: selected === 0});
 
     const nextClasses = classNames(nextClassName,
                                    {[disabled]: selected === pageCount - 1});
 
+    const previousLinkClasses = classNames(previousLinkClassName,
+                                    {[disabledLink]: selected === 0});
+
+    const nextLinkClasses = classNames(nextLinkClassName,
+                                      {[disabledLink]: selected === pageCount - 1});
+
     return (
       <ul className={containerClassName}>
         <li className={previousClasses}>
           <a onClick={this.handlePreviousPage}
-             className={previousLinkClassName}
+             className={previousLinkClasses}
              href={this.hrefBuilder(selected - 1)}
              tabIndex="0"
              onKeyPress={this.handlePreviousPage}>
@@ -253,7 +265,7 @@ export default class PaginationBoxView extends Component {
 
         <li className={nextClasses}>
           <a onClick={this.handleNextPage}
-             className={nextLinkClassName}
+             className={nextLinkClasses}
              href={this.hrefBuilder(selected + 1)}
              tabIndex="0"
              onKeyPress={this.handleNextPage}>
