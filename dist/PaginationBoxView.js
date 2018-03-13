@@ -171,6 +171,7 @@ var PaginationBoxView = function (_Component) {
           initialPage = _props.initialPage,
           disableInitialCallback = _props.disableInitialCallback;
       // Call the callback with the initialPage item:
+
       if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
         this.callCallback(initialPage);
       }
@@ -201,6 +202,7 @@ var PaginationBoxView = function (_Component) {
           pageClassName = _props3.pageClassName,
           pageLinkClassName = _props3.pageLinkClassName,
           activeClassName = _props3.activeClassName,
+          activeLinkClassName = _props3.activeLinkClassName,
           extraAriaContext = _props3.extraAriaContext;
 
 
@@ -210,6 +212,7 @@ var PaginationBoxView = function (_Component) {
         pageClassName: pageClassName,
         pageLinkClassName: pageLinkClassName,
         activeClassName: activeClassName,
+        activeLinkClassName: activeLinkClassName,
         extraAriaContext: extraAriaContext,
         href: this.hrefBuilder(index),
         page: index + 1 });
@@ -219,6 +222,7 @@ var PaginationBoxView = function (_Component) {
     value: function render() {
       var _props4 = this.props,
           disabledClassName = _props4.disabledClassName,
+          disabledLinkClassName = _props4.disabledLinkClassName,
           previousClassName = _props4.previousClassName,
           nextClassName = _props4.nextClassName,
           pageCount = _props4.pageCount,
@@ -231,9 +235,14 @@ var PaginationBoxView = function (_Component) {
 
 
       var disabled = disabledClassName;
+      var disabledLink = disabledLinkClassName;
       var previousClasses = (0, _classnames2.default)(previousClassName, _defineProperty({}, disabled, selected === 0));
 
       var nextClasses = (0, _classnames2.default)(nextClassName, _defineProperty({}, disabled, selected === pageCount - 1));
+
+      var previousLinkClasses = (0, _classnames2.default)(previousLinkClassName, _defineProperty({}, disabledLink, selected === 0));
+
+      var nextLinkClasses = (0, _classnames2.default)(nextLinkClassName, _defineProperty({}, disabledLink, selected === pageCount - 1));
 
       return _react2.default.createElement(
         'ul',
@@ -244,7 +253,7 @@ var PaginationBoxView = function (_Component) {
           _react2.default.createElement(
             'a',
             { onClick: this.handlePreviousPage,
-              className: previousLinkClassName,
+              className: previousLinkClasses,
               href: this.hrefBuilder(selected - 1),
               tabIndex: '0',
               onKeyPress: this.handlePreviousPage },
@@ -258,7 +267,7 @@ var PaginationBoxView = function (_Component) {
           _react2.default.createElement(
             'a',
             { onClick: this.handleNextPage,
-              className: nextLinkClassName,
+              className: nextLinkClasses,
               href: this.hrefBuilder(selected + 1),
               tabIndex: '0',
               onKeyPress: this.handleNextPage },
@@ -288,11 +297,13 @@ PaginationBoxView.propTypes = {
   pageClassName: _propTypes2.default.string,
   pageLinkClassName: _propTypes2.default.string,
   activeClassName: _propTypes2.default.string,
+  activeLinkClassName: _propTypes2.default.string,
   previousClassName: _propTypes2.default.string,
   nextClassName: _propTypes2.default.string,
   previousLinkClassName: _propTypes2.default.string,
   nextLinkClassName: _propTypes2.default.string,
   disabledClassName: _propTypes2.default.string,
+  disabledLinkClassName: _propTypes2.default.string,
   breakClassName: _propTypes2.default.string
 };
 PaginationBoxView.defaultProps = {

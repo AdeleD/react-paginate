@@ -26,6 +26,11 @@ var PageView = function PageView(props) {
     } else {
       cssClassName = props.activeClassName;
     }
+    if (typeof linkClassName !== 'undefined') {
+      linkClassName = linkClassName + ' ' + props.activeLinkClassName;
+    } else {
+      linkClassName = props.activeLinkClassName;
+    }
   }
 
   return _react2.default.createElement(
