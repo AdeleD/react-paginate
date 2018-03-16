@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-
 import PageView from './PageView';
 import BreakView from './BreakView';
 
@@ -227,11 +225,8 @@ export default class PaginationBoxView extends Component {
     const { selected } = this.state;
 
     let disabled = disabledClassName;
-    const previousClasses = classNames(previousClassName,
-                                       {[disabled]: selected === 0});
-
-    const nextClasses = classNames(nextClassName,
-                                   {[disabled]: selected === pageCount - 1});
+    const previousClasses = previousClassName + (selected === 0 ? ' disabled' : '');
+    const nextClasses = nextClassName + (selected === pageCount - 1 ? ' disabled' : '');
 
     return (
       <ul className={containerClassName}>

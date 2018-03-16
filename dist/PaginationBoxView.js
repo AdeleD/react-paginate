@@ -14,10 +14,6 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
 var _PageView = require('./PageView');
 
 var _PageView2 = _interopRequireDefault(_PageView);
@@ -27,8 +23,6 @@ var _BreakView = require('./BreakView');
 var _BreakView2 = _interopRequireDefault(_BreakView);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -225,9 +219,8 @@ var PaginationBoxView = function (_Component) {
 
 
       var disabled = disabledClassName;
-      var previousClasses = (0, _classnames2.default)(previousClassName, _defineProperty({}, disabled, selected === 0));
-
-      var nextClasses = (0, _classnames2.default)(nextClassName, _defineProperty({}, disabled, selected === pageCount - 1));
+      var previousClasses = previousClassName + (selected === 0 ? ' disabled' : '');
+      var nextClasses = nextClassName + (selected === pageCount - 1 ? ' disabled' : '');
 
       return _react2.default.createElement(
         'ul',
