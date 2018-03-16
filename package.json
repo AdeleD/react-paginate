@@ -36,7 +36,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "express": "^4.14.0",
-    "jest-cli": "^17.0.3",
+    "jest-cli": "^23.0.0-alpha.0",
     "jquery": "^3.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -48,7 +48,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "scripts": {
-    "test": "BABEL_JEST_STAGE=0 jest",
+    "test": "jest",
     "prepublish": "babel ./react_components --out-dir ./dist --source-maps",
     "start": "webpack-dev-server --hot --inline",
     "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js"
@@ -57,7 +57,7 @@
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
     },
-    "testPathDirs": [
+    "roots": [
       "__tests__"
     ],
     "unmockedModulePathPatterns": [
