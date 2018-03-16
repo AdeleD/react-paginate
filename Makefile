@@ -1,16 +1,15 @@
 .PHONY: install
 install:
-	@npm install
+	npm install
 
 .PHONY: test
 test:
-	@npm test
+	npm test
 
 .PHONY: demo
 demo:
-	cd demo && npm run demo
-	node demo/data.js
+	npm run demo
 
 .PHONY: serve
 serve:
-	node demo/server.js
+	npm run demo

@@ -1,12 +1,11 @@
 /* global __dirname */
 
-var path = require('path');
+const path = require('path');
+const webpack = require('webpack');
 
-var webpack = require('webpack');
-
-var dir_js = path.resolve(__dirname, 'js');
-var dir_html = path.resolve(__dirname, 'html');
-var dir_build = path.resolve(__dirname, 'build');
+const dir_js = path.resolve(__dirname, 'js');
+const dir_html = path.resolve(__dirname, 'html');
+const dir_build = path.resolve(__dirname, 'build');
 
 module.exports = {
     entry: path.resolve(dir_js, 'demo.js'),
@@ -19,24 +18,18 @@ module.exports = {
         contentBase: dir_build,
     },
     module: {
-        loaders: [
+        rules: [
             {
-                loader: 'react-hot-loader/webpack',
+                use: 'react-hot-loader/webpack',
                 test: dir_js,
             },
             {
-                loader: 'babel-loader',
-                test: dir_js,
-                query: {
-                    presets: ['es2015', 'react', 'stage-0'],
-                },
+                use: 'babel-loader',
+                test: dir_js
             },
             {
-                loader: 'babel-loader',
-                test: path.join(__dirname, '..', 'react_components'),
-                query: {
-                    presets: ['es2015', 'react', 'stage-0'],
-                },
+                use: 'babel-loader',
+                test: path.join(__dirname, '..', 'react_components')
             }
         ]
     },
@@ -49,4 +42,5 @@ module.exports = {
         colors: true
     },
     devtool: 'source-map',
+    mode: 'development'
 };
