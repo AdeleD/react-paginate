@@ -1,7 +1,6 @@
 /* global __dirname */
 
 const path = require('path');
-const webpack = require('webpack');
 
 const dir_js = path.resolve(__dirname, 'js');
 const dir_html = path.resolve(__dirname, 'html');
