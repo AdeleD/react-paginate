@@ -18,7 +18,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                loader: 'react-hot',
+                loader: 'react-hot-loader/webpack',
                 test: dir_js,
             },
             {

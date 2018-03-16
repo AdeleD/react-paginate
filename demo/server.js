@@ -62,5 +62,5 @@ app.get('/comments', function(req, res) {
 
 
 app.listen(NODE_PORT, function() {
-  console.log('Server running on %s mode on port %d', NODE_ENV, NODE_PORT);
+  console.log('Demo server running on %s mode on port %d', NODE_ENV, NODE_PORT);
 });
