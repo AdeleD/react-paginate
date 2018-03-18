@@ -1,8 +1,13 @@
+## >= 5.2.0
+
+* Delete the dependency on `react-addons-create-fragment`
+* Delete the dependency on `classnames`
+
+
 ## >= 5.1.0
 
 * Refactor using destructuring
 * Upgrade react-hot-loader to version 3.0.0 (dev dependency)
-Delete the dependency on `react-addons-create-fragment`
 
 
 ## >= 5.0.0
