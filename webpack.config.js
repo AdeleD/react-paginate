@@ -1,6 +1,5 @@
 /* global __dirname */
 var path = require('path');
-var webpack = require('webpack');
 var dir_js = path.resolve(__dirname, 'react_components');
 var dir_build = path.resolve(__dirname, 'build');
 
@@ -16,17 +15,14 @@ module.exports = {
         contentBase: dir_build,
     },
     module: {
-        loaders: [
+        rules: [
             {
-                loader: 'react-hot-loader/webpack',
+                use: 'react-hot-loader/webpack',
                 test: dir_js,
             },
             {
-                loader: 'babel-loader',
-                test: dir_js,
-                query: {
-                    presets: ['es2015', 'react', 'stage-0'],
-                },
+                use: 'babel-loader',
+                test: dir_js
             }
         ]
     },
@@ -44,4 +40,5 @@ module.exports = {
         colors: true
     },
     devtool: 'source-map',
+    mode: 'development'
 };

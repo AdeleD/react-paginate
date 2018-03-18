@@ -2,9 +2,6 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-
-import createFragment from 'react-addons-create-fragment';
 import PageView from './PageView';
 import BreakView from './BreakView';
 
@@ -129,6 +126,7 @@ export default class PaginationBoxView extends Component {
     } = this.props;
 
     return <PageView
+      key={index}
       onClick={this.handlePageSelected.bind(null, index)}
       selected={selected === index}
       pageClassName={pageClassName}
@@ -140,7 +138,7 @@ export default class PaginationBoxView extends Component {
   }
 
   pagination = () => {
-    let items = {};
+    const items = [];
     const {
       pageRangeDisplayed,
       pageCount,
@@ -154,7 +152,7 @@ export default class PaginationBoxView extends Component {
     if (pageCount <= pageRangeDisplayed) {
 
       for (let index = 0; index < pageCount; index++) {
-        items['key' + index] = this.getPageElement(index);
+        items.push(this.getPageElement(index));
       }
 
     } else {
@@ -181,33 +179,29 @@ export default class PaginationBoxView extends Component {
         page = index + 1;
 
         if (page <= marginPagesDisplayed) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
         if (page > pageCount - marginPagesDisplayed) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
         if ((index >= selected - leftSide) && (index <= selected + rightSide)) {
-          items['key' + index] = createPageView(index);
+          items.push(createPageView(index));
           continue;
         }
 
-        let keys            = Object.keys(items);
-        let breakLabelKey   = keys[keys.length - 1];
-        let breakLabelValue = items[breakLabelKey];
-
-        if (breakLabel && breakLabelValue !== breakView) {
+        if (breakLabel && items[items.length - 1] !== breakView) {
           breakView = (
             <BreakView
+              key={index}
               breakLabel={breakLabel}
               breakClassName={breakClassName}
             />
           );
-
-          items['key' + index] = breakView;
+          items.push(breakView);
         }
       }
     }
@@ -229,13 +223,10 @@ export default class PaginationBoxView extends Component {
     } = this.props;
 
     const { selected } = this.state;
-    
-    let disabled = disabledClassName;
-    const previousClasses = classNames(previousClassName,
-                                       {[disabled]: selected === 0});
 
-    const nextClasses = classNames(nextClassName,
-                                   {[disabled]: selected === pageCount - 1});
+    let disabled = disabledClassName;
+    const previousClasses = previousClassName + (selected === 0 ? ' disabled' : '');
+    const nextClasses = nextClassName + (selected === pageCount - 1 ? ' disabled' : '');
 
     return (
       <ul className={containerClassName}>
@@ -249,7 +240,7 @@ export default class PaginationBoxView extends Component {
           </a>
         </li>
 
-        {createFragment(this.pagination())}
+        {this.pagination()}
 
         <li className={nextClasses}>
           <a onClick={this.handleNextPage}

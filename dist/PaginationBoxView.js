@@ -14,14 +14,6 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _reactAddonsCreateFragment = require('react-addons-create-fragment');
-
-var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
-
 var _PageView = require('./PageView');
 
 var _PageView2 = _interopRequireDefault(_PageView);
@@ -31,8 +23,6 @@ var _BreakView = require('./BreakView');
 var _BreakView2 = _interopRequireDefault(_BreakView);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -86,7 +76,7 @@ var PaginationBoxView = function (_Component) {
     };
 
     _this.pagination = function () {
-      var items = {};
+      var items = [];
       var _this$props = _this.props,
           pageRangeDisplayed = _this$props.pageRangeDisplayed,
           pageCount = _this$props.pageCount,
@@ -99,7 +89,7 @@ var PaginationBoxView = function (_Component) {
       if (pageCount <= pageRangeDisplayed) {
 
         for (var index = 0; index < pageCount; index++) {
-          items['key' + index] = _this.getPageElement(index);
+          items.push(_this.getPageElement(index));
         }
       } else {
 
@@ -126,31 +116,27 @@ var PaginationBoxView = function (_Component) {
           page = _index + 1;
 
           if (page <= marginPagesDisplayed) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
           if (page > pageCount - marginPagesDisplayed) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
           if (_index >= selected - leftSide && _index <= selected + rightSide) {
-            items['key' + _index] = createPageView(_index);
+            items.push(createPageView(_index));
             continue;
           }
 
-          var keys = Object.keys(items);
-          var breakLabelKey = keys[keys.length - 1];
-          var breakLabelValue = items[breakLabelKey];
-
-          if (breakLabel && breakLabelValue !== breakView) {
+          if (breakLabel && items[items.length - 1] !== breakView) {
             breakView = _react2.default.createElement(_BreakView2.default, {
+              key: _index,
               breakLabel: breakLabel,
               breakClassName: breakClassName
             });
-
-            items['key' + _index] = breakView;
+            items.push(breakView);
           }
         }
       }
@@ -171,6 +157,7 @@ var PaginationBoxView = function (_Component) {
           initialPage = _props.initialPage,
           disableInitialCallback = _props.disableInitialCallback;
       // Call the callback with the initialPage item:
+
       if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
         this.callCallback(initialPage);
       }
@@ -205,6 +192,7 @@ var PaginationBoxView = function (_Component) {
 
 
       return _react2.default.createElement(_PageView2.default, {
+        key: index,
         onClick: this.handlePageSelected.bind(null, index),
         selected: selected === index,
         pageClassName: pageClassName,
@@ -231,9 +219,8 @@ var PaginationBoxView = function (_Component) {
 
 
       var disabled = disabledClassName;
-      var previousClasses = (0, _classnames2.default)(previousClassName, _defineProperty({}, disabled, selected === 0));
-
-      var nextClasses = (0, _classnames2.default)(nextClassName, _defineProperty({}, disabled, selected === pageCount - 1));
+      var previousClasses = previousClassName + (selected === 0 ? ' disabled' : '');
+      var nextClasses = nextClassName + (selected === pageCount - 1 ? ' disabled' : '');
 
       return _react2.default.createElement(
         'ul',
@@ -251,7 +238,7 @@ var PaginationBoxView = function (_Component) {
             previousLabel
           )
         ),
-        (0, _reactAddonsCreateFragment2.default)(this.pagination()),
+        this.pagination(),
         _react2.default.createElement(
           'li',
           { className: nextClasses },

@@ -4,3 +4,4 @@ node_modules/
 build/*
 demo/data/data.json
 demo/build/*
+dist/*.map
