@@ -1,13 +1,18 @@
+## >= 5.2.1
+
+* Fix `disabledClassName` not used in previous and next classnames (https://github.com/AdeleD/react-paginate/issues/204).
+
+
 ## >= 5.2.0
 
-* Delete the dependency on `react-addons-create-fragment`
-* Delete the dependency on `classnames`
+* Delete the dependency on `react-addons-create-fragment`.
+* Delete the dependency on `classnames`.
 
 
 ## >= 5.1.0
 
-* Refactor using destructuring
-* Upgrade react-hot-loader to version 3.0.0 (dev dependency)
+* Refactor using destructuring.
+* Upgrade react-hot-loader to version 3.0.0 (dev dependency).
 
 
 ## >= 5.0.0

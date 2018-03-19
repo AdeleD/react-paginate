@@ -105,6 +105,17 @@ describe('PaginationBoxView', () => {
     expect(breakItem.length).toBe(1);
   });
 
+  it('test disabledClassName', function() {
+    const smallPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageCount={1}
+        disabledClassName={"disabled-classname"} />
+    );
+
+    const disabledItems = ReactDOM.findDOMNode(smallPagination).querySelectorAll(".disabled-classname");
+    expect(disabledItems.length).toBe(2);
+  });
+
   describe('prop disableInitialCallback', () => {
     it('test when true', function() {
       const onPageChange = jest.fn();

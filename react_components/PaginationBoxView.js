@@ -224,7 +224,6 @@ export default class PaginationBoxView extends Component {
 
     const { selected } = this.state;
 
-    let disabled = disabledClassName;
     const previousClasses = previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
     const nextClasses = nextClassName + (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
 
