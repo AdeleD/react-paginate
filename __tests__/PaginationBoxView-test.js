@@ -5,9 +5,9 @@ jest.dontMock('./../react_components/PaginationBoxView');
 jest.dontMock('./../react_components/PageView');
 jest.dontMock('./../react_components/BreakView');
 
-const PaginationBoxView = require('./../react_components/PaginationBoxView').default;
-const PageView = require('./../react_components/PageView').default;
-const BreakView = require('./../react_components/BreakView').default;
+import PaginationBoxView from './../react_components/PaginationBoxView';
+import PageView from './../react_components/PageView';
+import BreakView from './../react_components/BreakView';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
@@ -136,6 +136,30 @@ describe('PaginationBoxView', () => {
       );
 
       expect(onPageChange).toHaveBeenCalled();
+    });
+  });
+
+  describe('prop disabledClassName', () => {
+    it('defaults to disable when no provided', function() {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={0}
+          pageCount={1}
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:first-child").className).toBe("previous disabled");
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:last-child").className).toBe("next disabled");
+    });
+    it('use the prop when provided', function() {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={0}
+          pageCount={1}
+          disabledClassName="custom disabled class"
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:first-child").className).toBe("previous custom disabled class");
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:last-child").className).toBe("next custom disabled class");
     });
   });
 });

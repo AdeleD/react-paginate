@@ -218,9 +218,8 @@ var PaginationBoxView = function (_Component) {
       var selected = this.state.selected;
 
 
-      var disabled = disabledClassName;
-      var previousClasses = previousClassName + (selected === 0 ? ' ' + disabled : '');
-      var nextClasses = nextClassName + (selected === pageCount - 1 ? ' ' + disabled : '');
+      var previousClasses = previousClassName + (selected === 0 ? ' ' + disabledClassName : '');
+      var nextClasses = nextClassName + (selected === pageCount - 1 ? ' ' + disabledClassName : '');
 
       return _react2.default.createElement(
         'ul',
