@@ -1,3 +1,8 @@
+## >= 5.2.2
+
+* Remove the useless node_modules folder from the previous release (https://github.com/AdeleD/react-paginate/issues/208).
+
+
 ## >= 5.2.1
 
 * Fix `disabledClassName` not used in previous and next classnames (https://github.com/AdeleD/react-paginate/issues/204).
