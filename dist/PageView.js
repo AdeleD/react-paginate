@@ -34,6 +34,7 @@ var PageView = function PageView(props) {
     _react2.default.createElement(
       'a',
       { onClick: onClick,
+        role: 'button',
         className: linkClassName,
         href: href,
         tabIndex: '0',

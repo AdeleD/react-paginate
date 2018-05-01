@@ -234,6 +234,7 @@ export default class PaginationBoxView extends Component {
              className={previousLinkClassName}
              href={this.hrefBuilder(selected - 1)}
              tabIndex="0"
+             role="button"
              onKeyPress={this.handlePreviousPage}>
             {previousLabel}
           </a>
@@ -246,6 +247,7 @@ export default class PaginationBoxView extends Component {
              className={nextLinkClassName}
              href={this.hrefBuilder(selected + 1)}
              tabIndex="0"
+             role="button"
              onKeyPress={this.handleNextPage}>
             {nextLabel}
           </a>

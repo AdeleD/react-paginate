@@ -233,6 +233,7 @@ var PaginationBoxView = function (_Component) {
               className: previousLinkClassName,
               href: this.hrefBuilder(selected - 1),
               tabIndex: '0',
+              role: 'button',
               onKeyPress: this.handlePreviousPage },
             previousLabel
           )
@@ -247,6 +248,7 @@ var PaginationBoxView = function (_Component) {
               className: nextLinkClassName,
               href: this.hrefBuilder(selected + 1),
               tabIndex: '0',
+              role: 'button',
               onKeyPress: this.handleNextPage },
             nextLabel
           )
