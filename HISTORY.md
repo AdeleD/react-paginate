@@ -1,3 +1,8 @@
+## >= 5.2.3
+
+* Add a role="button" on `<a>` tags to let screen readers know explicitly that links (without href) are intended to be interactive elements (https://github.com/AdeleD/react-paginate/issues/212).
+
+
 ## >= 5.2.2
 
 * Remove the useless node_modules folder from the previous release (https://github.com/AdeleD/react-paginate/issues/208).
