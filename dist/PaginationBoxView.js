@@ -24,6 +24,8 @@ var _BreakView2 = _interopRequireDefault(_BreakView);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -92,52 +94,60 @@ var PaginationBoxView = function (_Component) {
           items.push(_this.getPageElement(index));
         }
       } else {
+        // 1,2,3...5,6,7,8,9...11,12,13
+        //         ^
+        var leftSideIndex = selected - Math.floor(pageRangeDisplayed / 2);
+        leftSideIndex = Math.max(0, leftSideIndex);
 
-        var leftSide = pageRangeDisplayed / 2;
-        var rightSide = pageRangeDisplayed - leftSide;
+        // 1,2,3...5,6,7,8,9...11,12,13
+        // ^^^^^
+        var leftMarginIndexes = Array.from({ length: marginPagesDisplayed }, function (_, k) {
+          return k;
+        });
 
-        if (selected > pageCount - pageRangeDisplayed / 2) {
-          rightSide = pageCount - selected;
-          leftSide = pageRangeDisplayed - rightSide;
-        } else if (selected < pageRangeDisplayed / 2) {
-          leftSide = selected;
-          rightSide = pageRangeDisplayed - leftSide;
-        }
+        // 1,2,3...5,6,7,8,9...11,12,13
+        //                     ^^^^^^^^
+        var rightMarginIndexes = Array.from({ length: marginPagesDisplayed }, function (_, k) {
+          return k + pageCount - marginPagesDisplayed;
+        });
 
-        var _index = void 0;
-        var page = void 0;
-        var breakView = void 0;
+        // 1,2,3...5,6,7,8,9...11,12,13
+        //         ^^^^^^^^^
+        var rangeIndexes = Array.from(
+        // pageRangeDisplayed can be 0
+        // but at least one item must be in this array (selected item)
+        { length: Math.max(pageRangeDisplayed, 1) }, function (_, k) {
+          return k + leftSideIndex;
+        });
+
+        // 1,2,3...5,6,7,8,9...11,12,13
+        // ^^^^^ + ^^^^^^^^^ + ^^^^^^^^
+        var lastIndex = -1;
+        var indexes = [].concat(_toConsumableArray(leftMarginIndexes), _toConsumableArray(rangeIndexes), _toConsumableArray(rightMarginIndexes)).filter(function (i) {
+          var outOfRange = i < 0 || i >= pageCount;
+          var duplicated = i <= lastIndex;
+          lastIndex = Math.max(i, lastIndex);
+          return !outOfRange && !duplicated;
+        });
+
         var createPageView = function createPageView(index) {
           return _this.getPageElement(index);
         };
 
-        for (_index = 0; _index < pageCount; _index++) {
+        for (var i = 0; i < indexes.length; i++) {
+          var _index = indexes[i];
+          var prevIndex = i > 0 ? indexes[i - 1] : indexes[i];
 
-          page = _index + 1;
-
-          if (page <= marginPagesDisplayed) {
-            items.push(createPageView(_index));
-            continue;
-          }
-
-          if (page > pageCount - marginPagesDisplayed) {
-            items.push(createPageView(_index));
-            continue;
-          }
-
-          if (_index >= selected - leftSide && _index <= selected + rightSide) {
-            items.push(createPageView(_index));
-            continue;
-          }
-
-          if (breakLabel && items[items.length - 1] !== breakView) {
-            breakView = _react2.default.createElement(_BreakView2.default, {
-              key: _index,
+          // if distance between current and previous page more than 1, then render BreakView
+          if (_index - prevIndex > 1) {
+            items.push(_react2.default.createElement(_BreakView2.default, {
+              key: 'breakview-' + _index,
               breakLabel: breakLabel,
               breakClassName: breakClassName
-            });
-            items.push(breakView);
+            }));
           }
+
+          items.push(createPageView(_index));
         }
       }
 
