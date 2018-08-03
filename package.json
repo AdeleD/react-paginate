@@ -52,6 +52,8 @@
     "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js"
   },
   "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
     },

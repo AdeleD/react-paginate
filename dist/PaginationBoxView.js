@@ -59,6 +59,8 @@ var PaginationBoxView = function (_Component) {
     };
 
     _this.handlePageSelected = function (selected, evt) {
+      var oneIndexed = _this.props.oneIndexed;
+
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
 
       if (_this.state.selected === selected) return;
@@ -66,7 +68,7 @@ var PaginationBoxView = function (_Component) {
       _this.setState({ selected: selected });
 
       // Call the callback with the new selected item:
-      _this.callCallback(selected);
+      _this.callCallback(selected + (oneIndexed ? 1 : 0));
     };
 
     _this.callCallback = function (selectedItem) {
@@ -281,7 +283,8 @@ PaginationBoxView.propTypes = {
   previousLinkClassName: _propTypes2.default.string,
   nextLinkClassName: _propTypes2.default.string,
   disabledClassName: _propTypes2.default.string,
-  breakClassName: _propTypes2.default.string
+  breakClassName: _propTypes2.default.string,
+  oneIndexed: _propTypes2.default.bool
 };
 PaginationBoxView.defaultProps = {
   pageCount: 10,
@@ -294,7 +297,8 @@ PaginationBoxView.defaultProps = {
   nextLabel: "Next",
   breakLabel: "...",
   disabledClassName: "disabled",
-  disableInitialCallback: false
+  disableInitialCallback: false,
+  oneIndexed: false
 };
 exports.default = PaginationBoxView;
 ;
