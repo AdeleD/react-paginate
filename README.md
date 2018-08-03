@@ -74,6 +74,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `initialPage`             | `Number`    | The initial page selected.                                                                    |
 | `forcePage`               | `Number`    | To override selected page with parent prop.                                                   |
 | `disableInitialCallback`  | `boolean`   | Disable `onPageChange` callback with initial page. Default: `false`                           |
+| `oneIndexed`              | `boolean`   | Sets pagination selection to start with 1, instead of 0. Default: `false`                     |
 | `containerClassName`      | `String`    | The classname of the pagination container.                                                    |
 | `pageClassName`           | `String`    | The classname on tag `li` of each page element.                                               |
 | `pageLinkClassName`       | `String`    | The classname on tag `a` of each page element.                                                |
@@ -91,10 +92,11 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 1. [Submit an issue](https://github.com/AdeleD/react-paginate/issues)
 2. Fork the repository
 3. Create a dedicated branch (never ever work in `master`)
-4. The first time, run command: `webpack` into the directory
-5. Run `npm start`
-6. Fix bugs or implement features
-7. Always write tests
+4. Run `npm install`
+5. The first time, run command: `webpack` into the directory
+6. Run `npm start`
+7. Fix bugs or implement features
+8. Always write tests
 
 Run tests:
 
