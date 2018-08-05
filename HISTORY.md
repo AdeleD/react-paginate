@@ -1,3 +1,8 @@
+## >= 5.2.4
+
+* Use ES6 export in react_components/index.js (https://github.com/AdeleD/react-paginate/pull/203).
+
+
 ## >= 5.2.3
 
 * Add a role="button" on `<a>` tags to let screen readers know explicitly that links (without href) are intended to be interactive elements (https://github.com/AdeleD/react-paginate/issues/212).
