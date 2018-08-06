@@ -40,20 +40,23 @@ var PaginationBoxView = function (_Component) {
 
     _this.handlePreviousPage = function (evt) {
       var selected = _this.state.selected;
+      var oneIndexed = _this.props.oneIndexed;
 
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
-      if (selected > 0) {
+      if (selected > (oneIndexed ? 1 : 0)) {
         _this.handlePageSelected(selected - 1, evt);
       }
     };
 
     _this.handleNextPage = function (evt) {
       var selected = _this.state.selected;
-      var pageCount = _this.props.pageCount;
+      var _this$props = _this.props,
+          pageCount = _this$props.pageCount,
+          oneIndexed = _this$props.oneIndexed;
 
 
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
-      if (selected < pageCount - 1) {
+      if (selected < pageCount - (oneIndexed ? 0 : 1)) {
         _this.handlePageSelected(selected + 1, evt);
       }
     };
@@ -77,13 +80,13 @@ var PaginationBoxView = function (_Component) {
 
     _this.pagination = function () {
       var items = [];
-      var _this$props = _this.props,
-          pageRangeDisplayed = _this$props.pageRangeDisplayed,
-          pageCount = _this$props.pageCount,
-          marginPagesDisplayed = _this$props.marginPagesDisplayed,
-          breakLabel = _this$props.breakLabel,
-          breakClassName = _this$props.breakClassName,
-          oneIndexed = _this$props.oneIndexed;
+      var _this$props2 = _this.props,
+          pageRangeDisplayed = _this$props2.pageRangeDisplayed,
+          pageCount = _this$props2.pageCount,
+          marginPagesDisplayed = _this$props2.marginPagesDisplayed,
+          breakLabel = _this$props2.breakLabel,
+          breakClassName = _this$props2.breakClassName,
+          oneIndexed = _this$props2.oneIndexed;
       var selected = _this.state.selected;
 
 
@@ -216,12 +219,13 @@ var PaginationBoxView = function (_Component) {
           previousLinkClassName = _props4.previousLinkClassName,
           previousLabel = _props4.previousLabel,
           nextLinkClassName = _props4.nextLinkClassName,
-          nextLabel = _props4.nextLabel;
+          nextLabel = _props4.nextLabel,
+          oneIndexed = _props4.oneIndexed;
       var selected = this.state.selected;
 
 
-      var previousClasses = previousClassName + (selected === 0 ? ' ' + disabledClassName : '');
-      var nextClasses = nextClassName + (selected === pageCount - 1 ? ' ' + disabledClassName : '');
+      var previousClasses = previousClassName + (selected === (oneIndexed ? 1 : 0) ? ' ' + disabledClassName : '');
+      var nextClasses = nextClassName + (selected === pageCount - (oneIndexed ? 0 : 1) ? ' ' + disabledClassName : '');
 
       return _react2.default.createElement(
         'ul',

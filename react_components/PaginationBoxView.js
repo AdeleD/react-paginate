@@ -73,18 +73,19 @@ export default class PaginationBoxView extends Component {
 
   handlePreviousPage = evt => {
     const { selected } = this.state;
+    const { oneIndexed } = this.props;
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-    if (selected > 0) {
+    if (selected > (oneIndexed ? 1 : 0)) {
       this.handlePageSelected(selected - 1, evt);
     }
   };
 
   handleNextPage = evt => {
     const { selected } = this.state;
-    const { pageCount } = this.props;
+    const { pageCount, oneIndexed } = this.props;
 
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-    if (selected < pageCount - 1) {
+    if (selected < pageCount - (oneIndexed ? 0 : 1)) {
       this.handlePageSelected(selected + 1, evt);
     }
   };
@@ -223,13 +224,14 @@ export default class PaginationBoxView extends Component {
       previousLinkClassName,
       previousLabel,
       nextLinkClassName,
-      nextLabel
+      nextLabel,
+      oneIndexed
     } = this.props;
 
     const { selected } = this.state;
 
-    const previousClasses = previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
-    const nextClasses = nextClassName + (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
+    const previousClasses = previousClassName + (selected === (oneIndexed ? 1 : 0) ? ` ${disabledClassName}` : '');
+    const nextClasses = nextClassName + (selected === pageCount - (oneIndexed ? 0 : 1) ? ` ${disabledClassName}` : '');
 
     return (
       <ul className={containerClassName}>
