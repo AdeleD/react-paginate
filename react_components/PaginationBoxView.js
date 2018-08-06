@@ -90,7 +90,6 @@ export default class PaginationBoxView extends Component {
   };
 
   handlePageSelected = (selected, evt) => {
-    const { oneIndexed } = this.props;
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 
     if (this.state.selected === selected) return;
@@ -98,7 +97,7 @@ export default class PaginationBoxView extends Component {
     this.setState({selected: selected});
 
     // Call the callback with the new selected item:
-    this.callCallback(selected + (oneIndexed ? 1 : 0));
+    this.callCallback(selected);
   };
 
   hrefBuilder(pageIndex) {
@@ -125,7 +124,8 @@ export default class PaginationBoxView extends Component {
       pageClassName,
       pageLinkClassName,
       activeClassName,
-      extraAriaContext
+      extraAriaContext,
+      oneIndexed
     } = this.props;
 
     return <PageView
@@ -137,7 +137,7 @@ export default class PaginationBoxView extends Component {
       activeClassName={activeClassName}
       extraAriaContext={extraAriaContext}
       href={this.hrefBuilder(index)}
-      page={index + 1} />
+      page={oneIndexed ? index : index + 1} />
   }
 
   pagination = () => {
@@ -147,7 +147,8 @@ export default class PaginationBoxView extends Component {
       pageCount,
       marginPagesDisplayed,
       breakLabel,
-      breakClassName
+      breakClassName,
+      oneIndexed
     } = this.props;
 
     const { selected } = this.state;
@@ -175,7 +176,7 @@ export default class PaginationBoxView extends Component {
       let index;
       let page;
       let breakView;
-      let createPageView = (index) => this.getPageElement(index);
+      let createPageView = (index) => this.getPageElement(oneIndexed ? index + 1 : index);
 
       for (index = 0; index < pageCount; index++) {
 
@@ -199,7 +200,7 @@ export default class PaginationBoxView extends Component {
         if (breakLabel && items[items.length - 1] !== breakView) {
           breakView = (
             <BreakView
-              key={index}
+              key={oneIndexed ? index + 1 : index}
               breakLabel={breakLabel}
               breakClassName={breakClassName}
             />
