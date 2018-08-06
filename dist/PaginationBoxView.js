@@ -59,8 +59,6 @@ var PaginationBoxView = function (_Component) {
     };
 
     _this.handlePageSelected = function (selected, evt) {
-      var oneIndexed = _this.props.oneIndexed;
-
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
 
       if (_this.state.selected === selected) return;
@@ -68,7 +66,7 @@ var PaginationBoxView = function (_Component) {
       _this.setState({ selected: selected });
 
       // Call the callback with the new selected item:
-      _this.callCallback(selected + (oneIndexed ? 1 : 0));
+      _this.callCallback(selected);
     };
 
     _this.callCallback = function (selectedItem) {
@@ -84,7 +82,8 @@ var PaginationBoxView = function (_Component) {
           pageCount = _this$props.pageCount,
           marginPagesDisplayed = _this$props.marginPagesDisplayed,
           breakLabel = _this$props.breakLabel,
-          breakClassName = _this$props.breakClassName;
+          breakClassName = _this$props.breakClassName,
+          oneIndexed = _this$props.oneIndexed;
       var selected = _this.state.selected;
 
 
@@ -110,7 +109,7 @@ var PaginationBoxView = function (_Component) {
         var page = void 0;
         var breakView = void 0;
         var createPageView = function createPageView(index) {
-          return _this.getPageElement(index);
+          return _this.getPageElement(oneIndexed ? index + 1 : index);
         };
 
         for (_index = 0; _index < pageCount; _index++) {
@@ -134,7 +133,7 @@ var PaginationBoxView = function (_Component) {
 
           if (breakLabel && items[items.length - 1] !== breakView) {
             breakView = _react2.default.createElement(_BreakView2.default, {
-              key: _index,
+              key: oneIndexed ? _index + 1 : _index,
               breakLabel: breakLabel,
               breakClassName: breakClassName
             });
@@ -190,7 +189,8 @@ var PaginationBoxView = function (_Component) {
           pageClassName = _props3.pageClassName,
           pageLinkClassName = _props3.pageLinkClassName,
           activeClassName = _props3.activeClassName,
-          extraAriaContext = _props3.extraAriaContext;
+          extraAriaContext = _props3.extraAriaContext,
+          oneIndexed = _props3.oneIndexed;
 
 
       return _react2.default.createElement(_PageView2.default, {
@@ -202,7 +202,7 @@ var PaginationBoxView = function (_Component) {
         activeClassName: activeClassName,
         extraAriaContext: extraAriaContext,
         href: this.hrefBuilder(index),
-        page: index + 1 });
+        page: oneIndexed ? index : index + 1 });
     }
   }, {
     key: 'render',
