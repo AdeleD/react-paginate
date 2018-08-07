@@ -178,10 +178,11 @@ var PaginationBoxView = function (_Component) {
     value: function hrefBuilder(pageIndex) {
       var _props2 = this.props,
           hrefBuilder = _props2.hrefBuilder,
-          pageCount = _props2.pageCount;
+          pageCount = _props2.pageCount,
+          oneIndexed = _props2.oneIndexed;
 
       if (hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < pageCount) {
-        return hrefBuilder(pageIndex + 1);
+        return hrefBuilder(pageIndex + (oneIndexed ? 0 : 1));
       }
     }
   }, {

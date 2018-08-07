@@ -102,13 +102,17 @@ export default class PaginationBoxView extends Component {
   };
 
   hrefBuilder(pageIndex) {
-    const { hrefBuilder, pageCount } = this.props;
+    const {
+      hrefBuilder,
+      pageCount,
+      oneIndexed
+    } = this.props;
     if (hrefBuilder &&
       pageIndex !== this.state.selected &&
       pageIndex >= 0 &&
       pageIndex < pageCount
     ) {
-      return hrefBuilder(pageIndex + 1);
+      return hrefBuilder(pageIndex + (oneIndexed ? 0 : 1));
     }
   }
 
