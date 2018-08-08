@@ -156,53 +156,66 @@ export default class PaginationBoxView extends Component {
       }
 
     } else {
+      // 1,2,3...5,6,7,8,9...11,12,13
+      //         ^
+      let leftSideIndex = selected - Math.floor(pageRangeDisplayed / 2);
+      leftSideIndex = Math.max(0, leftSideIndex);
 
-      let leftSide  = (pageRangeDisplayed / 2);
-      let rightSide = (pageRangeDisplayed - leftSide);
+      // 1,2,3...5,6,7,8,9...11,12,13
+      // ^^^^^
+      const leftMarginIndexes = Array.from(
+        { length: marginPagesDisplayed },
+        (_, k) => k
+      );
 
-      if (selected > pageCount - pageRangeDisplayed / 2) {
-        rightSide = pageCount - selected;
-        leftSide  = pageRangeDisplayed - rightSide;
-      }
-      else if (selected < pageRangeDisplayed / 2) {
-        leftSide  = selected;
-        rightSide = pageRangeDisplayed - leftSide;
-      }
+      // 1,2,3...5,6,7,8,9...11,12,13
+      //                     ^^^^^^^^
+      const rightMarginIndexes = Array.from(
+        { length: marginPagesDisplayed },
+        (_, k) => k + pageCount - marginPagesDisplayed
+      );
 
-      let index;
-      let page;
-      let breakView;
-      let createPageView = (index) => this.getPageElement(index);
+      // 1,2,3...5,6,7,8,9...11,12,13
+      //         ^^^^^^^^^
+      const rangeIndexes = Array.from(
+        // pageRangeDisplayed can be 0
+        // but at least one item must be in this array (selected item)
+        { length: Math.max(pageRangeDisplayed, 1) },
+        (_, k) => k + leftSideIndex
+      );
 
-      for (index = 0; index < pageCount; index++) {
+      // 1,2,3...5,6,7,8,9...11,12,13
+      // ^^^^^ + ^^^^^^^^^ + ^^^^^^^^
+      let lastIndex = -1;
+      const indexes = [
+        ...leftMarginIndexes,
+        ...rangeIndexes,
+        ...rightMarginIndexes
+      ].filter(i => {
+        const outOfRange = i < 0 || i >= pageCount;
+        const duplicated = i <= lastIndex;
+        lastIndex = Math.max(i, lastIndex);
+        return !outOfRange && !duplicated;
+      });
 
-        page = index + 1;
+      const createPageView = index => this.getPageElement(index);
 
-        if (page <= marginPagesDisplayed) {
-          items.push(createPageView(index));
-          continue;
-        }
+      for (let i = 0; i < indexes.length; i++) {
+        const index = indexes[i];
+        const prevIndex = i > 0 ? indexes[i - 1] : indexes[i];
 
-        if (page > pageCount - marginPagesDisplayed) {
-          items.push(createPageView(index));
-          continue;
-        }
-
-        if ((index >= selected - leftSide) && (index <= selected + rightSide)) {
-          items.push(createPageView(index));
-          continue;
-        }
-
-        if (breakLabel && items[items.length - 1] !== breakView) {
-          breakView = (
+        // if distance between current and previous page more than 1, then render BreakView
+        if (index - prevIndex > 1) {
+          items.push(
             <BreakView
-              key={index}
+              key={`breakview-${index}`}
               breakLabel={breakLabel}
               breakClassName={breakClassName}
             />
           );
-          items.push(breakView);
         }
+
+        items.push(createPageView(index));
       }
     }
 
