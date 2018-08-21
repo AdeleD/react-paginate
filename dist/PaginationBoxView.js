@@ -181,7 +181,7 @@ var PaginationBoxView = function (_Component) {
           pageCount = _props2.pageCount,
           oneIndexed = _props2.oneIndexed;
 
-      if (hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < pageCount) {
+      if (hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < pageCount + (oneIndexed ? 1 : 0)) {
         return hrefBuilder(pageIndex + (oneIndexed ? 0 : 1));
       }
     }
