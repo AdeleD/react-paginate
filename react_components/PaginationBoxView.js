@@ -28,7 +28,8 @@ export default class PaginationBoxView extends Component {
     previousLinkClassName : PropTypes.string,
     nextLinkClassName     : PropTypes.string,
     disabledClassName     : PropTypes.string,
-    breakClassName        : PropTypes.string
+    breakClassName        : PropTypes.string,
+    breakLinkClassName    : PropTypes.string,
   };
 
   static defaultProps = {
@@ -146,7 +147,9 @@ export default class PaginationBoxView extends Component {
       pageCount,
       marginPagesDisplayed,
       breakLabel,
-      breakClassName
+      breakClassName,
+      breakLinkClassName,
+      extraAriaContext,
     } = this.props;
 
     const { selected } = this.state;
@@ -190,17 +193,26 @@ export default class PaginationBoxView extends Component {
           continue;
         }
 
-        if ((index >= selected - leftSide) && (index <= selected + rightSide)) {
+        let withinLeft = (index <= selected + rightSide);
+        let withinRight = (index >= selected - leftSide);
+        
+        if (withinLeft && withinRight) {
           items.push(createPageView(index));
           continue;
         }
 
         if (breakLabel && items[items.length - 1] !== breakView) {
+          let breakIdx = withinLeft ? Math.floor(selected - leftSide) : index;
           breakView = (
             <BreakView
               key={index}
+              onClick={this.handlePageSelected.bind(null, breakIdx)}
               breakLabel={breakLabel}
               breakClassName={breakClassName}
+              breakLinkClassName={breakLinkClassName}
+              extraAriaContext={extraAriaContext}
+              href={this.hrefBuilder(index)}
+              page={page}
             />
           );
           items.push(breakView);

@@ -82,7 +82,9 @@ var PaginationBoxView = function (_Component) {
           pageCount = _this$props.pageCount,
           marginPagesDisplayed = _this$props.marginPagesDisplayed,
           breakLabel = _this$props.breakLabel,
-          breakClassName = _this$props.breakClassName;
+          breakClassName = _this$props.breakClassName,
+          breakLinkClassName = _this$props.breakLinkClassName,
+          extraAriaContext = _this$props.extraAriaContext;
       var selected = _this.state.selected;
 
 
@@ -125,16 +127,25 @@ var PaginationBoxView = function (_Component) {
             continue;
           }
 
-          if (_index >= selected - leftSide && _index <= selected + rightSide) {
+          var withinLeft = _index <= selected + rightSide;
+          var withinRight = _index >= selected - leftSide;
+
+          if (withinLeft && withinRight) {
             items.push(createPageView(_index));
             continue;
           }
 
           if (breakLabel && items[items.length - 1] !== breakView) {
+            var breakIdx = withinLeft ? Math.floor(selected - leftSide) : _index;
             breakView = _react2.default.createElement(_BreakView2.default, {
               key: _index,
+              onClick: _this.handlePageSelected.bind(null, breakIdx),
               breakLabel: breakLabel,
-              breakClassName: breakClassName
+              breakClassName: breakClassName,
+              breakLinkClassName: breakLinkClassName,
+              extraAriaContext: extraAriaContext,
+              href: _this.hrefBuilder(_index),
+              page: page
             });
             items.push(breakView);
           }
@@ -283,7 +294,8 @@ PaginationBoxView.propTypes = {
   previousLinkClassName: _propTypes2.default.string,
   nextLinkClassName: _propTypes2.default.string,
   disabledClassName: _propTypes2.default.string,
-  breakClassName: _propTypes2.default.string
+  breakClassName: _propTypes2.default.string,
+  breakLinkClassName: _propTypes2.default.string
 };
 PaginationBoxView.defaultProps = {
   pageCount: 10,
