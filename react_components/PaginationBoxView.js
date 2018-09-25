@@ -107,6 +107,8 @@ export default class PaginationBoxView extends Component {
     ) {
       return hrefBuilder(pageIndex + 1);
     }
+
+    return '#';
   }
 
   callCallback = (selectedItem) => {

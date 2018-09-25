@@ -179,6 +179,8 @@ var PaginationBoxView = function (_Component) {
       if (hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < pageCount) {
         return hrefBuilder(pageIndex + 1);
       }
+
+      return '#';
     }
   }, {
     key: 'getPageElement',
