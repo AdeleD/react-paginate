@@ -5,8 +5,6 @@ import React from 'react';
 const PageView = (props) => {
   let cssClassName = props.pageClassName;
   let cssLinkClassName = props.pageLinkClassName;
-  
-  //let linkClassName = 
   const onClick = props.onClick;
   const href = props.href;
   let ariaLabel = 'Page ' + props.page +
@@ -22,9 +20,9 @@ const PageView = (props) => {
       cssClassName = props.activeClassName;
     }
 
-    if(typeof(cssLinkClassName) !== 'undefined'){
+    if (typeof(cssLinkClassName) !== 'undefined' && typeof(props.activeLinkClassName) !== 'undefined') {
       cssLinkClassName = cssLinkClassName + ' ' + props.activeLinkClassName;
-    }else{
+    }else if(typeof(props.activeLinkClassName) !== 'undefined'){
       cssLinkClassName = props.activeLinkClassName;
     }
   }
