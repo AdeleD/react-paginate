@@ -151,4 +151,17 @@ describe('PaginationBoxView', () => {
       expect(ReactDOM.findDOMNode(pagination).querySelector("li:last-child").className).toBe("next custom disabled class");
     });
   });
+
+  describe('prop activeLinkClassName',function(){
+      it('add activeLinkClassName to active <a>',function() {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          activeLinkClassName={'active-link'}
+          initialPage={0}
+          pageCount={1}
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").className).toBe("active-link");
+    });
+  });
 });
