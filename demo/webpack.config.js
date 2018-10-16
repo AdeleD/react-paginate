@@ -19,10 +19,6 @@ module.exports = {
     module: {
         rules: [
             {
-                use: 'react-hot-loader/webpack',
-                test: dir_js,
-            },
-            {
                 use: 'babel-loader',
                 test: dir_js
             },
