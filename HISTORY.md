@@ -1,3 +1,7 @@
+## >= 5.2.5
+
+* Upgrade webpack dev dependencies (Fix "Cannot read property 'properties' of undefined" from webpack-cli).
+
 ## >= 5.2.4
 
 * Use ES6 export in react_components/index.js (https://github.com/AdeleD/react-paginate/pull/203).
