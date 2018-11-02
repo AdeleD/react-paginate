@@ -96,6 +96,10 @@ var PaginationBoxView = function (_Component) {
         var leftSide = pageRangeDisplayed / 2;
         var rightSide = pageRangeDisplayed - leftSide;
 
+        // If the selected page index is on the default right side of the pagination,
+        // we consider that the new right side is made up of it (= only one break element).
+        // If the selected page index is on the default left side of the pagination,
+        // we consider that the new left side is made up of it (= only one break element).
         if (selected > pageCount - pageRangeDisplayed / 2) {
           rightSide = pageCount - selected;
           leftSide = pageRangeDisplayed - rightSide;
@@ -115,21 +119,35 @@ var PaginationBoxView = function (_Component) {
 
           page = _index + 1;
 
+          // If the page index is lower than the margin defined,
+          // the page has to be displayed on the left side of
+          // the pagination.
           if (page <= marginPagesDisplayed) {
             items.push(createPageView(_index));
             continue;
           }
 
+          // If the page index is greater than the page count
+          // minus the margin defined, the page has to be
+          // displayed on the right side of the pagination.
           if (page > pageCount - marginPagesDisplayed) {
             items.push(createPageView(_index));
             continue;
           }
 
+          // If the page index is near the selected page index
+          // and inside the defined range (pageRangeDisplayed)
+          // we have to display it (it will create the center
+          // part of the pagination).
           if (_index >= selected - leftSide && _index <= selected + rightSide) {
             items.push(createPageView(_index));
             continue;
           }
 
+          // If the page index doesn't meet any of the conditions above,
+          // we check if the last item of the current "items" array
+          // is a break element. If not, we add a break element, else,
+          // we do nothing (because we don't want to display the page).
           if (breakLabel && items[items.length - 1] !== breakView) {
             breakView = _react2.default.createElement(_BreakView2.default, {
               key: _index,
