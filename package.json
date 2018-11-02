@@ -41,9 +41,9 @@
     "react-dom": "^16.2.0",
     "react-hot-loader": "^3.0.0",
     "serve-static": "^1.11.1",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.12",
-    "webpack-dev-middleware": "^3.0.1"
+    "webpack": "^4.24.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "^3.4.0"
   },
   "scripts": {
     "test": "jest",
