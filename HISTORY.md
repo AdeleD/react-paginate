@@ -1,3 +1,7 @@
+## >= 5.3.0
+
+* Add the activeLinkClassName property.
+
 ## >= 5.2.5
 
 * Upgrade webpack dev dependencies (Fix "Cannot read property 'properties' of undefined" from webpack-cli).
