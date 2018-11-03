@@ -6,8 +6,6 @@ jest.dontMock('./../react_components/PageView');
 jest.dontMock('./../react_components/BreakView');
 
 import PaginationBoxView from './../react_components/PaginationBoxView';
-import PageView from './../react_components/PageView';
-import BreakView from './../react_components/BreakView';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
@@ -23,6 +21,7 @@ describe('PaginationBoxView', () => {
 
     expect(ReactDOM.findDOMNode(pagination).querySelector("li:first-child a").textContent).toBe("Previous");
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").className).toBe("");
     expect(ReactDOM.findDOMNode(pagination).querySelector("li:last-child a").textContent).toBe("Next");
 
     const pages = ReactDOM.findDOMNode(pagination).querySelectorAll("li");
@@ -149,6 +148,47 @@ describe('PaginationBoxView', () => {
       );
       expect(ReactDOM.findDOMNode(pagination).querySelector("li:first-child").className).toBe("previous custom disabled class");
       expect(ReactDOM.findDOMNode(pagination).querySelector("li:last-child").className).toBe("next custom disabled class");
+    });
+  });
+
+  describe('prop pageLinkClassName', () => {
+    it('use the prop when provided', function() {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageLinkClassName="page-link"
+          pageCount={5}
+          previousClassName="prev"
+          nextClassName="next"
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:not(.selected):not(.prev):not(.next) a:first-child").className).toBe("page-link");
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").className).toBe("page-link");
+    });
+  });
+
+  describe('prop activeLinkClassName', () => {
+    it('use the prop activeLinkClassName when provided', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          activeLinkClassName="active-page-link"
+          pageCount={5}
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").className).toBe("active-page-link");
+    });
+
+    it('use the prop activeLinkClassName without overriding the provided pageLinkClassName', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageLinkClassName="page-link"
+          activeLinkClassName="active-page-link"
+          pageCount={5}
+          previousClassName="prev"
+          nextClassName="next"
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:not(.selected):not(.prev):not(.next) a:first-child").className).toBe("page-link");
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").className).toBe("page-link active-page-link");
     });
   });
 });
