@@ -206,6 +206,7 @@ var PaginationBoxView = function (_Component) {
           pageClassName = _props3.pageClassName,
           pageLinkClassName = _props3.pageLinkClassName,
           activeClassName = _props3.activeClassName,
+          activeLinkClassName = _props3.activeLinkClassName,
           extraAriaContext = _props3.extraAriaContext;
 
 
@@ -216,6 +217,7 @@ var PaginationBoxView = function (_Component) {
         pageClassName: pageClassName,
         pageLinkClassName: pageLinkClassName,
         activeClassName: activeClassName,
+        activeLinkClassName: activeLinkClassName,
         extraAriaContext: extraAriaContext,
         href: this.hrefBuilder(index),
         page: index + 1 });
@@ -294,6 +296,7 @@ PaginationBoxView.propTypes = {
   pageClassName: _propTypes2.default.string,
   pageLinkClassName: _propTypes2.default.string,
   activeClassName: _propTypes2.default.string,
+  activeLinkClassName: _propTypes2.default.string,
   previousClassName: _propTypes2.default.string,
   nextClassName: _propTypes2.default.string,
   previousLinkClassName: _propTypes2.default.string,
