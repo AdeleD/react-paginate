@@ -23,6 +23,7 @@ export default class PaginationBoxView extends Component {
     pageClassName         : PropTypes.string,
     pageLinkClassName     : PropTypes.string,
     activeClassName       : PropTypes.string,
+    activeLinkClassName   : PropTypes.string,
     previousClassName     : PropTypes.string,
     nextClassName         : PropTypes.string,
     previousLinkClassName : PropTypes.string,
@@ -122,6 +123,7 @@ export default class PaginationBoxView extends Component {
       pageClassName,
       pageLinkClassName,
       activeClassName,
+      activeLinkClassName,
       extraAriaContext
     } = this.props;
 
@@ -132,6 +134,7 @@ export default class PaginationBoxView extends Component {
       pageClassName={pageClassName}
       pageLinkClassName={pageLinkClassName}
       activeClassName={activeClassName}
+      activeLinkClassName={activeLinkClassName}
       extraAriaContext={extraAriaContext}
       href={this.hrefBuilder(index)}
       page={index + 1} />
