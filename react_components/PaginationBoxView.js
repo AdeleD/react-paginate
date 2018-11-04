@@ -106,7 +106,7 @@ export default class PaginationBoxView extends Component {
       pageIndex >= 0 &&
       pageIndex < pageCount
     ) {
-      return hrefBuilder(pageIndex + 1);
+      return hrefBuilder(pageIndex);
     }
   }
 

@@ -259,9 +259,9 @@ describe('Test custom props', () => {
       );
   
       expect(ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
-        .getAttribute('href')).toBe('/page/3');
+        .getAttribute('href')).toBe('/page/2');
       expect(ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
-        .getAttribute('href')).toBe('/page/1');
+        .getAttribute('href')).toBe('/page/0');
       expect(ReactDOM.findDOMNode(pagination).querySelector('.selected a')
         .getAttribute('href')).toBe(null);
     });
