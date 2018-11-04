@@ -9,7 +9,7 @@ import PaginationBoxView from './../react_components/PaginationBoxView';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
-describe('Test rendering', () => {
+describe('Zero-indexed pagination', () => {
   it('should render a pagination component', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView />
@@ -40,5 +40,14 @@ describe('Test rendering', () => {
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll("li");
     // Prev, selected page, next
     expect(pageItems.length).toBe(3);
+  });
+});
+
+describe('One-indexed pagination', () => {
+  it('should render a pagination component', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView oneIndexed />
+    );
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
   });
 });

@@ -9,7 +9,7 @@ import PaginationBoxView from './../react_components/PaginationBoxView';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
-describe('Test custom props', () => {
+describe('Zero-indexed pagination', () => {
   describe('previousLabel/nextLabel', () => {
     it('should use the previousLabel prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
@@ -274,6 +274,82 @@ describe('Test custom props', () => {
           extraAriaContext="can be clicked"
           previousClassName="prev"
           nextClassName="next"
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:not(.selected):not(.prev):not(.next) a").getAttribute('aria-label')).toBe("Page 2 can be clicked");
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").getAttribute('aria-label')).toBe("Page 1 is your current page");
+    });
+  });
+});
+
+describe('One-indexed pagination', () => {
+  describe('onPageChange', () => {
+    it('should use the onPageChange prop when defined', () => {
+      const myOnPageChangeMethod = jest.fn();
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          onPageChange={myOnPageChangeMethod}
+          oneIndexed
+        />
+      );
+      const nextItem = ReactDOM.findDOMNode(pagination).querySelector("li:last-child a");
+      ReactTestUtils.Simulate.click(nextItem);
+
+      expect(myOnPageChangeMethod).toHaveBeenCalledWith({ selected: 2 });
+    });
+  });
+
+  describe('initialPage', () => {
+    it('should use the initialPage prop when defined', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={3}
+          oneIndexed
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("3");
+    });
+  });
+
+  describe('forcePage', () => {
+    it('should use the forcePage prop when defined', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          forcePage={3}
+          oneIndexed
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("3");
+    });
+  });
+
+  describe('hrefBuilder', () => {
+    it('should use the hrefBuilder prop when defined', function() {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={2}
+          hrefBuilder={(page) => '/page/' + page }
+          oneIndexed
+        />
+      );
+
+      expect(ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
+        .getAttribute('href')).toBe('/page/3');
+      expect(ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
+        .getAttribute('href')).toBe('/page/1');
+      expect(ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+        .getAttribute('href')).toBe(null);
+    });
+  });
+
+  describe('extraAriaContext', () => {
+    it('should use the extraAriaContext prop when defined', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          extraAriaContext="can be clicked"
+          previousClassName="prev"
+          nextClassName="next"
+          oneIndexed
         />
       );
       expect(ReactDOM.findDOMNode(pagination).querySelector("li:not(.selected):not(.prev):not(.next) a").getAttribute('aria-label')).toBe("Page 2 can be clicked");

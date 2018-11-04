@@ -9,7 +9,7 @@ import PaginationBoxView from './../react_components/PaginationBoxView';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
-describe('Test default props', () => {
+describe('Zero-indexed pagination', () => {
   describe('default previousLabel/nextLabel', () => {
     it('should use the default previousLabel/nextLabel', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
@@ -161,6 +161,71 @@ describe('Test default props', () => {
         <PaginationBoxView
           previousClassName="prev"
           nextClassName="next"
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:not(.selected):not(.prev):not(.next) a").getAttribute('aria-label')).toBe("Page 2");
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").getAttribute('aria-label')).toBe("Page 1 is your current page");
+    });
+  });
+});
+
+describe('One-indexed pagination', () => {
+  describe('default onPageChange', () => {
+    it('should not call any onPageChange callback if not defined but it should go to the next page', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView oneIndexed />
+      );
+      const nextItem = ReactDOM.findDOMNode(pagination).querySelector("li:last-child a");
+      ReactTestUtils.Simulate.click(nextItem);
+
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("2");
+    });
+  });
+
+  describe('default initialPage/forcePage', () => {
+    it('should use the default initial selected page (0)', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView oneIndexed />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
+    });
+  });
+
+  describe('default disableInitialCallback', () => {
+    it('should call the onPageChange callback when disableInitialCallback is set to false/undefined', () => {
+      const myOnPageChangeMethod = jest.fn();
+      ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={5}
+          onPageChange={myOnPageChangeMethod}
+          oneIndexed
+        />
+      );
+      expect(myOnPageChangeMethod).toHaveBeenCalledWith({ selected: 5 });
+    });
+  });
+
+  describe('default disabledClassName', () => {
+    it('should use the default disabledClassName', function() {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={1}
+          pageCount={1}
+          oneIndexed
+        />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:first-child").className).toBe("previous disabled");
+      expect(ReactDOM.findDOMNode(pagination).querySelector("li:last-child").className).toBe("next disabled");
+    });
+  });
+
+  describe('default extraAriaContext', () => {
+    it('should use the default extraAriaContext', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          previousClassName="prev"
+          nextClassName="next"
+          oneIndexed
         />
       );
       expect(ReactDOM.findDOMNode(pagination).querySelector("li:not(.selected):not(.prev):not(.next) a").getAttribute('aria-label')).toBe("Page 2");
