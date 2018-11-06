@@ -29,7 +29,8 @@ export default class PaginationBoxView extends Component {
     previousLinkClassName : PropTypes.string,
     nextLinkClassName     : PropTypes.string,
     disabledClassName     : PropTypes.string,
-    breakClassName        : PropTypes.string
+    breakClassName        : PropTypes.string,
+    oneIndexed            : PropTypes.bool,
   };
 
   static defaultProps = {
@@ -43,7 +44,8 @@ export default class PaginationBoxView extends Component {
     nextLabel             : "Next",
     breakLabel            : "...",
     disabledClassName     : "disabled",
-    disableInitialCallback: false
+    disableInitialCallback: false,
+    oneIndexed            : false,
   };
 
   constructor(props) {
@@ -52,7 +54,7 @@ export default class PaginationBoxView extends Component {
     this.state = {
       selected: props.initialPage ? props.initialPage :
                 props.forcePage   ? props.forcePage :
-                0
+                (props.oneIndexed ? 1 : 0)
     };
   }
 
@@ -72,18 +74,19 @@ export default class PaginationBoxView extends Component {
 
   handlePreviousPage = evt => {
     const { selected } = this.state;
+    const { oneIndexed } = this.props;
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-    if (selected > 0) {
+    if (selected > (oneIndexed ? 1 : 0)) {
       this.handlePageSelected(selected - 1, evt);
     }
   };
 
   handleNextPage = evt => {
     const { selected } = this.state;
-    const { pageCount } = this.props;
+    const { oneIndexed, pageCount } = this.props;
 
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-    if (selected < pageCount - 1) {
+    if (selected < (oneIndexed ? pageCount : pageCount - 1)) {
       this.handlePageSelected(selected + 1, evt);
     }
   };
@@ -100,13 +103,13 @@ export default class PaginationBoxView extends Component {
   };
 
   hrefBuilder(pageIndex) {
-    const { hrefBuilder, pageCount } = this.props;
+    const { oneIndexed, hrefBuilder, pageCount } = this.props;
     if (hrefBuilder &&
       pageIndex !== this.state.selected &&
-      pageIndex >= 0 &&
-      pageIndex < pageCount
+      pageIndex >= (oneIndexed ? 1 : 0) &&
+      pageIndex < (oneIndexed ? pageCount + 1 : pageCount)
     ) {
-      return hrefBuilder(pageIndex + 1);
+      return hrefBuilder(pageIndex);
     }
   }
 
@@ -120,6 +123,7 @@ export default class PaginationBoxView extends Component {
   getPageElement(index) {
     const { selected } = this.state;
     const {
+      oneIndexed,
       pageClassName,
       pageLinkClassName,
       activeClassName,
@@ -137,12 +141,13 @@ export default class PaginationBoxView extends Component {
       activeLinkClassName={activeLinkClassName}
       extraAriaContext={extraAriaContext}
       href={this.hrefBuilder(index)}
-      page={index + 1} />
+      page={oneIndexed ? index : index + 1} />
   }
 
   pagination = () => {
     const items = [];
     const {
+      oneIndexed,
       pageRangeDisplayed,
       pageCount,
       marginPagesDisplayed,
@@ -154,7 +159,7 @@ export default class PaginationBoxView extends Component {
 
     if (pageCount <= pageRangeDisplayed) {
 
-      for (let index = 0; index < pageCount; index++) {
+      for (let index = (oneIndexed ? 1 : 0); index < (oneIndexed ? pageCount + 1 : pageCount); index++) {
         items.push(this.getPageElement(index));
       }
 
@@ -181,9 +186,9 @@ export default class PaginationBoxView extends Component {
       let breakView;
       let createPageView = (index) => this.getPageElement(index);
 
-      for (index = 0; index < pageCount; index++) {
+      for (index = (oneIndexed ? 1 : 0); index < (oneIndexed ? pageCount + 1 : pageCount); index++) {
 
-        page = index + 1;
+        page = (oneIndexed ? index : index + 1);
 
         // If the page index is lower than the margin defined,
         // the page has to be displayed on the left side of
@@ -232,6 +237,7 @@ export default class PaginationBoxView extends Component {
 
   render() {
     const {
+      oneIndexed,
       disabledClassName,
       previousClassName,
       nextClassName,
@@ -245,8 +251,8 @@ export default class PaginationBoxView extends Component {
 
     const { selected } = this.state;
 
-    const previousClasses = previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
-    const nextClasses = nextClassName + (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
+    const previousClasses = previousClassName + (selected === (oneIndexed ? 1 : 0) ? ` ${disabledClassName}` : '');
+    const nextClasses = nextClassName + (selected === (oneIndexed ? pageCount : pageCount - 1) ? ` ${disabledClassName}` : '');
 
     return (
       <ul className={containerClassName}>
