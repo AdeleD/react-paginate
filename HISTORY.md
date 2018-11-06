@@ -1,3 +1,7 @@
+## >= 5.3.1
+
+* Tests improvements + fix package release (https://github.com/AdeleD/react-paginate/issues/245).
+
 ## >= 5.3.0
 
 * Add the activeLinkClassName property.
