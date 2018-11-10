@@ -1,3 +1,8 @@
+## >= 6.0.0
+
+* Implement forward/backward jump when clicking on a breakview (ellipsis).
+* The 'breakLabel' prop should not receive an `<a>` tag anymore. Otherwise, a warning will appear in the JS console: `validateDOMNesting(...): <a> cannot appear as a descendant of <a>.`
+
 ## >= 5.3.1
 
 * Tests improvements + fix package release (https://github.com/AdeleD/react-paginate/issues/245).
