@@ -13,11 +13,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var BreakView = function BreakView(props) {
   var label = props.breakLabel;
   var className = props.breakClassName || 'break';
+  var onClick = props.onClick;
 
   return _react2.default.createElement(
     'li',
     { className: className },
-    label
+    _react2.default.createElement(
+      'a',
+      { onClick: onClick,
+        role: 'button',
+        tabIndex: '0',
+        onKeyPress: onClick },
+      label
+    )
   );
 };
 

@@ -69,6 +69,15 @@ var PaginationBoxView = function (_Component) {
       _this.callCallback(selected);
     };
 
+    _this.handleBreakClick = function (index, evt) {
+      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
+
+      var selected = _this.state.selected;
+
+
+      _this.handlePageSelected(selected < index ? _this.getForwardJump() : _this.getBackwardJump(), evt);
+    };
+
     _this.callCallback = function (selectedItem) {
       if (typeof _this.props.onPageChange !== "undefined" && typeof _this.props.onPageChange === "function") {
         _this.props.onPageChange({ selected: selectedItem });
@@ -152,7 +161,8 @@ var PaginationBoxView = function (_Component) {
             breakView = _react2.default.createElement(_BreakView2.default, {
               key: _index,
               breakLabel: breakLabel,
-              breakClassName: breakClassName
+              breakClassName: breakClassName,
+              onClick: _this.handleBreakClick.bind(null, _index)
             });
             items.push(breakView);
           }
@@ -188,11 +198,33 @@ var PaginationBoxView = function (_Component) {
       }
     }
   }, {
+    key: 'getForwardJump',
+    value: function getForwardJump() {
+      var selected = this.state.selected;
+      var _props2 = this.props,
+          pageCount = _props2.pageCount,
+          pageRangeDisplayed = _props2.pageRangeDisplayed;
+
+
+      var forwardJump = selected + pageRangeDisplayed;
+      return forwardJump >= pageCount ? pageCount - 1 : forwardJump;
+    }
+  }, {
+    key: 'getBackwardJump',
+    value: function getBackwardJump() {
+      var selected = this.state.selected;
+      var pageRangeDisplayed = this.props.pageRangeDisplayed;
+
+
+      var backwardJump = selected - pageRangeDisplayed;
+      return backwardJump < 0 ? 0 : backwardJump;
+    }
+  }, {
     key: 'hrefBuilder',
     value: function hrefBuilder(pageIndex) {
-      var _props2 = this.props,
-          hrefBuilder = _props2.hrefBuilder,
-          pageCount = _props2.pageCount;
+      var _props3 = this.props,
+          hrefBuilder = _props3.hrefBuilder,
+          pageCount = _props3.pageCount;
 
       if (hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < pageCount) {
         return hrefBuilder(pageIndex + 1);
@@ -202,12 +234,12 @@ var PaginationBoxView = function (_Component) {
     key: 'getPageElement',
     value: function getPageElement(index) {
       var selected = this.state.selected;
-      var _props3 = this.props,
-          pageClassName = _props3.pageClassName,
-          pageLinkClassName = _props3.pageLinkClassName,
-          activeClassName = _props3.activeClassName,
-          activeLinkClassName = _props3.activeLinkClassName,
-          extraAriaContext = _props3.extraAriaContext;
+      var _props4 = this.props,
+          pageClassName = _props4.pageClassName,
+          pageLinkClassName = _props4.pageLinkClassName,
+          activeClassName = _props4.activeClassName,
+          activeLinkClassName = _props4.activeLinkClassName,
+          extraAriaContext = _props4.extraAriaContext;
 
 
       return _react2.default.createElement(_PageView2.default, {
@@ -225,16 +257,16 @@ var PaginationBoxView = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _props4 = this.props,
-          disabledClassName = _props4.disabledClassName,
-          previousClassName = _props4.previousClassName,
-          nextClassName = _props4.nextClassName,
-          pageCount = _props4.pageCount,
-          containerClassName = _props4.containerClassName,
-          previousLinkClassName = _props4.previousLinkClassName,
-          previousLabel = _props4.previousLabel,
-          nextLinkClassName = _props4.nextLinkClassName,
-          nextLabel = _props4.nextLabel;
+      var _props5 = this.props,
+          disabledClassName = _props5.disabledClassName,
+          previousClassName = _props5.previousClassName,
+          nextClassName = _props5.nextClassName,
+          pageCount = _props5.pageCount,
+          containerClassName = _props5.containerClassName,
+          previousLinkClassName = _props5.previousLinkClassName,
+          previousLabel = _props5.previousLabel,
+          nextLinkClassName = _props5.nextLinkClassName,
+          nextLabel = _props5.nextLabel;
       var selected = this.state.selected;
 
 
@@ -286,7 +318,7 @@ PaginationBoxView.propTypes = {
   marginPagesDisplayed: _propTypes2.default.number.isRequired,
   previousLabel: _propTypes2.default.node,
   nextLabel: _propTypes2.default.node,
-  breakLabel: _propTypes2.default.node,
+  breakLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   hrefBuilder: _propTypes2.default.func,
   onPageChange: _propTypes2.default.func,
   initialPage: _propTypes2.default.number,
