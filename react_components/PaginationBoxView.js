@@ -13,7 +13,10 @@ export default class PaginationBoxView extends Component {
     marginPagesDisplayed  : PropTypes.number.isRequired,
     previousLabel         : PropTypes.node,
     nextLabel             : PropTypes.node,
-    breakLabel            : PropTypes.node,
+    breakLabel            : PropTypes.oneOfType([
+                              PropTypes.string,
+                              PropTypes.node,
+                            ]),
     hrefBuilder           : PropTypes.func,
     onPageChange          : PropTypes.func,
     initialPage           : PropTypes.number,
@@ -98,6 +101,35 @@ export default class PaginationBoxView extends Component {
     // Call the callback with the new selected item:
     this.callCallback(selected);
   };
+
+  getForwardJump() {
+    const { selected } = this.state;
+    const { pageCount, pageRangeDisplayed } = this.props;
+
+    const forwardJump = selected + pageRangeDisplayed;
+    return forwardJump >= pageCount ? pageCount - 1 : forwardJump;
+  }
+
+  getBackwardJump() {
+    const { selected } = this.state;
+    const { pageRangeDisplayed } = this.props;
+
+    const backwardJump = selected - pageRangeDisplayed;
+    return backwardJump < 0 ? 0 : backwardJump;
+  }
+
+  handleBreakClick = (index, evt) => {
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+
+    const { selected } = this.state;
+
+    this.handlePageSelected(
+      selected < index ?
+        this.getForwardJump() :
+        this.getBackwardJump(),
+      evt
+    );
+  }
 
   hrefBuilder(pageIndex) {
     const { hrefBuilder, pageCount } = this.props;
@@ -220,6 +252,7 @@ export default class PaginationBoxView extends Component {
               key={index}
               breakLabel={breakLabel}
               breakClassName={breakClassName}
+              onClick={this.handleBreakClick.bind(null, index)}
             />
           );
           items.push(breakView);

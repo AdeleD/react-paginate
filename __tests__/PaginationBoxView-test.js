@@ -44,11 +44,11 @@ describe('Test rendering', () => {
 });
 
 describe('Test clicks', () => {
-  const pagination = ReactTestUtils.renderIntoDocument(
-    <PaginationBoxView />
-  );
-
   it('test clicks on previous and next buttons', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView />
+    );
+
     let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(pagination, 'a');
     let previous = elmts[0];
     let next = elmts[elmts.length - 1];
@@ -63,6 +63,10 @@ describe('Test clicks', () => {
   });
 
   it('test click on a page item', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView />
+    );
+
     ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
 
     const pageItem = ReactDOM.findDOMNode(pagination).querySelector("li:nth-child(3) a");
@@ -70,6 +74,46 @@ describe('Test clicks', () => {
     ReactTestUtils.Simulate.click(pageItem);
 
     expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("2");
+  });
+
+  it('test click on the left break view', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={0}
+        pageCount={20}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5} />
+    );
+
+    // The selected page is before the left break
+    const leftBreakView1 = ReactDOM.findDOMNode(pagination).querySelector(".break a");
+    ReactTestUtils.Simulate.click(leftBreakView1);
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("6");
+
+    // The selected page is after the left break
+    const leftBreakView2 = ReactDOM.findDOMNode(pagination).querySelectorAll(".break a")[0];
+    ReactTestUtils.Simulate.click(leftBreakView2);
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("1");
+  });
+
+  it('test click on the right break view', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={10}
+        pageCount={20}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5} />
+    );
+
+    // The selected page is before the right break
+    const rightBreak1 = ReactDOM.findDOMNode(pagination).querySelectorAll(".break a")[1];
+    ReactTestUtils.Simulate.click(rightBreak1);
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("16");
+
+    // The selected page is after the right break
+    const rightBreak2 = ReactDOM.findDOMNode(pagination).querySelector(".break a");
+    ReactTestUtils.Simulate.click(rightBreak2);
+    expect(ReactDOM.findDOMNode(pagination).querySelector(".selected a").textContent).toBe("11");
   });
 });
 
@@ -469,7 +513,7 @@ describe('Test custom props', () => {
     it('should use the breakLabel prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
-          breakLabel={<a href="">...</a>}
+          breakLabel={"..."}
         />
       );
       expect(ReactDOM.findDOMNode(pagination).querySelector("li.break").firstChild.nodeType).toBe(Node.ELEMENT_NODE);
