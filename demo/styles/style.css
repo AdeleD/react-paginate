@@ -7,7 +7,3 @@
 #react-paginate li {
     display: inline-block;
 }
-
-#react-paginate .break a {
-    cursor: default;
-}
