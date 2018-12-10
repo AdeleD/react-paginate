@@ -13,6 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var BreakView = function BreakView(props) {
   var label = props.breakLabel;
   var className = props.breakClassName || 'break';
+  var linkClassName = props.breakLinkClassName || '';
   var onClick = props.onClick;
 
   return _react2.default.createElement(
@@ -23,7 +24,8 @@ var BreakView = function BreakView(props) {
       { onClick: onClick,
         role: 'button',
         tabIndex: '0',
-        onKeyPress: onClick },
+        onKeyPress: onClick,
+        className: linkClassName },
       label
     )
   );

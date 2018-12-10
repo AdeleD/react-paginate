@@ -91,7 +91,8 @@ var PaginationBoxView = function (_Component) {
           pageCount = _this$props.pageCount,
           marginPagesDisplayed = _this$props.marginPagesDisplayed,
           breakLabel = _this$props.breakLabel,
-          breakClassName = _this$props.breakClassName;
+          breakClassName = _this$props.breakClassName,
+          breakLinkClassName = _this$props.breakLinkClassName;
       var selected = _this.state.selected;
 
 
@@ -162,6 +163,7 @@ var PaginationBoxView = function (_Component) {
               key: _index,
               breakLabel: breakLabel,
               breakClassName: breakClassName,
+              breakLinkClassName: breakLinkClassName,
               onClick: _this.handleBreakClick.bind(null, _index)
             });
             items.push(breakView);
@@ -334,7 +336,8 @@ PaginationBoxView.propTypes = {
   previousLinkClassName: _propTypes2.default.string,
   nextLinkClassName: _propTypes2.default.string,
   disabledClassName: _propTypes2.default.string,
-  breakClassName: _propTypes2.default.string
+  breakClassName: _propTypes2.default.string,
+  breakLinkClassName: _propTypes2.default.string
 };
 PaginationBoxView.defaultProps = {
   pageCount: 10,

@@ -527,6 +527,13 @@ describe('Test custom props', () => {
       );
       expect(ReactDOM.findDOMNode(pagination).querySelector(".break-me")).not.toBe(null);
     });
+
+    it('should use the breakLinkClassName prop when defined', function() {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView breakLinkClassName={"break-link-me"} />
+      );
+      expect(ReactDOM.findDOMNode(pagination).querySelector("a.break-link-me")).not.toBe(null);
+    });
   });
 
   describe('onPageChange', () => {
