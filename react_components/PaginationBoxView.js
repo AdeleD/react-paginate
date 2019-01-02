@@ -52,8 +52,8 @@ export default class PaginationBoxView extends Component {
 
     this.state = {
       selected: props.initialPage ? props.initialPage :
-                props.forcePage   ? props.forcePage :
-                0
+        props.forcePage   ? props.forcePage :
+          0
     };
   }
 
@@ -118,7 +118,7 @@ export default class PaginationBoxView extends Component {
 
   callCallback = (selectedItem) => {
     if (typeof(this.props.onPageChange) !== "undefined" &&
-        typeof(this.props.onPageChange) === "function") {
+      typeof(this.props.onPageChange) === "function") {
       this.props.onPageChange({selected: selectedItem});
     }
   };
@@ -234,33 +234,49 @@ export default class PaginationBoxView extends Component {
 
     const { selected } = this.state;
 
-    const previousClasses = previousClassName + (selected === (oneIndexed ? 1 : 0) ? ` ${disabledClassName}` : '');
-    const nextClasses = nextClassName + (selected === pageCount - (oneIndexed ? 0 : 1) ? ` ${disabledClassName}` : '');
+    const isFirstPage = selected === (oneIndexed ? 1 : 0);
+    const previousClasses = previousClassName + (isFirstPage ? ` ${disabledClassName}` : '');
+
+    const isLastPage = selected === pageCount - (oneIndexed ? 0 : 1);
+    const nextClasses = nextClassName + (isLastPage ? ` ${disabledClassName}` : '');
 
     return (
       <ul className={containerClassName}>
         <li className={previousClasses}>
-          <a onClick={this.handlePreviousPage}
-             className={previousLinkClassName}
-             href={this.hrefBuilder(selected - 1)}
-             tabIndex="0"
-             role="button"
-             onKeyPress={this.handlePreviousPage}>
-            {previousLabel}
-          </a>
+          {!isFirstPage
+            ? <a
+              onClick={this.handlePreviousPage}
+              className={previousLinkClassName}
+              href={this.hrefBuilder(selected - 1)}
+              tabIndex="0"
+              role="button"
+              onKeyPress={this.handlePreviousPage}>
+              {previousLabel}
+            </a>
+            : <span
+              className={previousLinkClassName}>
+              {previousLabel}
+            </span>
+          }
         </li>
 
         {this.pagination()}
 
         <li className={nextClasses}>
-          <a onClick={this.handleNextPage}
-             className={nextLinkClassName}
-             href={this.hrefBuilder(selected + 1)}
-             tabIndex="0"
-             role="button"
-             onKeyPress={this.handleNextPage}>
-            {nextLabel}
-          </a>
+          {!isLastPage
+            ? <a onClick={this.handleNextPage}
+                 className={nextLinkClassName}
+                 href={this.hrefBuilder(selected + 1)}
+                 tabIndex="0"
+                 role="button"
+                 onKeyPress={this.handleNextPage}>
+              {nextLabel}
+            </a>
+            : <span
+              className={nextLinkClassName}>
+              {nextLabel}
+            </span>
+          }
         </li>
       </ul>
     );
