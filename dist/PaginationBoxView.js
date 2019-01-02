@@ -225,11 +225,8 @@ var PaginationBoxView = function (_Component) {
       var selected = this.state.selected;
 
 
-      var isFirstPage = selected === (oneIndexed ? 1 : 0);
-      var previousClasses = previousClassName + (isFirstPage ? ' ' + disabledClassName : '');
-
-      var isLastPage = selected === pageCount - (oneIndexed ? 0 : 1);
-      var nextClasses = nextClassName + (isLastPage ? ' ' + disabledClassName : '');
+      var previousClasses = previousClassName + (selected === (oneIndexed ? 1 : 0) ? ' ' + disabledClassName : '');
+      var nextClasses = nextClassName + (selected === pageCount - (oneIndexed ? 0 : 1) ? ' ' + disabledClassName : '');
 
       return _react2.default.createElement(
         'ul',
@@ -237,20 +234,14 @@ var PaginationBoxView = function (_Component) {
         _react2.default.createElement(
           'li',
           { className: previousClasses },
-          !isFirstPage ? _react2.default.createElement(
+          _react2.default.createElement(
             'a',
-            {
-              onClick: this.handlePreviousPage,
+            { onClick: this.handlePreviousPage,
               className: previousLinkClassName,
               href: this.hrefBuilder(selected - 1),
               tabIndex: '0',
               role: 'button',
               onKeyPress: this.handlePreviousPage },
-            previousLabel
-          ) : _react2.default.createElement(
-            'span',
-            {
-              className: previousLinkClassName },
             previousLabel
           )
         ),
@@ -258,7 +249,7 @@ var PaginationBoxView = function (_Component) {
         _react2.default.createElement(
           'li',
           { className: nextClasses },
-          !isLastPage ? _react2.default.createElement(
+          _react2.default.createElement(
             'a',
             { onClick: this.handleNextPage,
               className: nextLinkClassName,
@@ -266,11 +257,6 @@ var PaginationBoxView = function (_Component) {
               tabIndex: '0',
               role: 'button',
               onKeyPress: this.handleNextPage },
-            nextLabel
-          ) : _react2.default.createElement(
-            'span',
-            {
-              className: nextLinkClassName },
             nextLabel
           )
         )

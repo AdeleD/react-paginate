@@ -234,49 +234,33 @@ export default class PaginationBoxView extends Component {
 
     const { selected } = this.state;
 
-    const isFirstPage = selected === (oneIndexed ? 1 : 0);
-    const previousClasses = previousClassName + (isFirstPage ? ` ${disabledClassName}` : '');
-
-    const isLastPage = selected === pageCount - (oneIndexed ? 0 : 1);
-    const nextClasses = nextClassName + (isLastPage ? ` ${disabledClassName}` : '');
+    const previousClasses = previousClassName + (selected === (oneIndexed ? 1 : 0) ? ` ${disabledClassName}` : '');
+    const nextClasses = nextClassName + (selected === pageCount - (oneIndexed ? 0 : 1) ? ` ${disabledClassName}` : '');
 
     return (
       <ul className={containerClassName}>
         <li className={previousClasses}>
-          {!isFirstPage
-            ? <a
-              onClick={this.handlePreviousPage}
-              className={previousLinkClassName}
-              href={this.hrefBuilder(selected - 1)}
-              tabIndex="0"
-              role="button"
-              onKeyPress={this.handlePreviousPage}>
-              {previousLabel}
-            </a>
-            : <span
-              className={previousLinkClassName}>
-              {previousLabel}
-            </span>
-          }
+          <a onClick={this.handlePreviousPage}
+             className={previousLinkClassName}
+             href={this.hrefBuilder(selected - 1)}
+             tabIndex="0"
+             role="button"
+             onKeyPress={this.handlePreviousPage}>
+            {previousLabel}
+          </a>
         </li>
 
         {this.pagination()}
 
         <li className={nextClasses}>
-          {!isLastPage
-            ? <a onClick={this.handleNextPage}
-                 className={nextLinkClassName}
-                 href={this.hrefBuilder(selected + 1)}
-                 tabIndex="0"
-                 role="button"
-                 onKeyPress={this.handleNextPage}>
-              {nextLabel}
-            </a>
-            : <span
-              className={nextLinkClassName}>
-              {nextLabel}
-            </span>
-          }
+          <a onClick={this.handleNextPage}
+             className={nextLinkClassName}
+             href={this.hrefBuilder(selected + 1)}
+             tabIndex="0"
+             role="button"
+             onKeyPress={this.handleNextPage}>
+            {nextLabel}
+          </a>
         </li>
       </ul>
     );
