@@ -4,14 +4,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const BreakView = props => {
-  const label = props.breakLabel;
-  const className = props.breakClassName || 'break';
-  const onClick = props.onClick;
+  const { breakLabel, breakClassName, breakLinkClassName, onClick } = props;
+  const className = breakClassName || 'break';
 
   return (
     <li className={className}>
-      <a onClick={onClick} role="button" tabIndex="0" onKeyPress={onClick}>
-        {label}
+      <a
+        className={breakLinkClassName}
+        onClick={onClick}
+        role="button"
+        tabIndex="0"
+        onKeyPress={onClick}
+      >
+        {breakLabel}
       </a>
     </li>
   );
@@ -20,6 +25,7 @@ const BreakView = props => {
 BreakView.propTypes = {
   breakLabel: PropTypes.string.isRequired,
   breakClassName: PropTypes.string,
+  breakLinkClassName: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
 
