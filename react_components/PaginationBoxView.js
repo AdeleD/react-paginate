@@ -5,71 +5,78 @@ import PropTypes from 'prop-types';
 import PageView from './PageView';
 import BreakView from './BreakView';
 
-
 export default class PaginationBoxView extends Component {
   static propTypes = {
-    pageCount             : PropTypes.number.isRequired,
-    pageRangeDisplayed    : PropTypes.number.isRequired,
-    marginPagesDisplayed  : PropTypes.number.isRequired,
-    previousLabel         : PropTypes.node,
-    nextLabel             : PropTypes.node,
-    breakLabel            : PropTypes.oneOfType([
-                              PropTypes.string,
-                              PropTypes.node,
-                            ]),
-    hrefBuilder           : PropTypes.func,
-    onPageChange          : PropTypes.func,
-    initialPage           : PropTypes.number,
-    forcePage             : PropTypes.number,
+    pageCount: PropTypes.number.isRequired,
+    pageRangeDisplayed: PropTypes.number.isRequired,
+    marginPagesDisplayed: PropTypes.number.isRequired,
+    previousLabel: PropTypes.node,
+    nextLabel: PropTypes.node,
+    breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    hrefBuilder: PropTypes.func,
+    onPageChange: PropTypes.func,
+    initialPage: PropTypes.number,
+    forcePage: PropTypes.number,
     disableInitialCallback: PropTypes.bool,
-    containerClassName    : PropTypes.string,
-    pageClassName         : PropTypes.string,
-    pageLinkClassName     : PropTypes.string,
-    activeClassName       : PropTypes.string,
-    activeLinkClassName   : PropTypes.string,
-    previousClassName     : PropTypes.string,
-    nextClassName         : PropTypes.string,
-    previousLinkClassName : PropTypes.string,
-    nextLinkClassName     : PropTypes.string,
-    disabledClassName     : PropTypes.string,
-    breakClassName        : PropTypes.string
+    containerClassName: PropTypes.string,
+    pageClassName: PropTypes.string,
+    pageLinkClassName: PropTypes.string,
+    activeClassName: PropTypes.string,
+    activeLinkClassName: PropTypes.string,
+    previousClassName: PropTypes.string,
+    nextClassName: PropTypes.string,
+    previousLinkClassName: PropTypes.string,
+    nextLinkClassName: PropTypes.string,
+    disabledClassName: PropTypes.string,
+    breakClassName: PropTypes.string,
+    extraAriaContext: PropTypes.string,
   };
 
   static defaultProps = {
-    pageCount             : 10,
-    pageRangeDisplayed    : 2,
-    marginPagesDisplayed  : 3,
-    activeClassName       : "selected",
-    previousClassName     : "previous",
-    nextClassName         : "next",
-    previousLabel         : "Previous",
-    nextLabel             : "Next",
-    breakLabel            : "...",
-    disabledClassName     : "disabled",
-    disableInitialCallback: false
+    pageCount: 10,
+    pageRangeDisplayed: 2,
+    marginPagesDisplayed: 3,
+    activeClassName: 'selected',
+    previousClassName: 'previous',
+    nextClassName: 'next',
+    previousLabel: 'Previous',
+    nextLabel: 'Next',
+    breakLabel: '...',
+    disabledClassName: 'disabled',
+    disableInitialCallback: false,
   };
 
   constructor(props) {
     super(props);
 
+    let initialSelected;
+    if (props.initialPage) {
+      initialSelected = props.initialPage;
+    } else if (props.forcePage) {
+      initialSelected = props.forcePage;
+    } else {
+      initialSelected = 0;
+    }
+
     this.state = {
-      selected: props.initialPage ? props.initialPage :
-                props.forcePage   ? props.forcePage :
-                0
+      selected: initialSelected,
     };
   }
 
   componentDidMount() {
     const { initialPage, disableInitialCallback } = this.props;
     // Call the callback with the initialPage item:
-    if (typeof(initialPage) !== 'undefined' && !disableInitialCallback) {
+    if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
       this.callCallback(initialPage);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (typeof(nextProps.forcePage) !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
-      this.setState({selected: nextProps.forcePage});
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (
+      typeof nextProps.forcePage !== 'undefined' &&
+      this.props.forcePage !== nextProps.forcePage
+    ) {
+      this.setState({ selected: nextProps.forcePage });
     }
   }
 
@@ -96,7 +103,7 @@ export default class PaginationBoxView extends Component {
 
     if (this.state.selected === selected) return;
 
-    this.setState({selected: selected});
+    this.setState({ selected: selected });
 
     // Call the callback with the new selected item:
     this.callCallback(selected);
@@ -124,16 +131,15 @@ export default class PaginationBoxView extends Component {
     const { selected } = this.state;
 
     this.handlePageSelected(
-      selected < index ?
-        this.getForwardJump() :
-        this.getBackwardJump(),
+      selected < index ? this.getForwardJump() : this.getBackwardJump(),
       evt
     );
-  }
+  };
 
   hrefBuilder(pageIndex) {
     const { hrefBuilder, pageCount } = this.props;
-    if (hrefBuilder &&
+    if (
+      hrefBuilder &&
       pageIndex !== this.state.selected &&
       pageIndex >= 0 &&
       pageIndex < pageCount
@@ -142,10 +148,12 @@ export default class PaginationBoxView extends Component {
     }
   }
 
-  callCallback = (selectedItem) => {
-    if (typeof(this.props.onPageChange) !== "undefined" &&
-        typeof(this.props.onPageChange) === "function") {
-      this.props.onPageChange({selected: selectedItem});
+  callCallback = selectedItem => {
+    if (
+      typeof this.props.onPageChange !== 'undefined' &&
+      typeof this.props.onPageChange === 'function'
+    ) {
+      this.props.onPageChange({ selected: selectedItem });
     }
   };
 
@@ -156,20 +164,23 @@ export default class PaginationBoxView extends Component {
       pageLinkClassName,
       activeClassName,
       activeLinkClassName,
-      extraAriaContext
+      extraAriaContext,
     } = this.props;
 
-    return <PageView
-      key={index}
-      onClick={this.handlePageSelected.bind(null, index)}
-      selected={selected === index}
-      pageClassName={pageClassName}
-      pageLinkClassName={pageLinkClassName}
-      activeClassName={activeClassName}
-      activeLinkClassName={activeLinkClassName}
-      extraAriaContext={extraAriaContext}
-      href={this.hrefBuilder(index)}
-      page={index + 1} />
+    return (
+      <PageView
+        key={index}
+        onClick={this.handlePageSelected.bind(null, index)}
+        selected={selected === index}
+        pageClassName={pageClassName}
+        pageLinkClassName={pageLinkClassName}
+        activeClassName={activeClassName}
+        activeLinkClassName={activeLinkClassName}
+        extraAriaContext={extraAriaContext}
+        href={this.hrefBuilder(index)}
+        page={index + 1}
+      />
+    );
   }
 
   pagination = () => {
@@ -179,21 +190,18 @@ export default class PaginationBoxView extends Component {
       pageCount,
       marginPagesDisplayed,
       breakLabel,
-      breakClassName
+      breakClassName,
     } = this.props;
 
     const { selected } = this.state;
 
     if (pageCount <= pageRangeDisplayed) {
-
       for (let index = 0; index < pageCount; index++) {
         items.push(this.getPageElement(index));
       }
-
     } else {
-
-      let leftSide  = (pageRangeDisplayed / 2);
-      let rightSide = (pageRangeDisplayed - leftSide);
+      let leftSide = pageRangeDisplayed / 2;
+      let rightSide = pageRangeDisplayed - leftSide;
 
       // If the selected page index is on the default right side of the pagination,
       // we consider that the new right side is made up of it (= only one break element).
@@ -201,20 +209,18 @@ export default class PaginationBoxView extends Component {
       // we consider that the new left side is made up of it (= only one break element).
       if (selected > pageCount - pageRangeDisplayed / 2) {
         rightSide = pageCount - selected;
-        leftSide  = pageRangeDisplayed - rightSide;
-      }
-      else if (selected < pageRangeDisplayed / 2) {
-        leftSide  = selected;
+        leftSide = pageRangeDisplayed - rightSide;
+      } else if (selected < pageRangeDisplayed / 2) {
+        leftSide = selected;
         rightSide = pageRangeDisplayed - leftSide;
       }
 
       let index;
       let page;
       let breakView;
-      let createPageView = (index) => this.getPageElement(index);
+      let createPageView = index => this.getPageElement(index);
 
       for (index = 0; index < pageCount; index++) {
-
         page = index + 1;
 
         // If the page index is lower than the margin defined,
@@ -237,7 +243,7 @@ export default class PaginationBoxView extends Component {
         // and inside the defined range (pageRangeDisplayed)
         // we have to display it (it will create the center
         // part of the pagination).
-        if ((index >= selected - leftSide) && (index <= selected + rightSide)) {
+        if (index >= selected - leftSide && index <= selected + rightSide) {
           items.push(createPageView(index));
           continue;
         }
@@ -273,13 +279,16 @@ export default class PaginationBoxView extends Component {
       previousLinkClassName,
       previousLabel,
       nextLinkClassName,
-      nextLabel
+      nextLabel,
     } = this.props;
 
     const { selected } = this.state;
 
-    const previousClasses = previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
-    const nextClasses = nextClassName + (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
+    const previousClasses =
+      previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
+    const nextClasses =
+      nextClassName +
+      (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
 
     const previousAriaDisabled = selected === 0 ? 'true' : 'false';
     const nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
@@ -287,13 +296,15 @@ export default class PaginationBoxView extends Component {
     return (
       <ul className={containerClassName}>
         <li className={previousClasses}>
-          <a onClick={this.handlePreviousPage}
-             className={previousLinkClassName}
-             href={this.hrefBuilder(selected - 1)}
-             tabIndex="0"
-             role="button"
-             onKeyPress={this.handlePreviousPage}
-             aria-disabled={previousAriaDisabled}>
+          <a
+            onClick={this.handlePreviousPage}
+            className={previousLinkClassName}
+            href={this.hrefBuilder(selected - 1)}
+            tabIndex="0"
+            role="button"
+            onKeyPress={this.handlePreviousPage}
+            aria-disabled={previousAriaDisabled}
+          >
             {previousLabel}
           </a>
         </li>
@@ -301,17 +312,19 @@ export default class PaginationBoxView extends Component {
         {this.pagination()}
 
         <li className={nextClasses}>
-          <a onClick={this.handleNextPage}
-             className={nextLinkClassName}
-             href={this.hrefBuilder(selected + 1)}
-             tabIndex="0"
-             role="button"
-             onKeyPress={this.handleNextPage}
-             aria-disabled={nextAriaDisabled}>
+          <a
+            onClick={this.handleNextPage}
+            className={nextLinkClassName}
+            href={this.hrefBuilder(selected + 1)}
+            tabIndex="0"
+            role="button"
+            onKeyPress={this.handleNextPage}
+            aria-disabled={nextAriaDisabled}
+          >
             {nextLabel}
           </a>
         </li>
       </ul>
     );
   }
-};
+}
