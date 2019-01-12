@@ -273,6 +273,9 @@ var PaginationBoxView = function (_Component) {
       var previousClasses = previousClassName + (selected === 0 ? ' ' + disabledClassName : '');
       var nextClasses = nextClassName + (selected === pageCount - 1 ? ' ' + disabledClassName : '');
 
+      var previousAriaDisabled = selected === 0 ? 'true' : 'false';
+      var nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
+
       return _react2.default.createElement(
         'ul',
         { className: containerClassName },
@@ -286,7 +289,8 @@ var PaginationBoxView = function (_Component) {
               href: this.hrefBuilder(selected - 1),
               tabIndex: '0',
               role: 'button',
-              onKeyPress: this.handlePreviousPage },
+              onKeyPress: this.handlePreviousPage,
+              'aria-disabled': previousAriaDisabled },
             previousLabel
           )
         ),
@@ -301,7 +305,8 @@ var PaginationBoxView = function (_Component) {
               href: this.hrefBuilder(selected + 1),
               tabIndex: '0',
               role: 'button',
-              onKeyPress: this.handleNextPage },
+              onKeyPress: this.handleNextPage,
+              'aria-disabled': nextAriaDisabled },
             nextLabel
           )
         )
