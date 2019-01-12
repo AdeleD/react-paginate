@@ -79,7 +79,7 @@ var PaginationBoxView = function (_Component) {
     };
 
     _this.callCallback = function (selectedItem) {
-      if (typeof _this.props.onPageChange !== "undefined" && typeof _this.props.onPageChange === "function") {
+      if (typeof _this.props.onPageChange !== 'undefined' && typeof _this.props.onPageChange === 'function') {
         _this.props.onPageChange({ selected: selectedItem });
       }
     };
@@ -91,17 +91,16 @@ var PaginationBoxView = function (_Component) {
           pageCount = _this$props.pageCount,
           marginPagesDisplayed = _this$props.marginPagesDisplayed,
           breakLabel = _this$props.breakLabel,
-          breakClassName = _this$props.breakClassName;
+          breakClassName = _this$props.breakClassName,
+          breakLinkClassName = _this$props.breakLinkClassName;
       var selected = _this.state.selected;
 
 
       if (pageCount <= pageRangeDisplayed) {
-
         for (var index = 0; index < pageCount; index++) {
           items.push(_this.getPageElement(index));
         }
       } else {
-
         var leftSide = pageRangeDisplayed / 2;
         var rightSide = pageRangeDisplayed - leftSide;
 
@@ -125,7 +124,6 @@ var PaginationBoxView = function (_Component) {
         };
 
         for (_index = 0; _index < pageCount; _index++) {
-
           page = _index + 1;
 
           // If the page index is lower than the margin defined,
@@ -162,6 +160,7 @@ var PaginationBoxView = function (_Component) {
               key: _index,
               breakLabel: breakLabel,
               breakClassName: breakClassName,
+              breakLinkClassName: breakLinkClassName,
               onClick: _this.handleBreakClick.bind(null, _index)
             });
             items.push(breakView);
@@ -172,8 +171,17 @@ var PaginationBoxView = function (_Component) {
       return items;
     };
 
+    var initialSelected = void 0;
+    if (props.initialPage) {
+      initialSelected = props.initialPage;
+    } else if (props.forcePage) {
+      initialSelected = props.forcePage;
+    } else {
+      initialSelected = 0;
+    }
+
     _this.state = {
-      selected: props.initialPage ? props.initialPage : props.forcePage ? props.forcePage : 0
+      selected: initialSelected
     };
     return _this;
   }
@@ -191,8 +199,8 @@ var PaginationBoxView = function (_Component) {
       }
     }
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
+    key: 'UNSAFE_componentWillReceiveProps',
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
       if (typeof nextProps.forcePage !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
         this.setState({ selected: nextProps.forcePage });
       }
@@ -252,7 +260,8 @@ var PaginationBoxView = function (_Component) {
         activeLinkClassName: activeLinkClassName,
         extraAriaContext: extraAriaContext,
         href: this.hrefBuilder(index),
-        page: index + 1 });
+        page: index + 1
+      });
     }
   }, {
     key: 'render',
@@ -284,13 +293,15 @@ var PaginationBoxView = function (_Component) {
           { className: previousClasses },
           _react2.default.createElement(
             'a',
-            { onClick: this.handlePreviousPage,
+            {
+              onClick: this.handlePreviousPage,
               className: previousLinkClassName,
               href: this.hrefBuilder(selected - 1),
               tabIndex: '0',
               role: 'button',
               onKeyPress: this.handlePreviousPage,
-              'aria-disabled': previousAriaDisabled },
+              'aria-disabled': previousAriaDisabled
+            },
             previousLabel
           )
         ),
@@ -300,13 +311,15 @@ var PaginationBoxView = function (_Component) {
           { className: nextClasses },
           _react2.default.createElement(
             'a',
-            { onClick: this.handleNextPage,
+            {
+              onClick: this.handleNextPage,
               className: nextLinkClassName,
               href: this.hrefBuilder(selected + 1),
               tabIndex: '0',
               role: 'button',
               onKeyPress: this.handleNextPage,
-              'aria-disabled': nextAriaDisabled },
+              'aria-disabled': nextAriaDisabled
+            },
             nextLabel
           )
         )
@@ -339,21 +352,22 @@ PaginationBoxView.propTypes = {
   previousLinkClassName: _propTypes2.default.string,
   nextLinkClassName: _propTypes2.default.string,
   disabledClassName: _propTypes2.default.string,
-  breakClassName: _propTypes2.default.string
+  breakClassName: _propTypes2.default.string,
+  breakLinkClassName: _propTypes2.default.string,
+  extraAriaContext: _propTypes2.default.string
 };
 PaginationBoxView.defaultProps = {
   pageCount: 10,
   pageRangeDisplayed: 2,
   marginPagesDisplayed: 3,
-  activeClassName: "selected",
-  previousClassName: "previous",
-  nextClassName: "next",
-  previousLabel: "Previous",
-  nextLabel: "Next",
-  breakLabel: "...",
-  disabledClassName: "disabled",
+  activeClassName: 'selected',
+  previousClassName: 'previous',
+  nextClassName: 'next',
+  previousLabel: 'Previous',
+  nextLabel: 'Next',
+  breakLabel: '...',
+  disabledClassName: 'disabled',
   disableInitialCallback: false
 };
 exports.default = PaginationBoxView;
-;
 //# sourceMappingURL=PaginationBoxView.js.map

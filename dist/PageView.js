@@ -8,6 +8,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PageView = function PageView(props) {
@@ -31,8 +35,6 @@ var PageView = function PageView(props) {
     }
 
     if (typeof pageLinkClassName !== 'undefined') {
-      pageLinkClassName = pageLinkClassName;
-
       if (typeof props.activeLinkClassName !== 'undefined') {
         pageLinkClassName = pageLinkClassName + ' ' + props.activeLinkClassName;
       }
@@ -46,17 +48,31 @@ var PageView = function PageView(props) {
     { className: pageClassName },
     _react2.default.createElement(
       'a',
-      { onClick: onClick,
+      {
+        onClick: onClick,
         role: 'button',
         className: pageLinkClassName,
         href: href,
         tabIndex: '0',
         'aria-label': ariaLabel,
         'aria-current': ariaCurrent,
-        onKeyPress: onClick },
+        onKeyPress: onClick
+      },
       props.page
     )
   );
+};
+
+PageView.propTypes = {
+  onClick: _propTypes2.default.func.isRequired,
+  selected: _propTypes2.default.bool.isRequired,
+  pageClassName: _propTypes2.default.string,
+  pageLinkClassName: _propTypes2.default.string,
+  activeClassName: _propTypes2.default.string,
+  activeLinkClassName: _propTypes2.default.string,
+  extraAriaContext: _propTypes2.default.string,
+  href: _propTypes2.default.string,
+  page: _propTypes2.default.number.isRequired
 };
 
 exports.default = PageView;
