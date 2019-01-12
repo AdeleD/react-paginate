@@ -29,6 +29,7 @@ export default class PaginationBoxView extends Component {
     nextLinkClassName: PropTypes.string,
     disabledClassName: PropTypes.string,
     breakClassName: PropTypes.string,
+    breakLinkClassName: PropTypes.string,
     extraAriaContext: PropTypes.string,
   };
 
@@ -191,6 +192,7 @@ export default class PaginationBoxView extends Component {
       marginPagesDisplayed,
       breakLabel,
       breakClassName,
+      breakLinkClassName,
     } = this.props;
 
     const { selected } = this.state;
@@ -258,6 +260,7 @@ export default class PaginationBoxView extends Component {
               key={index}
               breakLabel={breakLabel}
               breakClassName={breakClassName}
+              breakLinkClassName={breakLinkClassName}
               onClick={this.handleBreakClick.bind(null, index)}
             />
           );

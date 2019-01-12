@@ -418,8 +418,8 @@ describe('Test default props', () => {
     });
   });
 
-  describe('default breakLabel/breakClassName', () => {
-    it('should use the default breakLabel/breakClassName', () => {
+  describe('default breakLabel/breakClassName/breakLinkClassName', () => {
+    it('should use the default breakLabel/breakClassName/breakLinkClassName', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView />
       );
@@ -429,6 +429,9 @@ describe('Test default props', () => {
       expect(ReactDOM.findDOMNode(pagination).querySelector('.break')).not.toBe(
         null
       );
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.break a').className
+      ).toBe('');
     });
   });
 
@@ -636,7 +639,7 @@ describe('Test custom props', () => {
     });
   });
 
-  describe('breakLabel/breakClassName', () => {
+  describe('breakLabel/breakClassName/breakLinkClassName', () => {
     it('should use the breakLabel prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView breakLabel={'...'} />
@@ -661,6 +664,15 @@ describe('Test custom props', () => {
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.break-me')
+      ).not.toBe(null);
+    });
+
+    it('should use the breakLinkClassName prop when defined', function() {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView breakLinkClassName={'break-link'} />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.break-link')
       ).not.toBe(null);
     });
   });
