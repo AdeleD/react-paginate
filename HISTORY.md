@@ -1,3 +1,7 @@
+## >= 6.2.0
+
+- Add the breakLinkClassName prop.
+
 ## >= 6.1.0
 
 - Add aria-disabled prop to anchors for accessibility (https://github.com/AdeleD/react-paginate/pull/254)
