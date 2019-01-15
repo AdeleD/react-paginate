@@ -23,7 +23,7 @@ const BreakView = props => {
 };
 
 BreakView.propTypes = {
-  breakLabel: PropTypes.string.isRequired,
+  breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   breakClassName: PropTypes.string,
   breakLinkClassName: PropTypes.string,
   onClick: PropTypes.func.isRequired,
