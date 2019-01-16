@@ -40,7 +40,7 @@ var BreakView = function BreakView(props) {
 };
 
 BreakView.propTypes = {
-  breakLabel: _propTypes2.default.string.isRequired,
+  breakLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   breakClassName: _propTypes2.default.string,
   breakLinkClassName: _propTypes2.default.string,
   onClick: _propTypes2.default.func.isRequired
