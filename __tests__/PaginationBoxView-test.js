@@ -640,7 +640,7 @@ describe('Test custom props', () => {
   });
 
   describe('breakLabel/breakClassName/breakLinkClassName', () => {
-    it('should use the breakLabel prop when defined', () => {
+    it('should use the breakLabel string prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView breakLabel={'...'} />
       );
@@ -654,6 +654,20 @@ describe('Test custom props', () => {
       ).toBe('A');
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break').firstChild
+          .textContent
+      ).toBe('...');
+    });
+
+    it('should use the breakLabel node prop when defined', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView breakLabel={<span>...</span>} />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('li.break a').firstChild
+          .nodeName
+      ).toBe('SPAN');
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('li.break a').lastChild
           .textContent
       ).toBe('...');
     });
