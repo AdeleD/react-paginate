@@ -1,3 +1,7 @@
+## >= 6.2.1
+
+- Fix the breakLabel prop type in the BreakView component (see: https://github.com/AdeleD/react-paginate/pull/257).
+
 ## >= 6.2.0
 
 - Add the breakLinkClassName prop.
