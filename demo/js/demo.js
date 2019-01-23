@@ -69,7 +69,7 @@ export class App extends Component {
     let offset = Math.ceil(selected * this.props.perPage);
 
     this.setState({ offset: offset }, () => {
-      this.loadCommentsFromServer();
+      this.loadCommentsFromServer(offset);
     });
   };
 
