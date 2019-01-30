@@ -31,7 +31,7 @@ export default class PaginationBoxView extends Component {
     breakClassName: PropTypes.string,
     breakLinkClassName: PropTypes.string,
     extraAriaContext: PropTypes.string,
-    ariaLabelBuilder: PropTypes.func
+    ariaLabelBuilder: PropTypes.func,
   };
 
   static defaultProps = {
@@ -152,9 +152,11 @@ export default class PaginationBoxView extends Component {
 
   ariaLabelBuilder(pageIndex) {
     const selected = pageIndex === this.state.selected;
-    if (this.props.ariaLabelBuilder &&
+    if (
+      this.props.ariaLabelBuilder &&
       pageIndex >= 0 &&
-      pageIndex < this.props.pageCount) {
+      pageIndex < this.props.pageCount
+    ) {
       let label = this.props.ariaLabelBuilder(pageIndex + 1, selected);
       // perhaps deprecate warning in future?
       if (this.props.extraAriaContext && !selected) {
