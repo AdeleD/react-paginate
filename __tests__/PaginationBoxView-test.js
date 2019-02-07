@@ -1056,4 +1056,19 @@ describe('Test custom props', () => {
         .getAttribute('aria-disabled')
     ).toBe('true');
   });
+
+  it('should disable next link when page count is zero', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView initialPage={0} pageCount={0} />
+    );
+
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('li:last-child').className
+    ).toBe('next disabled');
+    expect(
+      ReactDOM.findDOMNode(pagination)
+        .querySelector('li:last-child a')
+        .getAttribute('aria-disabled')
+    ).toBe('true');
+  });
 });
