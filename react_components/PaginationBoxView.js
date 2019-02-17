@@ -66,10 +66,20 @@ export default class PaginationBoxView extends Component {
   }
 
   componentDidMount() {
-    const { initialPage, disableInitialCallback } = this.props;
+    const {
+      initialPage,
+      disableInitialCallback,
+      extraAriaContext,
+    } = this.props;
     // Call the callback with the initialPage item:
     if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
       this.callCallback(initialPage);
+    }
+
+    if (extraAriaContext) {
+      console.warn(
+        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+      );
     }
   }
 
@@ -158,7 +168,8 @@ export default class PaginationBoxView extends Component {
       pageIndex < this.props.pageCount
     ) {
       let label = this.props.ariaLabelBuilder(pageIndex + 1, selected);
-      // perhaps deprecate warning in future?
+      // DEPRECATED: The extraAriaContext prop was used to add additional context
+      // to the aria-label. Users should now use the ariaLabelBuilder instead.
       if (this.props.extraAriaContext && !selected) {
         label = label + ' ' + this.props.extraAriaContext;
       }
