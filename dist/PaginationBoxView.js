@@ -239,6 +239,19 @@ var PaginationBoxView = function (_Component) {
       }
     }
   }, {
+    key: 'ariaLabelBuilder',
+    value: function ariaLabelBuilder(pageIndex) {
+      var selected = pageIndex === this.state.selected;
+      if (this.props.ariaLabelBuilder && pageIndex >= 0 && pageIndex < this.props.pageCount) {
+        var label = this.props.ariaLabelBuilder(pageIndex + 1, selected);
+        // perhaps deprecate warning in future?
+        if (this.props.extraAriaContext && !selected) {
+          label = label + ' ' + this.props.extraAriaContext;
+        }
+        return label;
+      }
+    }
+  }, {
     key: 'getPageElement',
     value: function getPageElement(index) {
       var selected = this.state.selected;
@@ -260,6 +273,7 @@ var PaginationBoxView = function (_Component) {
         activeLinkClassName: activeLinkClassName,
         extraAriaContext: extraAriaContext,
         href: this.hrefBuilder(index),
+        ariaLabel: this.ariaLabelBuilder(index),
         page: index + 1
       });
     }
@@ -354,7 +368,8 @@ PaginationBoxView.propTypes = {
   disabledClassName: _propTypes2.default.string,
   breakClassName: _propTypes2.default.string,
   breakLinkClassName: _propTypes2.default.string,
-  extraAriaContext: _propTypes2.default.string
+  extraAriaContext: _propTypes2.default.string,
+  ariaLabelBuilder: _propTypes2.default.func
 };
 PaginationBoxView.defaultProps = {
   pageCount: 10,

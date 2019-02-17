@@ -20,13 +20,13 @@ var PageView = function PageView(props) {
 
   var onClick = props.onClick;
   var href = props.href;
-
-  var ariaLabel = 'Page ' + props.page + (props.extraAriaContext ? ' ' + props.extraAriaContext : '');
+  var ariaLabel = props.ariaLabel || 'Page ' + props.page + (props.extraAriaContext ? ' ' + props.extraAriaContext : '');
   var ariaCurrent = null;
 
   if (props.selected) {
     ariaCurrent = 'page';
-    ariaLabel = 'Page ' + props.page + ' is your current page';
+
+    ariaLabel = props.ariaLabel || 'Page ' + props.page + ' is your current page';
 
     if (typeof pageClassName !== 'undefined') {
       pageClassName = pageClassName + ' ' + props.activeClassName;

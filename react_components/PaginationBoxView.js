@@ -31,6 +31,7 @@ export default class PaginationBoxView extends Component {
     breakClassName: PropTypes.string,
     breakLinkClassName: PropTypes.string,
     extraAriaContext: PropTypes.string,
+    ariaLabelBuilder: PropTypes.func,
   };
 
   static defaultProps = {
@@ -65,10 +66,20 @@ export default class PaginationBoxView extends Component {
   }
 
   componentDidMount() {
-    const { initialPage, disableInitialCallback } = this.props;
+    const {
+      initialPage,
+      disableInitialCallback,
+      extraAriaContext,
+    } = this.props;
     // Call the callback with the initialPage item:
     if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
       this.callCallback(initialPage);
+    }
+
+    if (extraAriaContext) {
+      console.warn(
+        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+      );
     }
   }
 
@@ -149,6 +160,23 @@ export default class PaginationBoxView extends Component {
     }
   }
 
+  ariaLabelBuilder(pageIndex) {
+    const selected = pageIndex === this.state.selected;
+    if (
+      this.props.ariaLabelBuilder &&
+      pageIndex >= 0 &&
+      pageIndex < this.props.pageCount
+    ) {
+      let label = this.props.ariaLabelBuilder(pageIndex + 1, selected);
+      // DEPRECATED: The extraAriaContext prop was used to add additional context
+      // to the aria-label. Users should now use the ariaLabelBuilder instead.
+      if (this.props.extraAriaContext && !selected) {
+        label = label + ' ' + this.props.extraAriaContext;
+      }
+      return label;
+    }
+  }
+
   callCallback = selectedItem => {
     if (
       typeof this.props.onPageChange !== 'undefined' &&
@@ -179,6 +207,7 @@ export default class PaginationBoxView extends Component {
         activeLinkClassName={activeLinkClassName}
         extraAriaContext={extraAriaContext}
         href={this.hrefBuilder(index)}
+        ariaLabel={this.ariaLabelBuilder(index)}
         page={index + 1}
       />
     );
