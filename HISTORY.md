@@ -1,3 +1,7 @@
+## >= 6.3.0
+
+- Add the ariaLabelBuilder feature to customize aria-label attributes (see: https://github.com/AdeleD/react-paginate/pull/260).
+
 ## >= 6.2.1
 
 - Fix the breakLabel prop type in the BreakView component (see: https://github.com/AdeleD/react-paginate/pull/257).
