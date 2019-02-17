@@ -72,6 +72,7 @@ PageView.propTypes = {
   activeLinkClassName: _propTypes2.default.string,
   extraAriaContext: _propTypes2.default.string,
   href: _propTypes2.default.string,
+  ariaLabel: _propTypes2.default.string,
   page: _propTypes2.default.number.isRequired
 };
 
