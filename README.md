@@ -74,6 +74,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `breakClassName`         | `String`   | The classname on tag `li` of the ellipsis element.                                           |
 | `breakLinkClassName`     | `String`   | The classname on tag `a` of the ellipsis element.                                            |
 | `onPageChange`           | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument.   |
+| `onBreakLabelClick`      | `Function` | The method to call when a breakLabel is clicked. Can return the page to jump to.             |
 | `initialPage`            | `Number`   | The initial page selected.                                                                   |
 | `forcePage`              | `Number`   | To override selected page with parent prop.                                                  |
 | `disableInitialCallback` | `boolean`  | Disable `onPageChange` callback with initial page. Default: `false`                          |
