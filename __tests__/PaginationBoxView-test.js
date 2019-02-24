@@ -790,6 +790,32 @@ describe('Test custom props', () => {
     });
   });
 
+  describe('activeStyle', () => {
+    it('should use activeStyle prop when defined', () => {
+        const pagination = ReactTestUtils.renderIntoDocument(
+            <PaginationBoxView
+                activeStyle={{backgroundColor: 'red', color: 'rgb(255, 255, 255)'}}
+            />
+        );
+
+        const pageItem = ReactDOM.findDOMNode(pagination).querySelector(
+            'li:nth-child(3) a'
+        );
+        ReactTestUtils.Simulate.click(pageItem);
+
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector(
+            'li:nth-child(3) a'
+          ).style
+        ).toHaveProperty('background-color', 'red');
+        expect(
+            ReactDOM.findDOMNode(pagination).querySelector(
+            'li:nth-child(3) a'
+            ).style
+        ).toHaveProperty('color', 'rgb(255, 255, 255)');
+      });
+  });
+
   describe('pageClassName/activeClassName', () => {
     it('should use the pageClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
