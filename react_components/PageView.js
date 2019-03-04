@@ -48,6 +48,7 @@ const PageView = props => {
         aria-label={ariaLabel}
         aria-current={ariaCurrent}
         onKeyPress={onClick}
+        {...props.addedAttributes}
       >
         {props.page}
       </a>
@@ -66,6 +67,7 @@ PageView.propTypes = {
   href: PropTypes.string,
   ariaLabel: PropTypes.string,
   page: PropTypes.number.isRequired,
+  addedAttributes: PropTypes.object,
 };
 
 export default PageView;

@@ -14,6 +14,7 @@ export default class PaginationBoxView extends Component {
     nextLabel: PropTypes.node,
     breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     hrefBuilder: PropTypes.func,
+    attributesBuilder: PropTypes.func,
     onPageChange: PropTypes.func,
     initialPage: PropTypes.number,
     forcePage: PropTypes.number,
@@ -186,6 +187,13 @@ export default class PaginationBoxView extends Component {
     }
   };
 
+  getAddedAttributes = pageIndex => {
+    const { attributesBuilder } = this.props;
+    if (typeof attributesBuilder === 'function') {
+      return attributesBuilder(pageIndex + 1);
+    }
+  };
+
   getPageElement(index) {
     const { selected } = this.state;
     const {
@@ -209,6 +217,7 @@ export default class PaginationBoxView extends Component {
         href={this.hrefBuilder(index)}
         ariaLabel={this.ariaLabelBuilder(index)}
         page={index + 1}
+        addedAttributes={this.getAddedAttributes(index)}
       />
     );
   }
@@ -324,6 +333,8 @@ export default class PaginationBoxView extends Component {
 
     const previousAriaDisabled = selected === 0 ? 'true' : 'false';
     const nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
+    const addedPrevAttributes = this.getAddedAttributes(selected - 1);
+    const addedNextAttributes = this.getAddedAttributes(selected + 1);
 
     return (
       <ul className={containerClassName}>
@@ -336,6 +347,7 @@ export default class PaginationBoxView extends Component {
             role="button"
             onKeyPress={this.handlePreviousPage}
             aria-disabled={previousAriaDisabled}
+            {...addedPrevAttributes}
           >
             {previousLabel}
           </a>
@@ -352,6 +364,7 @@ export default class PaginationBoxView extends Component {
             role="button"
             onKeyPress={this.handleNextPage}
             aria-disabled={nextAriaDisabled}
+            {...addedNextAttributes}
           >
             {nextLabel}
           </a>

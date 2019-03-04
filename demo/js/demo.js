@@ -73,6 +73,10 @@ export class App extends Component {
     });
   };
 
+  attributesBuilder = index => ({
+    custom: 'custom ' + index,
+  });
+
   render() {
     return (
       <div className="commentBox">
@@ -89,6 +93,7 @@ export class App extends Component {
           containerClassName={'pagination'}
           subContainerClassName={'pages pagination'}
           activeClassName={'active'}
+          attributesBuilder={this.attributesBuilder}
         />
       </div>
     );

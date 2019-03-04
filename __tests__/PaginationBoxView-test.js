@@ -1018,6 +1018,32 @@ describe('Test custom props', () => {
     });
   });
 
+  describe('attributesBuilder', () => {
+    it('should call attributesBuilder prop when defined', function() {
+      const props = {
+        initialPage: 1, //is displayed as #2
+        attributesBuilder: jest.fn().mockImplementation(page => ({
+          custom: 'attribute for page ' + page,
+        })),
+      };
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView {...props} />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:last-child a') //forward arrow
+          .getAttribute('custom')
+      ).toBe('attribute for page 3');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:first-child a') //back arrow
+          .getAttribute('custom')
+      ).toBe('attribute for page 1');
+      expect(props.attributesBuilder).toHaveBeenCalledTimes(8); // default marginPagesDisplayed * 2 + arrows
+    });
+  });
+
   describe('extraAriaContext', () => {
     it('should use the extraAriaContext prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
