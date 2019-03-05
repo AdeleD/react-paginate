@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -81,6 +83,14 @@ var PaginationBoxView = function (_Component) {
     _this.callCallback = function (selectedItem) {
       if (typeof _this.props.onPageChange !== 'undefined' && typeof _this.props.onPageChange === 'function') {
         _this.props.onPageChange({ selected: selectedItem });
+      }
+    };
+
+    _this.getAddedAttributes = function (pageIndex) {
+      var attributesBuilder = _this.props.attributesBuilder;
+
+      if (typeof attributesBuilder === 'function') {
+        return attributesBuilder(pageIndex + 1);
       }
     };
 
@@ -280,7 +290,8 @@ var PaginationBoxView = function (_Component) {
         extraAriaContext: extraAriaContext,
         href: this.hrefBuilder(index),
         ariaLabel: this.ariaLabelBuilder(index),
-        page: index + 1
+        page: index + 1,
+        addedAttributes: this.getAddedAttributes(index)
       });
     }
   }, {
@@ -304,6 +315,8 @@ var PaginationBoxView = function (_Component) {
 
       var previousAriaDisabled = selected === 0 ? 'true' : 'false';
       var nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
+      var addedPrevAttributes = this.getAddedAttributes(selected - 1);
+      var addedNextAttributes = this.getAddedAttributes(selected + 1);
 
       return _react2.default.createElement(
         'ul',
@@ -313,7 +326,7 @@ var PaginationBoxView = function (_Component) {
           { className: previousClasses },
           _react2.default.createElement(
             'a',
-            {
+            _extends({
               onClick: this.handlePreviousPage,
               className: previousLinkClassName,
               href: this.hrefBuilder(selected - 1),
@@ -321,7 +334,7 @@ var PaginationBoxView = function (_Component) {
               role: 'button',
               onKeyPress: this.handlePreviousPage,
               'aria-disabled': previousAriaDisabled
-            },
+            }, addedPrevAttributes),
             previousLabel
           )
         ),
@@ -331,7 +344,7 @@ var PaginationBoxView = function (_Component) {
           { className: nextClasses },
           _react2.default.createElement(
             'a',
-            {
+            _extends({
               onClick: this.handleNextPage,
               className: nextLinkClassName,
               href: this.hrefBuilder(selected + 1),
@@ -339,7 +352,7 @@ var PaginationBoxView = function (_Component) {
               role: 'button',
               onKeyPress: this.handleNextPage,
               'aria-disabled': nextAriaDisabled
-            },
+            }, addedNextAttributes),
             nextLabel
           )
         )
@@ -358,6 +371,7 @@ PaginationBoxView.propTypes = {
   nextLabel: _propTypes2.default.node,
   breakLabel: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.node]),
   hrefBuilder: _propTypes2.default.func,
+  attributesBuilder: _propTypes2.default.func,
   onPageChange: _propTypes2.default.func,
   initialPage: _propTypes2.default.number,
   forcePage: _propTypes2.default.number,

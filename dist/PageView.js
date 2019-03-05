@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -48,7 +50,7 @@ var PageView = function PageView(props) {
     { className: pageClassName },
     _react2.default.createElement(
       'a',
-      {
+      _extends({
         onClick: onClick,
         role: 'button',
         className: pageLinkClassName,
@@ -57,7 +59,7 @@ var PageView = function PageView(props) {
         'aria-label': ariaLabel,
         'aria-current': ariaCurrent,
         onKeyPress: onClick
-      },
+      }, props.addedAttributes),
       props.page
     )
   );
@@ -73,7 +75,12 @@ PageView.propTypes = {
   extraAriaContext: _propTypes2.default.string,
   href: _propTypes2.default.string,
   ariaLabel: _propTypes2.default.string,
-  page: _propTypes2.default.number.isRequired
+  page: _propTypes2.default.number.isRequired,
+  addedAttributes: _propTypes2.default.object
+};
+
+PageView.defaultProps = {
+  addedAttributes: {}
 };
 
 exports.default = PageView;
