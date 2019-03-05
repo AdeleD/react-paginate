@@ -70,4 +70,8 @@ PageView.propTypes = {
   addedAttributes: PropTypes.object,
 };
 
+PageView.defaultProps = {
+  addedAttributes: {},
+};
+
 export default PageView;
