@@ -407,14 +407,26 @@ describe('Test pagination behaviour', () => {
         pageCount={3}
         pageRangeDisplayed={2}
         marginPagesDisplayed={2}
-        ariaLabelBuilder={(page, selected) => selected ? 'Current page' : 'Goto page ' + page } />
+        ariaLabelBuilder={(page, selected) =>
+          selected ? 'Current page' : 'Goto page ' + page
+        }
+      />
     );
-    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:nth-last-child(2) a')
-      .getAttribute('aria-label')).toBe('Goto page 3');
-    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:nth-child(2) a')
-      .getAttribute('aria-label')).toBe('Goto page 1');
-    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
-      .getAttribute('aria-label')).toBe('Current page');
+    expect(
+      ReactDOM.findDOMNode(linkedPagination)
+        .querySelector('li:nth-last-child(2) a')
+        .getAttribute('aria-label')
+    ).toBe('Goto page 3');
+    expect(
+      ReactDOM.findDOMNode(linkedPagination)
+        .querySelector('li:nth-child(2) a')
+        .getAttribute('aria-label')
+    ).toBe('Goto page 1');
+    expect(
+      ReactDOM.findDOMNode(linkedPagination)
+        .querySelector('.selected a')
+        .getAttribute('aria-label')
+    ).toBe('Current page');
   });
 
   it('test ariaLabelBuilder works with extraAriaContext', function() {
@@ -424,15 +436,27 @@ describe('Test pagination behaviour', () => {
         pageCount={3}
         pageRangeDisplayed={2}
         marginPagesDisplayed={2}
-        ariaLabelBuilder={(page, selected) => selected ? 'Current page' : 'Goto page ' + page }
-        extraAriaContext="foobar" />
+        ariaLabelBuilder={(page, selected) =>
+          selected ? 'Current page' : 'Goto page ' + page
+        }
+        extraAriaContext="foobar"
+      />
     );
-    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:nth-last-child(2) a')
-      .getAttribute('aria-label')).toBe('Goto page 3 foobar');
-    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:nth-child(2) a')
-      .getAttribute('aria-label')).toBe('Goto page 1 foobar');
-    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('.selected a')
-      .getAttribute('aria-label')).toBe('Current page');
+    expect(
+      ReactDOM.findDOMNode(linkedPagination)
+        .querySelector('li:nth-last-child(2) a')
+        .getAttribute('aria-label')
+    ).toBe('Goto page 3 foobar');
+    expect(
+      ReactDOM.findDOMNode(linkedPagination)
+        .querySelector('li:nth-child(2) a')
+        .getAttribute('aria-label')
+    ).toBe('Goto page 1 foobar');
+    expect(
+      ReactDOM.findDOMNode(linkedPagination)
+        .querySelector('.selected a')
+        .getAttribute('aria-label')
+    ).toBe('Current page');
   });
 });
 
@@ -762,6 +786,22 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
       ).toBe('3');
+    });
+
+    it('should update forcePage and hence selected page when forcePage value is changed', () => {
+      const node = document.createElement('div');
+      const pagination1 = ReactDOM.render(
+        <PaginationBoxView forcePage={2} />,
+        node
+      );
+      const pagination2 = ReactDOM.render(
+        <PaginationBoxView forcePage={3} />,
+        node
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination2).querySelector('.selected a')
+          .textContent
+      ).toBe('4');
     });
   });
 

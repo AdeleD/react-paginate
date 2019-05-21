@@ -83,12 +83,12 @@ export default class PaginationBoxView extends Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      typeof nextProps.forcePage !== 'undefined' &&
-      this.props.forcePage !== nextProps.forcePage
+      typeof this.props.forcePage !== 'undefined' &&
+      this.props.forcePage !== prevProps.forcePage
     ) {
-      this.setState({ selected: nextProps.forcePage });
+      this.setState({ selected: this.props.forcePage });
     }
   }
 
