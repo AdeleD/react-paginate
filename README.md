@@ -82,6 +82,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `pageLinkClassName`      | `String`   | The classname on tag `a` of each page element.                                               |
 | `activeClassName`        | `String`   | The classname for the active page.                                                           |
 | `activeLinkClassName`    | `String`   | The classname on the active tag `a`.                                                         |
+| `activeTabIndex`         | `Number`   | The tab index on the active tag `a`.                                                         |
 | `previousClassName`      | `String`   | The classname on tag `li` of the `previous` button.                                          |
 | `nextClassName`          | `String`   | The classname on tag `li` of the `next` button.                                              |
 | `previousLinkClassName`  | `String`   | The classname on tag `a` of the `previous` button.                                           |
