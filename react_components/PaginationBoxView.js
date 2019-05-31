@@ -254,8 +254,10 @@ export default class PaginationBoxView extends Component {
       }
 
       let breakView;
+      let page;
 
-      for (let index = 0, page = index + 1; index < pageCount; index++) {
+      for (let index = 0; index < pageCount; index++) {
+        page = index + 1;
         // If the page index is lower than the margin defined,
         // the page has to be displayed on the left side of
         // the pagination.
