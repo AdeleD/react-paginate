@@ -11,10 +11,10 @@ const BreakView = props => {
     <li className={className}>
       <a
         className={breakLinkClassName}
-        onClick={onClick}
-        role="button"
         tabIndex="0"
+        role="button"
         onKeyPress={onClick}
+        onClick={onClick}
       >
         {breakLabel}
       </a>

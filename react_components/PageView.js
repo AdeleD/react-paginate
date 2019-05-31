@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 const PageView = props => {
   let pageClassName = props.pageClassName;
   let pageLinkClassName = props.pageLinkClassName;
+  const pageTabIndex = props.pageTabIndex;
 
   const onClick = props.onClick;
   const href = props.href;
@@ -40,13 +41,13 @@ const PageView = props => {
   return (
     <li className={pageClassName}>
       <a
-        onClick={onClick}
-        role="button"
         className={pageLinkClassName}
+        tabIndex={pageTabIndex}
+        role="button"
         href={href}
-        tabIndex="0"
         aria-label={ariaLabel}
         aria-current={ariaCurrent}
+        onClick={onClick}
         onKeyPress={onClick}
       >
         {props.page}
@@ -60,6 +61,7 @@ PageView.propTypes = {
   selected: PropTypes.bool.isRequired,
   pageClassName: PropTypes.string,
   pageLinkClassName: PropTypes.string,
+  pageTabIndex: PropTypes.string,
   activeClassName: PropTypes.string,
   activeLinkClassName: PropTypes.string,
   extraAriaContext: PropTypes.string,

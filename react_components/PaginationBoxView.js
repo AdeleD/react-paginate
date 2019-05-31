@@ -23,6 +23,7 @@ export default class PaginationBoxView extends Component {
     pageLinkClassName: PropTypes.string,
     activeClassName: PropTypes.string,
     activeLinkClassName: PropTypes.string,
+    activeTabIndex: PropTypes.number,
     previousClassName: PropTypes.string,
     nextClassName: PropTypes.string,
     previousLinkClassName: PropTypes.string,
@@ -39,6 +40,7 @@ export default class PaginationBoxView extends Component {
     pageRangeDisplayed: 2,
     marginPagesDisplayed: 3,
     activeClassName: 'selected',
+    activeTabIndex: 0,
     previousClassName: 'previous',
     nextClassName: 'next',
     previousLabel: 'Previous',
@@ -115,7 +117,7 @@ export default class PaginationBoxView extends Component {
 
     if (this.state.selected === selected) return;
 
-    this.setState({ selected: selected });
+    this.setState({ selected });
 
     // Call the callback with the new selected item:
     this.callCallback(selected);
@@ -177,12 +179,12 @@ export default class PaginationBoxView extends Component {
     }
   }
 
-  callCallback = selectedItem => {
+  callCallback = selected => {
     if (
       typeof this.props.onPageChange !== 'undefined' &&
       typeof this.props.onPageChange === 'function'
     ) {
-      this.props.onPageChange({ selected: selectedItem });
+      this.props.onPageChange({ selected });
     }
   };
 
@@ -193,14 +195,18 @@ export default class PaginationBoxView extends Component {
       pageLinkClassName,
       activeClassName,
       activeLinkClassName,
+      activeTabIndex,
       extraAriaContext,
     } = this.props;
+    const isSelected = selected === index;
+    const pageTabIndex = (isSelected && activeTabIndex) ? `${activeTabIndex}` : "0";
 
     return (
       <PageView
         key={index}
-        onClick={this.handlePageSelected.bind(null, index)}
-        selected={selected === index}
+        page={index + 1}
+        selected={isSelected}
+        pageTabIndex={pageTabIndex}
         pageClassName={pageClassName}
         pageLinkClassName={pageLinkClassName}
         activeClassName={activeClassName}
@@ -208,13 +214,13 @@ export default class PaginationBoxView extends Component {
         extraAriaContext={extraAriaContext}
         href={this.hrefBuilder(index)}
         ariaLabel={this.ariaLabelBuilder(index)}
-        page={index + 1}
+        onClick={this.handlePageSelected.bind(null, index)}
       />
     );
   }
 
   pagination = () => {
-    const items = [];
+    const { selected } = this.state;
     const {
       pageRangeDisplayed,
       pageCount,
@@ -224,11 +230,12 @@ export default class PaginationBoxView extends Component {
       breakLinkClassName,
     } = this.props;
 
-    const { selected } = this.state;
+    const items = [];
+    let createPageView = index => this.getPageElement(index);
 
     if (pageCount <= pageRangeDisplayed) {
       for (let index = 0; index < pageCount; index++) {
-        items.push(this.getPageElement(index));
+        items.push(createPageView(index));
       }
     } else {
       let leftSide = pageRangeDisplayed / 2;
@@ -246,14 +253,9 @@ export default class PaginationBoxView extends Component {
         rightSide = pageRangeDisplayed - leftSide;
       }
 
-      let index;
-      let page;
       let breakView;
-      let createPageView = index => this.getPageElement(index);
 
-      for (index = 0; index < pageCount; index++) {
-        page = index + 1;
-
+      for (let index = 0, page = index + 1; index < pageCount; index++) {
         // If the page index is lower than the margin defined,
         // the page has to be displayed on the left side of
         // the pagination.
@@ -302,19 +304,18 @@ export default class PaginationBoxView extends Component {
   };
 
   render() {
+    const { selected } = this.state;
     const {
+      pageCount,
       disabledClassName,
       previousClassName,
       nextClassName,
-      pageCount,
       containerClassName,
       previousLinkClassName,
       previousLabel,
       nextLinkClassName,
       nextLabel,
     } = this.props;
-
-    const { selected } = this.state;
 
     const previousClasses =
       previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
@@ -329,14 +330,13 @@ export default class PaginationBoxView extends Component {
       <ul className={containerClassName}>
         <li className={previousClasses}>
           <a
-            onClick={this.handlePreviousPage}
             className={previousLinkClassName}
-            href={this.hrefBuilder(selected - 1)}
             tabIndex="0"
             role="button"
-            onKeyPress={this.handlePreviousPage}
+            href={this.hrefBuilder(selected - 1)}
             aria-disabled={previousAriaDisabled}
-          >
+            onClick={this.handlePreviousPage}
+            onKeyPress={this.handlePreviousPage}>
             {previousLabel}
           </a>
         </li>
@@ -345,14 +345,13 @@ export default class PaginationBoxView extends Component {
 
         <li className={nextClasses}>
           <a
-            onClick={this.handleNextPage}
             className={nextLinkClassName}
-            href={this.hrefBuilder(selected + 1)}
             tabIndex="0"
             role="button"
-            onKeyPress={this.handleNextPage}
+            href={this.hrefBuilder(selected + 1)}
             aria-disabled={nextAriaDisabled}
-          >
+            onClick={this.handleNextPage}
+            onKeyPress={this.handleNextPage}>
             {nextLabel}
           </a>
         </li>
