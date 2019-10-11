@@ -12,9 +12,9 @@ export class CommentList extends Component {
   };
 
   render() {
-    let commentNodes = this.props.data.map(function(comment, index) {
-      return <div key={index}>{comment.comment}</div>;
-    });
+    let commentNodes = this.props.data.map((comment, index) => (
+    	<div key={index}>{comment.comment}</div>;
+    ));
 
     return (
       <div id="project-comments" className="commentList">
