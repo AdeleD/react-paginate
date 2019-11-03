@@ -1,3 +1,7 @@
+## >= 6.3.1
+
+- Handle 'forcePage' value if set from outside (see: https://github.com/AdeleD/react-paginate/pull/272).
+
 ## >= 6.3.0
 
 - Add the ariaLabelBuilder feature to customize aria-label attributes (see: https://github.com/AdeleD/react-paginate/pull/260).
