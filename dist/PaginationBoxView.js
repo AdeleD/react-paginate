@@ -204,10 +204,10 @@ var PaginationBoxView = function (_Component) {
       }
     }
   }, {
-    key: 'UNSAFE_componentWillReceiveProps',
-    value: function UNSAFE_componentWillReceiveProps(nextProps) {
-      if (typeof nextProps.forcePage !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
-        this.setState({ selected: nextProps.forcePage });
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      if (typeof this.props.forcePage !== 'undefined' && this.props.forcePage !== prevProps.forcePage) {
+        this.setState({ selected: this.props.forcePage });
       }
     }
   }, {
