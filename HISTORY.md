@@ -1,3 +1,7 @@
+## >= 6.3.2
+
+- Bump dependency 'mixin-deep' from 1.3.1 to 1.3.2 (see: https://github.com/AdeleD/react-paginate/pull/283).
+
 ## >= 6.3.1
 
 - Handle 'forcePage' value if set from outside (see: https://github.com/AdeleD/react-paginate/pull/272).
