@@ -74,8 +74,8 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `breakClassName`         | `String`   | The classname on tag `li` of the ellipsis element.                                           |
 | `breakLinkClassName`     | `String`   | The classname on tag `a` of the ellipsis element.                                            |
 | `onPageChange`           | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument.   |
-| `initialPage`            | `Number`   | The initial page selected.                                                                   |
-| `forcePage`              | `Number`   | To override selected page with parent prop.                                                  |
+| `initialPage`            | `Number`   | The initial page selected. Do not use when using `forcePage` at the same time.                                                                  |
+| `forcePage`              | `Number`   | To override selected page with parent prop. Use this if you want to control the page from your app's state.                                                  |
 | `disableInitialCallback` | `boolean`  | Disable `onPageChange` callback with initial page. Default: `false`                          |
 | `containerClassName`     | `String`   | The classname of the pagination container.                                                   |
 | `pageClassName`          | `String`   | The classname on tag `li` of each page element.                                              |
