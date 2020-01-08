@@ -86,7 +86,8 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `nextClassName`          | `String`   | The classname on tag `li` of the `next` button.                                              |
 | `previousLinkClassName`  | `String`   | The classname on tag `a` of the `previous` button.                                           |
 | `nextLinkClassName`      | `String`   | The classname on tag `a` of the `next` button.                                               |
-| `disabledClassName`      | `String`   | The classname for disabled `previous` and `next` buttons.                                    |
+| `disabledClassName`      | `String`   | The classname for disabled `previous` and `next` buttons on tag `li`.                        |
+| `disabledLinkClassName`  | `String`   | The classname for disabled `previous` and `next` buttons on tag `a`.                         |
 | `hrefBuilder`            | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element. |
 | `extraAriaContext`       | `String`   | DEPRECATED: Extra context to add to the `aria-label` HTML attribute.                         |
 | `ariaLabelBuilder`       | `Function` | The method is called to generate the `aria-label` attribute value on each page link          |

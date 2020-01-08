@@ -1031,6 +1031,26 @@ describe('Test custom props', () => {
     });
   });
 
+  describe('disabledLinkClassName', () => {
+    it('should use the disabledLinkClassName prop when defined', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={0}
+          pageCount={1}
+          disabledLinkClassName="custom-link-disabled-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
+          .className
+      ).toBe('custom-link-disabled-classname');
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
+          .className
+      ).toBe('custom-link-disabled-classname');
+    });
+  });
+
   describe('hrefBuilder', () => {
     it('should use the hrefBuilder prop when defined', function() {
       const pagination = ReactTestUtils.renderIntoDocument(
