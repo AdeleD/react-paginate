@@ -33,8 +33,8 @@ describe('Test rendering', () => {
     ).toBe('Next');
 
     const pages = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
-    // 3 * 2 margins + 1 break label + previous & next buttons == 9:
-    expect(pages.length).toEqual(9);
+    // 3 * 2 margins + 2 page range + 1 the selected page + 1 break label + previous & next buttons == 11:
+    expect(pages.length).toEqual(12);
   });
 
   it('test rendering only active page item', function() {
@@ -153,7 +153,7 @@ describe('Test clicks', () => {
 });
 
 describe('Test pagination behaviour', () => {
-  it('should display 6 elements to the left, 1 break element and 2 elements to the right', () => {
+  it('should display 7 elements to the left, 1 break element and 2 elements to the right', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         initialPage={0}
@@ -194,7 +194,7 @@ describe('Test pagination behaviour', () => {
 
     expect(previousElement.className).toBe('previous disabled');
     expect(nextElement.className).toBe('next');
-    expect(leftElements.length).toBe(6);
+    expect(leftElements.length).toBe(7);
     expect(rightElements.length).toBe(2);
     expect(breakElements.length).toBe(1);
   });
@@ -354,7 +354,7 @@ describe('Test pagination behaviour', () => {
     expect(breakElements.length).toBe(1);
   });
 
-  it('should display 2 elements to the left, 1 break element and 6 elements to the right', () => {
+  it('should display 2 elements to the left, 1 break element and 7 elements to the right', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         initialPage={16}
@@ -396,7 +396,7 @@ describe('Test pagination behaviour', () => {
     expect(previousElement.className).toBe('previous');
     expect(nextElement.className).toBe('next');
     expect(leftElements.length).toBe(2);
-    expect(rightElements.length).toBe(6);
+    expect(rightElements.length).toBe(7);
     expect(breakElements.length).toBe(1);
   });
 
@@ -1130,5 +1130,28 @@ describe('Test custom props', () => {
         .querySelector('li:last-child a')
         .getAttribute('aria-disabled')
     ).toBe('true');
+  });
+
+  it('should display even amount of buttons when the marginal buttons are selected on both sides', () => {
+    const cases = [
+      { margin: 2, range: 5, expectedButtons: 9 },
+      { margin: 3, range: 3, expectedButtons: 9 },
+      { margin: 3, range: 1, expectedButtons: 7 },
+    ];
+    for (const selectedPage of [0, 19])
+      for (const { margin, range, expectedButtons } of cases) {
+        const pagination = ReactTestUtils.renderIntoDocument(
+          <PaginationBoxView
+            initialPage={selectedPage}
+            pageCount={20}
+            marginPagesDisplayed={margin}
+            pageRangeDisplayed={range}
+          />
+        );
+        const elements = Array.from(
+          ReactDOM.findDOMNode(pagination).querySelectorAll('li')
+        ).filter(el => !isNaN(Number(el.textContent)));
+        expect(elements.length).toBe(expectedButtons);
+      }
   });
 });

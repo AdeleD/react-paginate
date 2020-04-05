@@ -213,88 +213,109 @@ export default class PaginationBoxView extends Component {
     );
   }
 
+  createBreakView = page => {
+    const { breakLabel, breakClassName, breakLinkClassName } = this.props;
+    return (
+      <BreakView
+        key={page - 1}
+        breakLabel={breakLabel}
+        breakClassName={breakClassName}
+        breakLinkClassName={breakLinkClassName}
+        onClick={this.handleBreakClick.bind(null, page - 1)}
+      />
+    );
+  };
+
+  intervalsIntersect(intervalA, intervalB) {
+    return intervalA.end >= intervalB.start - 1;
+  }
+
+  generatePageInterval(start, end) {
+    const arr = new Array(end - start + 1);
+    for (let i = 0; i <= end - start; i++) {
+      arr[i] = i + start;
+    }
+    return arr;
+  }
+
+  intervalLength({ start, end }) {
+    return end - start;
+  }
+
+  startButtonIndexes(startInterval, selectedInterval) {
+    const { marginPagesDisplayed } = this.props;
+    if (startInterval.end >= selectedInterval.start - 1) {
+      const totalLength =
+        marginPagesDisplayed + this.intervalLength(selectedInterval);
+      return this.generatePageInterval(1, totalLength + 1);
+    }
+    return this.generatePageInterval(startInterval.start, startInterval.end);
+  }
+
+  middleButtonIndexes({ start, end }) {
+    const { pageCount, marginPagesDisplayed } = this.props;
+    if (
+      start - 1 > marginPagesDisplayed &&
+      end < pageCount - marginPagesDisplayed + 1
+    ) {
+      return this.generatePageInterval(start, end);
+    }
+    return [];
+  }
+
+  endButtonIndexes(selectedInterval, endInterval) {
+    const { pageCount, marginPagesDisplayed } = this.props;
+    if (selectedInterval.end >= endInterval.start) {
+      const totalLength =
+        marginPagesDisplayed + this.intervalLength(selectedInterval);
+      return this.generatePageInterval(pageCount - totalLength, pageCount);
+    }
+    return this.generatePageInterval(endInterval.start, endInterval.end);
+  }
+
   pagination = () => {
     const items = [];
     const {
-      pageRangeDisplayed,
+      pageRangeDisplayed: propRange,
       pageCount,
       marginPagesDisplayed,
       breakLabel,
-      breakClassName,
-      breakLinkClassName,
     } = this.props;
 
     const { selected } = this.state;
-
-    if (pageCount <= pageRangeDisplayed) {
+    const pageRangeDisplayed = propRange + 1 - (propRange % 2); // make pageRangeDisplayed odd
+    if (pageCount <= pageRangeDisplayed + 2 * marginPagesDisplayed) {
       for (let index = 0; index < pageCount; index++) {
         items.push(this.getPageElement(index));
       }
     } else {
-      let leftSide = pageRangeDisplayed / 2;
-      let rightSide = pageRangeDisplayed - leftSide;
+      let createPageView = page => this.getPageElement(page - 1);
+      // the default range of displayed buttons on the left
+      const startInterval = { start: 1, end: marginPagesDisplayed };
+      // the range of displayed buttons around the selected page
+      const selectedInterval = {
+        start: selected - Math.floor(pageRangeDisplayed / 2) + 1,
+        end: selected + Math.floor(pageRangeDisplayed / 2) + 1,
+      };
+      //the default range of displayed buttons on the right
+      const endInterval = {
+        start: pageCount - marginPagesDisplayed + 1,
+        end: pageCount,
+      };
 
-      // If the selected page index is on the default right side of the pagination,
-      // we consider that the new right side is made up of it (= only one break element).
-      // If the selected page index is on the default left side of the pagination,
-      // we consider that the new left side is made up of it (= only one break element).
-      if (selected > pageCount - pageRangeDisplayed / 2) {
-        rightSide = pageCount - selected;
-        leftSide = pageRangeDisplayed - rightSide;
-      } else if (selected < pageRangeDisplayed / 2) {
-        leftSide = selected;
-        rightSide = pageRangeDisplayed - leftSide;
-      }
+      const displayedButtons = [
+        ...this.startButtonIndexes(startInterval, selectedInterval),
+        ...this.middleButtonIndexes(selectedInterval),
+        ...this.endButtonIndexes(selectedInterval, endInterval),
+      ];
 
-      let index;
-      let page;
-      let breakView;
-      let createPageView = index => this.getPageElement(index);
-
-      for (index = 0; index < pageCount; index++) {
-        page = index + 1;
-
-        // If the page index is lower than the margin defined,
-        // the page has to be displayed on the left side of
-        // the pagination.
-        if (page <= marginPagesDisplayed) {
-          items.push(createPageView(index));
-          continue;
+      for (let i = 0, expectedPage = 1; i < displayedButtons.length; i++) {
+        if (expectedPage !== displayedButtons[i]) {
+          if (breakLabel) items.push(this.createBreakView(expectedPage));
+          expectedPage = displayedButtons[i];
         }
-
-        // If the page index is greater than the page count
-        // minus the margin defined, the page has to be
-        // displayed on the right side of the pagination.
-        if (page > pageCount - marginPagesDisplayed) {
-          items.push(createPageView(index));
-          continue;
-        }
-
-        // If the page index is near the selected page index
-        // and inside the defined range (pageRangeDisplayed)
-        // we have to display it (it will create the center
-        // part of the pagination).
-        if (index >= selected - leftSide && index <= selected + rightSide) {
-          items.push(createPageView(index));
-          continue;
-        }
-
-        // If the page index doesn't meet any of the conditions above,
-        // we check if the last item of the current "items" array
-        // is a break element. If not, we add a break element, else,
-        // we do nothing (because we don't want to display the page).
-        if (breakLabel && items[items.length - 1] !== breakView) {
-          breakView = (
-            <BreakView
-              key={index}
-              breakLabel={breakLabel}
-              breakClassName={breakClassName}
-              breakLinkClassName={breakLinkClassName}
-              onClick={this.handleBreakClick.bind(null, index)}
-            />
-          );
-          items.push(breakView);
-        }
+        items.push(createPageView(expectedPage));
+        expectedPage++;
       }
     }
 
