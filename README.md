@@ -1,7 +1,8 @@
-# react-paginate
+# react-paginate-next
 
 [![NPM](https://nodei.co/npm/react-paginate.png?downloads=true)](https://nodei.co/npm/react-paginate/)
-[![Build Status](https://travis-ci.org/AdeleD/react-paginate.svg?branch=master)](https://travis-ci.org/AdeleD/react-paginate)
+
+This is a fork of [react-paginate](https://github.com/AdeleD/react-paginate) which doesn't seem to be supported anymore.
 
 **A ReactJS component to render a pagination.**
 
