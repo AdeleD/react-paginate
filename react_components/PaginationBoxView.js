@@ -7,7 +7,7 @@ import BreakView from './BreakView';
 
 export default class PaginationBoxView extends Component {
   static propTypes = {
-    pageCount: PropTypes.number.isRequired,
+    pageCount: PropTypes.number,
     pageRangeDisplayed: PropTypes.number,
     marginPagesDisplayed: PropTypes.number,
     previousLabel: PropTypes.node,
