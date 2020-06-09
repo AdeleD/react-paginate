@@ -271,10 +271,8 @@ export default class PaginationBoxView extends Component {
         }
 
         //if it is the first element of the array the rightSide need to be adjusted otherwise an extra element will be renederd
-        let adjustedRightSide = rightSide;
-        if (selected === 0 && pageRangeDisplayed > 1) {
-          adjustedRightSide -= 1;
-        }
+        const adjustedRightSide = (selected === 0 && pageRangeDisplayed > 1) ? (rightSide-1) : rightSide;
+
 
         // If the page index is near the selected page index
         // and inside the defined range (pageRangeDisplayed)
