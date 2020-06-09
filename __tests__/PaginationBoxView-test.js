@@ -153,7 +153,7 @@ describe('Test clicks', () => {
 });
 
 describe('Test pagination behaviour', () => {
-  it('should display 6 elements to the left, 1 break element and 2 elements to the right', () => {
+  it('should display 5 elements to the left, 1 break element and 2 elements to the right', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         initialPage={0}
@@ -194,7 +194,7 @@ describe('Test pagination behaviour', () => {
 
     expect(previousElement.className).toBe('previous disabled');
     expect(nextElement.className).toBe('next');
-    expect(leftElements.length).toBe(6);
+    expect(leftElements.length).toBe(5);
     expect(rightElements.length).toBe(2);
     expect(breakElements.length).toBe(1);
   });
@@ -397,6 +397,52 @@ describe('Test pagination behaviour', () => {
     expect(nextElement.className).toBe('next');
     expect(leftElements.length).toBe(2);
     expect(rightElements.length).toBe(6);
+    expect(breakElements.length).toBe(1);
+  });
+
+  it('should display 2 elements to the left, 1 break element and 2 elements to the right', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={0}
+        pageCount={20}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={2}
+      />
+    );
+
+    const previousElement = ReactDOM.findDOMNode(pagination).querySelector(
+      'li:first-child'
+    );
+    const nextElement = ReactDOM.findDOMNode(pagination).querySelector(
+      'li:last-child'
+    );
+
+    let leftElements = [];
+    let rightElements = [];
+    let breakElements = [];
+    let breakElementReached = false;
+
+    const elements = ReactDOM.findDOMNode(pagination).querySelectorAll(
+      'li:not(.previous):not(.next)'
+    );
+    elements.forEach(element => {
+      if (breakElementReached === false && element.className !== 'break') {
+        leftElements.push(element);
+      } else if (
+        breakElementReached === true &&
+        element.className !== 'break'
+      ) {
+        rightElements.push(element);
+      } else {
+        breakElements.push(element);
+        breakElementReached = true;
+      }
+    });
+
+    expect(previousElement.className).toBe('previous disabled');
+    expect(nextElement.className).toBe('next');
+    expect(leftElements.length).toBe(2);
+    expect(rightElements.length).toBe(2);
     expect(breakElements.length).toBe(1);
   });
 

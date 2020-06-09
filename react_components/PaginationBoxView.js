@@ -270,11 +270,17 @@ export default class PaginationBoxView extends Component {
           continue;
         }
 
+        //if it is the first element of the array the rightSide need to be adjusted otherwise an extra element will be renederd
+        let adjustedRightSide = rightSide;
+        if (selected === 0 && pageRangeDisplayed > 1) {
+          adjustedRightSide -= 1;
+        }
+
         // If the page index is near the selected page index
         // and inside the defined range (pageRangeDisplayed)
         // we have to display it (it will create the center
         // part of the pagination).
-        if (index >= selected - leftSide && index <= selected + rightSide) {
+        if (index >= selected - leftSide && index <= selected + adjustedRightSide) {
           items.push(createPageView(index));
           continue;
         }
