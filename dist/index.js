@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _PaginationBoxView = require('./PaginationBoxView');
+var _PaginationBoxView = _interopRequireDefault(require("./PaginationBoxView"));
 
-var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _PaginationBoxView2.default;
+var _default = _PaginationBoxView["default"];
+exports["default"] = _default;
 //# sourceMappingURL=index.js.map

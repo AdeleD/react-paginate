@@ -3,21 +3,17 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _react = require('react');
+var _react = _interopRequireDefault(require("react"));
 
-var _react2 = _interopRequireDefault(_react);
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var PageView = function PageView(props) {
   var pageClassName = props.pageClassName;
   var pageLinkClassName = props.pageLinkClassName;
-
   var onClick = props.onClick;
   var href = props.href;
   var ariaLabel = props.ariaLabel || 'Page ' + props.page + (props.extraAriaContext ? ' ' + props.extraAriaContext : '');
@@ -25,7 +21,6 @@ var PageView = function PageView(props) {
 
   if (props.selected) {
     ariaCurrent = 'page';
-
     ariaLabel = props.ariaLabel || 'Page ' + props.page + ' is your current page';
 
     if (typeof pageClassName !== 'undefined') {
@@ -43,38 +38,32 @@ var PageView = function PageView(props) {
     }
   }
 
-  return _react2.default.createElement(
-    'li',
-    { className: pageClassName },
-    _react2.default.createElement(
-      'a',
-      {
-        onClick: onClick,
-        role: 'button',
-        className: pageLinkClassName,
-        href: href,
-        tabIndex: '0',
-        'aria-label': ariaLabel,
-        'aria-current': ariaCurrent,
-        onKeyPress: onClick
-      },
-      props.page
-    )
-  );
+  return /*#__PURE__*/_react["default"].createElement("li", {
+    className: pageClassName
+  }, /*#__PURE__*/_react["default"].createElement("a", {
+    onClick: onClick,
+    role: "button",
+    className: pageLinkClassName,
+    href: href,
+    tabIndex: "0",
+    "aria-label": ariaLabel,
+    "aria-current": ariaCurrent,
+    onKeyPress: onClick
+  }, props.page));
 };
 
 PageView.propTypes = {
-  onClick: _propTypes2.default.func.isRequired,
-  selected: _propTypes2.default.bool.isRequired,
-  pageClassName: _propTypes2.default.string,
-  pageLinkClassName: _propTypes2.default.string,
-  activeClassName: _propTypes2.default.string,
-  activeLinkClassName: _propTypes2.default.string,
-  extraAriaContext: _propTypes2.default.string,
-  href: _propTypes2.default.string,
-  ariaLabel: _propTypes2.default.string,
-  page: _propTypes2.default.number.isRequired
+  onClick: _propTypes["default"].func.isRequired,
+  selected: _propTypes["default"].bool.isRequired,
+  pageClassName: _propTypes["default"].string,
+  pageLinkClassName: _propTypes["default"].string,
+  activeClassName: _propTypes["default"].string,
+  activeLinkClassName: _propTypes["default"].string,
+  extraAriaContext: _propTypes["default"].string,
+  href: _propTypes["default"].string,
+  ariaLabel: _propTypes["default"].string,
+  page: _propTypes["default"].number.isRequired
 };
-
-exports.default = PageView;
+var _default = PageView;
+exports["default"] = _default;
 //# sourceMappingURL=PageView.js.map
