@@ -96,7 +96,7 @@ export default class PaginationBoxView extends Component {
     }
   }
 
-  handlePreviousPage = evt => {
+  handlePreviousPage = (evt) => {
     const { selected } = this.state;
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     if (selected > 0) {
@@ -104,7 +104,7 @@ export default class PaginationBoxView extends Component {
     }
   };
 
-  handleNextPage = evt => {
+  handleNextPage = (evt) => {
     const { selected } = this.state;
     const { pageCount } = this.props;
 
@@ -181,7 +181,7 @@ export default class PaginationBoxView extends Component {
     }
   }
 
-  callCallback = selectedItem => {
+  callCallback = (selectedItem) => {
     if (
       typeof this.props.onPageChange !== 'undefined' &&
       typeof this.props.onPageChange === 'function'
@@ -253,7 +253,7 @@ export default class PaginationBoxView extends Component {
       let index;
       let page;
       let breakView;
-      let createPageView = index => this.getPageElement(index);
+      let createPageView = (index) => this.getPageElement(index);
 
       for (index = 0; index < pageCount; index++) {
         page = index + 1;

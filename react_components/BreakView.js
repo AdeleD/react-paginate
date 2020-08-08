@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const BreakView = props => {
+const BreakView = (props) => {
   const { breakLabel, breakClassName, breakLinkClassName, onClick } = props;
   const className = breakClassName || 'break';
 
