@@ -1,10 +1,8 @@
 ## >= 6.4.0
 
-* Several properties have been added to extended accessibility support:
-** nextAriaLabel - defines the aria-label html property for the 'Next page' button.
-*** default: 'Next page'.
-** previousAriaLabel - defines the aria-label html property for the 'Previous page' button.
-*** Default: 'Previous page'.
+- Two properties have been added to extend accessibility support.
+  - nextAriaLabel: defines the aria-label html property for the 'Next page' button (default: 'Next page').
+  - previousAriaLabel: defines the aria-label html property for the 'Previous page' button (default: 'Previous page').
 
 ## >= 6.3.2
 
