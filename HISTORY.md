@@ -1,3 +1,11 @@
+## >= 6.4.0
+
+* Several properties have been added to extended accessibility support:
+** nextAriaLabel - defines the aria-label html property for the 'Next page' button.
+*** default: 'Next page'.
+** previousAriaLabel - defines the aria-label html property for the 'Previous page' button.
+*** Default: 'Previous page'.
+
 ## >= 6.3.2
 
 - Bump dependency 'mixin-deep' from 1.3.1 to 1.3.2 (see: https://github.com/AdeleD/react-paginate/pull/283).

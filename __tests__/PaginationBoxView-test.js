@@ -1131,4 +1131,29 @@ describe('Test custom props', () => {
         .getAttribute('aria-disabled')
     ).toBe('true');
   });
+
+   it('should render default aria labels if they are not specified', function() {
+      const linkedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={3} />
+      );
+
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+        .getAttribute('aria-label')).toBe('Next page');
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+        .getAttribute('aria-label')).toBe('Previous page');
+    });
+
+    it('should render custom aria labels if they are defined', function() {
+      const linkedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={3}
+                           nextAriaLabel={'Go to the next page'}
+                           previousAriaLabel={'Go to the previous page'}
+        />
+      );
+
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+        .getAttribute('aria-label')).toBe('Go to the next page');
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+        .getAttribute('aria-label')).toBe('Go to the previous page');
+    });
 });
