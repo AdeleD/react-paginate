@@ -2,6 +2,7 @@
 var path = require('path');
 var dir_js = path.resolve(__dirname, 'react_components');
 var dir_build = path.resolve(__dirname, 'build');
+var dir_node_modules = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
   entry: path.resolve(dir_js, 'index.js'),
@@ -19,10 +20,12 @@ module.exports = {
       {
         use: 'react-hot-loader/webpack',
         test: dir_js,
+        exclude: dir_node_modules,
       },
       {
         use: 'babel-loader',
         test: dir_js,
+        exclude: dir_node_modules,
       },
     ],
   },

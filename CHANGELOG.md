@@ -1,8 +1,9 @@
 ## >= 6.4.0
 
-- Two properties have been added to extend accessibility support.
+- Two properties have been added to extend accessibility support (see https://github.com/AdeleD/react-paginate/pull/164).
   - nextAriaLabel: defines the aria-label html property for the 'Next page' button (default: 'Next page').
   - previousAriaLabel: defines the aria-label html property for the 'Previous page' button (default: 'Previous page').
+- Upgrade devDependencies packages (see: https://github.com/AdeleD/react-paginate/pull/314).
 
 ## >= 6.3.2
 

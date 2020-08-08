@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PageView = props => {
+const PageView = (props) => {
   let pageClassName = props.pageClassName;
   let pageLinkClassName = props.pageLinkClassName;
 
