@@ -6,6 +6,7 @@ const dir_js = path.resolve(__dirname, 'js');
 const dir_build = path.resolve(__dirname, 'build');
 
 module.exports = {
+  target: 'node',
   entry: path.resolve(dir_js, 'demo.js'),
   output: {
     path: dir_build,

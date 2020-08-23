@@ -5,6 +5,7 @@ var dir_build = path.resolve(__dirname, 'build');
 var dir_node_modules = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
+  target: 'node',
   entry: path.resolve(dir_js, 'index.js'),
   output: {
     path: dir_build,
