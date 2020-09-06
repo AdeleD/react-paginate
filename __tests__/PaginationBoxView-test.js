@@ -5,7 +5,7 @@ jest.dontMock('./../react_components/PaginationBoxView');
 jest.dontMock('./../react_components/PageView');
 jest.dontMock('./../react_components/BreakView');
 
-import PaginationBoxView from './../react_components/PaginationBoxView';
+import PaginationBoxView from '../react_components/PaginationBoxView';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
