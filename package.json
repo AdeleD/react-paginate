@@ -60,19 +60,8 @@
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/",
-    "transform": {
-      ".*": "<rootDir>/node_modules/babel-jest"
-    },
     "roots": [
       "__tests__"
-    ],
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/fbjs"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/node_modules/"
     ]
   }
 }
