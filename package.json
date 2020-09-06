@@ -33,7 +33,8 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
-    "babel-jest": "^26.3.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.1.0",
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^6.11.0",
@@ -56,12 +57,5 @@
     "build": "webpack --config webpack.config.js --mode=production",
     "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js",
     "start": "npm run demo"
-  },
-  "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/",
-    "roots": [
-      "__tests__"
-    ]
   }
 }
