@@ -1,8 +1,8 @@
 {
   "name": "react-paginate",
-  "version": "6.3.2",
+  "version": "6.4.0",
   "description": "A ReactJS component that creates a pagination.",
-  "main": "./dist/index.js",
+  "main": "./dist/react-paginate.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/AdeleD/react-paginate"
@@ -33,6 +33,8 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.1.0",
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^6.11.0",
@@ -52,26 +54,8 @@
   },
   "scripts": {
     "test": "jest",
-    "prepublish": "babel ./react_components --out-dir ./dist --source-maps",
-    "start": "npm run demo",
-    "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js"
-  },
-  "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/",
-    "transform": {
-      ".*": "<rootDir>/node_modules/babel-jest"
-    },
-    "roots": [
-      "__tests__"
-    ],
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/fbjs"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ]
+    "build": "webpack --config webpack.config.js --mode=production",
+    "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js",
+    "start": "npm run demo"
   }
 }
