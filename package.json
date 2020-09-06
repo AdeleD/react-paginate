@@ -53,9 +53,9 @@
   },
   "scripts": {
     "test": "jest",
-    "prepublish": "babel ./react_components --out-dir ./dist --source-maps",
-    "start": "npm run demo",
-    "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js"
+    "build": "webpack --config webpack.config.js --mode=production",
+    "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js",
+    "start": "npm run demo"
   },
   "jest": {
     "verbose": true,
