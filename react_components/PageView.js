@@ -7,7 +7,8 @@ const PageView = (props) => {
   let pageClassName = props.pageClassName;
   let pageLinkClassName = props.pageLinkClassName;
 
-  const onClick = props.onClick;
+  const getEventListener = props.getEventListener;
+  const pageSelectedHandler = props.pageSelectedHandler;
   const href = props.href;
   let ariaLabel =
     props.ariaLabel ||
@@ -40,14 +41,14 @@ const PageView = (props) => {
   return (
     <li className={pageClassName}>
       <a
-        onClick={onClick}
         role="button"
         className={pageLinkClassName}
         href={href}
         tabIndex="0"
         aria-label={ariaLabel}
         aria-current={ariaCurrent}
-        onKeyPress={onClick}
+        onKeyPress={pageSelectedHandler}
+        {...getEventListener(pageSelectedHandler)}
       >
         {props.page}
       </a>
@@ -56,7 +57,7 @@ const PageView = (props) => {
 };
 
 PageView.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  pageSelectedHandler: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   pageClassName: PropTypes.string,
   pageLinkClassName: PropTypes.string,
@@ -66,6 +67,7 @@ PageView.propTypes = {
   href: PropTypes.string,
   ariaLabel: PropTypes.string,
   page: PropTypes.number.isRequired,
+  getEventListener: PropTypes.func.isRequired,
 };
 
 export default PageView;

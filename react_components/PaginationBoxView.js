@@ -127,7 +127,7 @@ export default class PaginationBoxView extends Component {
     this.callCallback(selected);
   };
 
-  getEventListener(handlerFunction) {
+  getEventListener = (handlerFunction) => {
     const { eventListener } = this.props;
     return {
       [eventListener]: handlerFunction,
@@ -212,7 +212,7 @@ export default class PaginationBoxView extends Component {
     return (
       <PageView
         key={index}
-        onClick={this.handlePageSelected.bind(null, index)}
+        pageSelectedHandler={this.handlePageSelected.bind(null, index)}
         selected={selected === index}
         pageClassName={pageClassName}
         pageLinkClassName={pageLinkClassName}
@@ -222,6 +222,7 @@ export default class PaginationBoxView extends Component {
         href={this.hrefBuilder(index)}
         ariaLabel={this.ariaLabelBuilder(index)}
         page={index + 1}
+        getEventListener={this.getEventListener}
       />
     );
   }
