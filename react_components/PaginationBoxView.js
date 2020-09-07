@@ -304,7 +304,8 @@ export default class PaginationBoxView extends Component {
               breakLabel={breakLabel}
               breakClassName={breakClassName}
               breakLinkClassName={breakLinkClassName}
-              onClick={this.handleBreakClick.bind(null, index)}
+              breakHandler={this.handleBreakClick.bind(null, index)}
+              getEventListener={this.getEventListener}
             />
           );
           items.push(breakView);
