@@ -34,6 +34,7 @@ export default class PaginationBoxView extends Component {
     breakLinkClassName: PropTypes.string,
     extraAriaContext: PropTypes.string,
     ariaLabelBuilder: PropTypes.func,
+    eventListener: PropTypes.string,
   };
 
   static defaultProps = {
@@ -50,6 +51,7 @@ export default class PaginationBoxView extends Component {
     breakLabel: '...',
     disabledClassName: 'disabled',
     disableInitialCallback: false,
+    eventListener: 'onClick',
   };
 
   constructor(props) {
@@ -124,6 +126,13 @@ export default class PaginationBoxView extends Component {
     // Call the callback with the new selected item:
     this.callCallback(selected);
   };
+
+  getEventListener(handlerFunction) {
+    const { eventListener } = this.props;
+    return {
+      [eventListener]: handlerFunction,
+    };
+  }
 
   getForwardJump() {
     const { selected } = this.state;
