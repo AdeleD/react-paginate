@@ -4,37 +4,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const PageView = (props) => {
-  let pageClassName = props.pageClassName;
-  let pageLinkClassName = props.pageLinkClassName;
+  let { pageClassName, pageLinkClassName } = props;
+  const {
+    page,
+    selected,
+    activeClassName,
+    activeLinkClassName,
+    getEventListener,
+    pageSelectedHandler,
+    href,
+    extraAriaContext
+  } = props;
 
-  const getEventListener = props.getEventListener;
-  const pageSelectedHandler = props.pageSelectedHandler;
-  const href = props.href;
   let ariaLabel =
     props.ariaLabel ||
     'Page ' +
-      props.page +
-      (props.extraAriaContext ? ' ' + props.extraAriaContext : '');
+      page +
+      (extraAriaContext ? ' ' + extraAriaContext : '');
   let ariaCurrent = null;
 
-  if (props.selected) {
+  if (selected) {
     ariaCurrent = 'page';
 
     ariaLabel =
-      props.ariaLabel || 'Page ' + props.page + ' is your current page';
+      props.ariaLabel || 'Page ' + page + ' is your current page';
 
     if (typeof pageClassName !== 'undefined') {
-      pageClassName = pageClassName + ' ' + props.activeClassName;
+      pageClassName = pageClassName + ' ' + activeClassName;
     } else {
-      pageClassName = props.activeClassName;
+      pageClassName = activeClassName;
     }
 
     if (typeof pageLinkClassName !== 'undefined') {
-      if (typeof props.activeLinkClassName !== 'undefined') {
-        pageLinkClassName = pageLinkClassName + ' ' + props.activeLinkClassName;
+      if (typeof activeLinkClassName !== 'undefined') {
+        pageLinkClassName = pageLinkClassName + ' ' + activeLinkClassName;
       }
     } else {
-      pageLinkClassName = props.activeLinkClassName;
+      pageLinkClassName = activeLinkClassName;
     }
   }
 
@@ -50,7 +56,7 @@ const PageView = (props) => {
         onKeyPress={pageSelectedHandler}
         {...getEventListener(pageSelectedHandler)}
       >
-        {props.page}
+        {page}
       </a>
     </li>
   );
