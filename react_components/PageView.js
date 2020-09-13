@@ -4,59 +4,66 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const PageView = (props) => {
-  let pageClassName = props.pageClassName;
-  let pageLinkClassName = props.pageLinkClassName;
+  let { pageClassName, pageLinkClassName } = props;
+  const {
+    page,
+    selected,
+    activeClassName,
+    activeLinkClassName,
+    getEventListener,
+    pageSelectedHandler,
+    href,
+    extraAriaContext
+  } = props;
 
-  const onClick = props.onClick;
-  const href = props.href;
   let ariaLabel =
     props.ariaLabel ||
     'Page ' +
-      props.page +
-      (props.extraAriaContext ? ' ' + props.extraAriaContext : '');
+      page +
+      (extraAriaContext ? ' ' + extraAriaContext : '');
   let ariaCurrent = null;
 
-  if (props.selected) {
+  if (selected) {
     ariaCurrent = 'page';
 
     ariaLabel =
-      props.ariaLabel || 'Page ' + props.page + ' is your current page';
+      props.ariaLabel || 'Page ' + page + ' is your current page';
 
     if (typeof pageClassName !== 'undefined') {
-      pageClassName = pageClassName + ' ' + props.activeClassName;
+      pageClassName = pageClassName + ' ' + activeClassName;
     } else {
-      pageClassName = props.activeClassName;
+      pageClassName = activeClassName;
     }
 
     if (typeof pageLinkClassName !== 'undefined') {
-      if (typeof props.activeLinkClassName !== 'undefined') {
-        pageLinkClassName = pageLinkClassName + ' ' + props.activeLinkClassName;
+      if (typeof activeLinkClassName !== 'undefined') {
+        pageLinkClassName = pageLinkClassName + ' ' + activeLinkClassName;
       }
     } else {
-      pageLinkClassName = props.activeLinkClassName;
+      pageLinkClassName = activeLinkClassName;
     }
   }
 
   return (
     <li className={pageClassName}>
       <a
-        onClick={onClick}
         role="button"
         className={pageLinkClassName}
         href={href}
         tabIndex="0"
         aria-label={ariaLabel}
         aria-current={ariaCurrent}
-        onKeyPress={onClick}
+        onKeyPress={pageSelectedHandler}
+        {...getEventListener(pageSelectedHandler)}
       >
-        {props.page}
+        {page}
       </a>
     </li>
   );
 };
 
 PageView.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  pageSelectedHandler: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,
   pageClassName: PropTypes.string,
   pageLinkClassName: PropTypes.string,
@@ -66,6 +73,7 @@ PageView.propTypes = {
   href: PropTypes.string,
   ariaLabel: PropTypes.string,
   page: PropTypes.number.isRequired,
+  getEventListener: PropTypes.func.isRequired,
 };
 
 export default PageView;

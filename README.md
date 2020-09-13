@@ -90,6 +90,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `hrefBuilder`            | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element. |
 | `extraAriaContext`       | `String`   | DEPRECATED: Extra context to add to the `aria-label` HTML attribute.                         |
 | `ariaLabelBuilder`       | `Function` | The method is called to generate the `aria-label` attribute value on each page link          |
+| `eventListener`          | `String`   | The event to listen onto before changing the selected page. Default is: "onClick".           |
 
 ## Contribute
 
