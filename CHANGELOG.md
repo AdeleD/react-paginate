@@ -1,3 +1,6 @@
+## >= 6.5.0
+- Add a prop 'eventListener' to let users use a custom event listener on prev/next buttons, pages and break views.
+
 ## >= 6.4.0
 
 - Two properties have been added to extend accessibility support (see https://github.com/AdeleD/react-paginate/pull/164).
