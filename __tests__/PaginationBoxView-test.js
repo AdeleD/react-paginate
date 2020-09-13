@@ -152,6 +152,77 @@ describe('Test clicks', () => {
   });
 });
 
+describe('Test custom event listener', () => {
+  it('test custom listener on previous and next buttons', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(<PaginationBoxView eventListener="onMouseOver" />);
+
+    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
+      pagination,
+      'a'
+    );
+    let previous = elmts[0];
+    let next = elmts[elmts.length - 1];
+
+    ReactTestUtils.Simulate.mouseOver(next);
+
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('2');
+
+    ReactTestUtils.Simulate.mouseOver(previous);
+
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('1');
+  });
+
+  it('test custom listener on a page item', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(<PaginationBoxView eventListener="onMouseOver" />);
+
+    ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
+
+    const pageItem = ReactDOM.findDOMNode(pagination).querySelector(
+      'li:nth-child(3) a'
+    );
+
+    ReactTestUtils.Simulate.mouseOver(pageItem);
+
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('2');
+  });
+
+  it('test custom listener on the left break view', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={0}
+        pageCount={20}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        eventListener="onMouseOver"
+      />
+    );
+
+    // The selected page is before the left break
+    const leftBreakView1 = ReactDOM.findDOMNode(pagination).querySelector(
+      '.break a'
+    );
+    ReactTestUtils.Simulate.mouseOver(leftBreakView1);
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('6');
+
+    // The selected page is after the left break
+    const leftBreakView2 = ReactDOM.findDOMNode(pagination).querySelectorAll(
+      '.break a'
+    )[0];
+    ReactTestUtils.Simulate.mouseOver(leftBreakView2);
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('1');
+  });
+});
+
 describe('Test pagination behaviour', () => {
   it('should display 6 elements to the left, 1 break element and 2 elements to the right', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
