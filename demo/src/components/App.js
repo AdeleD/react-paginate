@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactPaginate from 'react-paginate';
 import $ from 'jquery';
 
 import { DEMO_TYPES } from './../constants';
 import { CommentList } from './CommentList';
+import { BasicDemo } from './BasicDemo';
 
 export class App extends Component {
   static propTypes = {
@@ -61,25 +61,7 @@ export class App extends Component {
       <div className="commentBox">
         <CommentList data={this.state.data} />
         {this.props.demoType === DEMO_TYPES.BASIC && (
-          <ReactPaginate
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName='pagination'
-            pageClassName='page-item'
-            pageLinkClassName='page-link'
-            activeClassName='active'
-            previousClassName='page-item'
-            previousLinkClassName='page-link'
-            nextClassName='page-item'
-            nextLinkClassName='page-link'
-            breakClassName='page-item'
-            breakLinkClassName='page-link'
-            previousLabel='previous'
-            nextLabel='next'
-            breakLabel='...'
-          />
+          <BasicDemo pageCount={this.state.pageCount} onPageChange={this.handlePageClick} />
         )}
       </div>
     );
