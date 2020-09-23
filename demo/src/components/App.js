@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import $ from 'jquery';
 
+import { DEMO_TYPES } from './../constants';
 import { CommentList } from './CommentList';
 
 export class App extends Component {
@@ -10,6 +11,7 @@ export class App extends Component {
     url: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     perPage: PropTypes.number.isRequired,
+    demoType: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -58,7 +60,7 @@ export class App extends Component {
     return (
       <div className="commentBox">
         <CommentList data={this.state.data} />
-        <nav aria-label="Page navigation example">
+        {this.props.demoType === DEMO_TYPES.BASIC && (
           <ReactPaginate
             pageCount={this.state.pageCount}
             marginPagesDisplayed={2}
@@ -78,7 +80,7 @@ export class App extends Component {
             nextLabel='next'
             breakLabel='...'
           />
-        </nav>
+        )}
       </div>
     );
   }
