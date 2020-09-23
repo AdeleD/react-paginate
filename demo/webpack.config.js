@@ -2,15 +2,16 @@
 
 const path = require('path');
 
-const dir_demo_js = path.resolve(__dirname, 'js');
-const dir_demo_build = path.resolve(__dirname, 'build');
+const dir_demo_src = path.resolve(__dirname, 'src');
+const dir_demo_basic = path.resolve(__dirname, 'src', 'basic-demo');
+const dir_demo_build = path.resolve(__dirname, 'src', 'basic-demo', 'build');
 
 const dir_js = path.join(__dirname, '..', 'react_components');
 const dir_node_modules = path.resolve(__dirname, '..', 'node_modules');
 
 module.exports = {
   target: 'node',
-  entry: path.resolve(dir_demo_js, 'demo.js'),
+  entry: path.resolve(dir_demo_basic, 'demo.js'),
   output: {
     path: dir_demo_build,
     filename: 'demo.js',
@@ -23,11 +24,11 @@ module.exports = {
     rules: [
       {
         use: 'react-hot-loader/webpack',
-        test: dir_demo_js,
+        test: dir_demo_src,
       },
       {
         use: 'babel-loader',
-        test: dir_demo_js,
+        test: dir_demo_src,
         exclude: dir_node_modules,
       },
       {
