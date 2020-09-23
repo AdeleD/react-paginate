@@ -4,25 +4,9 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import $ from 'jquery';
 
+import { CommentList } from './components/CommentList';
+
 window.React = React;
-
-export class CommentList extends Component {
-  static propTypes = {
-    data: PropTypes.array.isRequired,
-  };
-
-  render() {
-    let commentNodes = this.props.data.map(function (comment, index) {
-      return <div key={index}>{comment.comment}</div>;
-    });
-
-    return (
-      <div id="project-comments" className="commentList">
-        <ul>{commentNodes}</ul>
-      </div>
-    );
-  }
-}
 
 export class App extends Component {
   static propTypes = {
