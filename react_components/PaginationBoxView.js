@@ -343,8 +343,7 @@ export default class PaginationBoxView extends Component {
     const nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
 
     return (
-      <ul className={containerClassName}>
-        <li className={previousClasses}>
+      <div className={containerClassName}>        
           <a
             className={previousLinkClassName}
             href={this.hrefBuilder(selected - 1)}
@@ -356,12 +355,10 @@ export default class PaginationBoxView extends Component {
             {...this.getEventListener(this.handlePreviousPage)}
           >
             {previousLabel}
-          </a>
-        </li>
+          </a>        
 
         {this.pagination()}
-
-        <li className={nextClasses}>
+        
           <a
             className={nextLinkClassName}
             href={this.hrefBuilder(selected + 1)}
@@ -373,9 +370,8 @@ export default class PaginationBoxView extends Component {
             {...this.getEventListener(this.handleNextPage)}
           >
             {nextLabel}
-          </a>
-        </li>
-      </ul>
+          </a>        
+      </div>
     );
   }
 }

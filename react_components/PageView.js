@@ -44,8 +44,7 @@ const PageView = (props) => {
     }
   }
 
-  return (
-    <li className={pageClassName}>
+  return (    
       <a
         role="button"
         className={pageLinkClassName}
@@ -57,8 +56,7 @@ const PageView = (props) => {
         {...getEventListener(pageSelectedHandler)}
       >
         {page}
-      </a>
-    </li>
+      </a>    
   );
 };
 

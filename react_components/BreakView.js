@@ -7,8 +7,7 @@ const BreakView = (props) => {
   const { breakLabel, breakClassName, breakLinkClassName, breakHandler, getEventListener } = props;
   const className = breakClassName || 'break';
 
-  return (
-    <li className={className}>
+  return (    
       <a
         className={breakLinkClassName}
         role="button"
@@ -17,8 +16,7 @@ const BreakView = (props) => {
         {...getEventListener(breakHandler)}
       >
         {breakLabel}
-      </a>
-    </li>
+      </a>    
   );
 };
 
