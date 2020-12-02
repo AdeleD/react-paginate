@@ -1227,4 +1227,29 @@ describe('Test custom props', () => {
       expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
         .getAttribute('aria-label')).toBe('Go to the previous page');
     });
+
+    it('should render default rel if they are not specified', function() {
+      const linkedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={3} />
+      );
+
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+        .getAttribute('rel')).toBe('next');
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+        .getAttribute('rel')).toBe('previous');
+    });
+
+    it('should render custom rel if they are defined', function() {
+      const linkedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={3}
+                           nextRel={'next page'}
+                           previousRel={'previous page'}
+        />
+      );
+
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+        .getAttribute('rel')).toBe('next page');
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+        .getAttribute('rel')).toBe('previous page');
+    });
 });
