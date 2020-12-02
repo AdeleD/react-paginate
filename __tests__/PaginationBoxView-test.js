@@ -1242,14 +1242,14 @@ describe('Test custom props', () => {
     it('should render custom rel if they are defined', function() {
       const linkedPagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView pageCount={3}
-                           nextRel={'next page'}
-                           previousRel={'previous page'}
+                           nextRel={'nofollow noreferrer'}
+                           previousRel={'nofollow noreferrer'}
         />
       );
 
       expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
-        .getAttribute('rel')).toBe('next page');
+        .getAttribute('rel')).toBe('nofollow noreferrer');
       expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
-        .getAttribute('rel')).toBe('previous page');
+        .getAttribute('rel')).toBe('nofollow noreferrer');
     });
 });
