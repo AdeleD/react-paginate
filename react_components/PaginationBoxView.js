@@ -12,8 +12,10 @@ export default class PaginationBoxView extends Component {
     marginPagesDisplayed: PropTypes.number.isRequired,
     previousLabel: PropTypes.node,
     previousAriaLabel: PropTypes.string,
+    prevRel: PropTypes.string,
     nextLabel: PropTypes.node,
     nextAriaLabel: PropTypes.string,
+    nextRel: PropTypes.string,
     breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     hrefBuilder: PropTypes.func,
     onPageChange: PropTypes.func,
@@ -45,9 +47,11 @@ export default class PaginationBoxView extends Component {
     previousLabel: 'Previous',
     previousClassName: 'previous',
     previousAriaLabel: 'Previous page',
+    prevRel: 'prev',
     nextLabel: 'Next',
     nextClassName: 'next',
     nextAriaLabel: 'Next page',
+    nextRel: 'next',
     breakLabel: '...',
     disabledClassName: 'disabled',
     disableInitialCallback: false,
@@ -325,10 +329,12 @@ export default class PaginationBoxView extends Component {
       previousClassName,
       previousLinkClassName,
       previousAriaLabel,
+      prevRel,
       nextLabel,
       nextClassName,
       nextLinkClassName,
       nextAriaLabel,
+      nextRel,
     } = this.props;
 
     const { selected } = this.state;
@@ -353,6 +359,7 @@ export default class PaginationBoxView extends Component {
             onKeyPress={this.handlePreviousPage}
             aria-disabled={previousAriaDisabled}
             aria-label={previousAriaLabel}
+            rel={prevRel}
             {...this.getEventListener(this.handlePreviousPage)}
           >
             {previousLabel}
@@ -370,6 +377,7 @@ export default class PaginationBoxView extends Component {
             onKeyPress={this.handleNextPage}
             aria-disabled={nextAriaDisabled}
             aria-label={nextAriaLabel}
+            rel={nextRel}
             {...this.getEventListener(this.handleNextPage)}
           >
             {nextLabel}

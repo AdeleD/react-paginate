@@ -1082,6 +1082,33 @@ describe('Test custom props', () => {
     });
   });
 
+  describe('prevRel/nextRel', () => {
+    it('should render default rel if they are not specified', function() {
+      const linkedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={3} />
+      );
+
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+        .getAttribute('rel')).toBe('next');
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+        .getAttribute('rel')).toBe('prev');
+    });
+
+    it('should render custom rel if they are defined', function() {
+      const linkedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={3}
+                           nextRel={'nofollow noreferrer'}
+                           prevRel={'nofollow noreferrer'}
+        />
+      );
+
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+        .getAttribute('rel')).toBe('nofollow noreferrer');
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+        .getAttribute('rel')).toBe('nofollow noreferrer');
+    });
+  });
+
   describe('disabledClassName', () => {
     it('should use the disabledClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
@@ -1203,28 +1230,28 @@ describe('Test custom props', () => {
     ).toBe('true');
   });
 
-   it('should render default aria labels if they are not specified', function() {
-      const linkedPagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView pageCount={3} />
-      );
+  it('should render default aria labels if they are not specified', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={3} />
+    );
 
-      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
-        .getAttribute('aria-label')).toBe('Next page');
-      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
-        .getAttribute('aria-label')).toBe('Previous page');
-    });
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+      .getAttribute('aria-label')).toBe('Next page');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+      .getAttribute('aria-label')).toBe('Previous page');
+  });
 
-    it('should render custom aria labels if they are defined', function() {
-      const linkedPagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView pageCount={3}
-                           nextAriaLabel={'Go to the next page'}
-                           previousAriaLabel={'Go to the previous page'}
-        />
-      );
+  it('should render custom aria labels if they are defined', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={3}
+                          nextAriaLabel={'Go to the next page'}
+                          previousAriaLabel={'Go to the previous page'}
+      />
+    );
 
-      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
-        .getAttribute('aria-label')).toBe('Go to the next page');
-      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
-        .getAttribute('aria-label')).toBe('Go to the previous page');
-    });
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+      .getAttribute('aria-label')).toBe('Go to the next page');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+      .getAttribute('aria-label')).toBe('Go to the previous page');
+  });
 });
