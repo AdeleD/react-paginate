@@ -1,3 +1,7 @@
+## >= 7.0.0
+- Add a rel attribute on previous/next buttons. Rel attributes are customizable thanks to props 'prevRel' and 'nextRel' (see: https://github.com/AdeleD/react-paginate/pull/326).
+- Upgrade devDependencies packages jest-cli and webpack-cli.
+
 ## >= 6.5.0
 - Add a prop 'eventListener' to let users use a custom event listener on prev/next buttons, pages and break views.
 
