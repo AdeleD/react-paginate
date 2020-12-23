@@ -1236,7 +1236,7 @@ describe('Test custom props', () => {
       expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
         .getAttribute('rel')).toBe('next');
       expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
-        .getAttribute('rel')).toBe('previous');
+        .getAttribute('rel')).toBe('prev');
     });
 
     it('should render custom rel if they are defined', function() {

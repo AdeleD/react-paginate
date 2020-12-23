@@ -47,7 +47,7 @@ export default class PaginationBoxView extends Component {
     previousLabel: 'Previous',
     previousClassName: 'previous',
     previousAriaLabel: 'Previous page',
-    previousRel: 'previous',
+    previousRel: 'prev',
     nextLabel: 'Next',
     nextClassName: 'next',
     nextAriaLabel: 'Next page',
