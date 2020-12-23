@@ -12,7 +12,7 @@ export default class PaginationBoxView extends Component {
     marginPagesDisplayed: PropTypes.number.isRequired,
     previousLabel: PropTypes.node,
     previousAriaLabel: PropTypes.string,
-    previousRel: PropTypes.string,
+    prevRel: PropTypes.string,
     nextLabel: PropTypes.node,
     nextAriaLabel: PropTypes.string,
     nextRel: PropTypes.string,
@@ -47,7 +47,7 @@ export default class PaginationBoxView extends Component {
     previousLabel: 'Previous',
     previousClassName: 'previous',
     previousAriaLabel: 'Previous page',
-    previousRel: 'prev',
+    prevRel: 'prev',
     nextLabel: 'Next',
     nextClassName: 'next',
     nextAriaLabel: 'Next page',
@@ -329,7 +329,7 @@ export default class PaginationBoxView extends Component {
       previousClassName,
       previousLinkClassName,
       previousAriaLabel,
-      previousRel,
+      prevRel,
       nextLabel,
       nextClassName,
       nextLinkClassName,
@@ -359,7 +359,7 @@ export default class PaginationBoxView extends Component {
             onKeyPress={this.handlePreviousPage}
             aria-disabled={previousAriaDisabled}
             aria-label={previousAriaLabel}
-            rel={previousRel}
+            rel={prevRel}
             {...this.getEventListener(this.handlePreviousPage)}
           >
             {previousLabel}

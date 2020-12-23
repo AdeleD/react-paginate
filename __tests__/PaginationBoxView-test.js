@@ -1243,7 +1243,7 @@ describe('Test custom props', () => {
       const linkedPagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView pageCount={3}
                            nextRel={'nofollow noreferrer'}
-                           previousRel={'nofollow noreferrer'}
+                           prevRel={'nofollow noreferrer'}
         />
       );
 
