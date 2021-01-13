@@ -14,6 +14,7 @@ const PageView = (props) => {
     pageSelectedHandler,
     href,
     extraAriaContext,
+    pageLabelRender,
   } = props;
 
   let ariaLabel =
@@ -53,7 +54,7 @@ const PageView = (props) => {
         onKeyPress={pageSelectedHandler}
         {...getEventListener(pageSelectedHandler)}
       >
-        {page}
+        {pageLabelRender(page - 1)}
       </a>
     </li>
   );
@@ -71,6 +72,7 @@ PageView.propTypes = {
   ariaLabel: PropTypes.string,
   page: PropTypes.number.isRequired,
   getEventListener: PropTypes.func.isRequired,
+  pageLabelRender: PropTypes.func.isRequired,
 };
 
 export default PageView;

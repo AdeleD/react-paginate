@@ -1254,4 +1254,28 @@ describe('Test custom props', () => {
     expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
       .getAttribute('aria-label')).toBe('Go to the previous page');
   });
+
+  describe('render custom page labels if defined', () => {
+    it('should use custom page labels', () => {
+      const data = [
+        { name: 'Item 1' },
+        { name: 'Item 2' },
+        { name: 'Item 3' },
+        { name: 'Item 4' },
+        { name: 'Item 5' },
+      ];
+
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={data.length}
+          pageLabelRender={(index) => data[index]?.name}
+        />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('Item 1');
+    });
+  });
 });
