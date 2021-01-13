@@ -866,18 +866,19 @@ describe('Test custom props', () => {
 
     it('should update forcePage and hence selected page when forcePage value is changed', () => {
       const node = document.createElement('div');
-      const pagination1 = ReactDOM.render(
-        <PaginationBoxView forcePage={2} />,
-        node
+      ReactDOM.render(<PaginationBoxView forcePage={2} />, node);
+      const pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView ref={pagination} forcePage={3} />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('3');
+        }
       );
-      const pagination2 = ReactDOM.render(
-        <PaginationBoxView forcePage={3} />,
-        node
-      );
-      expect(
-        ReactDOM.findDOMNode(pagination2).querySelector('.selected a')
-          .textContent
-      ).toBe('4');
     });
   });
 
