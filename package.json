@@ -41,6 +41,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.5",
     "express": "^4.17.1",
+    "husky": "^4.3.7",
     "jest-cli": "^26.6.3",
     "jquery": "^3.5.1",
     "prettier": "^2.0.5",
@@ -56,6 +57,13 @@
     "test": "jest",
     "build": "webpack --config webpack.config.js --mode=production",
     "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js",
-    "start": "npm run demo"
+    "start": "npm run demo",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }
