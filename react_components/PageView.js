@@ -13,21 +13,18 @@ const PageView = (props) => {
     getEventListener,
     pageSelectedHandler,
     href,
-    extraAriaContext
+    extraAriaContext,
   } = props;
 
   let ariaLabel =
     props.ariaLabel ||
-    'Page ' +
-      page +
-      (extraAriaContext ? ' ' + extraAriaContext : '');
+    'Page ' + page + (extraAriaContext ? ' ' + extraAriaContext : '');
   let ariaCurrent = null;
 
   if (selected) {
     ariaCurrent = 'page';
 
-    ariaLabel =
-      props.ariaLabel || 'Page ' + page + ' is your current page';
+    ariaLabel = props.ariaLabel || 'Page ' + page + ' is your current page';
 
     if (typeof pageClassName !== 'undefined') {
       pageClassName = pageClassName + ' ' + activeClassName;

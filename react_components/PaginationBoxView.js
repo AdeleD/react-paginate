@@ -136,7 +136,7 @@ export default class PaginationBoxView extends Component {
     return {
       [eventListener]: handlerFunction,
     };
-  }
+  };
 
   getForwardJump() {
     const { selected } = this.state;

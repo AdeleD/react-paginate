@@ -4,7 +4,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const BreakView = (props) => {
-  const { breakLabel, breakClassName, breakLinkClassName, breakHandler, getEventListener } = props;
+  const {
+    breakLabel,
+    breakClassName,
+    breakLinkClassName,
+    breakHandler,
+    getEventListener,
+  } = props;
   const className = breakClassName || 'break';
 
   return (

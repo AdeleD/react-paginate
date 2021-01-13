@@ -1,5 +1,3 @@
-/* global __dirname */
-
 const path = require('path');
 
 const dir_js = path.resolve(__dirname, 'react_components');
@@ -55,4 +53,4 @@ module.exports = (env, argv) => {
     config.output.path = dir_dist;
   }
   return config;
-}
+};
