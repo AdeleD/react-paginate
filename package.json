@@ -1,6 +1,6 @@
 {
   "name": "react-paginate",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "A ReactJS component that creates a pagination.",
   "main": "./dist/react-paginate.js",
   "repository": {
@@ -24,7 +24,7 @@
     "prop-types": "^15.6.1"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
