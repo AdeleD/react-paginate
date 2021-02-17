@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { act } from 'react-dom/test-utils';
 
 jest.dontMock('./../react_components/PaginationBoxView');
 jest.dontMock('./../react_components/PageView');
@@ -833,6 +834,79 @@ describe('Test custom props', () => {
       ReactTestUtils.Simulate.click(nextItem);
 
       expect(myOnPageChangeMethod).toHaveBeenCalledWith({ selected: 1 });
+    });
+  });
+
+  describe('onActivePageClick', () => {
+    let container;
+    let activePaginationItem;
+
+    const myOnActivePageClickMethod = jest.fn();
+    const myActiveLinkClassName = 'active-test-link';
+
+    const clickEvent = new MouseEvent('click', {bubbles: true});
+    const focusEvent = new MouseEvent('focus', {bubbles: true});
+    const mouseEnterEvent = new MouseEvent('mouseenter', {bubbles: true});
+    const mouseLeaveEvent = new MouseEvent('mouseleave', {bubbles: true});
+
+    const renderPagination = ()=> {
+      act(() => {
+        ReactDOM.render(<PaginationBoxView
+          pageCount={3}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={1}
+          initialPage={0}
+          forcePage={0}
+          onActivePageClick={myOnActivePageClickMethod}
+          activeLinkClassName={myActiveLinkClassName}
+        />, container);
+      });
+    }
+
+    beforeEach(() => {
+      container = document.createElement('div');
+      document.body.appendChild(container);
+      jest.clearAllMocks();
+      renderPagination();
+      activePaginationItem = container.querySelector(`.${myActiveLinkClassName}`);
+    });
+
+    afterEach(() => {
+      document.body.removeChild(container);
+      container = null;
+      jest.clearAllMocks();
+    });
+
+    it('should use the onActivePageClick prop when defined', () => {
+      act(() => {
+        activePaginationItem.dispatchEvent(clickEvent);
+      });
+
+      expect(myOnActivePageClickMethod).toHaveBeenCalledTimes(1);
+      expect(myOnActivePageClickMethod.mock.calls[0][0]).toBeUndefined();
+    });
+
+    it('should call the onActivePageClick prop on each click on active page link', () => {
+      act(() => {
+        activePaginationItem.dispatchEvent(clickEvent);
+        activePaginationItem.dispatchEvent(clickEvent);
+        activePaginationItem.dispatchEvent(clickEvent);
+      });
+
+      expect(myOnActivePageClickMethod).toHaveBeenCalledTimes(3);
+      expect(myOnActivePageClickMethod.mock.calls[0][0]).toBeUndefined();
+      expect(myOnActivePageClickMethod.mock.calls[1][0]).toBeUndefined();
+      expect(myOnActivePageClickMethod.mock.calls[2][0]).toBeUndefined();
+    });
+
+    it('should call the onActivePageClick prop on click event only', () => {
+      act(() => {
+        activePaginationItem.dispatchEvent(focusEvent);
+        activePaginationItem.dispatchEvent(mouseEnterEvent);
+        activePaginationItem.dispatchEvent(mouseLeaveEvent);
+      });
+
+      expect(myOnActivePageClickMethod).not.toHaveBeenCalled();
     });
   });
 
