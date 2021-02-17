@@ -73,6 +73,10 @@ export class App extends Component {
     });
   };
 
+  handleActivePageClick = () => {
+    alert('Active page clicked');
+  };
+
   render() {
     return (
       <div className="commentBox">
@@ -86,6 +90,7 @@ export class App extends Component {
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={this.handlePageClick}
+          onActivePageClick={this.handleActivePageClick}
           containerClassName={'pagination'}
           subContainerClassName={'pages pagination'}
           activeClassName={'active'}
