@@ -1,3 +1,7 @@
+## >= 7.1.1
+
+- Add an onPageActive callback (see: https://github.com/AdeleD/react-paginate/pull/349).
+
 ## >= 7.1.0
 
 - Compatibility with React v17.0
