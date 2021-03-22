@@ -87,7 +87,6 @@ export class App extends Component {
           pageRangeDisplayed={5}
           onPageChange={this.handlePageClick}
           containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
           activeClassName={'active'}
         />
       </div>
