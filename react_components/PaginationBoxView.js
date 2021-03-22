@@ -19,6 +19,7 @@ export default class PaginationBoxView extends Component {
     breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     hrefBuilder: PropTypes.func,
     onPageChange: PropTypes.func,
+    onPageActive: PropTypes.func,
     initialPage: PropTypes.number,
     forcePage: PropTypes.number,
     disableInitialCallback: PropTypes.bool,
@@ -123,7 +124,10 @@ export default class PaginationBoxView extends Component {
   handlePageSelected = (selected, evt) => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 
-    if (this.state.selected === selected) return;
+    if (this.state.selected === selected) {
+      this.callActiveCallback(selected);
+      return;
+    }
 
     this.setState({ selected: selected });
 
@@ -200,6 +204,15 @@ export default class PaginationBoxView extends Component {
       typeof this.props.onPageChange === 'function'
     ) {
       this.props.onPageChange({ selected: selectedItem });
+    }
+  };
+
+  callActiveCallback = (selectedItem) => {
+    if (
+      typeof this.props.onPageActive !== 'undefined' &&
+      typeof this.props.onPageActive === 'function'
+    ) {
+      this.props.onPageActive({ selected: selectedItem });
     }
   };
 
