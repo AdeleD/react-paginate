@@ -836,6 +836,25 @@ describe('Test custom props', () => {
     });
   });
 
+  describe('onPageActive', () => {
+    it('should use the onPageActive prop when defined', () => {
+      const myOnPageActiveMethod = jest.fn();
+      const myOnPageChangeMethod = jest.fn();
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          onPageActive={myOnPageActiveMethod}
+          onPageChange={myOnPageChangeMethod} />
+      );
+      const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
+        '.selected a'
+      );
+      ReactTestUtils.Simulate.click(activeItem);
+
+      expect(myOnPageActiveMethod).toHaveBeenCalledWith({ selected: 0 });
+      expect(myOnPageChangeMethod).not.toHaveBeenCalled();
+    });
+  });
+
   describe('initialPage', () => {
     it('should use the initialPage prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
