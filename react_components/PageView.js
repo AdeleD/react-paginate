@@ -13,21 +13,19 @@ const PageView = (props) => {
     getEventListener,
     pageSelectedHandler,
     href,
-    extraAriaContext
+    extraAriaContext,
+    pageLabelBuilder,
   } = props;
 
   let ariaLabel =
     props.ariaLabel ||
-    'Page ' +
-      page +
-      (extraAriaContext ? ' ' + extraAriaContext : '');
+    'Page ' + page + (extraAriaContext ? ' ' + extraAriaContext : '');
   let ariaCurrent = null;
 
   if (selected) {
     ariaCurrent = 'page';
 
-    ariaLabel =
-      props.ariaLabel || 'Page ' + page + ' is your current page';
+    ariaLabel = props.ariaLabel || 'Page ' + page + ' is your current page';
 
     if (typeof pageClassName !== 'undefined') {
       pageClassName = pageClassName + ' ' + activeClassName;
@@ -56,7 +54,7 @@ const PageView = (props) => {
         onKeyPress={pageSelectedHandler}
         {...getEventListener(pageSelectedHandler)}
       >
-        {page}
+        {pageLabelBuilder(page)}
       </a>
     </li>
   );
@@ -74,6 +72,7 @@ PageView.propTypes = {
   ariaLabel: PropTypes.string,
   page: PropTypes.number.isRequired,
   getEventListener: PropTypes.func.isRequired,
+  pageLabelBuilder: PropTypes.func.isRequired,
 };
 
 export default PageView;
