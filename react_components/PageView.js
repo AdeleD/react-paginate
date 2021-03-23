@@ -54,7 +54,7 @@ const PageView = (props) => {
         onKeyPress={pageSelectedHandler}
         {...getEventListener(pageSelectedHandler)}
       >
-        {pageLabelRender(page - 1)}
+        {pageLabelRender(page)}
       </a>
     </li>
   );

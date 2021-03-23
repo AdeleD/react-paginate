@@ -1268,7 +1268,10 @@ describe('Test custom props', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
           pageCount={data.length}
-          pageLabelRender={(index) => data[index]?.name}
+          pageLabelRender={(page) => {
+            const pageIndex = page - 1;
+            return data[pageIndex]?.name
+          }}
         />
       );
 

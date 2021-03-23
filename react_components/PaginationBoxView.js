@@ -56,7 +56,7 @@ export default class PaginationBoxView extends Component {
     breakLabel: '...',
     disabledClassName: 'disabled',
     disableInitialCallback: false,
-    pageLabelRender: (index) => index + 1,
+    pageLabelRender: (page) => page,
     eventListener: 'onClick',
   };
 
