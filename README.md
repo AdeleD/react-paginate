@@ -81,7 +81,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `containerClassName`     | `String`   | The classname of the pagination container.                                                   |
 | `pageClassName`          | `String`   | The classname on tag `li` of each page element.                                              |
 | `pageLinkClassName`      | `String`   | The classname on tag `a` of each page element.                                               |
-| `pageLabelRender`        | `Function` | Function to set the text on page links. Defaults to `(page) => page`                   |
+| `pageLabelBuilder`        | `Function` | Function to set the text on page links. Defaults to `(page) => page`                   |
 | `activeClassName`        | `String`   | The classname for the active page.                                                           |
 | `activeLinkClassName`    | `String`   | The classname on the active tag `a`.                                                         |
 | `previousClassName`      | `String`   | The classname on tag `li` of the `previous` button.                                          |

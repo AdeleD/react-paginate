@@ -26,7 +26,7 @@ export default class PaginationBoxView extends Component {
     containerClassName: PropTypes.string,
     pageClassName: PropTypes.string,
     pageLinkClassName: PropTypes.string,
-    pageLabelRender: PropTypes.func,
+    pageLabelBuilder: PropTypes.func,
     activeClassName: PropTypes.string,
     activeLinkClassName: PropTypes.string,
     previousClassName: PropTypes.string,
@@ -57,7 +57,7 @@ export default class PaginationBoxView extends Component {
     breakLabel: '...',
     disabledClassName: 'disabled',
     disableInitialCallback: false,
-    pageLabelRender: (page) => page,
+    pageLabelBuilder: (page) => page,
     eventListener: 'onClick',
   };
 
@@ -226,7 +226,7 @@ export default class PaginationBoxView extends Component {
       activeClassName,
       activeLinkClassName,
       extraAriaContext,
-      pageLabelRender,
+      pageLabelBuilder,
     } = this.props;
 
     return (
@@ -242,7 +242,7 @@ export default class PaginationBoxView extends Component {
         href={this.hrefBuilder(index)}
         ariaLabel={this.ariaLabelBuilder(index)}
         page={index + 1}
-        pageLabelRender={pageLabelRender}
+        pageLabelBuilder={pageLabelBuilder}
         getEventListener={this.getEventListener}
       />
     );
