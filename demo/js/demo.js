@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import $ from 'jquery';
 
-window.React = React;
+window.React = React; 
 
 export class CommentList extends Component {
   static propTypes = {
@@ -13,7 +13,7 @@ export class CommentList extends Component {
 
   render() {
     let commentNodes = this.props.data.map(function (comment, index) {
-      return <div key={index}>{comment.comment}</div>;
+      return <div key={index}>{comment.comment} and {comment.username}</div>;
     });
 
     return (
@@ -68,18 +68,20 @@ export class App extends Component {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.props.perPage);
 
+    console.log('fuccck', data)
     this.setState({ offset: offset }, () => {
       this.loadCommentsFromServer();
     });
   };
 
   render() {
+    console.log("shit", this.state.data)
     return (
       <div className="commentBox">
         <CommentList data={this.state.data} />
         <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
+          previousLabel={'<'}
+          nextLabel={'>'}
           breakLabel={'...'}
           breakClassName={'break-me'}
           pageCount={this.state.pageCount}
