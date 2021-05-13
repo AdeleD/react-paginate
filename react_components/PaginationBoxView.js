@@ -270,7 +270,7 @@ export default class PaginationBoxView extends Component {
           continue;
         }
 
-        //if it is the first element of the array the rightSide need to be adjusted otherwise an extra element will be renederd
+        //if it is the first element of the array the rightSide need to be adjusted otherwise an extra element will be rendered
         const adjustedRightSide = (selected === 0 && pageRangeDisplayed > 1) ? (rightSide-1) : rightSide;
 
 
