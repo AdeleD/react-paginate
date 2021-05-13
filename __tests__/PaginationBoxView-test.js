@@ -40,10 +40,10 @@ describe('Test rendering', () => {
   it('test rendering only active page item', function() {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
-        initialPage={0}
-        pageRangeDisplayed={0}
-        marginPagesDisplayed={0}
-        breakLabel={null}
+      initialPage={0}
+      pageRangeDisplayed={0}
+      marginPagesDisplayed={0}
+      breakLabel={null}
       />
     );
 
@@ -51,6 +51,9 @@ describe('Test rendering', () => {
     // Prev, selected page, next
     expect(pageItems.length).toBe(3);
   });
+
+  
+
 });
 
 describe('Test clicks', () => {
@@ -503,6 +506,52 @@ describe('Test pagination behaviour', () => {
         .querySelector('.selected a')
         .getAttribute('aria-label')
     ).toBe('Current page');
+  });
+
+  it('Marzia should display 2 elements to the left, 1 break element and 1 element to the right', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={0}
+        pageCount={20}
+        marginPagesDisplayed={1}
+        pageRangeDisplayed={2}
+      />
+    );
+
+    const previousElement = ReactDOM.findDOMNode(pagination).querySelector(
+      'li:first-child'
+    );
+    const nextElement = ReactDOM.findDOMNode(pagination).querySelector(
+      'li:last-child'
+    );
+
+    let leftElements = [];
+    let rightElements = [];
+    let breakElements = [];
+    let breakElementReached = false;
+
+    const elements = ReactDOM.findDOMNode(pagination).querySelectorAll(
+      'li:not(.previous):not(.next)'
+    );
+    elements.forEach(element => {
+      if (breakElementReached === false && element.className !== 'break') {
+        leftElements.push(element);
+      } else if (
+        breakElementReached === true &&
+        element.className !== 'break'
+      ) {
+        rightElements.push(element);
+      } else {
+        breakElements.push(element);
+        breakElementReached = true;
+      }
+    });
+
+    expect(previousElement.className).toBe('previous disabled');
+    expect(nextElement.className).toBe('next');
+    expect(leftElements.length).toBe(2);
+    expect(rightElements.length).toBe(1);
+    expect(breakElements.length).toBe(1);
   });
 });
 
