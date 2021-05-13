@@ -12,7 +12,7 @@ export class CommentList extends Component {
   };
 
   render() {
-    let commentNodes = this.props.data.map(function(comment, index) {
+    let commentNodes = this.props.data.map(function (comment, index) {
       return <div key={index}>{comment.comment}</div>;
     });
 
@@ -47,7 +47,7 @@ export class App extends Component {
       dataType: 'json',
       type: 'GET',
 
-      success: data => {
+      success: (data) => {
         this.setState({
           data: data.comments,
           pageCount: Math.ceil(data.meta.total_count / data.meta.limit),
@@ -64,7 +64,7 @@ export class App extends Component {
     this.loadCommentsFromServer();
   }
 
-  handlePageClick = data => {
+  handlePageClick = (data) => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.props.perPage);
 
@@ -87,7 +87,6 @@ export class App extends Component {
           pageRangeDisplayed={5}
           onPageChange={this.handlePageClick}
           containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
           activeClassName={'active'}
         />
       </div>

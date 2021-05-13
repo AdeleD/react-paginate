@@ -1,8 +1,8 @@
 {
   "name": "react-paginate",
-  "version": "6.3.2",
+  "version": "7.1.2",
   "description": "A ReactJS component that creates a pagination.",
-  "main": "./dist/index.js",
+  "main": "./dist/react-paginate.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/AdeleD/react-paginate"
@@ -24,55 +24,38 @@
     "prop-types": "^15.6.1"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.0.0-alpha.0",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "eslint": "^5.12.0",
-    "eslint-config-prettier": "^3.3.0",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.3",
-    "express": "^4.14.0",
-    "jest-cli": "^23.0.0-alpha.0",
-    "jquery": "^3.1.1",
-    "prettier": "1.15.3",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-hot-loader": "^3.0.0",
-    "serve-static": "^1.11.1",
-    "webpack": "^4.24.0",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-middleware": "^3.4.0"
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/eslint-parser": "^7.11.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.5",
+    "express": "^4.17.1",
+    "jest-cli": "^26.6.3",
+    "jquery": "^3.5.1",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-hot-loader": "^4.12.21",
+    "serve-static": "^1.14.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-middleware": "^3.7.2"
   },
   "scripts": {
     "test": "jest",
-    "prepublish": "babel ./react_components --out-dir ./dist --source-maps",
-    "start": "npm run demo",
-    "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js"
-  },
-  "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/",
-    "transform": {
-      ".*": "<rootDir>/node_modules/babel-jest"
-    },
-    "roots": [
-      "__tests__"
-    ],
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/fbjs"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ]
+    "build": "webpack --config webpack.config.js --mode=production",
+    "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js",
+    "start": "npm run demo"
   }
 }

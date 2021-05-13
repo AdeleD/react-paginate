@@ -1,1 +1,0 @@
-{"version":3,"sources":["../react_components/index.js"],"names":["PaginationBoxView"],"mappings":";;;;;;AAAA;;;;;;kBAEeA,2B","file":"index.js","sourcesContent":["import PaginationBoxView from './PaginationBoxView';\n\nexport default PaginationBoxView;\n"]}

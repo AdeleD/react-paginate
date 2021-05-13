@@ -3,18 +3,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const BreakView = props => {
-  const { breakLabel, breakClassName, breakLinkClassName, onClick } = props;
+const BreakView = (props) => {
+  const {
+    breakLabel,
+    breakClassName,
+    breakLinkClassName,
+    breakHandler,
+    getEventListener,
+  } = props;
   const className = breakClassName || 'break';
 
   return (
     <li className={className}>
       <a
         className={breakLinkClassName}
-        onClick={onClick}
         role="button"
         tabIndex="0"
-        onKeyPress={onClick}
+        onKeyPress={breakHandler}
+        {...getEventListener(breakHandler)}
       >
         {breakLabel}
       </a>
@@ -26,7 +32,8 @@ BreakView.propTypes = {
   breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   breakClassName: PropTypes.string,
   breakLinkClassName: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  breakHandler: PropTypes.func.isRequired,
+  getEventListener: PropTypes.func.isRequired,
 };
 
 export default BreakView;

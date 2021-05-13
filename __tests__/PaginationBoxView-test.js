@@ -5,7 +5,7 @@ jest.dontMock('./../react_components/PaginationBoxView');
 jest.dontMock('./../react_components/PageView');
 jest.dontMock('./../react_components/BreakView');
 
-import PaginationBoxView from './../react_components/PaginationBoxView';
+import PaginationBoxView from '../react_components/PaginationBoxView';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
@@ -152,6 +152,77 @@ describe('Test clicks', () => {
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('11');
+  });
+});
+
+describe('Test custom event listener', () => {
+  it('test custom listener on previous and next buttons', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(<PaginationBoxView eventListener="onMouseOver" />);
+
+    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
+      pagination,
+      'a'
+    );
+    let previous = elmts[0];
+    let next = elmts[elmts.length - 1];
+
+    ReactTestUtils.Simulate.mouseOver(next);
+
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('2');
+
+    ReactTestUtils.Simulate.mouseOver(previous);
+
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('1');
+  });
+
+  it('test custom listener on a page item', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(<PaginationBoxView eventListener="onMouseOver" />);
+
+    ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
+
+    const pageItem = ReactDOM.findDOMNode(pagination).querySelector(
+      'li:nth-child(3) a'
+    );
+
+    ReactTestUtils.Simulate.mouseOver(pageItem);
+
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('2');
+  });
+
+  it('test custom listener on the left break view', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={0}
+        pageCount={20}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        eventListener="onMouseOver"
+      />
+    );
+
+    // The selected page is before the left break
+    const leftBreakView1 = ReactDOM.findDOMNode(pagination).querySelector(
+      '.break a'
+    );
+    ReactTestUtils.Simulate.mouseOver(leftBreakView1);
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('6');
+
+    // The selected page is after the left break
+    const leftBreakView2 = ReactDOM.findDOMNode(pagination).querySelectorAll(
+      '.break a'
+    )[0];
+    ReactTestUtils.Simulate.mouseOver(leftBreakView2);
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('1');
   });
 });
 
@@ -817,6 +888,25 @@ describe('Test custom props', () => {
     });
   });
 
+  describe('onPageActive', () => {
+    it('should use the onPageActive prop when defined', () => {
+      const myOnPageActiveMethod = jest.fn();
+      const myOnPageChangeMethod = jest.fn();
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          onPageActive={myOnPageActiveMethod}
+          onPageChange={myOnPageChangeMethod} />
+      );
+      const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
+        '.selected a'
+      );
+      ReactTestUtils.Simulate.click(activeItem);
+
+      expect(myOnPageActiveMethod).toHaveBeenCalledWith({ selected: 0 });
+      expect(myOnPageChangeMethod).not.toHaveBeenCalled();
+    });
+  });
+
   describe('initialPage', () => {
     it('should use the initialPage prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
@@ -1063,6 +1153,33 @@ describe('Test custom props', () => {
     });
   });
 
+  describe('prevRel/nextRel', () => {
+    it('should render default rel if they are not specified', function() {
+      const linkedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={3} />
+      );
+
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+        .getAttribute('rel')).toBe('next');
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+        .getAttribute('rel')).toBe('prev');
+    });
+
+    it('should render custom rel if they are defined', function() {
+      const linkedPagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={3}
+                           nextRel={'nofollow noreferrer'}
+                           prevRel={'nofollow noreferrer'}
+        />
+      );
+
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+        .getAttribute('rel')).toBe('nofollow noreferrer');
+      expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+        .getAttribute('rel')).toBe('nofollow noreferrer');
+    });
+  });
+
   describe('disabledClassName', () => {
     it('should use the disabledClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
@@ -1182,5 +1299,57 @@ describe('Test custom props', () => {
         .querySelector('li:last-child a')
         .getAttribute('aria-disabled')
     ).toBe('true');
+  });
+
+  it('should render default aria labels if they are not specified', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={3} />
+    );
+
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+      .getAttribute('aria-label')).toBe('Next page');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+      .getAttribute('aria-label')).toBe('Previous page');
+  });
+
+  it('should render custom aria labels if they are defined', function() {
+    const linkedPagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={3}
+                          nextAriaLabel={'Go to the next page'}
+                          previousAriaLabel={'Go to the previous page'}
+      />
+    );
+
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:last-child a')
+      .getAttribute('aria-label')).toBe('Go to the next page');
+    expect(ReactDOM.findDOMNode(linkedPagination).querySelector('li:first-child a')
+      .getAttribute('aria-label')).toBe('Go to the previous page');
+  });
+
+  describe('render custom page labels if defined', () => {
+    it('should use custom page labels', () => {
+      const data = [
+        { name: 'Item 1' },
+        { name: 'Item 2' },
+        { name: 'Item 3' },
+        { name: 'Item 4' },
+        { name: 'Item 5' },
+      ];
+
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={data.length}
+          pageLabelBuilder={(page) => {
+            const pageIndex = page - 1;
+            return data[pageIndex]?.name
+          }}
+        />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('Item 1');
+    });
   });
 });

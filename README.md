@@ -18,7 +18,7 @@ or
 Install `react-paginate` with [npm](https://www.npmjs.com/):
 
 ```
-$ npm install react-paginate --save
+npm install react-paginate --save
 ```
 
 For [CommonJS](http://wiki.commonjs.org/wiki/CommonJS) users:
@@ -35,26 +35,26 @@ how to make `react-paginate` work with a list of objects.
 Clone the repository and move into:
 
 ```console
-$ git clone git@github.com:AdeleD/react-paginate.git
-$ cd react-paginate
+git clone git@github.com:AdeleD/react-paginate.git
+cd react-paginate
 ```
 
 Install dependencies:
 
 ```console
-$ make install
+make install
 ```
 
 Prepare the demo:
 
 ```console
-$ make demo
+make demo
 ```
 
 Run the server:
 
 ```console
-$ make serve
+make serve
 ```
 
 Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
@@ -74,12 +74,14 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `breakClassName`         | `String`   | The classname on tag `li` of the ellipsis element.                                           |
 | `breakLinkClassName`     | `String`   | The classname on tag `a` of the ellipsis element.                                            |
 | `onPageChange`           | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument.   |
+| `onPageActive`           | `Function` | The method to call when an active page is clicked. Exposes the active page object as an argument.   |
 | `initialPage`            | `Number`   | The initial page selected.                                                                   |
 | `forcePage`              | `Number`   | To override selected page with parent prop.                                                  |
 | `disableInitialCallback` | `boolean`  | Disable `onPageChange` callback with initial page. Default: `false`                          |
 | `containerClassName`     | `String`   | The classname of the pagination container.                                                   |
 | `pageClassName`          | `String`   | The classname on tag `li` of each page element.                                              |
 | `pageLinkClassName`      | `String`   | The classname on tag `a` of each page element.                                               |
+| `pageLabelBuilder`        | `Function` | Function to set the text on page links. Defaults to `(page) => page`                   |
 | `activeClassName`        | `String`   | The classname for the active page.                                                           |
 | `activeLinkClassName`    | `String`   | The classname on the active tag `a`.                                                         |
 | `previousClassName`      | `String`   | The classname on tag `li` of the `previous` button.                                          |
@@ -90,6 +92,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 | `hrefBuilder`            | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element. |
 | `extraAriaContext`       | `String`   | DEPRECATED: Extra context to add to the `aria-label` HTML attribute.                         |
 | `ariaLabelBuilder`       | `Function` | The method is called to generate the `aria-label` attribute value on each page link          |
+| `eventListener`          | `String`   | The event to listen onto before changing the selected page. Default is: "onClick".           |
 
 ## Contribute
 
@@ -104,7 +107,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 Run tests:
 
 ```console
-$ make test
+make test
 ```
 
 [1]: https://github.com/AdeleD/react-paginate/blob/master/demo/js/demo.js

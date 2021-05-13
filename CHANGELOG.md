@@ -1,3 +1,29 @@
+## >= 7.1.2
+
+- A new prop `pageLabelBuilder` has been added. It allows to customize pages labels of the component. By default, the page number is displayed (see: https://github.com/AdeleD/react-paginate/pull/334).
+
+## >= 7.1.1
+
+- Add an onPageActive callback (see: https://github.com/AdeleD/react-paginate/pull/349).
+
+## >= 7.1.0
+
+- Compatibility with React v17.0
+
+## >= 7.0.0
+- Add a rel attribute on previous/next buttons. Rel attributes are customizable thanks to props 'prevRel' and 'nextRel' (see: https://github.com/AdeleD/react-paginate/pull/326).
+- Upgrade devDependencies packages jest-cli and webpack-cli.
+
+## >= 6.5.0
+- Add a prop 'eventListener' to let users use a custom event listener on prev/next buttons, pages and break views.
+
+## >= 6.4.0
+
+- Two properties have been added to extend accessibility support (see https://github.com/AdeleD/react-paginate/pull/164).
+  - nextAriaLabel: defines the aria-label html property for the 'Next page' button (default: 'Next page').
+  - previousAriaLabel: defines the aria-label html property for the 'Previous page' button (default: 'Previous page').
+- Upgrade devDependencies packages (see: https://github.com/AdeleD/react-paginate/pull/314).
+
 ## >= 6.3.2
 
 - Bump dependency 'mixin-deep' from 1.3.1 to 1.3.2 (see: https://github.com/AdeleD/react-paginate/pull/283).
