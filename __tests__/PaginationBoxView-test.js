@@ -153,7 +153,6 @@ describe('Test clicks', () => {
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('11');
   });
-});
 
 describe('Test pagination behaviour', () => {
   it('should display 2 elements to the left, 1 break element and 2 elements to the right', () => {
@@ -510,51 +509,6 @@ describe('Test pagination behaviour', () => {
     ).toBe('Current page');
   });
 
-  it('should display 2 elements to the left, 1 break element and 1 element to the right', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
-      <PaginationBoxView
-        initialPage={0}
-        pageCount={20}
-        marginPagesDisplayed={1}
-        pageRangeDisplayed={2}
-      />
-    );
-
-    const previousElement = ReactDOM.findDOMNode(pagination).querySelector(
-      'li:first-child'
-    );
-    const nextElement = ReactDOM.findDOMNode(pagination).querySelector(
-      'li:last-child'
-    );
-
-    let leftElements = [];
-    let rightElements = [];
-    let breakElements = [];
-    let breakElementReached = false;
-
-    const elements = ReactDOM.findDOMNode(pagination).querySelectorAll(
-      'li:not(.previous):not(.next)'
-    );
-    elements.forEach(element => {
-      if (breakElementReached === false && element.className !== 'break') {
-        leftElements.push(element);
-      } else if (
-        breakElementReached === true &&
-        element.className !== 'break'
-      ) {
-        rightElements.push(element);
-      } else {
-        breakElements.push(element);
-        breakElementReached = true;
-      }
-    });
-
-    expect(previousElement.className).toBe('previous disabled');
-    expect(nextElement.className).toBe('next');
-    expect(leftElements.length).toBe(2);
-    expect(rightElements.length).toBe(1);
-    expect(breakElements.length).toBe(1);
-  });
 });
 
 describe('Test default props', () => {
