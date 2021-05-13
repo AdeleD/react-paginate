@@ -508,7 +508,7 @@ describe('Test pagination behaviour', () => {
     ).toBe('Current page');
   });
 
-  it('Marzia should display 2 elements to the left, 1 break element and 1 element to the right', () => {
+  it('should display 2 elements to the left, 1 break element and 1 element to the right', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         initialPage={0}
