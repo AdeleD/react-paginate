@@ -153,6 +153,7 @@ describe('Test clicks', () => {
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('11');
   });
+});
 
 describe('Test pagination behaviour', () => {
   it('should display 2 elements to the left, 1 break element and 2 elements to the right', () => {
