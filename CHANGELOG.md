@@ -1,3 +1,7 @@
+## >= 7.1.3
+
+- Remove react-hot-loader from production build.
+
 ## >= 7.1.2
 
 - A new prop `pageLabelBuilder` has been added. It allows to customize pages labels of the component. By default, the page number is displayed (see: https://github.com/AdeleD/react-paginate/pull/334).
