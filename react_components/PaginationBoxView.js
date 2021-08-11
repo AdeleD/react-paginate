@@ -338,6 +338,7 @@ export default class PaginationBoxView extends Component {
   };
 
   render() {
+    if (this.props.pageCount === 0) return null;
     const {
       disabledClassName,
       pageCount,
