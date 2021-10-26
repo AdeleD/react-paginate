@@ -102,6 +102,7 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 4. Run `npm start` http://localhost:3000
 5. Fix bugs or implement features
 6. Always write tests
+7. Format with Prettier `npm run format` and check ESLint `npm run lint`
 
 Run tests:
 
