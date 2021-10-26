@@ -101,38 +101,38 @@ You can also check this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxY
 
 ## Props
 
-| Name                     | Type       | Description                                                                                                                                                     |
-| ------------------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pageCount`              | `Number`   | **Required.** The total number of pages.                                                                                                                        |
-| `pageRangeDisplayed`     | `Number`   | **Required.** The range of pages displayed.                                                                                                                     |
-| `marginPagesDisplayed`   | `Number`   | **Required.** The number of pages to display for margins.                                                                                                       |
-| `previousLabel`          | `Node`     | Label for the `previous` button.                                                                                                                                |
-| `nextLabel`              | `Node`     | Label for the `next` button.                                                                                                                                    |
-| `breakLabel`             | `Node`     | Label for ellipsis.                                                                                                                                             |
-| `breakClassName`         | `String`   | The classname on tag `li` of the ellipsis element.                                                                                                              |
-| `breakLinkClassName`     | `String`   | The classname on tag `a` of the ellipsis element.                                                                                                               |
-| `onPageChange`           | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument.                                                                      |
-| `onPageActive`           | `Function` | The method to call when an active page is clicked. Exposes the active page object as an argument.                                                               |
-| `initialPage`            | `Number`   | The initial page selected. Do not use with `forcePage` at the same time.                                                                                        |
-| `forcePage`              | `Number`   | To override selected page with parent prop. Use this if you want to control the page from your app state.                                                       |
-| `disableInitialCallback` | `boolean`  | Disable `onPageChange` callback with initial page. Default: `false`                                                                                             |
-| `containerClassName`     | `String`   | The classname of the pagination container.                                                                                                                      |
-| `className`              | `String`   | Same as `containerClassName`. For use with [styled-components](https://styled-components.com/) & other CSS-in-JS.                                               |
-| `pageClassName`          | `String`   | The classname on tag `li` of each page element.                                                                                                                 |
-| `pageLinkClassName`      | `String`   | The classname on tag `a` of each page element.                                                                                                                  |
-| `pageLabelBuilder`       | `Function` | Function to set the text on page links. Defaults to `(page) => page`                                                                                            |
-| `activeClassName`        | `String`   | The classname for the active page.                                                                                                                              |
-| `activeLinkClassName`    | `String`   | The classname on the active tag `a`.                                                                                                                            |
-| `previousClassName`      | `String`   | The classname on tag `li` of the `previous` button.                                                                                                             |
-| `nextClassName`          | `String`   | The classname on tag `li` of the `next` button.                                                                                                                 |
-| `previousLinkClassName`  | `String`   | The classname on tag `a` of the `previous` button.                                                                                                              |
-| `nextLinkClassName`      | `String`   | The classname on tag `a` of the `next` button.                                                                                                                  |
-| `disabledClassName`      | `String`   | The classname for disabled `previous` and `next` buttons.                                                                                                       |
-| `hrefBuilder`            | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element.                                                                    |
-| `extraAriaContext`       | `String`   | DEPRECATED: Extra context to add to the `aria-label` HTML attribute.                                                                                            |
-| `ariaLabelBuilder`       | `Function` | The method is called to generate the `aria-label` attribute value on each page link                                                                             |
-| `eventListener`          | `String`   | The event to listen onto before changing the selected page. Default is: `onClick`.                                                                              |
-| `renderOnZeroPageCount`  | `Function` | A render fonction called when `pageCount` is zero. Let the Previous / Next buttons displayed by default (`undefined`). Display nothing when `null` is provided. |
+| Name                     | Type       | Description                                                                                                                                                            |
+| ------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pageCount`              | `Number`   | **Required.** The total number of pages.                                                                                                                               |
+| `pageRangeDisplayed`     | `Number`   | **Required.** The range of pages displayed.                                                                                                                            |
+| `marginPagesDisplayed`   | `Number`   | **Required.** The number of pages to display for margins.                                                                                                              |
+| `previousLabel`          | `Node`     | Label for the `previous` button.                                                                                                                                       |
+| `nextLabel`              | `Node`     | Label for the `next` button.                                                                                                                                           |
+| `breakLabel`             | `Node`     | Label for ellipsis.                                                                                                                                                    |
+| `breakClassName`         | `String`   | The classname on tag `li` of the ellipsis element.                                                                                                                     |
+| `breakLinkClassName`     | `String`   | The classname on tag `a` of the ellipsis element.                                                                                                                      |
+| `onPageChange`           | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument.                                                                             |
+| `onPageActive`           | `Function` | The method to call when an active page is clicked. Exposes the active page object as an argument.                                                                      |
+| `initialPage`            | `Number`   | The initial page selected, in [uncontrolled mode](https://reactjs.org/docs/uncontrolled-components.html). Do not use with `forcePage` at the same time.                |
+| `forcePage`              | `Number`   | To override selected page with parent prop. Use this if you want to [control](https://reactjs.org/docs/forms.html#controlled-components) the page from your app state. |
+| `disableInitialCallback` | `boolean`  | Disable `onPageChange` callback with initial page. Default: `false`                                                                                                    |
+| `containerClassName`     | `String`   | The classname of the pagination container.                                                                                                                             |
+| `className`              | `String`   | Same as `containerClassName`. For use with [styled-components](https://styled-components.com/) & other CSS-in-JS.                                                      |
+| `pageClassName`          | `String`   | The classname on tag `li` of each page element.                                                                                                                        |
+| `pageLinkClassName`      | `String`   | The classname on tag `a` of each page element.                                                                                                                         |
+| `pageLabelBuilder`       | `Function` | Function to set the text on page links. Defaults to `(page) => page`                                                                                                   |
+| `activeClassName`        | `String`   | The classname for the active page.                                                                                                                                     |
+| `activeLinkClassName`    | `String`   | The classname on the active tag `a`.                                                                                                                                   |
+| `previousClassName`      | `String`   | The classname on tag `li` of the `previous` button.                                                                                                                    |
+| `nextClassName`          | `String`   | The classname on tag `li` of the `next` button.                                                                                                                        |
+| `previousLinkClassName`  | `String`   | The classname on tag `a` of the `previous` button.                                                                                                                     |
+| `nextLinkClassName`      | `String`   | The classname on tag `a` of the `next` button.                                                                                                                         |
+| `disabledClassName`      | `String`   | The classname for disabled `previous` and `next` buttons.                                                                                                              |
+| `hrefBuilder`            | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element.                                                                           |
+| `extraAriaContext`       | `String`   | DEPRECATED: Extra context to add to the `aria-label` HTML attribute.                                                                                                   |
+| `ariaLabelBuilder`       | `Function` | The method is called to generate the `aria-label` attribute value on each page link                                                                                    |
+| `eventListener`          | `String`   | The event to listen onto before changing the selected page. Default is: `onClick`.                                                                                     |
+| `renderOnZeroPageCount`  | `Function` | A render fonction called when `pageCount` is zero. Let the Previous / Next buttons displayed by default (`undefined`). Display nothing when `null` is provided.        |
 
 ## Demo
 
