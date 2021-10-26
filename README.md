@@ -25,49 +25,62 @@ npm install react-paginate --save
 ## Usage
 
 ```javascript
-import ReactPaginate from "react-paginate";
+import ReactPaginate from 'react-paginate';
 
-// Example items from another resources
+const ITEMS_PER_PAGE = 4;
+// Example items, to simulate fetching from another resources.
 const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
-function Example() {
-	// Use to store array of items
-	const [products, setProducts] = useState(null);
-	// Set how many number of page you want to display on your pagination bar
-	const [pageCount, setPageCount] = useState(4);
-	// Set the items on current page, will change everytime we click to another page
-	const [tmpItems, setTmpItems] = useState(null);
-
-	useEffect(() => {
-		// Fetch items from another resources
-		setProducts(items);
-		// Fetch first 6 items in the array
-		setTmpItems(productResult.slice(0, 6));
-		// Length of product divide by item in each page
-		setPageCount(productResult.length / 6);
-	}, []);
-
-	// Invoke when user click to another page.
-	const handlePageClick = (data) => {
-		let num = data.selected;
-		// Change the next 6 or prev 6 items when the btn clicked.
-		setTmpItems(products.slice(num * 6, num * 6 + 6));
-	};
-
-	return (
-			<ReactPaginate
-				breakLabel="..."
-				nextLabel="next >"
-				onPageChange={handlePageClick}
-				pageRangeDisplayed={5}
-				pageCount={pageCount}
-				previousLabel="< previous"
-        renderOnZeroPageCount={null}
-			/>
-	)
+function Items({ currentItems }) {
+  return (
+    {currentItems.map(item => (
+      <div>
+        <h3>Item #{item}</h3>
+      </div>
+    ))}
+  );
 }
 
-export default Example;
+function ExampleApp() {
+  // We start with an empty list of items.
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+
+  useEffect(() => {
+    // Fetch items from another resources.
+    const endOffset = itemOffset + ITEMS_PER_PAGE;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(items.slice(itemOffset, endOffset));
+    setPageCount(items.length / 6);
+  }, [itemOffset]);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = data.selected * ITEMS_PER_PAGE % items.length;
+    console.log(`User requested page number ${data.selected}, which is offset ${newOffset}`);
+    setItemOffset(newOffset);
+  };
+
+  return (
+    <>
+      <Items currentItems={currentItems} />
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+      />
+    </>
+  );
+}
+
+export default ExampleApp;
 ```
 
 You can also read the code of [demo/js/demo.js][1] to quickly understand how to make `react-paginate` work with a list of objects.

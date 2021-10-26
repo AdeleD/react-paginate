@@ -13,7 +13,11 @@ export class CommentList extends Component {
 
   render() {
     let commentNodes = this.props.data.map(function (comment, index) {
-      return <div key={index}>{comment.comment} and {comment.username}</div>;
+      return (
+        <div key={index}>
+          {comment.comment} and {comment.username}
+        </div>
+      );
     });
 
     return (
