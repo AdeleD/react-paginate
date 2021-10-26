@@ -44,8 +44,8 @@ You can also check this [CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)
 | `breakLinkClassName`     | `String`   | The classname on tag `a` of the ellipsis element.                                                                                                               |
 | `onPageChange`           | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument.                                                                      |
 | `onPageActive`           | `Function` | The method to call when an active page is clicked. Exposes the active page object as an argument.                                                               |
-| `initialPage`            | `Number`   | The initial page selected.                                                                                                                                      |
-| `forcePage`              | `Number`   | To override selected page with parent prop.                                                                                                                     |
+| `initialPage`            | `Number`   | The initial page selected. Do not use with `forcePage` at the same time.                                                                                        |
+| `forcePage`              | `Number`   | To override selected page with parent prop. Use this if you want to control the page from your app state.                                                       |
 | `disableInitialCallback` | `boolean`  | Disable `onPageChange` callback with initial page. Default: `false`                                                                                             |
 | `containerClassName`     | `String`   | The classname of the pagination container.                                                                                                                      |
 | `pageClassName`          | `String`   | The classname on tag `li` of each page element.                                                                                                                 |
