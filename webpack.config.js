@@ -8,7 +8,7 @@ const dir_dist = path.resolve(__dirname, 'dist');
 const dir_node_modules = path.resolve(__dirname, 'node_modules');
 
 const config = {
-  target: 'node',
+  target: 'web',
   entry: path.resolve(dir_js, 'index.js'),
   output: {
     path: dir_build,
