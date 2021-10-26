@@ -79,11 +79,8 @@ export default class PaginationBoxView extends Component {
   }
 
   componentDidMount() {
-    const {
-      initialPage,
-      disableInitialCallback,
-      extraAriaContext,
-    } = this.props;
+    const { initialPage, disableInitialCallback, extraAriaContext } =
+      this.props;
     // Call the callback with the initialPage item:
     if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
       this.callCallback(initialPage);

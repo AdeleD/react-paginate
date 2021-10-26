@@ -35,7 +35,7 @@ function getPaginatedItems(items, offset) {
   return items.slice(offset, offset + PER_PAGE);
 }
 
-app.get('/comments', function(req, res) {
+app.get('/comments', function (req, res) {
   var items = JSON.parse(fs.readFileSync(DATA));
   var offset = req.query.offset ? parseInt(req.query.offset, 10) : 0;
   var nextOffset = offset + PER_PAGE;
@@ -57,6 +57,6 @@ app.get('/comments', function(req, res) {
   return res.json(json);
 });
 
-app.listen(NODE_PORT, function() {
+app.listen(NODE_PORT, function () {
   console.log('Demo server running on %s mode on port %d', NODE_ENV, NODE_PORT); // eslint-disable-line
 });

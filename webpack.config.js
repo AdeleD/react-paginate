@@ -54,7 +54,9 @@ module.exports = (env, argv) => {
   if (argv.mode === 'production') {
     config.mode = 'production';
     config.output.path = dir_dist;
-    config.module.rules = config.module.rules.filter(rule => rule.use !== 'react-hot-loader/webpack');
+    config.module.rules = config.module.rules.filter(
+      (rule) => rule.use !== 'react-hot-loader/webpack'
+    );
   }
   return config;
-}
+};
