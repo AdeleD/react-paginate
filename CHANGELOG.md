@@ -2,7 +2,7 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
-## >= 7.1.4 (To be released)
+## >= 7.1.4
 
 - A new prop `renderOnZeroPageCount` has been added. It allows to define what to display when `pageCount` is zero. By default, it lets the main pagination boxes be displayed (Previous / Next). To display nothing, just provides `renderOnZeroPageCount={null}`. (see: https://github.com/AdeleD/react-paginate/pull/377)
 - A new prop `className` has been added, which is an alias to `containerClassName` and is usefull for integration with CSS-in-JS frameworks like styled-components. (see: https://github.com/AdeleD/react-paginate/issues/321)
