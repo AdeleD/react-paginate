@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 jest.dontMock('./../react_components/PaginationBoxView');
@@ -963,7 +963,7 @@ describe('Test custom props', () => {
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
-      ).toBe('4');
+      ).toBe('3');
       expect(console.warn).toHaveBeenCalledTimes(1);
       expect(console.warn).toHaveBeenLastCalledWith(
         '(react-paginate): Both initialPage (3) and forcePage (2) props are provided, which is discouraged.' +
@@ -973,25 +973,30 @@ describe('Test custom props', () => {
       consoleWarnMock.mockRestore();
     });
 
-    it('should be totally controlled when forcePage is provided', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView forcePage={2} />
-      );
+    describe('should be totally controlled when forcePage is provided', () => {
+      it('should not change if parent state not changed', () => {
+        const pagination = ReactTestUtils.renderIntoDocument(
+          <PaginationBoxView forcePage={2} />
+        );
 
-      expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
-          .textContent
-      ).toBe('3');
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('3');
 
-      const pageItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        const pageItem =
+          ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
 
-      ReactTestUtils.Simulate.click(pageItem);
+        ReactTestUtils.Simulate.click(pageItem);
 
-      expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
-          .textContent
-      ).toBe('3');
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('3');
+      });
+
+      // TODO Test by mounting component and listening to change change (parent state).
+      // --> Create a parent stub component with useState to test?
     });
 
     it('should be totally controlled when forcePage is provided, even when it is 0', () => {
