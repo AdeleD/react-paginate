@@ -6,6 +6,7 @@
 **A ReactJS component to render a pagination.**
 
 By installing this component and writing only a little bit of CSS you can obtain this:
+Note: You should write your own css to obtain this UI. This package do not provide any css.
 
 <img src="https://cloud.githubusercontent.com/assets/2084833/24840237/7accb75a-1d1e-11e7-9abb-818431398b91.png" alt="Pagination demo 2" />
 
@@ -21,14 +22,57 @@ Install `react-paginate` with [npm](https://www.npmjs.com/):
 npm install react-paginate --save
 ```
 
-For [CommonJS](http://wiki.commonjs.org/wiki/CommonJS) users:
+## Usage
 
 ```javascript
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
+
+// Example items from another resources
+const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+function Example() {
+	// Use to store array of items
+	const [products, setProducts] = useState(null);
+	// Set how many number of page you want to display on your pagination bar
+	const [pageCount, setPageCount] = useState(4);
+	// Set the items on current page, will change everytime we click to another page
+	const [tmpItems, setTmpItems] = useState(null);
+
+	useEffect(() => {
+		// Fetch items from another resources
+		setProducts(items);
+		// Fetch first 6 items in the array
+		setTmpItems(productResult.slice(0, 6));
+		// Length of product divide by item in each page
+		setPageCount(productResult.length / 6);
+	}, []);
+
+	// Invoke when user click to another page.
+	const handlePageClick = (data) => {
+		let num = data.selected;
+		// Change the next 6 or prev 6 items when the btn clicked.
+		setTmpItems(products.slice(num * 6, num * 6 + 6));
+	};
+
+	return (
+			<ReactPaginate
+				breakLabel="..."
+				nextLabel="next >"
+				onPageChange={handlePageClick}
+				pageRangeDisplayed={5}
+				pageCount={pageCount}
+				previousLabel="< previous"
+        renderOnZeroPageCount={null}
+			/>
+	)
+}
+
+export default Example;
 ```
 
-Read the code of [demo/js/demo.js][1]. You will quickly understand how to make `react-paginate` work with a list of objects.
-You can also check this [CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ).
+You can also read the code of [demo/js/demo.js][1] to quickly understand how to make `react-paginate` work with a list of objects.
+
+You can also check this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)**.
 
 ## Props
 
