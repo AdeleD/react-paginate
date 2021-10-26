@@ -67,6 +67,13 @@ export default class PaginationBoxView extends Component {
   constructor(props) {
     super(props);
 
+    if (props.initialPage !== undefined && props.forcePage !== undefined) {
+      console.warn(
+        `(react-paginate): Both initialPage (${props.initialPage}) and forcePage (${props.forcePage}) props are provided, which is discouraged.` +
+          ' Use exclusively forcePage prop for a controlled component.\nSee https://reactjs.org/docs/forms.html#controlled-components'
+      );
+    }
+
     let initialSelected;
     if (props.initialPage) {
       initialSelected = props.initialPage;

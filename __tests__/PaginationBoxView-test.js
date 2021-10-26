@@ -7,6 +7,11 @@ jest.dontMock('./../react_components/BreakView');
 
 import PaginationBoxView from '../react_components/PaginationBoxView';
 
+// TODO Migrate to React Testing Library.
+// https://testing-library.com/docs/react-testing-library/intro
+// with jest-dom
+// https://github.com/testing-library/jest-dom
+
 import ReactTestUtils from 'react-dom/test-utils';
 
 describe('Test rendering', () => {
@@ -108,7 +113,9 @@ describe('Page count checks', () => {
     // Prev page, next
     expect(pageItems.length).toBe(4);
     expect(console.warn).toHaveBeenCalledTimes(1);
-    expect(console.warn).toHaveBeenLastCalledWith("(react-paginate): The pageCount prop value provided is not an integer (2.5). Did you forget a Math.ceil()?");
+    expect(console.warn).toHaveBeenLastCalledWith(
+      '(react-paginate): The pageCount prop value provided is not an integer (2.5). Did you forget a Math.ceil()?'
+    );
     consoleWarnMock.mockRestore();
   });
 });
@@ -576,7 +583,10 @@ describe('Test pagination behaviour', () => {
         .getAttribute('aria-label')
     ).toBe('Current page');
     expect(console.warn).toHaveBeenCalledTimes(1);
-    expect(console.warn).toHaveBeenLastCalledWith("DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.");
+    expect(console.warn).toHaveBeenLastCalledWith(
+      'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+    );
+    consoleWarnMock.mockRestore();
   });
 });
 
@@ -939,6 +949,24 @@ describe('Test custom props', () => {
           .textContent
       ).toBe('4');
     });
+
+    it('should report a warning when using both initialPage and forcePage props', () => {
+      const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView initialPage={3} forcePage={2} />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('4');
+      expect(console.warn).toHaveBeenCalledTimes(1);
+      expect(console.warn).toHaveBeenLastCalledWith(
+        '(react-paginate): Both initialPage (3) and forcePage (2) props are provided, which is discouraged.' +
+          ' Use exclusively forcePage prop for a controlled component.\n' +
+          'See https://reactjs.org/docs/forms.html#controlled-components'
+      );
+      consoleWarnMock.mockRestore();
+    });
   });
 
   describe('disableInitialCallback', () => {
@@ -1254,6 +1282,7 @@ describe('Test custom props', () => {
 
   describe('extraAriaContext', () => {
     it('should use the extraAriaContext prop when defined', () => {
+      const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
           extraAriaContext="can be clicked"
@@ -1271,6 +1300,11 @@ describe('Test custom props', () => {
           .querySelector('.selected a')
           .getAttribute('aria-label')
       ).toBe('Page 1 is your current page');
+      expect(console.warn).toHaveBeenCalledTimes(1);
+      expect(console.warn).toHaveBeenLastCalledWith(
+        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+      );
+      consoleWarnMock.mockRestore();
     });
   });
 
