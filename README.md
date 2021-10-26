@@ -6,6 +6,7 @@
 **A ReactJS component to render a pagination.**
 
 By installing this component and writing only a little bit of CSS you can obtain this:
+Note: You should write your own css to obtain this UI. This package do not provide any css.
 
 <img src="https://cloud.githubusercontent.com/assets/2084833/24840237/7accb75a-1d1e-11e7-9abb-818431398b91.png" alt="Pagination demo 2" />
 
@@ -21,14 +22,82 @@ Install `react-paginate` with [npm](https://www.npmjs.com/):
 npm install react-paginate --save
 ```
 
-For [CommonJS](http://wiki.commonjs.org/wiki/CommonJS) users:
+## Usage
 
 ```javascript
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import ReactPaginate from 'react-paginate';
+
+// Example items, to simulate fetching from another resources.
+const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+function Items({ currentItems }) {
+  return (
+    <>
+      {currentItems &&
+        currentItems.map((item) => (
+          <div>
+            <h3>Item #{item}</h3>
+          </div>
+        ))}
+    </>
+  );
+}
+
+function PaginatedItems({ itemsPerPage }) {
+  // We start with an empty list of items.
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+
+  useEffect(() => {
+    // Fetch items from another resources.
+    const endOffset = itemOffset + itemsPerPage;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(items.slice(itemOffset, endOffset));
+    setPageCount(items.length / itemsPerPage);
+  }, [itemOffset]);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % items.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
+  return (
+    <>
+      <Items currentItems={currentItems} />
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={pageCount}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+      />
+    </>
+  );
+}
+
+// Add a <div id="container"> to your HTML to see the componend rendered.
+ReactDOM.render(
+  <PaginatedItems itemsPerPage={4} />,
+  document.getElementById('container')
+);
 ```
 
-Read the code of [demo/js/demo.js][1]. You will quickly understand how to make `react-paginate` work with a list of objects.
-You can also check this [CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ).
+Test it on [CodePen](https://codepen.io/monsieurv/pen/abyJQWQ).
+
+You can also read the code of [demo/js/demo.js][1] to quickly understand how to make `react-paginate` work with a list of objects.
+
+You can also check this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)** with fetching sample code (using GitHub API).
 
 ## Props
 
