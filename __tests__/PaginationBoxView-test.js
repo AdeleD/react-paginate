@@ -51,6 +51,18 @@ describe('Test rendering', () => {
     // Prev, selected page, next
     expect(pageItems.length).toBe(3);
   });
+
+  it('should render nothing if page count is zero', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageCount={0}
+        pageRangeDisplayed={0}
+        marginPagesDisplayed={0}
+        breakLabel={null}
+      />
+    );
+    expect(ReactDOM.findDOMNode(pagination)).toBeNull();
+  });
 });
 
 describe('Test clicks', () => {
