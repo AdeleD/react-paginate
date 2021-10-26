@@ -52,6 +52,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test-watch": "jest --watch",
     "build": "webpack --config webpack.config.js --mode=production",
     "demo": "webpack --config demo/webpack.config.js --mode=development && node demo/data.js && node demo/server.js",
     "start": "npm run demo",

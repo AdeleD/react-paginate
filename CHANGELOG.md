@@ -1,3 +1,7 @@
+## To be released
+
+- A new prop `renderOnZeroPageCount` has been added. It allows to define what to display when `pageCount` is zero. By default, it lets the main pagination boxes be displayed (Previous / Next). To display nothing, just provides `renderOnZeroPageCount={null}`. (see: https://github.com/AdeleD/react-paginate/pull/377)
+
 ## >= 7.1.3
 
 - Remove react-hot-loader from production build.

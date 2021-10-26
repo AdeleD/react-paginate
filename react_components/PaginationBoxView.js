@@ -39,6 +39,7 @@ export default class PaginationBoxView extends Component {
     extraAriaContext: PropTypes.string,
     ariaLabelBuilder: PropTypes.func,
     eventListener: PropTypes.string,
+    renderOnZeroPageCount: PropTypes.func,
   };
 
   static defaultProps = {
@@ -59,6 +60,7 @@ export default class PaginationBoxView extends Component {
     disableInitialCallback: false,
     pageLabelBuilder: (page) => page,
     eventListener: 'onClick',
+    renderOnZeroPageCount: undefined,
   };
 
   constructor(props) {
@@ -335,7 +337,12 @@ export default class PaginationBoxView extends Component {
   };
 
   render() {
-    if (this.props.pageCount === 0) return null;
+    const { renderOnZeroPageCount } = this.props;
+    if (this.props.pageCount === 0 && renderOnZeroPageCount !== undefined) {
+      return renderOnZeroPageCount
+        ? renderOnZeroPageCount(this.props)
+        : renderOnZeroPageCount;
+    }
     const {
       disabledClassName,
       pageCount,

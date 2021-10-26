@@ -51,8 +51,10 @@ describe('Test rendering', () => {
     // Prev, selected page, next
     expect(pageItems.length).toBe(3);
   });
+});
 
-  it('should render nothing if page count is zero', () => {
+describe('Page count is zero', () => {
+  it('should render Previous / Next if page count is zero (default / when renderOnZeroPageCount is undefined)', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         pageCount={0}
@@ -61,7 +63,33 @@ describe('Test rendering', () => {
         breakLabel={null}
       />
     );
+    const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
+    // Prev page, next
+    expect(pageItems.length).toBe(2);
+  });
+  it('should render nothing if page count is zero when renderOnZeroPageCount is null', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageCount={0}
+        pageRangeDisplayed={0}
+        marginPagesDisplayed={0}
+        breakLabel={null}
+        renderOnZeroPageCount={null}
+      />
+    );
     expect(ReactDOM.findDOMNode(pagination)).toBeNull();
+  });
+  it('should render provided Component if page count is zero when renderOnZeroPageCount is not null', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageCount={0}
+        pageRangeDisplayed={0}
+        marginPagesDisplayed={0}
+        breakLabel={null}
+        renderOnZeroPageCount={() => <h2>Nothing</h2>}
+      />
+    );
+    expect(ReactDOM.findDOMNode(pagination).textContent).toBe('Nothing');
   });
 });
 
