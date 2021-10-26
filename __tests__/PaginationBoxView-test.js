@@ -936,10 +936,15 @@ describe('Test custom props', () => {
 
     it('should update forcePage and hence selected page when forcePage value is changed', () => {
       const node = document.createElement('div');
+      // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
       const pagination1 = ReactDOM.render(
         <PaginationBoxView forcePage={2} />,
         node
       );
+      expect(
+        ReactDOM.findDOMNode(pagination1).querySelector('.selected a')
+          .textContent
+      ).toBe('3');
       const pagination2 = ReactDOM.render(
         <PaginationBoxView forcePage={3} />,
         node
@@ -966,6 +971,48 @@ describe('Test custom props', () => {
           'See https://reactjs.org/docs/forms.html#controlled-components'
       );
       consoleWarnMock.mockRestore();
+    });
+
+    it('should be totally controlled when forcePage is provided', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView forcePage={2} />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('3');
+
+      const pageItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+
+      ReactTestUtils.Simulate.click(pageItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('3');
+    });
+
+    it('should be totally controlled when forcePage is provided, even when it is 0', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView forcePage={0} />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('1');
+
+      const pageItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+
+      ReactTestUtils.Simulate.click(pageItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('1');
     });
   });
 
