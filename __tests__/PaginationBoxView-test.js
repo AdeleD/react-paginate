@@ -547,6 +547,7 @@ describe('Test pagination behaviour', () => {
   });
 
   it('test ariaLabelBuilder works with extraAriaContext', function () {
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
     const linkedPagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         initialPage={1}
@@ -574,6 +575,8 @@ describe('Test pagination behaviour', () => {
         .querySelector('.selected a')
         .getAttribute('aria-label')
     ).toBe('Current page');
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith("DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.");
   });
 });
 
