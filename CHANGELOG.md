@@ -3,6 +3,7 @@
 - A new prop `renderOnZeroPageCount` has been added. It allows to define what to display when `pageCount` is zero. By default, it lets the main pagination boxes be displayed (Previous / Next). To display nothing, just provides `renderOnZeroPageCount={null}`. (see: https://github.com/AdeleD/react-paginate/pull/377)
 - A new prop `className` has been added, which is an alias to `containerClassName` and is usefull for integration with CSS-in-JS frameworks like styled-components. (see: https://github.com/AdeleD/react-paginate/issues/321)
 - Fix the Webpack build by providing a `web` target (see: https://github.com/AdeleD/react-paginate/issues/317)
+- Add a warning when a non integer is provided for `pageCount`
 
 ## >= 7.1.3
 

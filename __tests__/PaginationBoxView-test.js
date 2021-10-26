@@ -93,6 +93,26 @@ describe('Page count is zero', () => {
   });
 });
 
+describe('Page count checks', () => {
+  it('should trigger a warning when a float is provided', () => {
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        pageCount={2.5}
+        pageRangeDisplayed={0}
+        marginPagesDisplayed={0}
+        breakLabel={null}
+      />
+    );
+    const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
+    // Prev page, next
+    expect(pageItems.length).toBe(4);
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith("(react-paginate): The pageCount prop value provided is not an integer (2.5). Did you forget a Math.ceil()?");
+    consoleWarnMock.mockRestore();
+  });
+});
+
 describe('Test clicks', () => {
   it('test clicks on previous and next buttons', () => {
     const pagination = ReactTestUtils.renderIntoDocument(<PaginationBoxView />);
