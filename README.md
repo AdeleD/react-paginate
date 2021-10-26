@@ -117,6 +117,7 @@ You can also check this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxY
 | `forcePage`              | `Number`   | To override selected page with parent prop. Use this if you want to control the page from your app state.                                                       |
 | `disableInitialCallback` | `boolean`  | Disable `onPageChange` callback with initial page. Default: `false`                                                                                             |
 | `containerClassName`     | `String`   | The classname of the pagination container.                                                                                                                      |
+| `className`              | `String`   | Same as `containerClassName`. For use with [styled-components](https://styled-components.com/) & other CSS-in-JS.                                               |
 | `pageClassName`          | `String`   | The classname on tag `li` of each page element.                                                                                                                 |
 | `pageLinkClassName`      | `String`   | The classname on tag `a` of each page element.                                                                                                                  |
 | `pageLabelBuilder`       | `Function` | Function to set the text on page links. Defaults to `(page) => page`                                                                                            |

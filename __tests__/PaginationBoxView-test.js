@@ -935,7 +935,28 @@ describe('Test custom props', () => {
   describe('containerClassName', () => {
     it('should use the containerClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView containerClassName={'my-pagination'} />
+        <PaginationBoxView containerClassName="my-pagination" />
+      );
+      expect(ReactDOM.findDOMNode(pagination).className).toEqual(
+        'my-pagination'
+      );
+    });
+
+    it('should use the className prop when defined', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView className="my-pagination" />
+      );
+      expect(ReactDOM.findDOMNode(pagination).className).toEqual(
+        'my-pagination'
+      );
+    });
+
+    it('should use the className prop in priority from containerClassName', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          className="my-pagination"
+          containerClassName="another"
+        />
       );
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'

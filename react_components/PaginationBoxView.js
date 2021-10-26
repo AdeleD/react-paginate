@@ -24,6 +24,7 @@ export default class PaginationBoxView extends Component {
     forcePage: PropTypes.number,
     disableInitialCallback: PropTypes.bool,
     containerClassName: PropTypes.string,
+    className: PropTypes.string,
     pageClassName: PropTypes.string,
     pageLinkClassName: PropTypes.string,
     pageLabelBuilder: PropTypes.func,
@@ -346,6 +347,7 @@ export default class PaginationBoxView extends Component {
     const {
       disabledClassName,
       pageCount,
+      className,
       containerClassName,
       previousLabel,
       previousClassName,
@@ -371,7 +373,7 @@ export default class PaginationBoxView extends Component {
     const nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
 
     return (
-      <ul className={containerClassName}>
+      <ul className={className || containerClassName}>
         <li className={previousClasses}>
           <a
             className={previousLinkClassName}
