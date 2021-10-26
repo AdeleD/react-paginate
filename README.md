@@ -97,7 +97,7 @@ Test it on [CodePen](https://codepen.io/monsieurv/pen/abyJQWQ).
 
 You can also read the code of [demo/js/demo.js][1] to quickly understand how to make `react-paginate` work with a list of objects.
 
-You can also check this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)** with fetching sample code (using GitHub API).
+You can also check this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)** with fetching sample code (using GitHub API) and synchronized pagination widgets.
 
 ## Props
 
