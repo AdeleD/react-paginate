@@ -22,6 +22,7 @@ export default class PaginationBoxView extends Component {
     onPageActive: PropTypes.func,
     initialPage: PropTypes.number,
     forcePage: PropTypes.number,
+    page: PropTypes.number,
     disableInitialCallback: PropTypes.bool,
     containerClassName: PropTypes.string,
     className: PropTypes.string,
@@ -67,25 +68,30 @@ export default class PaginationBoxView extends Component {
   constructor(props) {
     super(props);
 
-    if (props.initialPage !== undefined && props.forcePage !== undefined) {
+    if (props.initialPage !== undefined && props.page !== undefined) {
       console.warn(
-        `(react-paginate): Both initialPage (${props.initialPage}) and forcePage (${props.forcePage}) props are provided, which is discouraged.` +
-          ' Use exclusively forcePage prop for a controlled component.\nSee https://reactjs.org/docs/forms.html#controlled-components'
+        `(react-paginate): Both initialPage (${props.initialPage}) and page (${props.page}) props are provided, which is discouraged.` +
+          ' Use exclusively page prop for a controlled component.\nSee https://reactjs.org/docs/forms.html#controlled-components'
       );
     }
 
-    // When we are in controlled mode, we do not use local state for forcePage.
+    // When we are in controlled mode, we do not use local state for props.page.
     // See getSelectedPage.
     // We init anyway the selected prop, in case the user changes the component to uncontrolled.
     // (Which is higly discouraged, see warning in componentDidUpdate)
     this.state = {
-      selected: props.initialPage || 0,
+      selected: props.forcePage || props.initialPage || 0,
     };
   }
 
   componentDidMount() {
-    const { initialPage, disableInitialCallback, extraAriaContext, pageCount } =
-      this.props;
+    const {
+      initialPage,
+      disableInitialCallback,
+      extraAriaContext,
+      pageCount,
+      forcePage,
+    } = this.props;
     // Call the callback with the initialPage item:
     if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
       this.callCallback(initialPage);
@@ -93,7 +99,15 @@ export default class PaginationBoxView extends Component {
 
     if (extraAriaContext) {
       console.warn(
-        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder prop instead.'
+      );
+    }
+
+    if (forcePage) {
+      console.warn(
+        'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
+          ' You should now use the page prop for a controlled component.' +
+          '\nSee https://reactjs.org/docs/forms.html#controlled-components'
       );
     }
 
@@ -115,22 +129,24 @@ export default class PaginationBoxView extends Component {
     }
 
     if (
-      prevProps.forcePage !== undefined &&
-      this.props.forcePage === undefined
+      this.props.forcePage !== undefined &&
+      this.props.forcePage !== prevProps.forcePage
     ) {
+      this.setState({ selected: this.props.forcePage });
+    }
+
+    if (prevProps.page !== undefined && this.props.page === undefined) {
       console.warn(
         '(react-paginate): Changing from controlled to uncontrolled is highly discouraged.' +
-          ' Please always provide a forcePage value in controlled mode.\n' +
-          `(force page was ${prevProps.forcePage} and is now ${this.props.forcePage})`
+          ' Please always provide a page value in controlled mode.\n' +
+          `(page prop was ${prevProps.page} and is now ${this.props.page})`
       );
     }
   }
 
-  // When we are in controlled mode, we do not use local state for forcePage.
+  // When we are in controlled mode, we do not use local state for page.
   getSelectedPage = () =>
-    this.props.forcePage !== undefined
-      ? this.props.forcePage
-      : this.state.selected;
+    this.props.page !== undefined ? this.props.page : this.state.selected;
 
   handlePreviousPage = (evt) => {
     const selected = this.getSelectedPage();
@@ -158,7 +174,7 @@ export default class PaginationBoxView extends Component {
       return;
     }
 
-    if (this.props.forcePage === undefined) {
+    if (this.props.page === undefined) {
       this.setState({ selected: toBeSelected });
     }
 

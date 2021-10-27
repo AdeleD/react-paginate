@@ -1,7 +1,8 @@
-## >= 8.0.0 (WIP)
+## >= 8.0.0
 
-- Providing the `forcePage` prop (to something else than `undefined`) now makes the component wholly [controlled](https://reactjs.org/docs/forms.html#controlled-components). (see https://github.com/AdeleD/react-paginate/issues/124)
-- Add a warning when providing both `initialPage` and `forcePage` props. You should only provides `forcePage` when the component is [controlled](https://reactjs.org/docs/forms.html#controlled-components). (see: https://github.com/AdeleD/react-paginate/pull/290)
+- A new prop `page` has been added. It allows to wholly [control](https://reactjs.org/docs/forms.html#controlled-components) the component. (see https://github.com/AdeleD/react-paginate/issues/124)
+- The `forcePage` prop is now DEPRECATED. It was allowing a subpar controlled mode, which confused users ([#124](https://github.com/AdeleD/react-paginate/issues/124) [#374](https://github.com/AdeleD/react-paginate/issues/374) [#356](https://github.com/AdeleD/react-paginate/issues/356)) and potentially created race conditions. Please use `page` prop instead.
+- Add a warning when providing both `initialPage` and `page` props. You should only provides `page` when the component is [controlled](https://reactjs.org/docs/forms.html#controlled-components). (see: https://github.com/AdeleD/react-paginate/pull/290)
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
 ## >= 7.1.4

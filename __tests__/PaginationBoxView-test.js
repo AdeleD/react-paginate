@@ -584,7 +584,7 @@ describe('Test pagination behaviour', () => {
     ).toBe('Current page');
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
-      'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+      'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder prop instead.'
     );
     consoleWarnMock.mockRestore();
   });
@@ -925,6 +925,7 @@ describe('Test custom props', () => {
 
   describe('forcePage', () => {
     it('should use the forcePage prop when defined', () => {
+      const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView forcePage={2} />
       );
@@ -932,9 +933,17 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
       ).toBe('3');
+      expect(console.warn).toHaveBeenCalledTimes(1);
+      expect(console.warn).toHaveBeenLastCalledWith(
+        'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
+          ' You should now use the page prop for a controlled component.' +
+          '\nSee https://reactjs.org/docs/forms.html#controlled-components'
+      );
+      consoleWarnMock.mockRestore();
     });
 
     it('should update forcePage and hence selected page when forcePage value is changed', () => {
+      const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const node = document.createElement('div');
       // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
       const pagination1 = ReactDOM.render(
@@ -953,12 +962,79 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination2).querySelector('.selected a')
           .textContent
       ).toBe('4');
+      expect(console.warn).toHaveBeenCalledTimes(1);
+      expect(console.warn).toHaveBeenLastCalledWith(
+        'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
+          ' You should now use the page prop for a controlled component.' +
+          '\nSee https://reactjs.org/docs/forms.html#controlled-components'
+      );
+      consoleWarnMock.mockRestore();
     });
 
-    it('should report a warning when using both initialPage and forcePage props', () => {
+    describe('should not be totally controlled when forcePage is provided', () => {
+      it('should change even if parent state not changed', () => {
+        const consoleWarnMock = jest
+          .spyOn(console, 'warn')
+          .mockImplementation();
+        const pagination = ReactTestUtils.renderIntoDocument(
+          <PaginationBoxView forcePage={2} />
+        );
+
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('3');
+
+        const pageItem =
+          ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+
+        ReactTestUtils.Simulate.click(pageItem);
+
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('2');
+        expect(console.warn).toHaveBeenCalledTimes(1);
+        expect(console.warn).toHaveBeenLastCalledWith(
+          'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
+            ' You should now use the page prop for a controlled component.' +
+            '\nSee https://reactjs.org/docs/forms.html#controlled-components'
+        );
+        consoleWarnMock.mockRestore();
+      });
+    });
+  });
+
+  describe('page prop', () => {
+    it('should use the page prop when defined', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView page={2} />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('3');
+    });
+
+    it('should update page and hence selected page when page prop value is changed', () => {
+      const node = document.createElement('div');
+      // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
+      const pagination1 = ReactDOM.render(<PaginationBoxView page={2} />, node);
+      expect(
+        ReactDOM.findDOMNode(pagination1).querySelector('.selected a')
+          .textContent
+      ).toBe('3');
+      const pagination2 = ReactDOM.render(<PaginationBoxView page={3} />, node);
+      expect(
+        ReactDOM.findDOMNode(pagination2).querySelector('.selected a')
+          .textContent
+      ).toBe('4');
+    });
+
+    it('should report a warning when using both initialPage and page props', () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView initialPage={3} forcePage={2} />
+        <PaginationBoxView initialPage={3} page={2} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -966,17 +1042,17 @@ describe('Test custom props', () => {
       ).toBe('3');
       expect(console.warn).toHaveBeenCalledTimes(1);
       expect(console.warn).toHaveBeenLastCalledWith(
-        '(react-paginate): Both initialPage (3) and forcePage (2) props are provided, which is discouraged.' +
-          ' Use exclusively forcePage prop for a controlled component.\n' +
+        '(react-paginate): Both initialPage (3) and page (2) props are provided, which is discouraged.' +
+          ' Use exclusively page prop for a controlled component.\n' +
           'See https://reactjs.org/docs/forms.html#controlled-components'
       );
       consoleWarnMock.mockRestore();
     });
 
-    describe('should be totally controlled when forcePage is provided', () => {
+    describe('should be totally controlled when page prop is provided', () => {
       it('should not change if parent state not changed', () => {
         const pagination = ReactTestUtils.renderIntoDocument(
-          <PaginationBoxView forcePage={2} />
+          <PaginationBoxView page={2} />
         );
 
         expect(
@@ -997,27 +1073,26 @@ describe('Test custom props', () => {
 
       // TODO Test by mounting component and listening to change change (parent state).
       // --> Create a parent stub component with useState to test?
-    });
+      it('should be controlled even when page prop is 0', () => {
+        const pagination = ReactTestUtils.renderIntoDocument(
+          <PaginationBoxView page={0} />
+        );
 
-    it('should be totally controlled when forcePage is provided, even when it is 0', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView forcePage={0} />
-      );
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('1');
 
-      expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
-          .textContent
-      ).toBe('1');
+        const pageItem =
+          ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
 
-      const pageItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        ReactTestUtils.Simulate.click(pageItem);
 
-      ReactTestUtils.Simulate.click(pageItem);
-
-      expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
-          .textContent
-      ).toBe('1');
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('1');
+      });
     });
   });
 
@@ -1354,7 +1429,7 @@ describe('Test custom props', () => {
       ).toBe('Page 1 is your current page');
       expect(console.warn).toHaveBeenCalledTimes(1);
       expect(console.warn).toHaveBeenLastCalledWith(
-        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder prop instead.'
       );
       consoleWarnMock.mockRestore();
     });
