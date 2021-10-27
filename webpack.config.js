@@ -1,5 +1,3 @@
-/* global __dirname */
-
 const path = require('path');
 
 const dir_js = path.resolve(__dirname, 'react_components');
@@ -8,13 +6,15 @@ const dir_dist = path.resolve(__dirname, 'dist');
 const dir_node_modules = path.resolve(__dirname, 'node_modules');
 
 const config = {
-  target: 'web',
   entry: path.resolve(dir_js, 'index.js'),
   output: {
     path: dir_build,
     library: 'ReactPaginate',
-    libraryTarget: 'umd',
     filename: 'react-paginate.js',
+    libraryTarget: 'umd',
+    // this to support both browser and Node.
+    // https://github.com/riversun/making-library-with-webpack#1-4publish-an-export-default-class-with-the-setting-library-name--class-name
+    globalObject: 'this',
   },
   devServer: {
     contentBase: dir_build,
