@@ -91,9 +91,14 @@ export default class PaginationBoxView extends Component {
       extraAriaContext,
       pageCount,
       forcePage,
+      page,
     } = this.props;
     // Call the callback with the initialPage item:
-    if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
+    if (
+      typeof initialPage !== 'undefined' &&
+      !disableInitialCallback &&
+      page === undefined
+    ) {
       this.callCallback(initialPage);
     }
 

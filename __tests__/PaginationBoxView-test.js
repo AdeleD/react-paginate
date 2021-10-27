@@ -653,7 +653,7 @@ describe('Test default props', () => {
   });
 
   describe('default disableInitialCallback', () => {
-    it('should call the onPageChange callback when disableInitialCallback is set to false/undefined', () => {
+    it('should call the onPageChange callback when disableInitialCallback is set to false/undefined (uncontrolled)', () => {
       const myOnPageChangeMethod = jest.fn();
       ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
@@ -662,6 +662,39 @@ describe('Test default props', () => {
         />
       );
       expect(myOnPageChangeMethod).toHaveBeenCalledWith({ selected: 5 });
+    });
+
+    it('... except when the component is in controlled mode (page prop)', () => {
+      const myOnPageChangeMethod = jest.fn();
+      ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView page={5} onPageChange={myOnPageChangeMethod} />
+      );
+      expect(myOnPageChangeMethod).not.toHaveBeenCalled();
+    });
+
+    it('... except when the component is in controlled mode (page prop), even with initialPage prop', () => {
+      const myOnPageChangeMethod = jest.fn();
+      ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={3}
+          page={5}
+          onPageChange={myOnPageChangeMethod}
+        />
+      );
+      expect(myOnPageChangeMethod).not.toHaveBeenCalled();
+    });
+
+    it('it should not even be forced to true when the component is in controlled mode (page prop)', () => {
+      const myOnPageChangeMethod = jest.fn();
+      ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={3}
+          page={5}
+          onPageChange={myOnPageChangeMethod}
+          disableInitialCallback={true}
+        />
+      );
+      expect(myOnPageChangeMethod).not.toHaveBeenCalled();
     });
   });
 
