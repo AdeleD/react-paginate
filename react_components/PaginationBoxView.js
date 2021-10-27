@@ -95,7 +95,7 @@ export default class PaginationBoxView extends Component {
     } = this.props;
     // Call the callback with the initialPage item:
     if (
-      typeof initialPage !== 'undefined' &&
+      initialPage !== undefined &&
       !disableInitialCallback &&
       page === undefined
     ) {
