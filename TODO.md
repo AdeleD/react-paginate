@@ -9,7 +9,7 @@ Add documentation with controlled mode
 
 ### `forcePage` prop
 
-Deprecate it and refer to a documentation to implement a controlled component.
+Deprecate it and **refer to a documentation to implement a controlled component**.
 
 ## Dependencies
 
@@ -30,5 +30,6 @@ Create a example directory with several cases:
 - uncontrolled simple with stub data;
 - controlled with async API;
 - synched multiple pagination controls;
-- integration with react-router.
+- integration with react-router;
   - change on history previous / next
+- theming and integration with styled-components.
