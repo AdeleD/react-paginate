@@ -1,11 +1,11 @@
 ## >= 8.0.0 (WIP)
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
-- Add a warning when providing both `initialPage` and `forcePage` props. You should only provides `forcePage` when the component is [controlled](https://reactjs.org/docs/forms.html#controlled-components). (see: https://github.com/AdeleD/react-paginate/pull/290)
 
 ## >= 7.1.5
 
 - Fix the Webpack build to work for both browser and Node (see: https://github.com/AdeleD/react-paginate/issues/389)
+- Add a warning when providing both `initialPage` and `forcePage` props. You should only provides `forcePage` when the component is [controlled](https://reactjs.org/docs/forms.html#controlled-components). (see: https://github.com/AdeleD/react-paginate/pull/290)
 
 ## >= 7.1.4
 

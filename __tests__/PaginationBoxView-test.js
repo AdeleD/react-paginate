@@ -973,7 +973,7 @@ describe('Test custom props', () => {
       consoleWarnMock.mockRestore();
     });
 
-    it('should be totally controlled when forcePage is provided', () => {
+    it('(observation) is not totally controlled when forcePage is provided', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView forcePage={2} />
       );
@@ -991,10 +991,10 @@ describe('Test custom props', () => {
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
-      ).toBe('3');
+      ).toBe('2');
     });
 
-    it('should be totally controlled when forcePage is provided, even when it is 0', () => {
+    it('(observation) is not totally controlled when forcePage is provided, even when it is 0', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView forcePage={0} />
       );
@@ -1012,7 +1012,7 @@ describe('Test custom props', () => {
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
-      ).toBe('1');
+      ).toBe('2');
     });
   });
 
