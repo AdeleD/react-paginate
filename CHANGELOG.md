@@ -2,6 +2,10 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 7.2.0
+
+- Remove button role for links with an href (see: https://github.com/AdeleD/react-paginate/pull/390)
+
 ## >= 7.1.5
 
 - Fix the Webpack build to work for both browser and Node (see: https://github.com/AdeleD/react-paginate/issues/389)

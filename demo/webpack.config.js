@@ -1,5 +1,3 @@
-/* global __dirname */
-
 const path = require('path');
 
 const dir_demo_js = path.resolve(__dirname, 'js');
