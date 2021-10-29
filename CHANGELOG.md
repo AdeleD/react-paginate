@@ -6,6 +6,15 @@
 - Add a warning when providing both `initialPage` and `page` props. You should only provides `page` when the component is [controlled](https://reactjs.org/docs/forms.html#controlled-components). (see: https://github.com/AdeleD/react-paginate/pull/290)
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 7.2.0
+
+- Remove button role for links with an href (see: https://github.com/AdeleD/react-paginate/pull/390)
+
+## >= 7.1.5
+
+- Fix the Webpack build to work for both browser and Node (see: https://github.com/AdeleD/react-paginate/issues/389)
+- Add a warning when providing both `initialPage` and `forcePage` props. You should only provides `forcePage` when the component is [controlled](https://reactjs.org/docs/forms.html#controlled-components). (see: https://github.com/AdeleD/react-paginate/pull/290)
+
 ## >= 7.1.4
 
 - A new prop `renderOnZeroPageCount` has been added. It allows to define what to display when `pageCount` is zero. By default, it lets the main pagination boxes be displayed (Previous / Next). To display nothing, just provides `renderOnZeroPageCount={null}`. (see: https://github.com/AdeleD/react-paginate/pull/377)

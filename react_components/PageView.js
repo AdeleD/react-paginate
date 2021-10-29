@@ -45,7 +45,7 @@ const PageView = (props) => {
   return (
     <li className={pageClassName}>
       <a
-        role="button"
+        role={!href ? 'button' : undefined}
         className={pageLinkClassName}
         href={href}
         tabIndex="0"
