@@ -40,6 +40,11 @@ Add a `theme` object to pass all theming classes, so we can clean up the props a
 
 Look at other packages and support existing props (at least for two versions or forever; just remove them from README).
 
+https://github.com/markdalgleish/react-themeable
+https://github.com/moroshko/react-autosuggest
+
+See also https://github.com/AdeleD/react-paginate/issues/80
+
 ## Misc
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
