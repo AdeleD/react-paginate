@@ -97,15 +97,15 @@ Test it on [CodePen](https://codepen.io/monsieurv/pen/abyJQWQ).
 
 You can also read the code of [demo/js/demo.js][1] to quickly understand how to make `react-paginate` work with a list of objects.
 
-You can also check this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)** with fetching sample code (using GitHub API) and synchronized pagination widgets.
+Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)**, witch features fetching sample code (using GitHub API) and two synchronized pagination widgets.
 
 ## Props
 
 | Name                     | Type       | Description                                                                                                                                                            |
 | ------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `pageCount`              | `Number`   | **Required.** The total number of pages.                                                                                                                               |
-| `pageRangeDisplayed`     | `Number`   | **Required.** The range of pages displayed.                                                                                                                            |
-| `marginPagesDisplayed`   | `Number`   | **Required.** The number of pages to display for margins.                                                                                                              |
+| `pageRangeDisplayed`     | `Number`   | The range of pages displayed.                                                                                                                                          |
+| `marginPagesDisplayed`   | `Number`   | The number of pages to display for margins.                                                                                                                            |
 | `previousLabel`          | `Node`     | Label for the `previous` button.                                                                                                                                       |
 | `nextLabel`              | `Node`     | Label for the `next` button.                                                                                                                                           |
 | `breakLabel`             | `Node`     | Label for ellipsis.                                                                                                                                                    |

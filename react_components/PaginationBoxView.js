@@ -8,8 +8,8 @@ import BreakView from './BreakView';
 export default class PaginationBoxView extends Component {
   static propTypes = {
     pageCount: PropTypes.number.isRequired,
-    pageRangeDisplayed: PropTypes.number.isRequired,
-    marginPagesDisplayed: PropTypes.number.isRequired,
+    pageRangeDisplayed: PropTypes.number,
+    marginPagesDisplayed: PropTypes.number,
     previousLabel: PropTypes.node,
     previousAriaLabel: PropTypes.string,
     prevPageRel: PropTypes.string,
@@ -47,7 +47,6 @@ export default class PaginationBoxView extends Component {
   };
 
   static defaultProps = {
-    pageCount: 10,
     pageRangeDisplayed: 2,
     marginPagesDisplayed: 3,
     activeClassName: 'selected',
