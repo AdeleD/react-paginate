@@ -140,6 +140,20 @@ describe('Page count checks', () => {
     );
     consoleWarnMock.mockRestore();
   });
+
+  it('should trigger a warning when the forcePage provided is greater than the maximum page index (from pageCount)', () => {
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+    ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={9} forcePage={9} />
+    );
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith(
+      '(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (9 > 8).'
+    );
+    consoleWarnMock.mockRestore();
+  });
+
+  // TODO Warning on prop change.
 });
 
 describe('Test clicks', () => {

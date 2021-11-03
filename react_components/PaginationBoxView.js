@@ -96,8 +96,13 @@ export default class PaginationBoxView extends Component {
   }
 
   componentDidMount() {
-    const { initialPage, disableInitialCallback, extraAriaContext, pageCount } =
-      this.props;
+    const {
+      initialPage,
+      disableInitialCallback,
+      extraAriaContext,
+      pageCount,
+      forcePage,
+    } = this.props;
     // Call the callback with the initialPage item:
     if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
       this.callCallback(initialPage);
@@ -122,13 +127,29 @@ export default class PaginationBoxView extends Component {
         }).`
       );
     }
+
+    if (forcePage !== undefined && forcePage > pageCount - 1) {
+      console.warn(
+        `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${forcePage} > ${
+          pageCount - 1
+        }).`
+      );
+    }
   }
 
   componentDidUpdate(prevProps) {
     if (
-      typeof this.props.forcePage !== 'undefined' &&
+      this.props.forcePage !== undefined &&
       this.props.forcePage !== prevProps.forcePage
     ) {
+      if (this.props.forcePage > this.props.pageCount - 1) {
+        console.warn(
+          `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${
+            this.props.forcePage
+          } > ${this.props.pageCount - 1}).`
+        );
+      }
+
       this.setState({ selected: this.props.forcePage });
     }
 
