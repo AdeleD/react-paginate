@@ -463,7 +463,7 @@ export default class PaginationBoxView extends Component {
           <a
             className={previousLinkClasses}
             href={this.hrefBuilder(selected - 1)}
-            tabIndex="0"
+            tabIndex={isPreviousDisabled ? '-1' : '0'}
             role="button"
             onKeyPress={this.handlePreviousPage}
             aria-disabled={previousAriaDisabled}
@@ -481,7 +481,7 @@ export default class PaginationBoxView extends Component {
           <a
             className={nextLinkClasses}
             href={this.hrefBuilder(selected + 1)}
-            tabIndex="0"
+            tabIndex={isNextDisabled ? '-1' : '0'}
             role="button"
             onKeyPress={this.handleNextPage}
             aria-disabled={nextAriaDisabled}

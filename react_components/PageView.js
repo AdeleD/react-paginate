@@ -50,7 +50,7 @@ const PageView = (props) => {
         role={!href ? 'button' : undefined}
         className={pageLinkClassName}
         href={href}
-        tabIndex="0"
+        tabIndex={selected ? '-1' : '0'}
         aria-label={ariaLabel}
         aria-current={ariaCurrent}
         onKeyPress={pageSelectedHandler}

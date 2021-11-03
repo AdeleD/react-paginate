@@ -868,19 +868,19 @@ describe('Test default props', () => {
       );
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:not(.selected):not(.prev):not(.next) a')
+          .querySelector('li:nth-child(3) a')
           .getAttribute('tabindex')
       ).toBe('0');
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('.selected a')
           .getAttribute('tabindex')
-      ).toBe('0');
+      ).toBe('-1');
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:first-child a')
           .getAttribute('tabindex')
-      ).toBe('0');
+      ).toBe('-1');
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:last-child a')
