@@ -33,3 +33,13 @@ Create a example directory with several cases:
 - integration with react-router;
   - change on history previous / next
 - theming and integration with styled-components.
+
+## Theming
+
+Add a `theme` object to pass all theming classes, so we can clean up the props and doc?
+
+Look at other packages and support existing props (at least for two versions or forever; just remove them from README).
+
+## Misc
+
+- Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 /* eslint-disable react/no-find-dom-node */
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 jest.dontMock('./../react_components/PaginationBoxView');
@@ -19,9 +19,13 @@ import PaginationBoxView from '../react_components/PaginationBoxView';
 
 import ReactTestUtils from 'react-dom/test-utils';
 
+const DEFAULT_PAGE_COUNT = 10;
+
 describe('Test rendering', () => {
   it('should render a pagination component', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(<PaginationBoxView />);
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
+    );
 
     expect(ReactDOM.findDOMNode(pagination).nodeName).toEqual('UL');
 
@@ -50,6 +54,7 @@ describe('Test rendering', () => {
   it('test rendering only active page item', function () {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
+        pageCount={DEFAULT_PAGE_COUNT}
         initialPage={0}
         pageRangeDisplayed={0}
         marginPagesDisplayed={0}
@@ -123,11 +128,51 @@ describe('Page count checks', () => {
     );
     consoleWarnMock.mockRestore();
   });
+
+  it('should trigger a warning when the initialPage provided is greater than the maximum page index (from pageCount)', () => {
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+    ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={10} initialPage={10} />
+    );
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith(
+      '(react-paginate): The initialPage prop provided is greater than the maximum page index from pageCount prop (10 > 9).'
+    );
+    consoleWarnMock.mockRestore();
+  });
+
+  it('should trigger a warning when the forcePage provided is greater than the maximum page index (from pageCount)', () => {
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+    ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={9} forcePage={9} />
+    );
+    expect(console.warn).toHaveBeenCalledTimes(2);
+    expect(console.warn).toHaveBeenLastCalledWith(
+      '(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (9 > 8).'
+    );
+    consoleWarnMock.mockRestore();
+  });
+
+  // TODO Warning on prop change.
+
+  it('should trigger a warning when the page provided is greater than the maximum page index (from pageCount)', () => {
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+    ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={8} page={8} />
+    );
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith(
+      '(react-paginate): The page prop provided is greater than the maximum page index from pageCount prop (8 > 7).'
+    );
+    consoleWarnMock.mockRestore();
+  });
 });
 
 describe('Test clicks', () => {
   it('test clicks on previous and next buttons', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(<PaginationBoxView />);
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
+    );
 
     let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
       pagination,
@@ -150,7 +195,9 @@ describe('Test clicks', () => {
   });
 
   it('test click on a page item', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(<PaginationBoxView />);
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
+    );
 
     ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
 
@@ -222,7 +269,10 @@ describe('Test clicks', () => {
 describe('Test custom event listener', () => {
   it('test custom listener on previous and next buttons', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
-      <PaginationBoxView eventListener="onMouseOver" />
+      <PaginationBoxView
+        pageCount={DEFAULT_PAGE_COUNT}
+        eventListener="onMouseOver"
+      />
     );
 
     let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
@@ -247,7 +297,10 @@ describe('Test custom event listener', () => {
 
   it('test custom listener on a page item', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
-      <PaginationBoxView eventListener="onMouseOver" />
+      <PaginationBoxView
+        pageCount={DEFAULT_PAGE_COUNT}
+        eventListener="onMouseOver"
+      />
     );
 
     ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
@@ -599,7 +652,7 @@ describe('Test default props', () => {
   describe('default previousLabel/nextLabel', () => {
     it('should use the default previousLabel/nextLabel', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -615,7 +668,7 @@ describe('Test default props', () => {
   describe('default breakLabel/breakClassName/breakLinkClassName', () => {
     it('should use the default breakLabel/breakClassName/breakLinkClassName', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break').textContent
@@ -632,7 +685,7 @@ describe('Test default props', () => {
   describe('default onPageChange', () => {
     it('should not call any onPageChange callback if not defined but it should go to the next page', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
       const nextItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a');
@@ -648,7 +701,7 @@ describe('Test default props', () => {
   describe('default initialPage/forcePage', () => {
     it('should use the default initial selected page (0)', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -662,6 +715,7 @@ describe('Test default props', () => {
       const myOnPageChangeMethod = jest.fn();
       ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           initialPage={5}
           onPageChange={myOnPageChangeMethod}
         />
@@ -706,7 +760,7 @@ describe('Test default props', () => {
   describe('default containerClassName', () => {
     it('should not use any classname on the container by default', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
       expect(ReactDOM.findDOMNode(pagination).className).toEqual('');
     });
@@ -715,7 +769,11 @@ describe('Test default props', () => {
   describe('default pageClassName/activeClassName', () => {
     it('should not use any classname on page items and a default activeClassName', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView previousClassName="prev" nextClassName="next" />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          previousClassName="prev"
+          nextClassName="next"
+        />
       );
 
       const pageItem =
@@ -737,7 +795,11 @@ describe('Test default props', () => {
   describe('default pageLinkClassName/activeLinkClassName', () => {
     it('should not use any classname on selected links by default', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView previousClassName="prev" nextClassName="next" />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          previousClassName="prev"
+          nextClassName="next"
+        />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
@@ -753,7 +815,7 @@ describe('Test default props', () => {
   describe('default previousClassName/nextClassName', () => {
     it('should use the default previousClassName/nextClassName', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView initialPage={2} />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
@@ -766,10 +828,10 @@ describe('Test default props', () => {
     });
   });
 
-  describe('default previousLinkClassName/nextLinkClassName', () => {
+  describe('default previousLinkClassName/nextLinkClassName/disabledLinkClassName', () => {
     it('should not use any classname on previous/next links by default', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView initialPage={2} />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -801,7 +863,7 @@ describe('Test default props', () => {
   describe('default hrefBuilder', () => {
     it('should not render href attributes on page items if hrefBuilder is not defined', function () {
       const linkedPagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
 
       expect(
@@ -825,7 +887,11 @@ describe('Test default props', () => {
   describe('default extraAriaContext', () => {
     it('should use the default extraAriaContext', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView previousClassName="prev" nextClassName="next" />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          previousClassName="prev"
+          nextClassName="next"
+        />
       );
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -845,7 +911,10 @@ describe('Test custom props', () => {
   describe('previousLabel/nextLabel', () => {
     it('should use the previousLabel prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView previousLabel={'Custom previous label'} />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          previousLabel={'Custom previous label'}
+        />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -855,7 +924,10 @@ describe('Test custom props', () => {
 
     it('should use the nextLabel prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView nextLabel={'Custom next label'} />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          nextLabel={'Custom next label'}
+        />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
@@ -867,7 +939,7 @@ describe('Test custom props', () => {
   describe('breakLabel/breakClassName/breakLinkClassName', () => {
     it('should use the breakLabel string prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView breakLabel={'...'} />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} breakLabel={'...'} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break').firstChild
@@ -885,7 +957,10 @@ describe('Test custom props', () => {
 
     it('should use the breakLabel node prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView breakLabel={<span>...</span>} />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          breakLabel={<span>...</span>}
+        />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break a').firstChild
@@ -899,7 +974,10 @@ describe('Test custom props', () => {
 
     it('should use the breakClassName prop when defined', function () {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView breakClassName={'break-me'} />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          breakClassName={'break-me'}
+        />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.break-me')
@@ -908,7 +986,10 @@ describe('Test custom props', () => {
 
     it('should use the breakLinkClassName prop when defined', function () {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView breakLinkClassName={'break-link'} />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          breakLinkClassName={'break-link'}
+        />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.break-link')
@@ -920,7 +1001,10 @@ describe('Test custom props', () => {
     it('should use the onPageChange prop when defined', () => {
       const myOnPageChangeMethod = jest.fn();
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView onPageChange={myOnPageChangeMethod} />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          onPageChange={myOnPageChangeMethod}
+        />
       );
       const nextItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a');
@@ -936,6 +1020,7 @@ describe('Test custom props', () => {
       const myOnPageChangeMethod = jest.fn();
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           onPageActive={myOnPageActiveMethod}
           onPageChange={myOnPageChangeMethod}
         />
@@ -952,7 +1037,7 @@ describe('Test custom props', () => {
   describe('initialPage', () => {
     it('should use the initialPage prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView initialPage={2} />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -965,7 +1050,7 @@ describe('Test custom props', () => {
     it('should use the forcePage prop when defined', () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView forcePage={2} />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -981,12 +1066,15 @@ describe('Test custom props', () => {
     });
 
     it('should update forcePage and hence selected page when forcePage value is changed', () => {
-      const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const node = document.createElement('div');
       // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
       let pagination = React.createRef();
       ReactDOM.render(
-        <PaginationBoxView ref={pagination} forcePage={2} />,
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          ref={pagination}
+          forcePage={2}
+        />,
         node,
         () => {
           expect(
@@ -998,7 +1086,11 @@ describe('Test custom props', () => {
       );
       pagination = React.createRef();
       ReactDOM.render(
-        <PaginationBoxView ref={pagination} forcePage={3} />,
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          ref={pagination}
+          forcePage={3}
+        />,
         node,
         () => {
           expect(
@@ -1013,12 +1105,17 @@ describe('Test custom props', () => {
     it('should report a warning when using both initialPage and forcePage props', () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView initialPage={3} forcePage={2} />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={3}
+          forcePage={2}
+        />
       );
+      // forcePage is first.
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
-      ).toBe('4');
+      ).toBe('3');
       expect(console.warn).toHaveBeenCalledTimes(1);
       expect(console.warn).toHaveBeenLastCalledWith(
         'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
@@ -1034,7 +1131,7 @@ describe('Test custom props', () => {
           .spyOn(console, 'warn')
           .mockImplementation();
         const pagination = ReactTestUtils.renderIntoDocument(
-          <PaginationBoxView forcePage={2} />
+          <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
         );
 
         expect(
@@ -1065,7 +1162,7 @@ describe('Test custom props', () => {
   describe('page prop', () => {
     it('should use the page prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView page={2} />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1076,22 +1173,44 @@ describe('Test custom props', () => {
     it('should update page and hence selected page when page prop value is changed', () => {
       const node = document.createElement('div');
       // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
-      const pagination1 = ReactDOM.render(<PaginationBoxView page={2} />, node);
-      expect(
-        ReactDOM.findDOMNode(pagination1).querySelector('.selected a')
-          .textContent
-      ).toBe('3');
-      const pagination2 = ReactDOM.render(<PaginationBoxView page={3} />, node);
-      expect(
-        ReactDOM.findDOMNode(pagination2).querySelector('.selected a')
-          .textContent
-      ).toBe('4');
+      let pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          ref={pagination}
+          page={2}
+        />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('3');
+        }
+      );
+      pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          ref={pagination}
+          page={3}
+        />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('4');
+        }
+      );
     });
 
     it('should report a warning when using both initialPage and page props', () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView initialPage={3} page={2} />
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={3} page={2} />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1109,7 +1228,7 @@ describe('Test custom props', () => {
     describe('should be totally controlled when page prop is provided', () => {
       it('should not change if parent state not changed', () => {
         const pagination = ReactTestUtils.renderIntoDocument(
-          <PaginationBoxView page={2} />
+          <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} page={2} />
         );
 
         expect(
@@ -1132,7 +1251,7 @@ describe('Test custom props', () => {
       // --> Create a parent stub component with useState to test?
       it('should be controlled even when page prop is 0', () => {
         const pagination = ReactTestUtils.renderIntoDocument(
-          <PaginationBoxView page={0} />
+          <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} page={0} />
         );
 
         expect(
@@ -1158,6 +1277,7 @@ describe('Test custom props', () => {
       const myOnPageChangeMethod = jest.fn();
       ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           initialPage={5}
           disableInitialCallback={true}
           onPageChange={myOnPageChangeMethod}
@@ -1170,7 +1290,10 @@ describe('Test custom props', () => {
   describe('containerClassName', () => {
     it('should use the containerClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView containerClassName="my-pagination" />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          containerClassName="my-pagination"
+        />
       );
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'
@@ -1179,7 +1302,10 @@ describe('Test custom props', () => {
 
     it('should use the className prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView className="my-pagination" />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          className="my-pagination"
+        />
       );
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'
@@ -1189,6 +1315,7 @@ describe('Test custom props', () => {
     it('should use the className prop in priority from containerClassName', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           className="my-pagination"
           containerClassName="another"
         />
@@ -1203,6 +1330,7 @@ describe('Test custom props', () => {
     it('should use the pageClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           pageClassName={'page-item'}
           previousClassName="prev"
           nextClassName="next"
@@ -1227,6 +1355,7 @@ describe('Test custom props', () => {
     it('should use the activeClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           activeClassName="active-page-item"
           previousClassName="prev"
           nextClassName="next"
@@ -1246,6 +1375,7 @@ describe('Test custom props', () => {
     it('should use the activeClassName prop without overriding the defined pageClassName', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           pageClassName="page-item"
           activeClassName="active-page-item"
           previousClassName="prev"
@@ -1273,6 +1403,7 @@ describe('Test custom props', () => {
     it('should use the pageLinkClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           pageLinkClassName="page-item-link"
           previousClassName="prev"
           nextClassName="next"
@@ -1304,6 +1435,7 @@ describe('Test custom props', () => {
     it('should use the activeLinkClassName prop without overriding the defined pageLinkClassName', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           pageLinkClassName="page-item-link"
           activeLinkClassName="active-page-item-link"
           previousClassName="prev"
@@ -1325,6 +1457,7 @@ describe('Test custom props', () => {
     it('should use the previousClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           initialPage={2}
           previousClassName="custom-previous-classname"
         />
@@ -1338,6 +1471,7 @@ describe('Test custom props', () => {
     it('should use the nextClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           initialPage={2}
           nextClassName="custom-next-classname"
         />
@@ -1349,10 +1483,11 @@ describe('Test custom props', () => {
     });
   });
 
-  describe('previousLinkClassName/nextLinkClassName', () => {
+  describe('previousLinkClassName/nextLinkClassName/disabledLinkClassName', () => {
     it('should use the previousLinkClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           initialPage={2}
           previousLinkClassName="custom-previous-link-classname"
         />
@@ -1366,6 +1501,7 @@ describe('Test custom props', () => {
     it('should use the nextLinkClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           initialPage={2}
           nextLinkClassName="custom-next-link-classname"
         />
@@ -1374,6 +1510,80 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
           .className
       ).toBe('custom-next-link-classname');
+    });
+
+    it('should use the disabledLinkClassName prop when defined', () => {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={0}
+          disabledLinkClassName="custom-disabled-link-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
+          .className
+      ).toBe(' custom-disabled-link-classname');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:last-child a')
+          .className
+      ).toBe('');
+
+      const paginationLast = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={9}
+          disabledLinkClassName="custom-disabled-link-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(paginationLast).querySelector('li:first-child a')
+          .className
+      ).toBe('');
+      expect(
+        ReactDOM.findDOMNode(paginationLast).querySelector('li:last-child a')
+          .className
+      ).toBe(' custom-disabled-link-classname');
+    });
+
+    it('should combines the previousLinkClassName and disabledLinkClassName props', () => {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={0}
+          previousLinkClassName="custom-previous-link-classname"
+          nextLinkClassName="custom-next-link-classname"
+          disabledLinkClassName="custom-disabled-link-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
+          .className
+      ).toBe('custom-previous-link-classname custom-disabled-link-classname');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:last-child a')
+          .className
+      ).toBe('custom-next-link-classname');
+    });
+
+    it('should combines the nextLinkClassName and disabledLinkClassName props', () => {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={9}
+          previousLinkClassName="custom-previous-link-classname"
+          nextLinkClassName="custom-next-link-classname"
+          disabledLinkClassName="custom-disabled-link-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
+          .className
+      ).toBe('custom-previous-link-classname');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:last-child a')
+          .className
+      ).toBe('custom-next-link-classname custom-disabled-link-classname');
     });
   });
 
@@ -1441,6 +1651,7 @@ describe('Test custom props', () => {
     it('should use the hrefBuilder prop when defined', function () {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           initialPage={1}
           hrefBuilder={(page) => '/page/' + page}
         />
@@ -1469,6 +1680,7 @@ describe('Test custom props', () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
           extraAriaContext="can be clicked"
           previousClassName="prev"
           nextClassName="next"

@@ -4,12 +4,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PageView from './PageView';
 import BreakView from './BreakView';
+import { classNameIfDefined } from './utils';
 
 export default class PaginationBoxView extends Component {
   static propTypes = {
     pageCount: PropTypes.number.isRequired,
-    pageRangeDisplayed: PropTypes.number.isRequired,
-    marginPagesDisplayed: PropTypes.number.isRequired,
+    pageRangeDisplayed: PropTypes.number,
+    marginPagesDisplayed: PropTypes.number,
     previousLabel: PropTypes.node,
     previousAriaLabel: PropTypes.string,
     prevPageRel: PropTypes.string,
@@ -38,6 +39,7 @@ export default class PaginationBoxView extends Component {
     previousLinkClassName: PropTypes.string,
     nextLinkClassName: PropTypes.string,
     disabledClassName: PropTypes.string,
+    disabledLinkClassName: PropTypes.string,
     breakClassName: PropTypes.string,
     breakLinkClassName: PropTypes.string,
     extraAriaContext: PropTypes.string,
@@ -48,7 +50,6 @@ export default class PaginationBoxView extends Component {
   };
 
   static defaultProps = {
-    pageCount: 10,
     pageRangeDisplayed: 2,
     marginPagesDisplayed: 3,
     activeClassName: 'selected',
@@ -124,7 +125,49 @@ export default class PaginationBoxView extends Component {
 
     if (!Number.isInteger(pageCount)) {
       console.warn(
-        `(react-paginate): The pageCount prop value provided is not an integer (${this.props.pageCount}). Did you forget a Math.ceil()?`
+        `(react-paginate): The pageCount prop value provided is not an integer (${pageCount}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (initialPage !== undefined && !Number.isInteger(initialPage)) {
+      console.warn(
+        `(react-paginate): The initialPage prop value provided is not an integer (${pageCount}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (forcePage !== undefined && !Number.isInteger(forcePage)) {
+      console.warn(
+        `(react-paginate): The pageCount prop value provided is not an integer (${forcePage}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (page !== undefined && !Number.isInteger(page)) {
+      console.warn(
+        `(react-paginate): The page prop value provided is not an integer (${page}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (initialPage !== undefined && initialPage > pageCount - 1) {
+      console.warn(
+        `(react-paginate): The initialPage prop provided is greater than the maximum page index from pageCount prop (${initialPage} > ${
+          pageCount - 1
+        }).`
+      );
+    }
+
+    if (forcePage !== undefined && forcePage > pageCount - 1) {
+      console.warn(
+        `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${forcePage} > ${
+          pageCount - 1
+        }).`
+      );
+    }
+
+    if (page !== undefined && page > pageCount - 1) {
+      console.warn(
+        `(react-paginate): The page prop provided is greater than the maximum page index from pageCount prop (${page} > ${
+          pageCount - 1
+        }).`
       );
     }
   }
@@ -137,6 +180,43 @@ export default class PaginationBoxView extends Component {
       console.warn(
         `(react-paginate): The pageCount prop value provided is not an integer (${this.props.pageCount}). Did you forget a Math.ceil()?`
       );
+    }
+
+    if(
+      this.props.forcePage !== undefined &&
+      this.props.forcePage !== prevProps.forcePage
+    ) {
+      if (this.props.forcePage > this.props.pageCount - 1) {
+        console.warn(
+          `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${
+            this.props.forcePage
+          } > ${this.props.pageCount - 1}).`
+        );
+      }
+
+      this.setState({ selected: this.props.forcePage });
+    }
+
+    if (
+      Number.isInteger(prevProps.page) &&
+      !Number.isInteger(this.props.page)
+    ) {
+      console.warn(
+        `(react-paginate): The page prop value provided is not an integer (${this.props.page}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if(
+      this.props.page !== undefined &&
+      this.props.page !== prevProps.page
+    ) {
+      if (this.props.page > this.props.pageCount - 1) {
+        console.warn(
+          `(react-paginate): The page prop provided is greater than the maximum page index from pageCount prop (${
+            this.props.page
+          } > ${this.props.pageCount - 1}).`
+        );
+      }
     }
 
     if (
@@ -417,6 +497,7 @@ export default class PaginationBoxView extends Component {
     }
     const {
       disabledClassName,
+      disabledLinkClassName,
       pageCount,
       className,
       containerClassName,
@@ -434,20 +515,31 @@ export default class PaginationBoxView extends Component {
 
     const selected = this.getSelectedPage();
 
-    const previousClasses =
-      previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
-    const nextClasses =
-      nextClassName +
-      (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
+    const isPreviousDisabled = selected === 0;
+    const isNextDisabled = selected === pageCount - 1;
 
-    const previousAriaDisabled = selected === 0 ? 'true' : 'false';
-    const nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
+    const previousClasses = `${classNameIfDefined(previousClassName)}${
+      isPreviousDisabled ? ` ${disabledClassName}` : ''
+    }`;
+    const nextClasses = `${classNameIfDefined(nextClassName)}${
+      isNextDisabled ? ` ${disabledClassName}` : ''
+    }`;
+
+    const previousLinkClasses = `${classNameIfDefined(previousLinkClassName)}${
+      isPreviousDisabled ? ` ${disabledLinkClassName}` : ''
+    }`;
+    const nextLinkClasses = `${classNameIfDefined(nextLinkClassName)}${
+      isNextDisabled ? ` ${disabledLinkClassName}` : ''
+    }`;
+
+    const previousAriaDisabled = isPreviousDisabled ? 'true' : 'false';
+    const nextAriaDisabled = isNextDisabled ? 'true' : 'false';
 
     return (
       <ul className={className || containerClassName}>
         <li className={previousClasses}>
           <a
-            className={previousLinkClassName}
+            className={previousLinkClasses}
             href={this.hrefBuilder(selected - 1)}
             tabIndex="0"
             role="button"
@@ -465,7 +557,7 @@ export default class PaginationBoxView extends Component {
 
         <li className={nextClasses}>
           <a
-            className={nextLinkClassName}
+            className={nextLinkClasses}
             href={this.hrefBuilder(selected + 1)}
             tabIndex="0"
             role="button"
