@@ -92,6 +92,7 @@ export class App extends Component {
           onPageChange={this.handlePageClick}
           containerClassName="pagination"
           activeClassName="active"
+          hrefBuilder={(page) => '/page/' + page}
         />
       </div>
     );

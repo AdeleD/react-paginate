@@ -229,11 +229,11 @@ export default class PaginationBoxView extends Component {
     );
   };
 
-  hrefBuilder(pageIndex) {
+  getElementHref(pageIndex) {
     const { hrefBuilder, pageCount } = this.props;
     if (
       hrefBuilder &&
-      pageIndex !== this.state.selected &&
+      // pageIndex !== this.state.selected &&
       pageIndex >= 0 &&
       pageIndex < pageCount
     ) {
@@ -312,7 +312,7 @@ export default class PaginationBoxView extends Component {
         activeClassName={activeClassName}
         activeLinkClassName={activeLinkClassName}
         extraAriaContext={extraAriaContext}
-        href={this.hrefBuilder(index)}
+        href={this.getElementHref(index)}
         ariaLabel={this.ariaLabelBuilder(index)}
         page={index + 1}
         pageLabelBuilder={pageLabelBuilder}
@@ -462,7 +462,7 @@ export default class PaginationBoxView extends Component {
         <li className={previousClasses}>
           <a
             className={previousLinkClasses}
-            href={this.hrefBuilder(selected - 1)}
+            href={this.getElementHref(selected - 1)}
             tabIndex={isPreviousDisabled ? '-1' : '0'}
             role="button"
             onKeyPress={this.handlePreviousPage}
@@ -480,7 +480,7 @@ export default class PaginationBoxView extends Component {
         <li className={nextClasses}>
           <a
             className={nextLinkClasses}
-            href={this.hrefBuilder(selected + 1)}
+            href={this.getElementHref(selected + 1)}
             tabIndex={isNextDisabled ? '-1' : '0'}
             role="button"
             onKeyPress={this.handleNextPage}

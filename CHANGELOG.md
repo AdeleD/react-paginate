@@ -10,6 +10,7 @@
 - `tabindex` is now set to `-1` on disabled controls (disable previous/next buttons; active page button). (see: https://github.com/AdeleD/react-paginate/issues/219)
 - Add a warning when providing an `initialPage` prop value that is greater than the maximum page index from `pageCount` prop.
 - Add a warning when providing a `forcePage` prop value that is greater than the maximum page index from `pageCount` prop.
+- The `href` generated from `hrefBuilder` prop is now also set active page control `<a>` tag. (see #242)
 
 ## >= 7.1.5
 

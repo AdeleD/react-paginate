@@ -1541,7 +1541,57 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination)
           .querySelector('.selected a')
           .getAttribute('href')
+      ).toBe('/page/2');
+    });
+
+    it('should use not add href to disabled next / previous buttons', function () {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={0}
+          hrefBuilder={(page) => '/page/' + page}
+        />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('li:last-child a')
+          .getAttribute('href')
+      ).toBe('/page/2');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('li:first-child a')
+          .getAttribute('href')
       ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('.selected a')
+          .getAttribute('href')
+      ).toBe('/page/1');
+
+      const paginationLast = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={DEFAULT_PAGE_COUNT - 1}
+          hrefBuilder={(page) => '/page/' + page}
+        />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('li:last-child a')
+          .getAttribute('href')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('li:first-child a')
+          .getAttribute('href')
+      ).toBe('/page/9');
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('.selected a')
+          .getAttribute('href')
+      ).toBe('/page/10');
     });
   });
 
