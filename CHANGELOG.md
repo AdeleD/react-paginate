@@ -19,6 +19,7 @@
 - The `href` generated from `hrefBuilder` prop is now also set active page control `<a>` tag. (see #242)
 - A new prop `hrefAllControls` has been added. It allows to enable `hrefBuilder` for all controls.
 - Fix page range of 2 when first page is selected. (see https://github.com/AdeleD/react-paginate/issues/307)
+- Fix the breaking algorithm to not create breaks for only one page (see: https://github.com/AdeleD/react-paginate/issues/270)
 
 ## >= 7.1.5
 
