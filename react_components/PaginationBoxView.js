@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PageView from './PageView';
 import BreakView from './BreakView';
+import { classNameIfDefined } from './utils';
 
 export default class PaginationBoxView extends Component {
   static propTypes = {
@@ -37,7 +38,7 @@ export default class PaginationBoxView extends Component {
     previousLinkClassName: PropTypes.string,
     nextLinkClassName: PropTypes.string,
     disabledClassName: PropTypes.string,
-    disabledLinkClassName : PropTypes.string,
+    disabledLinkClassName: PropTypes.string,
     breakClassName: PropTypes.string,
     breakLinkClassName: PropTypes.string,
     extraAriaContext: PropTypes.string,
@@ -110,7 +111,15 @@ export default class PaginationBoxView extends Component {
 
     if (!Number.isInteger(pageCount)) {
       console.warn(
-        `(react-paginate): The pageCount prop value provided is not an integer (${this.props.pageCount}). Did you forget a Math.ceil()?`
+        `(react-paginate): The pageCount prop value provided is not an integer (${pageCount}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (initialPage !== undefined && initialPage > pageCount - 1) {
+      console.warn(
+        `(react-paginate): The initialPage prop provided is greater than the maximum page index from pageCount prop (${initialPage} > ${
+          pageCount - 1
+        }).`
       );
     }
   }
@@ -407,17 +416,25 @@ export default class PaginationBoxView extends Component {
 
     const { selected } = this.state;
 
-    const isPreviousSelected = selected === 0;
-    const isNextSelected = selected === pageCount - 1;
+    const isPreviousDisabled = selected === 0;
+    const isNextDisabled = selected === pageCount - 1;
 
-    const previousClasses = `${previousClassName}${isPreviousSelected ? ` ${disabledClassName}` : ''}`
-    const nextClasses = `${nextClassName}${isNextSelected ? ` ${disabledClassName}` : ''}`;
+    const previousClasses = `${classNameIfDefined(previousClassName)}${
+      isPreviousDisabled ? ` ${disabledClassName}` : ''
+    }`;
+    const nextClasses = `${classNameIfDefined(nextClassName)}${
+      isNextDisabled ? ` ${disabledClassName}` : ''
+    }`;
 
-    const previousLinkClasses = `${previousLinkClassName}${isPreviousSelected ? ` ${disabledLinkClassName}` : ''}`;
-    const nextLinkClasses = `${nextLinkClassName}${isNextSelected ? ` ${disabledLinkClassName}` : ''}`;
+    const previousLinkClasses = `${classNameIfDefined(previousLinkClassName)}${
+      isPreviousDisabled ? ` ${disabledLinkClassName}` : ''
+    }`;
+    const nextLinkClasses = `${classNameIfDefined(nextLinkClassName)}${
+      isNextDisabled ? ` ${disabledLinkClassName}` : ''
+    }`;
 
-    const previousAriaDisabled = isPreviousSelected ? 'true' : 'false';
-    const nextAriaDisabled = isNextSelected ? 'true' : 'false';
+    const previousAriaDisabled = isPreviousDisabled ? 'true' : 'false';
+    const nextAriaDisabled = isNextDisabled ? 'true' : 'false';
 
     return (
       <ul className={className || containerClassName}>

@@ -128,6 +128,18 @@ describe('Page count checks', () => {
     );
     consoleWarnMock.mockRestore();
   });
+
+  it('should trigger a warning when the initialPage provided is greater than the maximum page index (from pageCount)', () => {
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+    ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={10} initialPage={10} />
+    );
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith(
+      '(react-paginate): The initialPage prop provided is greater than the maximum page index from pageCount prop (10 > 9).'
+    );
+    consoleWarnMock.mockRestore();
+  });
 });
 
 describe('Test clicks', () => {
@@ -721,7 +733,7 @@ describe('Test default props', () => {
     });
   });
 
-  describe('default pageLinkClassName/activeLinkClassName/disabledLinkClassName', () => {
+  describe('default pageLinkClassName/activeLinkClassName', () => {
     it('should not use any classname on selected links by default', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
@@ -757,7 +769,7 @@ describe('Test default props', () => {
     });
   });
 
-  describe('default previousLinkClassName/nextLinkClassName', () => {
+  describe('default previousLinkClassName/nextLinkClassName/disabledLinkClassName', () => {
     it('should not use any classname on previous/next links by default', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
@@ -1299,7 +1311,7 @@ describe('Test custom props', () => {
     });
   });
 
-  describe('previousLinkClassName/nextLinkClassName', () => {
+  describe('previousLinkClassName/nextLinkClassName/disabledLinkClassName', () => {
     it('should use the previousLinkClassName prop when defined', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
@@ -1326,6 +1338,80 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
           .className
       ).toBe('custom-next-link-classname');
+    });
+
+    it('should use the disabledLinkClassName prop when defined', () => {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={0}
+          disabledLinkClassName="custom-disabled-link-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
+          .className
+      ).toBe(' custom-disabled-link-classname');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:last-child a')
+          .className
+      ).toBe('');
+
+      const paginationLast = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={9}
+          disabledLinkClassName="custom-disabled-link-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(paginationLast).querySelector('li:first-child a')
+          .className
+      ).toBe('');
+      expect(
+        ReactDOM.findDOMNode(paginationLast).querySelector('li:last-child a')
+          .className
+      ).toBe(' custom-disabled-link-classname');
+    });
+
+    it('should combines the previousLinkClassName and disabledLinkClassName props', () => {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={0}
+          previousLinkClassName="custom-previous-link-classname"
+          nextLinkClassName="custom-next-link-classname"
+          disabledLinkClassName="custom-disabled-link-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
+          .className
+      ).toBe('custom-previous-link-classname custom-disabled-link-classname');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:last-child a')
+          .className
+      ).toBe('custom-next-link-classname');
+    });
+
+    it('should combines the nextLinkClassName and disabledLinkClassName props', () => {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={9}
+          previousLinkClassName="custom-previous-link-classname"
+          nextLinkClassName="custom-next-link-classname"
+          disabledLinkClassName="custom-disabled-link-classname"
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
+          .className
+      ).toBe('custom-previous-link-classname');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst).querySelector('li:last-child a')
+          .className
+      ).toBe('custom-next-link-classname custom-disabled-link-classname');
     });
   });
 

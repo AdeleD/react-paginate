@@ -128,7 +128,7 @@ Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)
 | `previousLinkClassName`  | `String`   | The classname on tag `a` of the `previous` button.                                                                                                                     |
 | `nextLinkClassName`      | `String`   | The classname on tag `a` of the `next` button.                                                                                                                         |
 | `disabledClassName`      | `String`   | The classname for disabled `previous` and `next` buttons.                                                                                                              |
-| `disabledLinkClassName`   | `String`    | The classname on tag `a` for disabled `previous` and `next` buttons.                          |
+| `disabledLinkClassName`  | `String`   | The classname on tag `a` for disabled `previous` and `next` buttons.                                                                                                   |
 | `hrefBuilder`            | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element.                                                                           |
 | `extraAriaContext`       | `String`   | DEPRECATED: Extra context to add to the `aria-label` HTML attribute.                                                                                                   |
 | `ariaLabelBuilder`       | `Function` | The method is called to generate the `aria-label` attribute value on each page link                                                                                    |
