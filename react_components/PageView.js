@@ -15,6 +15,7 @@ const PageView = (props) => {
     href,
     extraAriaContext,
     pageLabelBuilder,
+    rel,
   } = props;
 
   let ariaLabel =
@@ -45,6 +46,7 @@ const PageView = (props) => {
   return (
     <li className={pageClassName}>
       <a
+        rel={rel}
         role={!href ? 'button' : undefined}
         className={pageLinkClassName}
         href={href}
@@ -73,6 +75,7 @@ PageView.propTypes = {
   page: PropTypes.number.isRequired,
   getEventListener: PropTypes.func.isRequired,
   pageLabelBuilder: PropTypes.func.isRequired,
+  rel: PropTypes.string,
 };
 
 export default PageView;

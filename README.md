@@ -133,6 +133,11 @@ You can also check this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxY
 | `ariaLabelBuilder`       | `Function` | The method is called to generate the `aria-label` attribute value on each page link                                                                                    |
 | `eventListener`          | `String`   | The event to listen onto before changing the selected page. Default is: `onClick`.                                                                                     |
 | `renderOnZeroPageCount`  | `Function` | A render fonction called when `pageCount` is zero. Let the Previous / Next buttons displayed by default (`undefined`). Display nothing when `null` is provided.        |
+| `prevRel`                | `String`   | The `rel` property on the `a` tag for the prev page control. Default value `prev`. Set to `null` to disable.                                                           |
+| `nextRel`                | `String`   | The `rel` propery on the `a` tag for the next page control. Default value `next`. Set to `null` to disable.                                                            |
+| `prevPageRel`            | `String`   | The `rel` property on the `a` tag just before the selected page. Default value `prev`. Set to `null` to disable.                                                       |
+| `selectedPageRel`        | `String`   | The `rel` propery on the `a` tag for the selected page. Default value `canonical`. Set to `null` to disable.                                                           |
+| `nextPageRel`            | `String`   | The `rel` property on the `a` tag just after the selected page. Default value `next`. Set to `null` to disable.                                                        |
 
 ## Demo
 
