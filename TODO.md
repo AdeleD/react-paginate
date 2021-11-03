@@ -1,4 +1,4 @@
-# v8
+# v9
 
 ## Controlled mode (`page`)
 
@@ -48,3 +48,4 @@ See also https://github.com/AdeleD/react-paginate/issues/80
 ## Misc
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
+- Create branches for old versions (from release tags): `v7`, `v8`, `v9` (for easy reference to old doc)
