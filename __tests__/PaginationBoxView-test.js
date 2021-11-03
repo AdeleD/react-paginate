@@ -1,6 +1,7 @@
 /**
  * @jest-environment jsdom
  */
+/* eslint-disable react/no-find-dom-node */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -11,6 +12,7 @@ jest.dontMock('./../react_components/BreakView');
 import PaginationBoxView from '../react_components/PaginationBoxView';
 
 // TODO Migrate to React Testing Library.
+// -> ReactDOM.findDOMNode won't work with function components.
 // https://testing-library.com/docs/react-testing-library/intro
 // with jest-dom
 // https://github.com/testing-library/jest-dom
@@ -940,22 +942,30 @@ describe('Test custom props', () => {
     it('should update forcePage and hence selected page when forcePage value is changed', () => {
       const node = document.createElement('div');
       // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
-      const pagination1 = ReactDOM.render(
-        <PaginationBoxView forcePage={2} />,
-        node
+      let pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView ref={pagination} forcePage={2} />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('3');
+        }
       );
-      expect(
-        ReactDOM.findDOMNode(pagination1).querySelector('.selected a')
-          .textContent
-      ).toBe('3');
-      const pagination2 = ReactDOM.render(
-        <PaginationBoxView forcePage={3} />,
-        node
+      pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView ref={pagination} forcePage={3} />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('3');
+        }
       );
-      expect(
-        ReactDOM.findDOMNode(pagination2).querySelector('.selected a')
-          .textContent
-      ).toBe('4');
     });
 
     it('should report a warning when using both initialPage and forcePage props', () => {
