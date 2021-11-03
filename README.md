@@ -130,7 +130,7 @@ Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)
 | `disabledClassName`      | `String`   | The classname for disabled `previous` and `next` buttons.                                                                                                              |
 | `disabledLinkClassName`  | `String`   | The classname on tag `a` for disabled `previous` and `next` buttons.                                                                                                   |
 | `hrefBuilder`            | `Function` | The method is called to generate the `href` attribute value on tag `a` of each page element.                                                                           |
-| `hrefAllControls`            | `Bool` | By default the `hrefBuilder` add `href` only to active controls. Set this prop to `true` so `href` are generated on all controls ([see](https://github.com/AdeleD/react-paginate/issues/242)).                                                                           |
+| `hrefAllControls`        | `Bool`     | By default the `hrefBuilder` add `href` only to active controls. Set this prop to `true` so `href` are generated on all controls ([see](https://github.com/AdeleD/react-paginate/issues/242)).                                                                           |
 | `extraAriaContext`       | `String`   | DEPRECATED: Extra context to add to the `aria-label` HTML attribute.                                                                                                   |
 | `ariaLabelBuilder`       | `Function` | The method is called to generate the `aria-label` attribute value on each page link                                                                                    |
 | `eventListener`          | `String`   | The event to listen onto before changing the selected page. Default is: `onClick`.                                                                                     |
@@ -140,6 +140,18 @@ Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)
 | `prevPageRel`            | `String`   | The `rel` property on the `a` tag just before the selected page. Default value `prev`. Set to `null` to disable.                                                       |
 | `selectedPageRel`        | `String`   | The `rel` propery on the `a` tag for the selected page. Default value `canonical`. Set to `null` to disable.                                                           |
 | `nextPageRel`            | `String`   | The `rel` property on the `a` tag just after the selected page. Default value `next`. Set to `null` to disable.                                                        |
+| `showFirstLabel`         | `Bool`     | Optional First Page button. Default value `false`. Set to `true` to enable.                                                                                            |
+| `firstLabel`             | `Node`     | Label for the First button.                                                                                                                                            |
+| `firstClassName`         | `String`   | The classname on tag `li` of the `first` button.                                                                                                                       |
+| `firstLinkClassName`     | `String`   | The classname on tag `a` of the `first` button.                                                                                                                        |
+| `firstAriaLabel`         | `String`   | `aria-label` for the first button. Default: `First page`.                                                                                                              |
+| `firstRel`               | `String`   | The `rel` property on the `a` tag for the first page control. Default value `first`. Set to `null` to disable.                                                         |
+| `showLastLabel`          | `Bool`     | Optional Last Page button. Default value `false`. Set to `true` to enable.                                                                                             |
+| `lastLabel`              | `Node`     | Label for the Last button.                                                                                                                                             |
+| `lastClassName`          | `String`   | The classname on tag `li` of the `last` button.                                                                                                                        |
+| `lastLinkClassName`      | `String`   | The classname on tag `a` of the `last` button.                                                                                                                         |
+| `lastAriaLabel`          | `String`   | `aria-label` for the first button. Default: `Last page`.                                                                                                               |
+| `lastRel`                | `String`   | The `rel` property on the `a` tag for the first page control. Default value `last`. Set to `null` to disable.                                                          |
 
 ## Demo
 
