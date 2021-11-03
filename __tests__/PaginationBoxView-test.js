@@ -1530,6 +1530,41 @@ describe('Test custom props', () => {
           .getAttribute('rel')
       ).toBe('custom-next-rel');
     });
+    it('should not render rel if prePageRel, selectedPageRel and nextPageRel are null', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={4}
+          prevPageRel={null}
+          nextPageRel={null}
+          selectedPageRel={null}
+        />
+      );
+
+      const activeItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-Child(3) a');
+      ReactTestUtils.Simulate.click(activeItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(2) a')
+          .getAttribute('rel')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(3) a')
+          .getAttribute('rel')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('.selected a')
+          .getAttribute('rel')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(4) a')
+          .getAttribute('rel')
+      ).toBe(null);
+    });
     it('should not render prevPageRel and nextPageRel if pageCount is 1', function () {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView pageCount={1} />
