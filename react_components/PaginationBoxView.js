@@ -12,9 +12,11 @@ export default class PaginationBoxView extends Component {
     marginPagesDisplayed: PropTypes.number.isRequired,
     previousLabel: PropTypes.node,
     previousAriaLabel: PropTypes.string,
+    prevPageRel: PropTypes.string,
     prevRel: PropTypes.string,
     nextLabel: PropTypes.node,
     nextAriaLabel: PropTypes.string,
+    nextPageRel: PropTypes.string,
     nextRel: PropTypes.string,
     breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     hrefBuilder: PropTypes.func,
@@ -42,6 +44,7 @@ export default class PaginationBoxView extends Component {
     ariaLabelBuilder: PropTypes.func,
     eventListener: PropTypes.string,
     renderOnZeroPageCount: PropTypes.func,
+    selectedPageRel: PropTypes.string,
   };
 
   static defaultProps = {
@@ -52,10 +55,12 @@ export default class PaginationBoxView extends Component {
     previousLabel: 'Previous',
     previousClassName: 'previous',
     previousAriaLabel: 'Previous page',
+    prevPageRel: 'prev',
     prevRel: 'prev',
     nextLabel: 'Next',
     nextClassName: 'next',
     nextAriaLabel: 'Next page',
+    nextPageRel: 'next',
     nextRel: 'next',
     breakLabel: '...',
     disabledClassName: 'disabled',
@@ -63,6 +68,7 @@ export default class PaginationBoxView extends Component {
     pageLabelBuilder: (page) => page,
     eventListener: 'onClick',
     renderOnZeroPageCount: undefined,
+    selectedPageRel: 'canonical',
   };
 
   constructor(props) {
@@ -268,6 +274,20 @@ export default class PaginationBoxView extends Component {
     }
   };
 
+  getElementPageRel = (index) => {
+    const { selected } = this.state;
+    const { nextPageRel, prevPageRel, selectedPageRel } = this.props;
+
+    if (selected - 1 === index) {
+      return prevPageRel;
+    } else if (selected === index) {
+      return selectedPageRel;
+    } else if (selected + 1 === index) {
+      return nextPageRel;
+    }
+    return undefined;
+  };
+
   getPageElement(index) {
     const selected = this.getSelectedPage();
     const {
@@ -284,6 +304,7 @@ export default class PaginationBoxView extends Component {
         key={index}
         pageSelectedHandler={this.handlePageSelected.bind(null, index)}
         selected={selected === index}
+        rel={this.getElementPageRel(index)}
         pageClassName={pageClassName}
         pageLinkClassName={pageLinkClassName}
         activeClassName={activeClassName}

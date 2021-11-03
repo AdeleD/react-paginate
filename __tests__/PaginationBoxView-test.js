@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+/* eslint-disable react/no-find-dom-node */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -8,6 +12,7 @@ jest.dontMock('./../react_components/BreakView');
 import PaginationBoxView from '../react_components/PaginationBoxView';
 
 // TODO Migrate to React Testing Library.
+// -> ReactDOM.findDOMNode won't work with function components.
 // https://testing-library.com/docs/react-testing-library/intro
 // with jest-dom
 // https://github.com/testing-library/jest-dom
@@ -979,20 +984,39 @@ describe('Test custom props', () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const node = document.createElement('div');
       // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
-      const pagination1 = ReactDOM.render(
-        <PaginationBoxView forcePage={2} />,
-        node
+      let pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView ref={pagination} forcePage={2} />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('3');
+        }
+      );
+      pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView ref={pagination} forcePage={3} />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('3');
+        }
+      );
+    });
+
+    it('should report a warning when using both initialPage and forcePage props', () => {
+      const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView initialPage={3} forcePage={2} />
       );
       expect(
-        ReactDOM.findDOMNode(pagination1).querySelector('.selected a')
-          .textContent
-      ).toBe('3');
-      const pagination2 = ReactDOM.render(
-        <PaginationBoxView forcePage={3} />,
-        node
-      );
-      expect(
-        ReactDOM.findDOMNode(pagination2).querySelector('.selected a')
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
       ).toBe('4');
       expect(console.warn).toHaveBeenCalledTimes(1);
@@ -1582,6 +1606,235 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
       ).toBe('Item 1');
+    });
+  });
+  describe('prevPageRel/nextPageRel/selectedPageRel', () => {
+    it('should render default rel if not defined', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={4} />
+      );
+
+      const activeItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+      ReactTestUtils.Simulate.click(activeItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(3) a')
+          .getAttribute('rel')
+      ).toBe('canonical');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(2) a')
+          .getAttribute('rel')
+      ).toBe('prev');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(4) a')
+          .getAttribute('rel')
+      ).toBe('next');
+    });
+    it('should render custom rel if defined', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={4}
+          prevPageRel="custom-prev-rel"
+          nextPageRel="custom-next-rel"
+          selectedPageRel="custom-selected-rel"
+        />
+      );
+
+      const activeItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+      ReactTestUtils.Simulate.click(activeItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(3) a')
+          .getAttribute('rel')
+      ).toBe('custom-selected-rel');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(2) a')
+          .getAttribute('rel')
+      ).toBe('custom-prev-rel');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(4) a')
+          .getAttribute('rel')
+      ).toBe('custom-next-rel');
+    });
+    it('should not render rel if prePageRel, selectedPageRel and nextPageRel are null', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={4}
+          prevPageRel={null}
+          nextPageRel={null}
+          selectedPageRel={null}
+        />
+      );
+
+      const activeItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-Child(3) a');
+      ReactTestUtils.Simulate.click(activeItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(2) a')
+          .getAttribute('rel')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(3) a')
+          .getAttribute('rel')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('.selected a')
+          .getAttribute('rel')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(4) a')
+          .getAttribute('rel')
+      ).toBe(null);
+    });
+    it('should not render prevPageRel and nextPageRel if pageCount is 1', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={1} />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:first-child a')
+          .getAttribute('aria-label')
+      ).toBe('Previous page');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-Child(2) a')
+          .getAttribute('rel')
+      ).toBe('canonical');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('.selected a')
+          .getAttribute('rel')
+      ).toBe('canonical');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-last-Child(2) a')
+          .getAttribute('rel')
+      ).toBe('canonical');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:last-child a')
+          .getAttribute('aria-label')
+      ).toBe('Next page');
+    });
+    it('should not render prevPageRel if selected page is first', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={4} />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-Child(1) a')
+          .getAttribute('aria-label')
+      ).toBe('Previous page');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-Child(2) a')
+          .getAttribute('rel')
+      ).toBe('canonical');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-Child(3) a')
+          .getAttribute('rel')
+      ).toBe('next');
+    });
+    it('should not render nextPageRel if selected page is last', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={4} />
+      );
+
+      const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
+        'li:nth-last-child(2) a'
+      );
+      ReactTestUtils.Simulate.click(activeItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-last-Child(1) a')
+          .getAttribute('aria-label')
+      ).toBe('Next page');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-last-Child(2) a')
+          .getAttribute('rel')
+      ).toBe('canonical');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-last-Child(3) a')
+          .getAttribute('rel')
+      ).toBe('prev');
+    });
+    it('should not render nextPageRel if the break page is present just after the selected page', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={20}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={0}
+        />
+      );
+
+      const activeItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+      ReactTestUtils.Simulate.click(activeItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-Child(2) a')
+          .getAttribute('rel')
+      ).toBe('prev');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-Child(3) a')
+          .getAttribute('rel')
+      ).toBe('canonical');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-Child(4)')
+          .getAttribute('class')
+      ).toBe('break');
+    });
+    it('should not render prevPageRel if the break page is present just before the selected page', function () {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={20}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={0}
+        />
+      );
+
+      const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
+        'li:nth-last-child(3) a'
+      );
+
+      ReactTestUtils.Simulate.click(activeItem);
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-last-Child(2) a')
+          .getAttribute('rel')
+      ).toBe('next');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-last-Child(3) a')
+          .getAttribute('rel')
+      ).toBe('canonical');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-last-Child(4)')
+          .getAttribute('class')
+      ).toBe('break');
     });
   });
 });

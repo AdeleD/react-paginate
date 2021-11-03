@@ -9,6 +9,7 @@
 ## >= 7.2.0
 
 - Remove button role for links with an href (see: https://github.com/AdeleD/react-paginate/pull/390)
+- Add a rel attribute on previous page, current page and next page controls. They are respectivement customizable thanks to props `prevPageRel`, `selectedPageRel` and `nextPageRel`. To disable the rel attribute, set them to `null`. (see: https://github.com/AdeleD/react-paginate/pull/391)
 
 ## >= 7.1.5
 
