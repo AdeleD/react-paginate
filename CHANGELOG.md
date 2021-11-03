@@ -11,6 +11,7 @@
 - Add a warning when providing an `initialPage` prop value that is greater than the maximum page index from `pageCount` prop.
 - Add a warning when providing a `forcePage` prop value that is greater than the maximum page index from `pageCount` prop.
 - The `href` generated from `hrefBuilder` prop is now also set active page control `<a>` tag. (see #242)
+- A new prop `hrefAllControls` has been added. It allows to enable `hrefBuilder` for all controls.
 
 ## >= 7.1.5
 

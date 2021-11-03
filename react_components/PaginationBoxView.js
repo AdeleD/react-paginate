@@ -21,6 +21,7 @@ export default class PaginationBoxView extends Component {
     nextRel: PropTypes.string,
     breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     hrefBuilder: PropTypes.func,
+    hrefAllControls: PropTypes.bool,
     onPageChange: PropTypes.func,
     onPageActive: PropTypes.func,
     initialPage: PropTypes.number,
@@ -69,6 +70,7 @@ export default class PaginationBoxView extends Component {
     eventListener: 'onClick',
     renderOnZeroPageCount: undefined,
     selectedPageRel: 'canonical',
+    hrefAllControls: false,
   };
 
   constructor(props) {
@@ -230,14 +232,10 @@ export default class PaginationBoxView extends Component {
   };
 
   getElementHref(pageIndex) {
-    const { hrefBuilder, pageCount } = this.props;
-    if (
-      hrefBuilder &&
-      // pageIndex !== this.state.selected &&
-      pageIndex >= 0 &&
-      pageIndex < pageCount
-    ) {
-      return hrefBuilder(pageIndex + 1);
+    const { hrefBuilder, pageCount, hrefAllControls } = this.props;
+    if (!hrefBuilder) return;
+    if (hrefAllControls || (pageIndex >= 0 && pageIndex < pageCount)) {
+      return hrefBuilder(pageIndex + 1, pageCount, this.state.selected);
     }
   }
 
