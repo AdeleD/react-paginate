@@ -441,17 +441,17 @@ export default class PaginationBoxView extends Component {
     const isNextDisabled = selected === pageCount - 1;
 
     const previousClasses = `${classNameIfDefined(previousClassName)}${
-      isPreviousDisabled ? ` ${disabledClassName}` : ''
+      isPreviousDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
     }`;
     const nextClasses = `${classNameIfDefined(nextClassName)}${
-      isNextDisabled ? ` ${disabledClassName}` : ''
+      isNextDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
     }`;
 
     const previousLinkClasses = `${classNameIfDefined(previousLinkClassName)}${
-      isPreviousDisabled ? ` ${disabledLinkClassName}` : ''
+      isPreviousDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
     }`;
     const nextLinkClasses = `${classNameIfDefined(nextLinkClassName)}${
-      isNextDisabled ? ` ${disabledLinkClassName}` : ''
+      isNextDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
     }`;
 
     const previousAriaDisabled = isPreviousDisabled ? 'true' : 'false';
