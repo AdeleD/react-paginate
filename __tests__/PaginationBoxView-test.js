@@ -1608,7 +1608,7 @@ describe('Test custom props', () => {
           .getAttribute('rel')
       ).toBe('prev');
     });
-    it('should not render prevPageRel if the break page is present just before the selected page', function () {
+    it('should not render nextPageRel if the break page is present just after the selected page', function () {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
           pageCount={20}
@@ -1637,7 +1637,7 @@ describe('Test custom props', () => {
           .getAttribute('class')
       ).toBe('break');
     });
-    it('should not render nextPageRel if the break page is present just after the selected page', function () {
+    it('should not render prevPageRel if the break page is present just before the selected page', function () {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
           pageCount={20}
