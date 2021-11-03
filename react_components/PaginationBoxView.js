@@ -245,6 +245,7 @@ export default class PaginationBoxView extends Component {
       this.props.onPageActive({ selected: selectedItem });
     }
   };
+
   getElementPageRel = (index) => {
     const { selected } = this.state;
     const { nextPageRel, prevPageRel, selectedPageRel } = this.props;
