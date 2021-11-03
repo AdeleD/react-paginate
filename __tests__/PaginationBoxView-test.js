@@ -860,6 +860,34 @@ describe('Test default props', () => {
       ).toBe('Page 1 is your current page');
     });
   });
+
+  describe('default tabindex', () => {
+    it('should set the tabindex to 0 on all controls', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={0} />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:not(.selected):not(.prev):not(.next) a')
+          .getAttribute('tabindex')
+      ).toBe('0');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('.selected a')
+          .getAttribute('tabindex')
+      ).toBe('0');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:first-child a')
+          .getAttribute('tabindex')
+      ).toBe('0');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:last-child a')
+          .getAttribute('tabindex')
+      ).toBe('0');
+    });
+  });
 });
 
 describe('Test custom props', () => {
