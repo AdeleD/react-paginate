@@ -6,6 +6,9 @@
 
 - Remove button role for links with an href (see: https://github.com/AdeleD/react-paginate/pull/390)
 - Add a rel attribute on previous page, current page and next page controls. They are respectivement customizable thanks to props `prevPageRel`, `selectedPageRel` and `nextPageRel`. To disable the rel attribute, set them to `null`. (see: https://github.com/AdeleD/react-paginate/pull/391)
+- A new prop `disabledLinkClassName` has been added. It allows to add a custom class on disabled `previous` and `next` controls. Default to `undefined` (no class added).
+- Add a warning when providing an `initialPage` prop value that is greater than the maximum page index from `pageCount` prop.
+- Add a warning when providing a `forcePage` prop value that is greater than the maximum page index from `pageCount` prop.
 
 ## >= 7.1.5
 
