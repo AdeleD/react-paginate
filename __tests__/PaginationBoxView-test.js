@@ -721,7 +721,7 @@ describe('Test default props', () => {
     });
   });
 
-  describe('default pageLinkClassName/activeLinkClassName', () => {
+  describe('default pageLinkClassName/activeLinkClassName/disabledLinkClassName', () => {
     it('should not use any classname on selected links by default', () => {
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView

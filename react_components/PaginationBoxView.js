@@ -37,6 +37,7 @@ export default class PaginationBoxView extends Component {
     previousLinkClassName: PropTypes.string,
     nextLinkClassName: PropTypes.string,
     disabledClassName: PropTypes.string,
+    disabledLinkClassName : PropTypes.string,
     breakClassName: PropTypes.string,
     breakLinkClassName: PropTypes.string,
     extraAriaContext: PropTypes.string,
@@ -388,6 +389,7 @@ export default class PaginationBoxView extends Component {
     }
     const {
       disabledClassName,
+      disabledLinkClassName,
       pageCount,
       className,
       containerClassName,
@@ -405,20 +407,23 @@ export default class PaginationBoxView extends Component {
 
     const { selected } = this.state;
 
-    const previousClasses =
-      previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
-    const nextClasses =
-      nextClassName +
-      (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
+    const isPreviousSelected = selected === 0;
+    const isNextSelected = selected === pageCount - 1;
 
-    const previousAriaDisabled = selected === 0 ? 'true' : 'false';
-    const nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
+    const previousClasses = `${previousClassName}${isPreviousSelected ? ` ${disabledClassName}` : ''}`
+    const nextClasses = `${nextClassName}${isNextSelected ? ` ${disabledClassName}` : ''}`;
+
+    const previousLinkClasses = `${previousLinkClassName}${isPreviousSelected ? ` ${disabledLinkClassName}` : ''}`;
+    const nextLinkClasses = `${nextLinkClassName}${isNextSelected ? ` ${disabledLinkClassName}` : ''}`;
+
+    const previousAriaDisabled = isPreviousSelected ? 'true' : 'false';
+    const nextAriaDisabled = isNextSelected ? 'true' : 'false';
 
     return (
       <ul className={className || containerClassName}>
         <li className={previousClasses}>
           <a
-            className={previousLinkClassName}
+            className={previousLinkClasses}
             href={this.hrefBuilder(selected - 1)}
             tabIndex="0"
             role="button"
@@ -436,7 +441,7 @@ export default class PaginationBoxView extends Component {
 
         <li className={nextClasses}>
           <a
-            className={nextLinkClassName}
+            className={nextLinkClasses}
             href={this.hrefBuilder(selected + 1)}
             tabIndex="0"
             role="button"
