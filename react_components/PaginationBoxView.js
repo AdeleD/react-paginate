@@ -21,6 +21,7 @@ export default class PaginationBoxView extends Component {
     nextRel: PropTypes.string,
     breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     hrefBuilder: PropTypes.func,
+    hrefAllControls: PropTypes.bool,
     onPageChange: PropTypes.func,
     onPageActive: PropTypes.func,
     initialPage: PropTypes.number,
@@ -70,6 +71,7 @@ export default class PaginationBoxView extends Component {
     eventListener: 'onClick',
     renderOnZeroPageCount: undefined,
     selectedPageRel: 'canonical',
+    hrefAllControls: false,
   };
 
   constructor(props) {
@@ -182,7 +184,7 @@ export default class PaginationBoxView extends Component {
       );
     }
 
-    if(
+    if (
       this.props.forcePage !== undefined &&
       this.props.forcePage !== prevProps.forcePage
     ) {
@@ -206,10 +208,7 @@ export default class PaginationBoxView extends Component {
       );
     }
 
-    if(
-      this.props.page !== undefined &&
-      this.props.page !== prevProps.page
-    ) {
+    if (this.props.page !== undefined && this.props.page !== prevProps.page) {
       if (this.props.page > this.props.pageCount - 1) {
         console.warn(
           `(react-paginate): The page prop provided is greater than the maximum page index from pageCount prop (${
@@ -307,15 +306,11 @@ export default class PaginationBoxView extends Component {
     );
   };
 
-  hrefBuilder(pageIndex) {
-    const { hrefBuilder, pageCount } = this.props;
-    if (
-      hrefBuilder &&
-      pageIndex !== this.state.selected &&
-      pageIndex >= 0 &&
-      pageIndex < pageCount
-    ) {
-      return hrefBuilder(pageIndex + 1);
+  getElementHref(pageIndex) {
+    const { hrefBuilder, pageCount, hrefAllControls } = this.props;
+    if (!hrefBuilder) return;
+    if (hrefAllControls || (pageIndex >= 0 && pageIndex < pageCount)) {
+      return hrefBuilder(pageIndex + 1, pageCount, this.state.selected);
     }
   }
 
@@ -390,7 +385,7 @@ export default class PaginationBoxView extends Component {
         activeClassName={activeClassName}
         activeLinkClassName={activeLinkClassName}
         extraAriaContext={extraAriaContext}
-        href={this.hrefBuilder(index)}
+        href={this.getElementHref(index)}
         ariaLabel={this.ariaLabelBuilder(index)}
         page={index + 1}
         pageLabelBuilder={pageLabelBuilder}
@@ -456,11 +451,19 @@ export default class PaginationBoxView extends Component {
           continue;
         }
 
+        // If it is the first element of the array the rightSide need to be adjusted,
+        //  otherwise an extra element will be rendered
+        const adjustedRightSide =
+          selected === 0 && pageRangeDisplayed > 1 ? rightSide - 1 : rightSide;
+
         // If the page index is near the selected page index
         // and inside the defined range (pageRangeDisplayed)
         // we have to display it (it will create the center
         // part of the pagination).
-        if (index >= selected - leftSide && index <= selected + rightSide) {
+        if (
+          index >= selected - leftSide &&
+          index <= selected + adjustedRightSide
+        ) {
           items.push(createPageView(index));
           continue;
         }
@@ -519,17 +522,17 @@ export default class PaginationBoxView extends Component {
     const isNextDisabled = selected === pageCount - 1;
 
     const previousClasses = `${classNameIfDefined(previousClassName)}${
-      isPreviousDisabled ? ` ${disabledClassName}` : ''
+      isPreviousDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
     }`;
     const nextClasses = `${classNameIfDefined(nextClassName)}${
-      isNextDisabled ? ` ${disabledClassName}` : ''
+      isNextDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
     }`;
 
     const previousLinkClasses = `${classNameIfDefined(previousLinkClassName)}${
-      isPreviousDisabled ? ` ${disabledLinkClassName}` : ''
+      isPreviousDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
     }`;
     const nextLinkClasses = `${classNameIfDefined(nextLinkClassName)}${
-      isNextDisabled ? ` ${disabledLinkClassName}` : ''
+      isNextDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
     }`;
 
     const previousAriaDisabled = isPreviousDisabled ? 'true' : 'false';
@@ -540,8 +543,8 @@ export default class PaginationBoxView extends Component {
         <li className={previousClasses}>
           <a
             className={previousLinkClasses}
-            href={this.hrefBuilder(selected - 1)}
-            tabIndex="0"
+            href={this.getElementHref(selected - 1)}
+            tabIndex={isPreviousDisabled ? '-1' : '0'}
             role="button"
             onKeyPress={this.handlePreviousPage}
             aria-disabled={previousAriaDisabled}
@@ -558,8 +561,8 @@ export default class PaginationBoxView extends Component {
         <li className={nextClasses}>
           <a
             className={nextLinkClasses}
-            href={this.hrefBuilder(selected + 1)}
-            tabIndex="0"
+            href={this.getElementHref(selected + 1)}
+            tabIndex={isNextDisabled ? '-1' : '0'}
             role="button"
             onKeyPress={this.handleNextPage}
             aria-disabled={nextAriaDisabled}

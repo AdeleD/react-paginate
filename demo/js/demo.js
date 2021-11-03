@@ -92,6 +92,11 @@ export class App extends Component {
           onPageChange={this.handlePageClick}
           containerClassName="pagination"
           activeClassName="active"
+          // eslint-disable-next-line no-unused-vars
+          hrefBuilder={(page, pageCount, selected) =>
+            page >= 1 && page <= pageCount ? `/page/${page}` : '#'
+          }
+          hrefAllControls
         />
       </div>
     );

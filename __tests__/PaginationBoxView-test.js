@@ -345,7 +345,51 @@ describe('Test custom event listener', () => {
 });
 
 describe('Test pagination behaviour', () => {
-  it('should display 6 elements to the left, 1 break element and 2 elements to the right', () => {
+  it('should display 2 elements to the left, 1 break element and 2 elements to the right', () => {
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={0}
+        pageCount={20}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={1}
+      />
+    );
+
+    const previousElement =
+      ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
+    const nextElement =
+      ReactDOM.findDOMNode(pagination).querySelector('li:last-child');
+
+    let leftElements = [];
+    let rightElements = [];
+    let breakElements = [];
+    let breakElementReached = false;
+
+    const elements = ReactDOM.findDOMNode(pagination).querySelectorAll(
+      'li:not(.previous):not(.next)'
+    );
+    elements.forEach((element) => {
+      if (breakElementReached === false && element.className !== 'break') {
+        leftElements.push(element);
+      } else if (
+        breakElementReached === true &&
+        element.className !== 'break'
+      ) {
+        rightElements.push(element);
+      } else {
+        breakElements.push(element);
+        breakElementReached = true;
+      }
+    });
+
+    expect(previousElement.className).toBe('previous disabled');
+    expect(nextElement.className).toBe('next');
+    expect(leftElements.length).toBe(2);
+    expect(rightElements.length).toBe(1);
+    expect(breakElements.length).toBe(1);
+  });
+
+  it('should display 5 elements to the left, 1 break element and 2 elements to the right', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         initialPage={0}
@@ -384,7 +428,7 @@ describe('Test pagination behaviour', () => {
 
     expect(previousElement.className).toBe('previous disabled');
     expect(nextElement.className).toBe('next');
-    expect(leftElements.length).toBe(6);
+    expect(leftElements.length).toBe(5);
     expect(rightElements.length).toBe(2);
     expect(breakElements.length).toBe(1);
   });
@@ -905,6 +949,34 @@ describe('Test default props', () => {
       ).toBe('Page 1 is your current page');
     });
   });
+
+  describe('default tabindex', () => {
+    it('should set the tabindex to 0 on all controls', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={0} />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:nth-child(3) a')
+          .getAttribute('tabindex')
+      ).toBe('0');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('.selected a')
+          .getAttribute('tabindex')
+      ).toBe('-1');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:first-child a')
+          .getAttribute('tabindex')
+      ).toBe('-1');
+      expect(
+        ReactDOM.findDOMNode(pagination)
+          .querySelector('li:last-child a')
+          .getAttribute('tabindex')
+      ).toBe('0');
+    });
+  });
 });
 
 describe('Test custom props', () => {
@@ -1210,7 +1282,11 @@ describe('Test custom props', () => {
     it('should report a warning when using both initialPage and page props', () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={3} page={2} />
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={3}
+          page={2}
+        />
       );
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1671,7 +1747,110 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination)
           .querySelector('.selected a')
           .getAttribute('href')
+      ).toBe('/page/2');
+    });
+
+    it('should not add href to disabled next / previous buttons', function () {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={0}
+          hrefBuilder={(page) => '/page/' + page}
+        />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('li:last-child a')
+          .getAttribute('href')
+      ).toBe('/page/2');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('li:first-child a')
+          .getAttribute('href')
       ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('.selected a')
+          .getAttribute('href')
+      ).toBe('/page/1');
+
+      const paginationLast = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={DEFAULT_PAGE_COUNT - 1}
+          hrefBuilder={(page) => '/page/' + page}
+        />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('li:last-child a')
+          .getAttribute('href')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('li:first-child a')
+          .getAttribute('href')
+      ).toBe('/page/9');
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('.selected a')
+          .getAttribute('href')
+      ).toBe('/page/10');
+    });
+
+    it('should add href to all controls when hrefAllControls is set to true', function () {
+      const paginationFirst = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={0}
+          hrefBuilder={(page, pageCount) =>
+            page >= 1 && page <= pageCount ? `/page/${page}` : '#'
+          }
+          hrefAllControls
+        />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('li:last-child a')
+          .getAttribute('href')
+      ).toBe('/page/2');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('li:first-child a')
+          .getAttribute('href')
+      ).toBe('#');
+      expect(
+        ReactDOM.findDOMNode(paginationFirst)
+          .querySelector('.selected a')
+          .getAttribute('href')
+      ).toBe('/page/1');
+
+      const paginationLast = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={DEFAULT_PAGE_COUNT - 1}
+          hrefBuilder={(page) => '/page/' + page}
+        />
+      );
+
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('li:last-child a')
+          .getAttribute('href')
+      ).toBe(null);
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('li:first-child a')
+          .getAttribute('href')
+      ).toBe('/page/9');
+      expect(
+        ReactDOM.findDOMNode(paginationLast)
+          .querySelector('.selected a')
+          .getAttribute('href')
+      ).toBe('/page/10');
     });
   });
 
