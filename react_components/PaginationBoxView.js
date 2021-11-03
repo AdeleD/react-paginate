@@ -352,19 +352,24 @@ export default class PaginationBoxView extends Component {
         rightSide = pageRangeDisplayed - leftSide;
       }
 
-      let index;
-      let page;
-      let breakView;
       let createPageView = (index) => this.getPageElement(index);
+      let index;
+      let breakView;
 
+      // First pass: process the pages or breaks to display (or not).
+      const pagesBreaking = [];
       for (index = 0; index < pageCount; index++) {
-        page = index + 1;
+        const page = index + 1;
 
         // If the page index is lower than the margin defined,
         // the page has to be displayed on the left side of
         // the pagination.
         if (page <= marginPagesDisplayed) {
-          items.push(createPageView(index));
+          pagesBreaking.push({
+            type: 'page',
+            index,
+            display: createPageView(index),
+          });
           continue;
         }
 
@@ -372,7 +377,11 @@ export default class PaginationBoxView extends Component {
         // minus the margin defined, the page has to be
         // displayed on the right side of the pagination.
         if (page > pageCount - marginPagesDisplayed) {
-          items.push(createPageView(index));
+          pagesBreaking.push({
+            type: 'page',
+            index,
+            display: createPageView(index),
+          });
           continue;
         }
 
@@ -389,7 +398,11 @@ export default class PaginationBoxView extends Component {
           index >= selected - leftSide &&
           index <= selected + adjustedRightSide
         ) {
-          items.push(createPageView(index));
+          pagesBreaking.push({
+            type: 'page',
+            index,
+            display: createPageView(index),
+          });
           continue;
         }
 
@@ -397,7 +410,10 @@ export default class PaginationBoxView extends Component {
         // we check if the last item of the current "items" array
         // is a break element. If not, we add a break element, else,
         // we do nothing (because we don't want to display the page).
-        if (breakLabel && items[items.length - 1] !== breakView) {
+        if (
+          breakLabel &&
+          pagesBreaking[pagesBreaking.length - 1].display !== breakView
+        ) {
           breakView = (
             <BreakView
               key={index}
@@ -408,9 +424,34 @@ export default class PaginationBoxView extends Component {
               getEventListener={this.getEventListener}
             />
           );
-          items.push(breakView);
+          pagesBreaking.push({ type: 'break', index, display: breakView });
         }
       }
+      // Second pass: we remove breaks containing one page to the actual page.
+      pagesBreaking.forEach((pageElement, i) => {
+        let actualPageElement = pageElement;
+        // 1 2 3 4 5 6 7 ... 9 10
+        //         |
+        // 1 2 ... 4 5 6 7 8 9 10
+        //             |
+        // The break should be replaced by the page.
+        if (
+          pageElement.type === 'break' &&
+          pagesBreaking[i - 1] &&
+          pagesBreaking[i - 1].type === 'page' &&
+          pagesBreaking[i + 1] &&
+          pagesBreaking[i + 1].type === 'page' &&
+          pagesBreaking[i + 1].index - pagesBreaking[i - 1].index <= 2
+        ) {
+          actualPageElement = {
+            type: 'page',
+            index: i,
+            display: createPageView(i),
+          };
+        }
+        // We add the displayed elements in the same pass, to avoid another iteration.
+        items.push(actualPageElement.display);
+      });
     }
 
     return items;

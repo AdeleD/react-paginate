@@ -203,19 +203,26 @@ describe('Test clicks', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         initialPage={0}
-        pageCount={20}
+        pageCount={22}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
       />
     );
 
     // The selected page is before the left break
-    const leftBreakView1 =
+    const rightBreakView =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.click(leftBreakView1);
+    ReactTestUtils.Simulate.click(rightBreakView);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('6');
+
+    const rightBreakView2 =
+      ReactDOM.findDOMNode(pagination).querySelector('.break a');
+    ReactTestUtils.Simulate.click(rightBreakView2);
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('11');
 
     // The selected page is after the left break
     const leftBreakView2 =
@@ -223,7 +230,7 @@ describe('Test clicks', () => {
     ReactTestUtils.Simulate.click(leftBreakView2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
-    ).toBe('1');
+    ).toBe('6');
   });
 
   it('test click on the right break view', () => {
@@ -315,12 +322,19 @@ describe('Test custom event listener', () => {
     );
 
     // The selected page is before the left break
-    const leftBreakView1 =
+    const rightBreakView =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.mouseOver(leftBreakView1);
+    ReactTestUtils.Simulate.mouseOver(rightBreakView);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('6');
+
+    const rightBreakView2 =
+      ReactDOM.findDOMNode(pagination).querySelector('.break a');
+    ReactTestUtils.Simulate.mouseOver(rightBreakView2);
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('11');
 
     // The selected page is after the left break
     const leftBreakView2 =
@@ -328,7 +342,7 @@ describe('Test custom event listener', () => {
     ReactTestUtils.Simulate.mouseOver(leftBreakView2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
-    ).toBe('1');
+    ).toBe('6');
   });
 });
 
@@ -468,7 +482,7 @@ describe('Test pagination behaviour', () => {
   it('should display 2 elements to the left, 5 elements in the middle, 2 elements to the right and 2 break elements', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
-        initialPage={5}
+        initialPage={7}
         pageCount={20}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
@@ -612,6 +626,53 @@ describe('Test pagination behaviour', () => {
     expect(leftElements.length).toBe(2);
     expect(rightElements.length).toBe(6);
     expect(breakElements.length).toBe(1);
+  });
+
+  // 1 2 3 4 5 6 7 ... 9 10
+  //         |
+  it('should not display a break containing only one page', () => {
+    // should display 10 elements, 0 break element
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={5}
+        pageCount={10}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+      />
+    );
+
+    const previousElement =
+      ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
+    const nextElement =
+      ReactDOM.findDOMNode(pagination).querySelector('li:last-child');
+
+    let leftElements = [];
+    let rightElements = [];
+    let breakElements = [];
+    let breakElementReached = false;
+
+    const elements = ReactDOM.findDOMNode(pagination).querySelectorAll(
+      'li:not(.previous):not(.next)'
+    );
+    elements.forEach((element) => {
+      if (breakElementReached === false && element.className !== 'break') {
+        leftElements.push(element);
+      } else if (
+        breakElementReached === true &&
+        element.className !== 'break'
+      ) {
+        rightElements.push(element);
+      } else {
+        breakElements.push(element);
+        breakElementReached = true;
+      }
+    });
+
+    expect(previousElement.className).toBe('previous');
+    expect(nextElement.className).toBe('next');
+    expect(leftElements.length).toBe(10);
+    expect(rightElements.length).toBe(0);
+    expect(breakElements.length).toBe(0);
   });
 
   it('should use ariaLabelBuilder for rendering aria-labels if ariaLabelBuilder is specified', function () {
