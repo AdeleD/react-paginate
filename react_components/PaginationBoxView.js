@@ -245,7 +245,7 @@ export default class PaginationBoxView extends Component {
       this.props.onPageActive({ selected: selectedItem });
     }
   };
-  handlePageRel = (index) => {
+  getElementPageRel = (index) => {
     const { selected } = this.state;
     const { nextPageRel, prevPageRel, selectedPageRel } = this.props;
 
@@ -275,7 +275,7 @@ export default class PaginationBoxView extends Component {
         key={index}
         pageSelectedHandler={this.handlePageSelected.bind(null, index)}
         selected={selected === index}
-        rel={this.handlePageRel(index)}
+        rel={this.getElementPageRel(index)}
         pageClassName={pageClassName}
         pageLinkClassName={pageLinkClassName}
         activeClassName={activeClassName}
