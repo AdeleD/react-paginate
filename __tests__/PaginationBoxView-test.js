@@ -66,9 +66,6 @@ describe('Test rendering', () => {
     // Prev, selected page, next
     expect(pageItems.length).toBe(3);
   });
-
-
-
 });
 
 describe('Page count is zero', () => {
@@ -346,12 +343,10 @@ describe('Test pagination behaviour', () => {
       />
     );
 
-    const previousElement = ReactDOM.findDOMNode(pagination).querySelector(
-      'li:first-child'
-    );
-    const nextElement = ReactDOM.findDOMNode(pagination).querySelector(
-      'li:last-child'
-    );
+    const previousElement =
+      ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
+    const nextElement =
+      ReactDOM.findDOMNode(pagination).querySelector('li:last-child');
 
     let leftElements = [];
     let rightElements = [];
@@ -361,7 +356,7 @@ describe('Test pagination behaviour', () => {
     const elements = ReactDOM.findDOMNode(pagination).querySelectorAll(
       'li:not(.previous):not(.next)'
     );
-    elements.forEach(element => {
+    elements.forEach((element) => {
       if (breakElementReached === false && element.className !== 'break') {
         leftElements.push(element);
       } else if (
@@ -683,7 +678,6 @@ describe('Test pagination behaviour', () => {
     );
     consoleWarnMock.mockRestore();
   });
-
 });
 
 describe('Test default props', () => {

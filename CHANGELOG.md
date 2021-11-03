@@ -12,6 +12,7 @@
 - Add a warning when providing a `forcePage` prop value that is greater than the maximum page index from `pageCount` prop.
 - The `href` generated from `hrefBuilder` prop is now also set active page control `<a>` tag. (see #242)
 - A new prop `hrefAllControls` has been added. It allows to enable `hrefBuilder` for all controls.
+- Fix page range of 2 when first page is selected. (see https://github.com/AdeleD/react-paginate/issues/307)
 
 ## >= 7.1.5
 
