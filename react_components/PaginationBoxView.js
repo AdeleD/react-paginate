@@ -30,6 +30,7 @@ export default class PaginationBoxView extends Component {
     onPageActive: PropTypes.func,
     initialPage: PropTypes.number,
     forcePage: PropTypes.number,
+    page: PropTypes.number,
     disableInitialCallback: PropTypes.bool,
     containerClassName: PropTypes.string,
     className: PropTypes.string,
@@ -98,24 +99,19 @@ export default class PaginationBoxView extends Component {
   constructor(props) {
     super(props);
 
-    if (props.initialPage !== undefined && props.forcePage !== undefined) {
+    if (props.initialPage !== undefined && props.page !== undefined) {
       console.warn(
-        `(react-paginate): Both initialPage (${props.initialPage}) and forcePage (${props.forcePage}) props are provided, which is discouraged.` +
-          ' Use exclusively forcePage prop for a controlled component.\nSee https://reactjs.org/docs/forms.html#controlled-components'
+        `(react-paginate): Both initialPage (${props.initialPage}) and page (${props.page}) props are provided, which is discouraged.` +
+          ' Use exclusively page prop for a controlled component.\nSee https://reactjs.org/docs/forms.html#controlled-components'
       );
     }
 
-    let initialSelected;
-    if (props.initialPage) {
-      initialSelected = props.initialPage;
-    } else if (props.forcePage) {
-      initialSelected = props.forcePage;
-    } else {
-      initialSelected = 0;
-    }
-
+    // When we are in controlled mode, we do not use local state for props.page.
+    // See getSelectedPage.
+    // We init anyway the selected prop, in case the user changes the component to uncontrolled.
+    // (Which is higly discouraged, see warning in componentDidUpdate)
     this.state = {
-      selected: initialSelected,
+      selected: props.forcePage || props.initialPage || 0,
     };
   }
 
@@ -126,21 +122,52 @@ export default class PaginationBoxView extends Component {
       extraAriaContext,
       pageCount,
       forcePage,
+      page,
     } = this.props;
     // Call the callback with the initialPage item:
-    if (typeof initialPage !== 'undefined' && !disableInitialCallback) {
+    if (
+      initialPage !== undefined &&
+      !disableInitialCallback &&
+      page === undefined
+    ) {
       this.callCallback(initialPage);
     }
 
     if (extraAriaContext) {
       console.warn(
-        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder prop instead.'
+      );
+    }
+
+    if (forcePage) {
+      console.warn(
+        'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
+          ' You should now use the page prop for a controlled component.' +
+          '\nSee https://reactjs.org/docs/forms.html#controlled-components'
       );
     }
 
     if (!Number.isInteger(pageCount)) {
       console.warn(
         `(react-paginate): The pageCount prop value provided is not an integer (${pageCount}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (initialPage !== undefined && !Number.isInteger(initialPage)) {
+      console.warn(
+        `(react-paginate): The initialPage prop value provided is not an integer (${pageCount}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (forcePage !== undefined && !Number.isInteger(forcePage)) {
+      console.warn(
+        `(react-paginate): The pageCount prop value provided is not an integer (${forcePage}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (page !== undefined && !Number.isInteger(page)) {
+      console.warn(
+        `(react-paginate): The page prop value provided is not an integer (${page}). Did you forget a Math.ceil()?`
       );
     }
 
@@ -159,9 +186,26 @@ export default class PaginationBoxView extends Component {
         }).`
       );
     }
+
+    if (page !== undefined && page > pageCount - 1) {
+      console.warn(
+        `(react-paginate): The page prop provided is greater than the maximum page index from pageCount prop (${page} > ${
+          pageCount - 1
+        }).`
+      );
+    }
   }
 
   componentDidUpdate(prevProps) {
+    if (
+      Number.isInteger(prevProps.pageCount) &&
+      !Number.isInteger(this.props.pageCount)
+    ) {
+      console.warn(
+        `(react-paginate): The pageCount prop value provided is not an integer (${this.props.pageCount}). Did you forget a Math.ceil()?`
+      );
+    }
+
     if (
       this.props.forcePage !== undefined &&
       this.props.forcePage !== prevProps.forcePage
@@ -178,17 +222,46 @@ export default class PaginationBoxView extends Component {
     }
 
     if (
-      Number.isInteger(prevProps.pageCount) &&
-      !Number.isInteger(this.props.pageCount)
+      Number.isInteger(prevProps.page) &&
+      !Number.isInteger(this.props.page)
     ) {
       console.warn(
-        `(react-paginate): The pageCount prop value provided is not an integer (${this.props.pageCount}). Did you forget a Math.ceil()?`
+        `(react-paginate): The page prop value provided is not an integer (${this.props.page}). Did you forget a Math.ceil()?`
+      );
+    }
+
+    if (this.props.page !== undefined && this.props.page !== prevProps.page) {
+      if (this.props.page > this.props.pageCount - 1) {
+        console.warn(
+          `(react-paginate): The page prop provided is greater than the maximum page index from pageCount prop (${
+            this.props.page
+          } > ${this.props.pageCount - 1}).`
+        );
+      }
+    }
+
+    if (
+      this.props.forcePage !== undefined &&
+      this.props.forcePage !== prevProps.forcePage
+    ) {
+      this.setState({ selected: this.props.forcePage });
+    }
+
+    if (prevProps.page !== undefined && this.props.page === undefined) {
+      console.warn(
+        '(react-paginate): Changing from controlled to uncontrolled is highly discouraged.' +
+          ' Please always provide a page value in controlled mode.\n' +
+          `(page prop was ${prevProps.page} and is now ${this.props.page})`
       );
     }
   }
 
+  // When we are in controlled mode, we do not use local state for page.
+  getSelectedPage = () =>
+    this.props.page !== undefined ? this.props.page : this.state.selected;
+
   handlePreviousPage = (evt) => {
-    const { selected } = this.state;
+    const selected = this.getSelectedPage();
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     if (selected > 0) {
       this.handlePageSelected(selected - 1, evt);
@@ -196,7 +269,7 @@ export default class PaginationBoxView extends Component {
   };
 
   handleNextPage = (evt) => {
-    const { selected } = this.state;
+    const selected = this.getSelectedPage();
     const { pageCount } = this.props;
 
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
@@ -223,18 +296,20 @@ export default class PaginationBoxView extends Component {
     }
   };
 
-  handlePageSelected = (selected, evt) => {
+  handlePageSelected = (toBeSelected, evt) => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 
-    if (this.state.selected === selected) {
-      this.callActiveCallback(selected);
+    if (this.getSelectedPage() === toBeSelected) {
+      this.callActiveCallback(toBeSelected);
       return;
     }
 
-    this.setState({ selected: selected });
+    if (this.props.page === undefined) {
+      this.setState({ selected: toBeSelected });
+    }
 
     // Call the callback with the new selected item:
-    this.callCallback(selected);
+    this.callCallback(toBeSelected);
   };
 
   getEventListener = (handlerFunction) => {
@@ -245,7 +320,7 @@ export default class PaginationBoxView extends Component {
   };
 
   getForwardJump() {
-    const { selected } = this.state;
+    const selected = this.getSelectedPage();
     const { pageCount, pageRangeDisplayed } = this.props;
 
     const forwardJump = selected + pageRangeDisplayed;
@@ -253,7 +328,7 @@ export default class PaginationBoxView extends Component {
   }
 
   getBackwardJump() {
-    const { selected } = this.state;
+    const selected = this.getSelectedPage();
     const { pageRangeDisplayed } = this.props;
 
     const backwardJump = selected - pageRangeDisplayed;
@@ -263,7 +338,7 @@ export default class PaginationBoxView extends Component {
   handleBreakClick = (index, evt) => {
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
 
-    const { selected } = this.state;
+    const selected = this.getSelectedPage();
 
     this.handlePageSelected(
       selected < index ? this.getForwardJump() : this.getBackwardJump(),
@@ -329,7 +404,7 @@ export default class PaginationBoxView extends Component {
   };
 
   getPageElement(index) {
-    const { selected } = this.state;
+    const selected = this.getSelectedPage();
     const {
       pageClassName,
       pageLinkClassName,
@@ -370,7 +445,7 @@ export default class PaginationBoxView extends Component {
       breakLinkClassName,
     } = this.props;
 
-    const { selected } = this.state;
+    const selected = this.getSelectedPage();
 
     if (pageCount <= pageRangeDisplayed) {
       for (let index = 0; index < pageCount; index++) {
@@ -392,19 +467,24 @@ export default class PaginationBoxView extends Component {
         rightSide = pageRangeDisplayed - leftSide;
       }
 
-      let index;
-      let page;
-      let breakView;
       let createPageView = (index) => this.getPageElement(index);
+      let index;
+      let breakView;
 
+      // First pass: process the pages or breaks to display (or not).
+      const pagesBreaking = [];
       for (index = 0; index < pageCount; index++) {
-        page = index + 1;
+        const page = index + 1;
 
         // If the page index is lower than the margin defined,
         // the page has to be displayed on the left side of
         // the pagination.
         if (page <= marginPagesDisplayed) {
-          items.push(createPageView(index));
+          pagesBreaking.push({
+            type: 'page',
+            index,
+            display: createPageView(index),
+          });
           continue;
         }
 
@@ -412,7 +492,11 @@ export default class PaginationBoxView extends Component {
         // minus the margin defined, the page has to be
         // displayed on the right side of the pagination.
         if (page > pageCount - marginPagesDisplayed) {
-          items.push(createPageView(index));
+          pagesBreaking.push({
+            type: 'page',
+            index,
+            display: createPageView(index),
+          });
           continue;
         }
 
@@ -429,7 +513,11 @@ export default class PaginationBoxView extends Component {
           index >= selected - leftSide &&
           index <= selected + adjustedRightSide
         ) {
-          items.push(createPageView(index));
+          pagesBreaking.push({
+            type: 'page',
+            index,
+            display: createPageView(index),
+          });
           continue;
         }
 
@@ -437,7 +525,10 @@ export default class PaginationBoxView extends Component {
         // we check if the last item of the current "items" array
         // is a break element. If not, we add a break element, else,
         // we do nothing (because we don't want to display the page).
-        if (breakLabel && items[items.length - 1] !== breakView) {
+        if (
+          breakLabel &&
+          pagesBreaking[pagesBreaking.length - 1].display !== breakView
+        ) {
           breakView = (
             <BreakView
               key={index}
@@ -448,9 +539,34 @@ export default class PaginationBoxView extends Component {
               getEventListener={this.getEventListener}
             />
           );
-          items.push(breakView);
+          pagesBreaking.push({ type: 'break', index, display: breakView });
         }
       }
+      // Second pass: we remove breaks containing one page to the actual page.
+      pagesBreaking.forEach((pageElement, i) => {
+        let actualPageElement = pageElement;
+        // 1 2 3 4 5 6 7 ... 9 10
+        //         |
+        // 1 2 ... 4 5 6 7 8 9 10
+        //             |
+        // The break should be replaced by the page.
+        if (
+          pageElement.type === 'break' &&
+          pagesBreaking[i - 1] &&
+          pagesBreaking[i - 1].type === 'page' &&
+          pagesBreaking[i + 1] &&
+          pagesBreaking[i + 1].type === 'page' &&
+          pagesBreaking[i + 1].index - pagesBreaking[i - 1].index <= 2
+        ) {
+          actualPageElement = {
+            type: 'page',
+            index: i,
+            display: createPageView(i),
+          };
+        }
+        // We add the displayed elements in the same pass, to avoid another iteration.
+        items.push(actualPageElement.display);
+      });
     }
 
     return items;
@@ -493,7 +609,7 @@ export default class PaginationBoxView extends Component {
       lastRel,
     } = this.props;
 
-    const { selected } = this.state;
+    const selected = this.getSelectedPage();
 
     const isPreviousDisabled = selected === 0;
     const isNextDisabled = selected === pageCount - 1;

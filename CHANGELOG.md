@@ -1,8 +1,14 @@
-## >= 8.0.0 (WIP)
+## >= 9.0.0
 
+- A new prop `page` has been added. It allows to wholly [control](https://reactjs.org/docs/forms.html#controlled-components) the component. (see https://github.com/AdeleD/react-paginate/issues/124)
+- The `forcePage` prop is now DEPRECATED. It was allowing a subpar controlled mode, which confused users ([#124](https://github.com/AdeleD/react-paginate/issues/124) [#374](https://github.com/AdeleD/react-paginate/issues/374) [#356](https://github.com/AdeleD/react-paginate/issues/356)) and potentially created race conditions. Please use `page` prop instead.
+- The `disableInitialCallback` prop now is always to `true` (no initial callback) when the `page` prop is used (in controlled mode)
+- Add a warning when providing both `initialPage` and `page` props. You should only provides `page` when the component is [controlled](https://reactjs.org/docs/forms.html#controlled-components). (see: https://github.com/AdeleD/react-paginate/pull/290)
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
+- Add a warning when providing a `page` prop value that is greater than the maximum page index from `pageCount` prop.
+- Add a warning when a non integer is provided for `initialPage`, `forcePage` or `page` props.
 
-## >= 7.2.0
+## >= 8.0.0
 
 - Remove button role for links with an href (see: https://github.com/AdeleD/react-paginate/pull/390)
 - Add a rel attribute on previous page, current page and next page controls. They are respectivement customizable thanks to props `prevPageRel`, `selectedPageRel` and `nextPageRel`. To disable the rel attribute, set them to `null`. (see: https://github.com/AdeleD/react-paginate/pull/391)
@@ -13,6 +19,7 @@
 - The `href` generated from `hrefBuilder` prop is now also set active page control `<a>` tag. (see #242)
 - A new prop `hrefAllControls` has been added. It allows to enable `hrefBuilder` for all controls.
 - Fix page range of 2 when first page is selected. (see https://github.com/AdeleD/react-paginate/issues/307)
+- Fix the breaking algorithm to not create breaks for only one page (see: https://github.com/AdeleD/react-paginate/issues/270)
 
 ## >= 7.1.5
 

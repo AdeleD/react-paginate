@@ -146,7 +146,7 @@ describe('Page count checks', () => {
     ReactTestUtils.renderIntoDocument(
       <PaginationBoxView pageCount={9} forcePage={9} />
     );
-    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenCalledTimes(2);
     expect(console.warn).toHaveBeenLastCalledWith(
       '(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (9 > 8).'
     );
@@ -154,6 +154,18 @@ describe('Page count checks', () => {
   });
 
   // TODO Warning on prop change.
+
+  it('should trigger a warning when the page provided is greater than the maximum page index (from pageCount)', () => {
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+    ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView pageCount={8} page={8} />
+    );
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenLastCalledWith(
+      '(react-paginate): The page prop provided is greater than the maximum page index from pageCount prop (8 > 7).'
+    );
+    consoleWarnMock.mockRestore();
+  });
 });
 
 describe('Test clicks', () => {
@@ -203,19 +215,26 @@ describe('Test clicks', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
         initialPage={0}
-        pageCount={20}
+        pageCount={22}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
       />
     );
 
     // The selected page is before the left break
-    const leftBreakView1 =
+    const rightBreakView =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.click(leftBreakView1);
+    ReactTestUtils.Simulate.click(rightBreakView);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('6');
+
+    const rightBreakView2 =
+      ReactDOM.findDOMNode(pagination).querySelector('.break a');
+    ReactTestUtils.Simulate.click(rightBreakView2);
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('11');
 
     // The selected page is after the left break
     const leftBreakView2 =
@@ -223,7 +242,7 @@ describe('Test clicks', () => {
     ReactTestUtils.Simulate.click(leftBreakView2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
-    ).toBe('1');
+    ).toBe('6');
   });
 
   it('test click on the right break view', () => {
@@ -315,12 +334,19 @@ describe('Test custom event listener', () => {
     );
 
     // The selected page is before the left break
-    const leftBreakView1 =
+    const rightBreakView =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.mouseOver(leftBreakView1);
+    ReactTestUtils.Simulate.mouseOver(rightBreakView);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('6');
+
+    const rightBreakView2 =
+      ReactDOM.findDOMNode(pagination).querySelector('.break a');
+    ReactTestUtils.Simulate.mouseOver(rightBreakView2);
+    expect(
+      ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+    ).toBe('11');
 
     // The selected page is after the left break
     const leftBreakView2 =
@@ -328,7 +354,7 @@ describe('Test custom event listener', () => {
     ReactTestUtils.Simulate.mouseOver(leftBreakView2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
-    ).toBe('1');
+    ).toBe('6');
   });
 });
 
@@ -468,7 +494,7 @@ describe('Test pagination behaviour', () => {
   it('should display 2 elements to the left, 5 elements in the middle, 2 elements to the right and 2 break elements', () => {
     const pagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
-        initialPage={5}
+        initialPage={7}
         pageCount={20}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
@@ -614,6 +640,53 @@ describe('Test pagination behaviour', () => {
     expect(breakElements.length).toBe(1);
   });
 
+  // 1 2 3 4 5 6 7 ... 9 10
+  //         |
+  it('should not display a break containing only one page', () => {
+    // should display 10 elements, 0 break element
+    const pagination = ReactTestUtils.renderIntoDocument(
+      <PaginationBoxView
+        initialPage={5}
+        pageCount={10}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+      />
+    );
+
+    const previousElement =
+      ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
+    const nextElement =
+      ReactDOM.findDOMNode(pagination).querySelector('li:last-child');
+
+    let leftElements = [];
+    let rightElements = [];
+    let breakElements = [];
+    let breakElementReached = false;
+
+    const elements = ReactDOM.findDOMNode(pagination).querySelectorAll(
+      'li:not(.previous):not(.next)'
+    );
+    elements.forEach((element) => {
+      if (breakElementReached === false && element.className !== 'break') {
+        leftElements.push(element);
+      } else if (
+        breakElementReached === true &&
+        element.className !== 'break'
+      ) {
+        rightElements.push(element);
+      } else {
+        breakElements.push(element);
+        breakElementReached = true;
+      }
+    });
+
+    expect(previousElement.className).toBe('previous');
+    expect(nextElement.className).toBe('next');
+    expect(leftElements.length).toBe(10);
+    expect(rightElements.length).toBe(0);
+    expect(breakElements.length).toBe(0);
+  });
+
   it('should use ariaLabelBuilder for rendering aria-labels if ariaLabelBuilder is specified', function () {
     const linkedPagination = ReactTestUtils.renderIntoDocument(
       <PaginationBoxView
@@ -674,7 +747,7 @@ describe('Test pagination behaviour', () => {
     ).toBe('Current page');
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
-      'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+      'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder prop instead.'
     );
     consoleWarnMock.mockRestore();
   });
@@ -743,7 +816,7 @@ describe('Test default props', () => {
   });
 
   describe('default disableInitialCallback', () => {
-    it('should call the onPageChange callback when disableInitialCallback is set to false/undefined', () => {
+    it('should call the onPageChange callback when disableInitialCallback is set to false/undefined (uncontrolled)', () => {
       const myOnPageChangeMethod = jest.fn();
       ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
@@ -753,6 +826,39 @@ describe('Test default props', () => {
         />
       );
       expect(myOnPageChangeMethod).toHaveBeenCalledWith({ selected: 5 });
+    });
+
+    it('... except when the component is in controlled mode (page prop)', () => {
+      const myOnPageChangeMethod = jest.fn();
+      ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView page={5} onPageChange={myOnPageChangeMethod} />
+      );
+      expect(myOnPageChangeMethod).not.toHaveBeenCalled();
+    });
+
+    it('... except when the component is in controlled mode (page prop), even with initialPage prop', () => {
+      const myOnPageChangeMethod = jest.fn();
+      ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={3}
+          page={5}
+          onPageChange={myOnPageChangeMethod}
+        />
+      );
+      expect(myOnPageChangeMethod).not.toHaveBeenCalled();
+    });
+
+    it('it should not even be forced to true when the component is in controlled mode (page prop)', () => {
+      const myOnPageChangeMethod = jest.fn();
+      ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          initialPage={3}
+          page={5}
+          onPageChange={myOnPageChangeMethod}
+          disableInitialCallback={true}
+        />
+      );
+      expect(myOnPageChangeMethod).not.toHaveBeenCalled();
     });
   });
 
@@ -1075,6 +1181,7 @@ describe('Test custom props', () => {
 
   describe('forcePage', () => {
     it('should use the forcePage prop when defined', () => {
+      const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
       );
@@ -1082,6 +1189,13 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
       ).toBe('3');
+      expect(console.warn).toHaveBeenCalledTimes(1);
+      expect(console.warn).toHaveBeenLastCalledWith(
+        'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
+          ' You should now use the page prop for a controlled component.' +
+          '\nSee https://reactjs.org/docs/forms.html#controlled-components'
+      );
+      consoleWarnMock.mockRestore();
     });
 
     it('should update forcePage and hence selected page when forcePage value is changed', () => {
@@ -1130,59 +1244,168 @@ describe('Test custom props', () => {
           forcePage={2}
         />
       );
+      // forcePage is first.
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
-      ).toBe('4');
+      ).toBe('3');
       expect(console.warn).toHaveBeenCalledTimes(1);
       expect(console.warn).toHaveBeenLastCalledWith(
-        '(react-paginate): Both initialPage (3) and forcePage (2) props are provided, which is discouraged.' +
-          ' Use exclusively forcePage prop for a controlled component.\n' +
+        'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
+          ' You should now use the page prop for a controlled component.' +
+          '\nSee https://reactjs.org/docs/forms.html#controlled-components'
+      );
+      consoleWarnMock.mockRestore();
+    });
+
+    describe('should not be totally controlled when forcePage is provided', () => {
+      it('should change even if parent state not changed', () => {
+        const consoleWarnMock = jest
+          .spyOn(console, 'warn')
+          .mockImplementation();
+        const pagination = ReactTestUtils.renderIntoDocument(
+          <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
+        );
+
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('3');
+
+        const pageItem =
+          ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+
+        ReactTestUtils.Simulate.click(pageItem);
+
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('2');
+        expect(console.warn).toHaveBeenCalledTimes(1);
+        expect(console.warn).toHaveBeenLastCalledWith(
+          'DEPRECATED (react-paginate): The forcePage prop is deprecated.' +
+            ' You should now use the page prop for a controlled component.' +
+            '\nSee https://reactjs.org/docs/forms.html#controlled-components'
+        );
+        consoleWarnMock.mockRestore();
+      });
+    });
+  });
+
+  describe('page prop', () => {
+    it('should use the page prop when defined', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('3');
+    });
+
+    it('should update page and hence selected page when page prop value is changed', () => {
+      const node = document.createElement('div');
+      // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
+      let pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          ref={pagination}
+          page={2}
+        />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('3');
+        }
+      );
+      pagination = React.createRef();
+      ReactDOM.render(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          ref={pagination}
+          page={3}
+        />,
+        node,
+        () => {
+          expect(
+            ReactDOM.findDOMNode(pagination.current).querySelector(
+              '.selected a'
+            ).textContent
+          ).toBe('4');
+        }
+      );
+    });
+
+    it('should report a warning when using both initialPage and page props', () => {
+      const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageCount={DEFAULT_PAGE_COUNT}
+          initialPage={3}
+          page={2}
+        />
+      );
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('3');
+      expect(console.warn).toHaveBeenCalledTimes(1);
+      expect(console.warn).toHaveBeenLastCalledWith(
+        '(react-paginate): Both initialPage (3) and page (2) props are provided, which is discouraged.' +
+          ' Use exclusively page prop for a controlled component.\n' +
           'See https://reactjs.org/docs/forms.html#controlled-components'
       );
       consoleWarnMock.mockRestore();
     });
 
-    it('(observation) is not totally controlled when forcePage is provided', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
-      );
+    describe('should be totally controlled when page prop is provided', () => {
+      it('should not change if parent state not changed', () => {
+        const pagination = ReactTestUtils.renderIntoDocument(
+          <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} page={2} />
+        );
 
-      expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
-          .textContent
-      ).toBe('3');
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('3');
 
-      const pageItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        const pageItem =
+          ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
 
-      ReactTestUtils.Simulate.click(pageItem);
+        ReactTestUtils.Simulate.click(pageItem);
 
-      expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
-          .textContent
-      ).toBe('2');
-    });
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('3');
+      });
 
-    it('(observation) is not totally controlled when forcePage is provided, even when it is 0', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={0} />
-      );
+      // TODO Test by mounting component and listening to change change (parent state).
+      // --> Create a parent stub component with useState to test?
+      it('should be controlled even when page prop is 0', () => {
+        const pagination = ReactTestUtils.renderIntoDocument(
+          <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} page={0} />
+        );
 
-      expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
-          .textContent
-      ).toBe('1');
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('1');
 
-      const pageItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        const pageItem =
+          ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
 
-      ReactTestUtils.Simulate.click(pageItem);
+        ReactTestUtils.Simulate.click(pageItem);
 
-      expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
-          .textContent
-      ).toBe('2');
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe('1');
+      });
     });
   });
 
@@ -1715,7 +1938,7 @@ describe('Test custom props', () => {
       ).toBe('Page 1 is your current page');
       expect(console.warn).toHaveBeenCalledTimes(1);
       expect(console.warn).toHaveBeenLastCalledWith(
-        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder instead.'
+        'DEPRECATED (react-paginate): The extraAriaContext prop is deprecated. You should now use the ariaLabelBuilder prop instead.'
       );
       consoleWarnMock.mockRestore();
     });

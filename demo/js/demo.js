@@ -86,7 +86,7 @@ export class App extends Component {
           nextLabel="next"
           breakLabel="..."
           breakClassName="break-me"
-          pageCount={this.state.pageCount}
+          pageCount={20}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={this.handlePageClick}
