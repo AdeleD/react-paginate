@@ -45,6 +45,11 @@ https://github.com/moroshko/react-autosuggest
 
 See also https://github.com/AdeleD/react-paginate/issues/80
 
+## Hooks
+
+Add a hook `usePage`?
+https://remix.run/blog/react-router-v6
+
 ## Misc
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
