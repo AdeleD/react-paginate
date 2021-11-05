@@ -7,6 +7,11 @@
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 - Add a warning when providing a `page` prop value that is greater than the maximum page index from `pageCount` prop.
 - Add a warning when a non integer is provided for `initialPage`, `forcePage` or `page` props.
+- Added a new optional First and Last page button and related props. To make the First button visible, you should pass `showFirstLabel={true}` (default: false). For the Last button, use `showLastLabel={true}`.
+New related props:
+`showFirstLabel`, `firstLabel`, `firstClassName`, `firstLinkClassName`, `firstAriaLabel`, `firstRel`.
+and
+`showLastLabel`, `lastLabel`, `lastClassName`, `lastLinkClassName`, `lastAriaLabel`, `lastRel` (see detailed description in the readme)
 
 ## >= 8.0.0
 
