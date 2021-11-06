@@ -97,9 +97,9 @@ export class App extends Component {
             page >= 1 && page <= pageCount ? `/page/${page}` : '#'
           }
           hrefAllControls
-          showFirstLabel={true}
+          showFirstLabel
           firstLabel='first'
-          showLastLabel={true}
+          showLastLabel
           lastLabel='last'
         />
       </div>

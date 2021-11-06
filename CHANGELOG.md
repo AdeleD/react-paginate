@@ -7,7 +7,7 @@
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 - Add a warning when providing a `page` prop value that is greater than the maximum page index from `pageCount` prop.
 - Add a warning when a non integer is provided for `initialPage`, `forcePage` or `page` props.
-- Added a new optional First and Last page button and related props (See: https://github.com/AdeleD/react-paginate/pull/392). To make the First button visible, you should pass `showFirstLabel={true}` (default: false). For the Last button, use `showLastLabel={true}`.
+- Added a new optional First and Last page button and related props (See: https://github.com/AdeleD/react-paginate/pull/392). To make the First button visible, you should pass `showFirstLabel` (default: false). For the Last button, use `showLastLabel`.
 New related props:
 `showFirstLabel`, `firstLabel`, `firstClassName`, `firstLinkClassName`, `firstAriaLabel`, `firstRel`.
 and
