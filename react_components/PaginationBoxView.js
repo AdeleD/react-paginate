@@ -654,7 +654,6 @@ export default class PaginationBoxView extends Component {
           <li className={firstClasses}>
             <a
               className={firstLinkClasses}
-              href={1}
               tabIndex='0'
               role="button"
               onKeyPress={this.handleFirstPage}
