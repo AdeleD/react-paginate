@@ -10,7 +10,8 @@
 6. Always write tests
 7. Format with Prettier `npm run format` and check ESLint `npm run lint`
 8. Document your changes in [`CHANGELOG.md`](/CHANGELOG.md)
-9. Open the PR
+9. If props have changed, update the TypeScript definitions in [`dist/index.d.ts`](/dist/index.d.ts)
+10. Submit the PR
 
 Run tests:
 
@@ -26,4 +27,3 @@ npm test
 4. Tag the new version `git tag v8.0.0` and push the tag `git push --tags`
 5. Create a [release note](https://github.com/AdeleD/react-paginate/releases)
 6. Publish on NPM
-7. If props have changed, submit a PR (after a release) with updated TypeScript definitions [here](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-paginate)
