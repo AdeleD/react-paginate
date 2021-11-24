@@ -2127,4 +2127,55 @@ describe('Test custom props', () => {
       ).toBe('break');
     });
   });
+
+  describe('Prevent breaks for one page', () => {
+    it('test clicks on previous and next buttons', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageRangeDisplayed={5}
+          pageCount={12}
+          renderOnZeroPageCount={null}
+          marginPagesDisplayed={1}
+        />
+      );
+
+      const elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
+        pagination,
+        'a'
+      );
+      const previous = elmts[0];
+      const next = elmts[elmts.length - 1];
+
+      ReactTestUtils.Simulate.click(next);
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
+      ).toBe(1);
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+      ).toBe('2');
+
+      // Click to go to page 8.
+      for (let i = 1; i < 7; i++) {
+        ReactTestUtils.Simulate.click(next);
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
+        ).toBe(1);
+        expect(
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+        ).toBe(`${2+i}`);
+      }
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+      ).toBe('8');
+
+      ReactTestUtils.Simulate.click(previous);
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
+      ).toBe(1);
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+      ).toBe('7');
+    });
+  });
 });

@@ -445,8 +445,8 @@ export default class PaginationBoxView extends Component {
         ) {
           actualPageElement = {
             type: 'page',
-            index: i,
-            display: createPageView(i),
+            index: pageElement.index,
+            display: createPageView(pageElement.index),
           };
         }
         // We add the displayed elements in the same pass, to avoid another iteration.

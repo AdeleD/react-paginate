@@ -2,6 +2,10 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.0.1
+
+- Fix the indexed passed when replacing a break (containing only one page) with the actual page (see: https://github.com/AdeleD/react-paginate/pull/395)
+
 ## >= 8.0.0
 
 - Remove button role for links with an href (see: https://github.com/AdeleD/react-paginate/pull/390)
