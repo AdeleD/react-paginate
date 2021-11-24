@@ -95,7 +95,7 @@ ReactDOM.render(
 
 Test it on [CodePen](https://codepen.io/monsieurv/pen/abyJQWQ).
 
-You can also read the code of [demo/js/demo.js][1] to quickly understand how to make `react-paginate` work with a list of objects.
+You can also read the code of [demo/js/demo.js](https://github.com/AdeleD/react-paginate/blob/master/demo/js/demo.js) to quickly understand how to make `react-paginate` work with a list of objects.
 
 Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)**, with features fetching sample code (using GitHub API) and two synchronized pagination widgets.
 
@@ -153,19 +153,19 @@ cd react-paginate
 Install dependencies:
 
 ```console
-make install
+npm run install
 ```
 
 Prepare the demo:
 
 ```console
-make demo
+npm run demo
 ```
 
 Run the server:
 
 ```console
-make serve
+npm run serve
 ```
 
 Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
@@ -174,18 +174,4 @@ Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
 
 ## Contribute
 
-1. [Submit an issue](https://github.com/AdeleD/react-paginate/issues)
-2. Fork the repository
-3. Create a dedicated branch (never ever work in `master`)
-4. Run `npm start` http://localhost:3000
-5. Fix bugs or implement features
-6. Always write tests
-7. Format with Prettier `npm run format` and check ESLint `npm run lint`
-
-Run tests:
-
-```console
-make test
-```
-
-[1]: https://github.com/AdeleD/react-paginate/blob/master/demo/js/demo.js
+See [`CONTRIBUTE.md`](/CONTRIBUTE.md)
