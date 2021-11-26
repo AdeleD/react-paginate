@@ -34,13 +34,13 @@ export interface ReactPaginateProps {
    * The `rel` property on the `a` tag just before the selected page.
    * Default value `prev`.  Set to `null` to disable.
    */
-  prevPageRel?: string | undefined;
+  prevPageRel?: string | null | undefined;
 
   /**
   * The `rel` property on the `a` tag for the prev page control.
   * Default value `prev`. Set to `null` to disable.
   */
-  prevRel?: string | undefined;
+  prevRel?: string | null | undefined;
 
   /**
    * Label for the `next` button.
@@ -56,13 +56,13 @@ export interface ReactPaginateProps {
    * The `rel` property on the `a` tag just after the selected page.
    * Default value `next`.  Set to `null` to disable.
    */
-  nextPageRel?: string | undefined;
+  nextPageRel?: string | null | undefined;
 
   /**
   * The `rel` property on the `a` tag for the next page control.
   * Default value `next`. Set to `null` to disable.
   */
-  nextRel?: string | undefined;
+  nextRel?: string | null | undefined;
 
   /**
    * Label for ellipsis.
@@ -200,13 +200,13 @@ export interface ReactPaginateProps {
    * A render fonction called when `pageCount` is zero. Let the Previous / Next buttons displayed by default (`undefined`).
    * Display nothing when `null` is provided.
    */
-  renderOnZeroPageCount?(props: ReactPaginateProps): void;
+  renderOnZeroPageCount?: (props: ReactPaginateProps) => void | null;
 
   /**
    * The `rel` propery on the `a` tag for the selected page.
    * Default value `canonical`. Set to `null` to disable.
    */
-   selectedPageRel?: string | undefined;
+   selectedPageRel?: string | null | undefined;
 }
 
 declare const ReactPaginate: React.ComponentClass<ReactPaginateProps>;
