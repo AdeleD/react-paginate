@@ -17,7 +17,6 @@ const STYLES_DIR = path.join(__dirname, 'styles');
 const DATA = path.join(__dirname, 'data', 'data.json');
 const NODE_PORT = process.env.NODE_PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const PER_PAGE = 10;
 
 app.use(serveStatic(ROOT_DIR));
 app.use(serveStatic(STYLES_DIR));
@@ -31,27 +30,29 @@ app.use(
   })
 );
 
-function getPaginatedItems(items, offset) {
-  return items.slice(offset, offset + PER_PAGE);
+const ITEMS = JSON.parse(fs.readFileSync(DATA));
+
+function getPaginatedItems(items, offset, limit) {
+  return items.slice(offset, offset + limit);
 }
 
 app.get('/comments', function (req, res) {
-  const items = JSON.parse(fs.readFileSync(DATA));
-  const offset = req.query.offset ? parseInt(req.query.offset, 10) : 0;
-  const nextOffset = offset + PER_PAGE;
-  const previousOffset = offset - PER_PAGE < 1 ? 0 : offset - PER_PAGE;
+  const offset = req.query.offset ? parseInt(req.query.offset) : 0;
+  const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+  const nextOffset = offset + limit;
+  const previousOffset = offset - limit < 1 ? 0 : offset - limit;
 
   const meta = {
-    limit: PER_PAGE,
-    next: util.format('?limit=%s&offset=%s', PER_PAGE, nextOffset),
+    limit: limit,
+    next: util.format('?limit=%d&offset=%d', limit, nextOffset),
     offset: req.query.offset,
-    previous: util.format('?limit=%s&offset=%s', PER_PAGE, previousOffset),
-    total_count: items.length,
+    previous: util.format('?limit=%d&offset=%', limit, previousOffset),
+    total_count: ITEMS.length,
   };
 
   const json = {
     meta: meta,
-    comments: getPaginatedItems(items, offset),
+    comments: getPaginatedItems(ITEMS, offset, limit),
   };
 
   return res.json(json);

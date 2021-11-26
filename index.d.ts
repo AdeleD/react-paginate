@@ -37,9 +37,9 @@ export interface ReactPaginateProps {
   prevPageRel?: string | null | undefined;
 
   /**
-  * The `rel` property on the `a` tag for the prev page control.
-  * Default value `prev`. Set to `null` to disable.
-  */
+   * The `rel` property on the `a` tag for the prev page control.
+   * Default value `prev`. Set to `null` to disable.
+   */
   prevRel?: string | null | undefined;
 
   /**
@@ -59,9 +59,9 @@ export interface ReactPaginateProps {
   nextPageRel?: string | null | undefined;
 
   /**
-  * The `rel` property on the `a` tag for the next page control.
-  * Default value `next`. Set to `null` to disable.
-  */
+   * The `rel` property on the `a` tag for the next page control.
+   * Default value `next`. Set to `null` to disable.
+   */
   nextRel?: string | null | undefined;
 
   /**
@@ -171,7 +171,11 @@ export interface ReactPaginateProps {
   /**
    * The method is called to generate the href attribute value on tag a of each page element.
    */
-  hrefBuilder?(pageIndex: number, pageCount: number, selectedPage: number): void;
+  hrefBuilder?(
+    pageIndex: number,
+    pageCount: number,
+    selectedPage: number
+  ): void;
 
   /**
    * By default the `hrefBuilder` add `href` only to active controls.
@@ -179,7 +183,7 @@ export interface ReactPaginateProps {
    * ([see](https://github.com/AdeleD/react-paginate/issues/242))
    * Default to `false`
    */
-   hrefAllControls?: boolean | undefined;
+  hrefAllControls?: boolean | undefined;
 
   /**
    * Extra context to add to the aria-label HTML attribute.
@@ -206,7 +210,7 @@ export interface ReactPaginateProps {
    * The `rel` propery on the `a` tag for the selected page.
    * Default value `canonical`. Set to `null` to disable.
    */
-   selectedPageRel?: string | null | undefined;
+  selectedPageRel?: string | null | undefined;
 }
 
 declare const ReactPaginate: React.ComponentClass<ReactPaginateProps>;

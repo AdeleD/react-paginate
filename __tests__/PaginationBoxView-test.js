@@ -2151,21 +2151,25 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
       ).toBe(1);
       expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
       ).toBe('2');
 
       // Click to go to page 8.
       for (let i = 1; i < 7; i++) {
         ReactTestUtils.Simulate.click(next);
         expect(
-          ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
+          ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a')
+            .length
         ).toBe(1);
         expect(
-          ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
-        ).toBe(`${2+i}`);
+          ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+            .textContent
+        ).toBe(`${2 + i}`);
       }
       expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
       ).toBe('8');
 
       ReactTestUtils.Simulate.click(previous);
@@ -2174,7 +2178,8 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
       ).toBe(1);
       expect(
-        ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
       ).toBe('7');
     });
   });
