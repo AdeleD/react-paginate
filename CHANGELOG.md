@@ -4,7 +4,7 @@
 
 ## >= 8.0.2
 
-- Add TypeScript definitions directly [in the repository](https://github.com/AdeleD/react-paginate/blob/master/dist/index.d.ts) (instead of community definitions from [DefinitelyTyped]](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-paginate)) (see: https://github.com/AdeleD/react-paginate/issues/394)
+- Add TypeScript definitions directly [in the repository](https://github.com/AdeleD/react-paginate/blob/master/dist/index.d.ts) (instead of community definitions from [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-paginate)) (see: https://github.com/AdeleD/react-paginate/issues/394)
 
 ## >= 8.0.1
 
