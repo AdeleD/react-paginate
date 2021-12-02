@@ -2224,4 +2224,57 @@ describe('Test custom props', () => {
       ).toBe('2');
     });
   });
+
+  describe('onBreakLabelClick', () => {
+    it('should use the onBreakLabelClick prop when defined', () => {
+      const myOnBreakLabelClick = jest.fn();
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          onBreakLabelClick={myOnBreakLabelClick}
+          initialPage={10}
+          pageCount={20}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+        />
+      );
+      const breakItem = ReactDOM.findDOMNode(pagination).querySelector(
+        'li.break a'
+      );
+      ReactTestUtils.Simulate.click(breakItem);
+
+      expect(myOnBreakLabelClick).toHaveBeenCalledWith(
+        2,
+        10,
+        expect.objectContaining({ target: expect.any(Element) })
+      );
+
+      // page should not change because myOnBreakLabelClick returned undefined
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('11');
+    });
+
+    it('should use the return value from onBreakLabelClick to change page', () => {
+      const myOnBreakLabelClick = () => 5;
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          onBreakLabelClick={myOnBreakLabelClick}
+          initialPage={10}
+          pageCount={20}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+        />
+      );
+      const breakItem = ReactDOM.findDOMNode(pagination).querySelector(
+        'li.break a'
+      );
+      ReactTestUtils.Simulate.click(breakItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('6');
+    });
+  });
 });

@@ -112,6 +112,7 @@ Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)
 | `breakClassName`         | `String`   | The classname on tag `li` of the ellipsis element.                                                                                                                     |
 | `breakLinkClassName`     | `String`   | The classname on tag `a` of the ellipsis element.                                                                                                                      |
 | `onPageChange`           | `Function` | The method to call when a page is clicked. Exposes the current page object as an argument.                                                                             |
+| `onBreakLabelClick` | `Function` | The method to call when a breakLabel is clicked. Can return the page to jump to. |
 | `onPageActive`           | `Function` | The method to call when an active page is clicked. Exposes the active page object as an argument.                                                                      |
 | `initialPage`            | `Number`   | The initial page selected, in [uncontrolled mode](https://reactjs.org/docs/uncontrolled-components.html). Do not use with `forcePage` at the same time.                |
 | `forcePage`              | `Number`   | To override selected page with parent prop. Use this if you want to [control](https://reactjs.org/docs/forms.html#controlled-components) the page from your app state. |
