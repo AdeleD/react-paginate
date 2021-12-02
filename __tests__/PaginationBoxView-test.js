@@ -2183,4 +2183,45 @@ describe('Test custom props', () => {
       ).toBe('7');
     });
   });
+
+  describe('Prevent breaks when only one active page', () => {
+    it('does not show break', () => {
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          pageRangeDisplayed={0}
+          pageCount={12}
+          marginPagesDisplayed={0}
+        />
+      );
+
+      const elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
+        pagination,
+        'a'
+      );
+      const next = elmts[elmts.length - 1];
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelectorAll('.break a').length
+      ).toBe(0);
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
+      ).toBe(1);
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('1');
+
+      ReactTestUtils.Simulate.click(next);
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelectorAll('.break a').length
+      ).toBe(0);
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
+      ).toBe(1);
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('2');
+    });
+  });
 });

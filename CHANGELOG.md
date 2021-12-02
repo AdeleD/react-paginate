@@ -2,6 +2,10 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.1.0
+
+- Prevent breaks to be displayed when both `pageRangeDisplayed` and `marginPagesDisplayed` are 0
+
 ## >= 8.0.3
 
 - Fix bug on `marginPagesDisplayed={0}` (see: https://github.com/AdeleD/react-paginate/pull/396)

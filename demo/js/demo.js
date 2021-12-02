@@ -139,8 +139,8 @@ export class App extends Component {
             breakClassName="page-item"
             breakLinkClassName="page-link"
             pageCount={20}
+            pageRangeDisplayed={4}
             marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
             onPageChange={this.handlePageClick}
             containerClassName="pagination justify-content-center"
             pageClassName="page-item"

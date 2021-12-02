@@ -413,7 +413,9 @@ export default class PaginationBoxView extends Component {
         if (
           breakLabel &&
           pagesBreaking.length > 0 &&
-          pagesBreaking[pagesBreaking.length - 1].display !== breakView
+          pagesBreaking[pagesBreaking.length - 1].display !== breakView &&
+          // We do not show break if only one active page is displayed.
+          (pageRangeDisplayed > 0 || marginPagesDisplayed > 0)
         ) {
           breakView = (
             <BreakView
