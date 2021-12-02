@@ -412,6 +412,7 @@ export default class PaginationBoxView extends Component {
         // we do nothing (because we don't want to display the page).
         if (
           breakLabel &&
+          pagesBreaking.length > 0 &&
           pagesBreaking[pagesBreaking.length - 1].display !== breakView
         ) {
           breakView = (

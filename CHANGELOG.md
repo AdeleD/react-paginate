@@ -2,6 +2,10 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.0.3
+
+- Fix bug on `marginPagesDisplayed={0}` (see: https://github.com/AdeleD/react-paginate/pull/396)
+
 ## >= 8.0.2
 
 - Add TypeScript definitions directly [in the repository](https://github.com/AdeleD/react-paginate/blob/master/dist/index.d.ts) (instead of community definitions from [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-paginate)) (see: https://github.com/AdeleD/react-paginate/issues/394)

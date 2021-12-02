@@ -1,6 +1,6 @@
 {
   "name": "react-paginate",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "description": "A ReactJS component that creates a pagination.",
   "main": "./dist/react-paginate.js",
   "repository": {
