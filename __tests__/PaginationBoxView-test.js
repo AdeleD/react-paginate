@@ -2224,4 +2224,61 @@ describe('Test custom props', () => {
       ).toBe('2');
     });
   });
+
+  describe('onClick', () => {
+    it('should use the onClick prop when defined', () => {
+      const myOnClick = jest.fn(() => false);
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          onClick={myOnClick}
+          initialPage={10}
+          pageCount={20}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+        />
+      );
+      const breakItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li.break a');
+      ReactTestUtils.Simulate.click(breakItem);
+
+      expect(myOnClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          index: 2,
+          selected: 10,
+          event: expect.objectContaining({ target: expect.any(Element) }),
+          isPrevious: false,
+          isNext: false,
+          isBreak: true,
+          isActive: false,
+        })
+      );
+
+      // page should not change because onClick returned false
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('11');
+    });
+
+    it('should use the return value from onClick to change page', () => {
+      const myOnClick = () => 5;
+      const pagination = ReactTestUtils.renderIntoDocument(
+        <PaginationBoxView
+          onClick={myOnClick}
+          initialPage={10}
+          pageCount={20}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+        />
+      );
+      const breakItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li.break a');
+      ReactTestUtils.Simulate.click(breakItem);
+
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('6');
+    });
+  });
 });

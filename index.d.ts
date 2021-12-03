@@ -90,6 +90,20 @@ export interface ReactPaginateProps {
   onPageActive?(selectedItem: { selected: number }): void;
 
   /**
+   * The method to call when an active page is clicked. Exposes the active page object as an argument.
+   */
+  onClick?(clickEvent: {
+    index: number | null;
+    selected: number;
+    nextSelectedPage: number | undefined;
+    event: object;
+    isPrevious: boolean;
+    isNext: boolean;
+    isBreak: boolean;
+    isActive: boolean;
+  }): boolean | number | void;
+
+  /**
    * The initial page selected.
    */
   initialPage?: number | undefined;
