@@ -24,7 +24,7 @@ export default class PaginationBoxView extends Component {
     hrefAllControls: PropTypes.bool,
     onPageChange: PropTypes.func,
     onPageActive: PropTypes.func,
-    onBreakLabelClick: PropTypes.func,
+    onClick: PropTypes.func,
     initialPage: PropTypes.number,
     forcePage: PropTypes.number,
     disableInitialCallback: PropTypes.bool,
@@ -166,33 +166,41 @@ export default class PaginationBoxView extends Component {
     }
   }
 
-  handlePreviousPage = (evt) => {
+  handlePreviousPage = (event) => {
     const { selected } = this.state;
-    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-    if (selected > 0) {
-      this.handlePageSelected(selected - 1, evt);
-    }
+
+    this.handleClick(event, null, selected > 0 ? selected - 1 : undefined, {
+      isPrevious: true,
+    });
   };
 
-  handleNextPage = (evt) => {
+  handleNextPage = (event) => {
     const { selected } = this.state;
     const { pageCount } = this.props;
 
-    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-    if (selected < pageCount - 1) {
-      this.handlePageSelected(selected + 1, evt);
-    }
+    this.handleClick(
+      event,
+      null,
+      selected < pageCount - 1 ? selected + 1 : undefined,
+      { isNext: true }
+    );
   };
 
-  handlePageSelected = (selected, evt) => {
-    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-
+  handlePageSelected = (selected, event) => {
     if (this.state.selected === selected) {
       this.callActiveCallback(selected);
+      this.handleClick(event, null, undefined, { isActive: true });
       return;
     }
 
-    this.setState({ selected: selected });
+    this.handleClick(event, null, selected);
+  };
+
+  handlePageChange = (selected) => {
+    if (this.state.selected === selected) {
+      return;
+    }
+    this.setState({ selected });
 
     // Call the callback with the new selected item:
     this.callCallback(selected);
@@ -221,22 +229,59 @@ export default class PaginationBoxView extends Component {
     return backwardJump < 0 ? 0 : backwardJump;
   }
 
-  handleBreakClick = (index, evt) => {
-    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
-
+  handleClick = (
+    event,
+    index,
+    nextSelectedPage,
+    {
+      isPrevious = false,
+      isNext = false,
+      isBreak = false,
+      isActive = false,
+    } = {}
+  ) => {
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     const { selected } = this.state;
-    let page;
+    const { onClick } = this.props;
 
-    if (typeof this.props.onBreakLabelClick === 'function') {
-      page = this.props.onBreakLabelClick(index, selected, evt);
-      if (typeof page === 'undefined') {
+    let newPage = nextSelectedPage;
+
+    if (onClick) {
+      const onClickReturn = onClick({
+        index,
+        selected,
+        nextSelectedPage,
+        event,
+        isPrevious,
+        isNext,
+        isBreak,
+        isActive,
+      });
+      if (onClickReturn === false) {
+        // We abord standard behavior and let parent handle
+        // all behavior.
         return;
       }
-    } else {
-      page = selected < index ? this.getForwardJump() : this.getBackwardJump();
+      if (Number.isInteger(onClickReturn)) {
+        // We assume parent want to go to the returned page.
+        newPage = onClickReturn;
+      }
     }
 
-    this.handlePageSelected(page, evt);
+    if (newPage !== undefined) {
+      this.handlePageChange(newPage);
+    }
+  };
+
+  handleBreakClick = (index, event) => {
+    const { selected } = this.state;
+
+    this.handleClick(
+      event,
+      index,
+      selected < index ? this.getForwardJump() : this.getBackwardJump(),
+      { isBreak: true }
+    );
   };
 
   getElementHref(pageIndex) {
@@ -266,7 +311,7 @@ export default class PaginationBoxView extends Component {
 
   callCallback = (selectedItem) => {
     if (
-      typeof this.props.onPageChange !== 'undefined' &&
+      this.props.onPageChange !== undefined &&
       typeof this.props.onPageChange === 'function'
     ) {
       this.props.onPageChange({ selected: selectedItem });
@@ -275,7 +320,7 @@ export default class PaginationBoxView extends Component {
 
   callActiveCallback = (selectedItem) => {
     if (
-      typeof this.props.onPageActive !== 'undefined' &&
+      this.props.onPageActive !== undefined &&
       typeof this.props.onPageActive === 'function'
     ) {
       this.props.onPageActive({ selected: selectedItem });

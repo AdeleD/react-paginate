@@ -2225,50 +2225,54 @@ describe('Test custom props', () => {
     });
   });
 
-  describe('onBreakLabelClick', () => {
-    it('should use the onBreakLabelClick prop when defined', () => {
-      const myOnBreakLabelClick = jest.fn();
+  describe('onClick', () => {
+    it('should use the onClick prop when defined', () => {
+      const myOnClick = jest.fn(() => false);
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
-          onBreakLabelClick={myOnBreakLabelClick}
+          onClick={myOnClick}
           initialPage={10}
           pageCount={20}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
         />
       );
-      const breakItem = ReactDOM.findDOMNode(pagination).querySelector(
-        'li.break a'
-      );
+      const breakItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li.break a');
       ReactTestUtils.Simulate.click(breakItem);
 
-      expect(myOnBreakLabelClick).toHaveBeenCalledWith(
-        2,
-        10,
-        expect.objectContaining({ target: expect.any(Element) })
+      expect(myOnClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          index: 2,
+          selected: 10,
+          event: expect.objectContaining({ target: expect.any(Element) }),
+          isPrevious: false,
+          isNext: false,
+          isBreak: true,
+          isActive: false,
+        })
       );
 
-      // page should not change because myOnBreakLabelClick returned undefined
+      // page should not change because onClick returned false
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
       ).toBe('11');
     });
 
-    it('should use the return value from onBreakLabelClick to change page', () => {
-      const myOnBreakLabelClick = () => 5;
+    it('should use the return value from onClick to change page', () => {
+      const myOnClick = () => 5;
       const pagination = ReactTestUtils.renderIntoDocument(
         <PaginationBoxView
-          onBreakLabelClick={myOnBreakLabelClick}
+          onClick={myOnClick}
           initialPage={10}
           pageCount={20}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
         />
       );
-      const breakItem = ReactDOM.findDOMNode(pagination).querySelector(
-        'li.break a'
-      );
+      const breakItem =
+        ReactDOM.findDOMNode(pagination).querySelector('li.break a');
       ReactTestUtils.Simulate.click(breakItem);
 
       expect(

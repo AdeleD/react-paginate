@@ -111,6 +111,7 @@ export class App extends Component {
   }
 
   handlePageClick = (data) => {
+    console.log('onPageChange', data);
     let selected = data.selected;
     let offset = Math.ceil(selected * this.props.perPage);
 
@@ -156,6 +157,14 @@ export class App extends Component {
             }
             hrefAllControls
             forcePage={currentPage}
+            onClick={(clickEvent) => {
+              console.log('onClick', clickEvent);
+              // Return false to prevent standard page change,
+              // return false; // --> Will do nothing.
+              // return a number to choose the next page,
+              // return 4; --> Will go to page 5 (index 4)
+              // return nothing (undefined) to let standard behavior take place.
+            }}
           />
         </nav>
       </div>
