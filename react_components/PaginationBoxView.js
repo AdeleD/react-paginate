@@ -164,6 +164,11 @@ export default class PaginationBoxView extends Component {
         `(react-paginate): The pageCount prop value provided is not an integer (${this.props.pageCount}). Did you forget a Math.ceil()?`
       );
     }
+    console.log(this.props.pageCount)
+    console.log(prevProps.pageCount)
+    if(this.props.pageCount < prevProps.pageCount){
+      this.setState({ selected: this.props.pageCount - 1});
+    }
   }
 
   handlePreviousPage = (event) => {
