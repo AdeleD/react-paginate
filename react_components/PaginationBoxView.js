@@ -167,7 +167,9 @@ export default class PaginationBoxView extends Component {
     console.warn(this.props.pageCount)
     console.warn(prevProps.pageCount)
     if(this.props.pageCount < prevProps.pageCount){
-      this.setState({ selected: this.props.pageCount - 1});
+      //this.setState({ selected: this.props.pageCount - 1});
+      //this.callCallback(selected);
+      this.handlePageChange(this.props.pageCount-1)
     }
   }
 
