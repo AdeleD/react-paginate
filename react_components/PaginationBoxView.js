@@ -141,6 +141,8 @@ export default class PaginationBoxView extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.warn('here')
+
     if (
       this.props.forcePage !== undefined &&
       this.props.forcePage !== prevProps.forcePage
@@ -165,15 +167,14 @@ export default class PaginationBoxView extends Component {
       );
     }
     console.warn(prevProps)
-    console.log(prevProps)
-    if(this.props.pageCount < prevProps.pageCount){
+    console.warn(this.props)
+    /*if(this.props.pageCount < prevProps.pageCount){
       console.warn(prevProps)
-      console.log(prevProps)
       console.warn('here')
-      console.log('here')
+
       if(prevProps.selected > this.props.pageCount-1) this.handlePageChange (prevProps.selected)
       else this.handlePageChange(this.props.pageCount-1)
-    }
+    }*/
   }
 
   handlePreviousPage = (event) => {
