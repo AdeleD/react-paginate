@@ -165,11 +165,7 @@ export default class PaginationBoxView extends Component {
       );
     }
     if(this.props.pageCount < prevProps.pageCount){
-      console.warn(prevProps)
-      console.warn(prevProps.selected)
-
-      if(prevProps.selected > this.props.pageCount-1) this.handlePageChange (prevProps.selected)
-      else this.handlePageChange(this.props.pageCount-1)
+      this.handlePageChange (0)
     }
   }
 
