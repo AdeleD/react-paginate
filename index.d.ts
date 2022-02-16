@@ -143,6 +143,11 @@ export interface ReactPaginateProps {
   pageLinkClassName?: string | undefined;
 
   /**
+   * Function to set the text on page links. Defaults to `(page) => page`
+   */
+  pageLabelBuilder?(page: number): string | React.ReactNode;
+
+  /**
    * The classname for the active page.
    */
   activeClassName?: string | undefined;

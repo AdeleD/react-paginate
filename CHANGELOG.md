@@ -2,6 +2,10 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.1.1
+
+- Add TypeScript definition for `pageLabelBuilder` prop
+
 ## >= 8.1.0
 
 - A new prop `onClick` has been added. It is a callback for any click on the component. It exposes information on the part clicked (for eg. `isNext` for when next control is clicked or `isBreak` for a break clicked), the next expected page `nextSelectedPage` & others. Can return `false` to prevent any page change or a number to override the page to jump to. Just return nothing (or `undefined`) to let default behavior take place. (see: https://github.com/AdeleD/react-paginate/issues/263)
