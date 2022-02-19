@@ -1,6 +1,8 @@
 __tests__
+build
 demo
 docs
+*.log
 .editorconfig
 .eslintignore
 .eslintrc.json
