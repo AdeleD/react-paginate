@@ -1,6 +1,7 @@
 ## >= 9.0.0 (WIP)
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
+- Excluded unnecessary files from package (see: https://github.com/AdeleD/react-paginate/issues/410)
 
 ## >= 8.1.1
 
