@@ -130,7 +130,7 @@ export class App extends Component {
           forcePage={currentPage}
         />
         <CommentList data={this.state.data} />
-        {/* Here the pagination component is styled thanks to Boostrap
+        {/* Here the pagination component is styled thanks to Bootstrap
         classes. See https://getbootstrap.com/docs/5.1/components/pagination */}
         <nav aria-label="Page navigation comments" className="mt-4">
           <ReactPaginate
