@@ -1,6 +1,6 @@
 {
   "name": "react-paginate",
-  "version": "8.1.2",
+  "version": "8.1.3",
   "description": "A ReactJS component that creates a pagination.",
   "main": "./dist/react-paginate.js",
   "repository": {
@@ -24,7 +24,7 @@
     "prop-types": "^15.6.1"
   },
   "peerDependencies": {
-    "react": "^16 || ^17"
+    "react": "^16 || ^17 || ^18"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -42,8 +42,8 @@
     "jest-cli": "^27.3.1",
     "jquery": "^3.6.0",
     "prettier": "^2.4.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18",
+    "react-dom": "^18",
     "react-hot-loader": "^4.13.0",
     "serve-static": "^1.14.1",
     "styled-components": "^5.3.3",

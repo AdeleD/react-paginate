@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
@@ -172,7 +172,8 @@ export class App extends Component {
   }
 }
 
-ReactDOM.render(
-  <App url={'http://localhost:3000/comments'} author={'adele'} perPage={6} />,
-  document.getElementById('react-paginate')
+const container = document.getElementById('react-paginate');
+const root = createRoot(container);
+root.render(
+  <App url={'http://localhost:3000/comments'} author={'adele'} perPage={6} />
 );
