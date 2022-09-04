@@ -10,7 +10,7 @@ import $ from 'jquery';
 // Use inner class names to style the controls.
 const MyPaginate = styled(ReactPaginate).attrs({
   // You can redefine classes here, if you want.
-  activeClassName: 'active', // default to "disabled"
+  activeClassName: 'active', // default to "selected"
 })`
   margin-bottom: 2rem;
   display: flex;
