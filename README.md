@@ -50,7 +50,9 @@ function PaginatedItems({ itemsPerPage }) {
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
 
-  // Fetch items from another resources.
+  // Simulate fetching items from another resources.
+  // (This could be items from props; or items loaded in a local state
+  // from an API endpoint with useEffect and useState)
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = items.slice(itemOffset, endOffset);
