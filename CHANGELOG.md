@@ -4,6 +4,7 @@
 
 ## >= 8.1.4
 
+- Add an ARIA role [`navigation`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/navigation_role) to main `<ul>` tag
 - Dependencies bumps for generating build. Replace `react-hot-loader` by [`react-refresh`](https://github.com/pmmmwh/react-refresh-webpack-plugin/) (see: https://github.com/AdeleD/react-paginate/issues/428#issuecomment-1302408824)
 
 ## >= 8.1.3

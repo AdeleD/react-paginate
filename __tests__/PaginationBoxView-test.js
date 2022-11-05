@@ -12,14 +12,6 @@ jest.dontMock('./../react_components/BreakView');
 
 import PaginationBoxView from '../react_components/PaginationBoxView';
 
-// TODO Migrate to React Testing Library.
-// -> ReactDOM.findDOMNode won't work with function components.
-// https://testing-library.com/docs/react-testing-library/intro
-// with jest-dom
-// https://github.com/testing-library/jest-dom
-
-import ReactTestUtils from 'react-dom/test-utils';
-
 const DEFAULT_PAGE_COUNT = 10;
 
 describe('Test rendering', () => {
@@ -27,19 +19,11 @@ describe('Test rendering', () => {
     render(
       <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
     );
-    // const pagination = ReactTestUtils.renderIntoDocument(
-    //   <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-    // );
 
     const pagination = await screen.findByRole('navigation');
     expect(pagination).toBeDefined();
 
     expect(ReactDOM.findDOMNode(pagination).nodeName).toEqual('UL');
-
-    // ReactTestUtils.scryRenderedComponentsWithType(
-    //   pagination,
-    //   PaginationBoxView
-    // );
 
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -148,7 +132,7 @@ describe('Page count checks', () => {
 
   it('should trigger a warning when the initialPage provided is greater than the maximum page index (from pageCount)', () => {
     const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
-    ReactTestUtils.renderIntoDocument(
+    render(
       <PaginationBoxView pageCount={10} initialPage={10} />
     );
     expect(console.warn).toHaveBeenCalledTimes(1);
@@ -160,7 +144,7 @@ describe('Page count checks', () => {
 
   it('should trigger a warning when the forcePage provided is greater than the maximum page index (from pageCount)', () => {
     const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
-    ReactTestUtils.renderIntoDocument(
+    render(
       <PaginationBoxView pageCount={9} forcePage={9} />
     );
     expect(console.warn).toHaveBeenCalledTimes(1);
@@ -710,8 +694,8 @@ describe('Test pagination behaviour', () => {
     expect(breakElements.length).toBe(0);
   });
 
-  it('should use ariaLabelBuilder for rendering aria-labels if ariaLabelBuilder is specified', function () {
-    const linkedPagination = ReactTestUtils.renderIntoDocument(
+  it('should use ariaLabelBuilder for rendering aria-labels if ariaLabelBuilder is specified', async function () {
+    render(
       <PaginationBoxView
         initialPage={1}
         pageCount={3}
@@ -722,6 +706,8 @@ describe('Test pagination behaviour', () => {
         }
       />
     );
+    const linkedPagination = await screen.findByRole('navigation');
+    expect(linkedPagination).toBeDefined();
     expect(
       ReactDOM.findDOMNode(linkedPagination)
         .querySelector('li:nth-last-child(2) a')
@@ -739,9 +725,9 @@ describe('Test pagination behaviour', () => {
     ).toBe('Current page');
   });
 
-  it('test ariaLabelBuilder works with extraAriaContext', function () {
+  it('test ariaLabelBuilder works with extraAriaContext', async function () {
     const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
-    const linkedPagination = ReactTestUtils.renderIntoDocument(
+    render(
       <PaginationBoxView
         initialPage={1}
         pageCount={3}
@@ -753,6 +739,8 @@ describe('Test pagination behaviour', () => {
         extraAriaContext="foobar"
       />
     );
+    const linkedPagination = await screen.findByRole('navigation');
+    expect(linkedPagination).toBeDefined();
     expect(
       ReactDOM.findDOMNode(linkedPagination)
         .querySelector('li:nth-last-child(2) a')
@@ -849,7 +837,7 @@ describe('Test default props', () => {
   describe('default disableInitialCallback', () => {
     it('should call the onPageChange callback when disableInitialCallback is set to false/undefined', () => {
       const myOnPageChangeMethod = jest.fn();
-      ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={5}
@@ -976,10 +964,12 @@ describe('Test default props', () => {
   });
 
   describe('default hrefBuilder', () => {
-    it('should not render href attributes on page items if hrefBuilder is not defined', function () {
-      const linkedPagination = ReactTestUtils.renderIntoDocument(
+    it('should not render href attributes on page items if hrefBuilder is not defined', async function () {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
+      const linkedPagination = await screen.findByRole('navigation');
+      expect(linkedPagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(linkedPagination)
@@ -1228,7 +1218,7 @@ describe('Test custom props', () => {
       const node = document.createElement('div');
       // TODO Fix this test: use mounted component (requires enzyme?) and change prop on it.
       let pagination = React.createRef();
-      ReactDOM.render(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           ref={pagination}
@@ -1244,7 +1234,7 @@ describe('Test custom props', () => {
         }
       );
       pagination = React.createRef();
-      ReactDOM.render(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           ref={pagination}
@@ -1335,7 +1325,7 @@ describe('Test custom props', () => {
   describe('disableInitialCallback', () => {
     it('should not call the onPageChange callback when disableInitialCallback is set to true', () => {
       const myOnPageChangeMethod = jest.fn();
-      ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={5}
@@ -1598,14 +1588,16 @@ describe('Test custom props', () => {
       ).toBe('custom-next-link-classname');
     });
 
-    it('should use the disabledLinkClassName prop when defined', () => {
-      const paginationFirst = ReactTestUtils.renderIntoDocument(
+    it('should use the disabledLinkClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={0}
           disabledLinkClassName="custom-disabled-link-classname"
         />
       );
+      const paginationFirst = await screen.findByRole('navigation');
+      expect(paginationFirst).toBeDefined();
       expect(
         ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
           .className
@@ -1615,13 +1607,15 @@ describe('Test custom props', () => {
           .className
       ).toBe('');
 
-      const paginationLast = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={9}
           disabledLinkClassName="custom-disabled-link-classname"
         />
       );
+      const paginationLast = (await screen.findAllByRole('navigation'))[1];
+      expect(paginationLast).toBeDefined();
       expect(
         ReactDOM.findDOMNode(paginationLast).querySelector('li:first-child a')
           .className
@@ -1632,8 +1626,8 @@ describe('Test custom props', () => {
       ).toBe(' custom-disabled-link-classname');
     });
 
-    it('should combines the previousLinkClassName and disabledLinkClassName props', () => {
-      const paginationFirst = ReactTestUtils.renderIntoDocument(
+    it('should combines the previousLinkClassName and disabledLinkClassName props', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={0}
@@ -1642,6 +1636,8 @@ describe('Test custom props', () => {
           disabledLinkClassName="custom-disabled-link-classname"
         />
       );
+      const paginationFirst = await screen.findByRole('navigation');
+      expect(paginationFirst).toBeDefined();
       expect(
         ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
           .className
@@ -1652,8 +1648,8 @@ describe('Test custom props', () => {
       ).toBe('custom-next-link-classname');
     });
 
-    it('should combines the nextLinkClassName and disabledLinkClassName props', () => {
-      const paginationFirst = ReactTestUtils.renderIntoDocument(
+    it('should combines the nextLinkClassName and disabledLinkClassName props', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={9}
@@ -1662,6 +1658,8 @@ describe('Test custom props', () => {
           disabledLinkClassName="custom-disabled-link-classname"
         />
       );
+      const paginationFirst = await screen.findByRole('navigation');
+      expect(paginationFirst).toBeDefined();
       expect(
         ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
           .className
@@ -1674,10 +1672,12 @@ describe('Test custom props', () => {
   });
 
   describe('prevRel/nextRel', () => {
-    it('should render default rel if they are not specified', function () {
-      const linkedPagination = ReactTestUtils.renderIntoDocument(
+    it('should render default rel if they are not specified', async function () {
+      render(
         <PaginationBoxView pageCount={3} />
       );
+      const linkedPagination = await screen.findByRole('navigation');
+      expect(linkedPagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(linkedPagination)
@@ -1691,14 +1691,16 @@ describe('Test custom props', () => {
       ).toBe('prev');
     });
 
-    it('should render custom rel if they are defined', function () {
-      const linkedPagination = ReactTestUtils.renderIntoDocument(
+    it('should render custom rel if they are defined', async function () {
+      render(
         <PaginationBoxView
           pageCount={3}
           nextRel={'nofollow noreferrer'}
           prevRel={'nofollow noreferrer'}
         />
       );
+      const linkedPagination = await screen.findByRole('navigation');
+      expect(linkedPagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(linkedPagination)
@@ -1764,14 +1766,16 @@ describe('Test custom props', () => {
       ).toBe('/page/2');
     });
 
-    it('should not add href to disabled next / previous buttons', function () {
-      const paginationFirst = ReactTestUtils.renderIntoDocument(
+    it('should not add href to disabled next / previous buttons', async function () {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={0}
           hrefBuilder={(page) => '/page/' + page}
         />
       );
+      const paginationFirst = await screen.findByRole('navigation');
+      expect(paginationFirst).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(paginationFirst)
@@ -1789,13 +1793,15 @@ describe('Test custom props', () => {
           .getAttribute('href')
       ).toBe('/page/1');
 
-      const paginationLast = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={DEFAULT_PAGE_COUNT - 1}
           hrefBuilder={(page) => '/page/' + page}
         />
       );
+      const paginationLast = (await screen.findAllByRole('navigation'))[1];
+      expect(paginationLast).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(paginationLast)
@@ -1814,8 +1820,8 @@ describe('Test custom props', () => {
       ).toBe('/page/10');
     });
 
-    it('should add href to all controls when hrefAllControls is set to true', function () {
-      const paginationFirst = ReactTestUtils.renderIntoDocument(
+    it('should add href to all controls when hrefAllControls is set to true', async function () {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={0}
@@ -1825,6 +1831,8 @@ describe('Test custom props', () => {
           hrefAllControls
         />
       );
+      const paginationFirst = await screen.findByRole('navigation');
+      expect(paginationFirst).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(paginationFirst)
@@ -1842,13 +1850,15 @@ describe('Test custom props', () => {
           .getAttribute('href')
       ).toBe('/page/1');
 
-      const paginationLast = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={DEFAULT_PAGE_COUNT - 1}
           hrefBuilder={(page) => '/page/' + page}
         />
       );
+      const paginationLast = (await screen.findAllByRole('navigation'))[1];
+      expect(paginationLast).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(paginationLast)
@@ -1957,10 +1967,12 @@ describe('Test custom props', () => {
     ).toBe('true');
   });
 
-  it('should render default aria labels if they are not specified', function () {
-    const linkedPagination = ReactTestUtils.renderIntoDocument(
+  it('should render default aria labels if they are not specified', async function () {
+    render(
       <PaginationBoxView pageCount={3} />
     );
+    const linkedPagination = await screen.findByRole('navigation');
+    expect(linkedPagination).toBeDefined();
 
     expect(
       ReactDOM.findDOMNode(linkedPagination)
@@ -1974,14 +1986,16 @@ describe('Test custom props', () => {
     ).toBe('Previous page');
   });
 
-  it('should render custom aria labels if they are defined', function () {
-    const linkedPagination = ReactTestUtils.renderIntoDocument(
+  it('should render custom aria labels if they are defined', async function () {
+    render(
       <PaginationBoxView
         pageCount={3}
         nextAriaLabel={'Go to the next page'}
         previousAriaLabel={'Go to the previous page'}
       />
     );
+    const linkedPagination = await screen.findByRole('navigation');
+    expect(linkedPagination).toBeDefined();
 
     expect(
       ReactDOM.findDOMNode(linkedPagination)
