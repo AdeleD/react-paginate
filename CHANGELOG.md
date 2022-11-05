@@ -2,6 +2,10 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.1.4
+
+- Dependencies bumps for generating build. Replace `react-hot-loader` by [`react-refresh`](https://github.com/pmmmwh/react-refresh-webpack-plugin/) (see: https://github.com/AdeleD/react-paginate/issues/428#issuecomment-1302408824)
+
 ## >= 8.1.3
 
 - Support React 18 (see: https://github.com/AdeleD/react-paginate/issues/423)
