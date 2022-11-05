@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const dir_js = path.resolve(__dirname, 'react_components');
 const dir_build = path.resolve(__dirname, 'build');
@@ -17,6 +18,7 @@ const config = {
     globalObject: 'this',
   },
   devServer: {
+    hot: true,
     contentBase: dir_build,
   },
   module: {
@@ -51,12 +53,11 @@ const config = {
 };
 
 module.exports = (env, argv) => {
+  const isDevelopment = argv.mode !== 'production' && process.env.NODE_ENV !== 'production';
+  config.mode = isDevelopment ? 'development' : 'production';
+  config.plugins = [isDevelopment && new webpack.HotModuleReplacementPlugin()].filter(Boolean);
   if (argv.mode === 'production') {
-    config.mode = 'production';
     config.output.path = dir_dist;
-    // config.module.rules = config.module.rules.filter(
-    //   (rule) => rule.use !== 'react-hot-loader/webpack'
-    // );
   }
   return config;
 };
