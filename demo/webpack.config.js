@@ -12,7 +12,6 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 console.log(`Webpack demo ${isDevelopment ? 'dev' : 'prod'}`);
 
 module.exports = {
-  target: 'node',
   entry: [
     'webpack-hot-middleware/client',
     path.resolve(dir_demo_js, 'demo.js'),
@@ -35,6 +34,7 @@ module.exports = {
     rules: [
       {
         test: dir_demo_js,
+        // test: /\.js?$/,
         exclude: /node_modules/,
         use: [
           {
