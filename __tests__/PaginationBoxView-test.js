@@ -16,9 +16,7 @@ const DEFAULT_PAGE_COUNT = 10;
 
 describe('Test rendering', () => {
   it('should render a pagination component', async () => {
-    render(
-      <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-    );
+    render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
 
     const pagination = await screen.findByRole('navigation');
     expect(pagination).toBeDefined();
@@ -132,9 +130,7 @@ describe('Page count checks', () => {
 
   it('should trigger a warning when the initialPage provided is greater than the maximum page index (from pageCount)', () => {
     const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
-    render(
-      <PaginationBoxView pageCount={10} initialPage={10} />
-    );
+    render(<PaginationBoxView pageCount={10} initialPage={10} />);
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
       '(react-paginate): The initialPage prop provided is greater than the maximum page index from pageCount prop (10 > 9).'
@@ -144,9 +140,7 @@ describe('Page count checks', () => {
 
   it('should trigger a warning when the forcePage provided is greater than the maximum page index (from pageCount)', () => {
     const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
-    render(
-      <PaginationBoxView pageCount={9} forcePage={9} />
-    );
+    render(<PaginationBoxView pageCount={9} forcePage={9} />);
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
       '(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (9 > 8).'
@@ -159,9 +153,7 @@ describe('Page count checks', () => {
 
 describe('Test clicks', () => {
   it('test clicks on previous and next buttons', async () => {
-    render(
-      <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-    );
+    render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
     const pagination = await screen.findByRole('navigation');
     expect(pagination).toBeDefined();
 
@@ -183,9 +175,7 @@ describe('Test clicks', () => {
   });
 
   it('test click on a page item', async () => {
-    render(
-      <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-    );
+    render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
     const pagination = await screen.findByRole('navigation');
     expect(pagination).toBeDefined();
 
@@ -767,9 +757,7 @@ describe('Test pagination behaviour', () => {
 describe('Test default props', () => {
   describe('default previousLabel/nextLabel', () => {
     it('should use the default previousLabel/nextLabel', async () => {
-      render(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-      );
+      render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       expect(
@@ -785,9 +773,7 @@ describe('Test default props', () => {
 
   describe('default breakLabel/breakClassName/breakLinkClassName', () => {
     it('should use the default breakLabel/breakClassName/breakLinkClassName', async () => {
-      render(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-      );
+      render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       expect(
@@ -804,9 +790,7 @@ describe('Test default props', () => {
 
   describe('default onPageChange', () => {
     it('should not call any onPageChange callback if not defined but it should go to the next page', async () => {
-      render(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-      );
+      render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       const nextItem =
@@ -822,9 +806,7 @@ describe('Test default props', () => {
 
   describe('default initialPage/forcePage', () => {
     it('should use the default initial selected page (0)', async () => {
-      render(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-      );
+      render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       expect(
@@ -850,9 +832,7 @@ describe('Test default props', () => {
 
   describe('default containerClassName', () => {
     it('should not use any classname on the container by default', async () => {
-      render(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-      );
+      render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual('');
@@ -947,9 +927,7 @@ describe('Test default props', () => {
 
   describe('default disabledClassName', () => {
     it('should use the default disabledClassName', async function () {
-      render(
-        <PaginationBoxView initialPage={0} pageCount={1} />
-      );
+      render(<PaginationBoxView initialPage={0} pageCount={1} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       expect(
@@ -965,9 +943,7 @@ describe('Test default props', () => {
 
   describe('default hrefBuilder', () => {
     it('should not render href attributes on page items if hrefBuilder is not defined', async function () {
-      render(
-        <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
-      );
+      render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
       const linkedPagination = await screen.findByRole('navigation');
       expect(linkedPagination).toBeDefined();
 
@@ -1673,9 +1649,7 @@ describe('Test custom props', () => {
 
   describe('prevRel/nextRel', () => {
     it('should render default rel if they are not specified', async function () {
-      render(
-        <PaginationBoxView pageCount={3} />
-      );
+      render(<PaginationBoxView pageCount={3} />);
       const linkedPagination = await screen.findByRole('navigation');
       expect(linkedPagination).toBeDefined();
 
@@ -1911,9 +1885,7 @@ describe('Test custom props', () => {
 
   describe('aria-disabled', () => {
     it('should be true for previous link when link is disabled', async () => {
-      render(
-        <PaginationBoxView initialPage={0} pageCount={5} />
-      );
+      render(<PaginationBoxView initialPage={0} pageCount={5} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       expect(
@@ -1929,9 +1901,7 @@ describe('Test custom props', () => {
     });
 
     it('should be true for next link when link is disabled', async () => {
-      render(
-        <PaginationBoxView initialPage={4} pageCount={5} />
-      );
+      render(<PaginationBoxView initialPage={4} pageCount={5} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
 
@@ -1949,9 +1919,7 @@ describe('Test custom props', () => {
   });
 
   it('should be true for both previous and next links when only one page', async () => {
-    render(
-      <PaginationBoxView initialPage={0} pageCount={1} />
-    );
+    render(<PaginationBoxView initialPage={0} pageCount={1} />);
     const pagination = await screen.findByRole('navigation');
     expect(pagination).toBeDefined();
 
@@ -1968,9 +1936,7 @@ describe('Test custom props', () => {
   });
 
   it('should render default aria labels if they are not specified', async function () {
-    render(
-      <PaginationBoxView pageCount={3} />
-    );
+    render(<PaginationBoxView pageCount={3} />);
     const linkedPagination = await screen.findByRole('navigation');
     expect(linkedPagination).toBeDefined();
 
@@ -2039,9 +2005,7 @@ describe('Test custom props', () => {
   });
   describe('prevPageRel/nextPageRel/selectedPageRel', () => {
     it('should render default rel if not defined', async function () {
-      render(
-        <PaginationBoxView pageCount={4} />
-      );
+      render(<PaginationBoxView pageCount={4} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
 
@@ -2135,9 +2099,7 @@ describe('Test custom props', () => {
       ).toBe(null);
     });
     it('should not render prevPageRel and nextPageRel if pageCount is 1', async function () {
-      render(
-        <PaginationBoxView pageCount={1} />
-      );
+      render(<PaginationBoxView pageCount={1} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
 
@@ -2168,9 +2130,7 @@ describe('Test custom props', () => {
       ).toBe('Next page');
     });
     it('should not render prevPageRel if selected page is first', async function () {
-      render(
-        <PaginationBoxView pageCount={4} />
-      );
+      render(<PaginationBoxView pageCount={4} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
 
@@ -2191,9 +2151,7 @@ describe('Test custom props', () => {
       ).toBe('next');
     });
     it('should not render nextPageRel if selected page is last', async function () {
-      render(
-        <PaginationBoxView pageCount={4} />
-      );
+      render(<PaginationBoxView pageCount={4} />);
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
 

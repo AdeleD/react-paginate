@@ -561,7 +561,11 @@ export default class PaginationBoxView extends Component {
     const nextAriaDisabled = isNextDisabled ? 'true' : 'false';
 
     return (
-      <ul className={className || containerClassName} role="navigation" aria-label="Pagination">
+      <ul
+        className={className || containerClassName}
+        role="navigation"
+        aria-label="Pagination"
+      >
         <li className={previousClasses}>
           <a
             className={previousLinkClasses}
