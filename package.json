@@ -39,6 +39,7 @@
     "express": "^4",
     "husky": "^8",
     "jest-cli": "^29",
+    "jest-environment-jsdom": "^29.2.2",
     "jquery": "^3.6",
     "prettier": "^2.7",
     "react": "^18",

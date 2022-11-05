@@ -4,6 +4,7 @@
 /* eslint-disable react/no-find-dom-node */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 jest.dontMock('./../react_components/PaginationBoxView');
 jest.dontMock('./../react_components/PageView');
@@ -22,17 +23,23 @@ import ReactTestUtils from 'react-dom/test-utils';
 const DEFAULT_PAGE_COUNT = 10;
 
 describe('Test rendering', () => {
-  it('should render a pagination component', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should render a pagination component', async () => {
+    render(
       <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
     );
+    // const pagination = ReactTestUtils.renderIntoDocument(
+    //   <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
+    // );
+
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     expect(ReactDOM.findDOMNode(pagination).nodeName).toEqual('UL');
 
-    ReactTestUtils.scryRenderedComponentsWithType(
-      pagination,
-      PaginationBoxView
-    );
+    // ReactTestUtils.scryRenderedComponentsWithType(
+    //   pagination,
+    //   PaginationBoxView
+    // );
 
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -51,8 +58,8 @@ describe('Test rendering', () => {
     expect(pages.length).toEqual(9);
   });
 
-  it('test rendering only active page item', function () {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('test rendering only active page item', async function () {
+    render(
       <PaginationBoxView
         pageCount={DEFAULT_PAGE_COUNT}
         initialPage={0}
@@ -61,6 +68,8 @@ describe('Test rendering', () => {
         breakLabel={null}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
     // Prev, selected page, next
@@ -69,8 +78,8 @@ describe('Test rendering', () => {
 });
 
 describe('Page count is zero', () => {
-  it('should render Previous / Next if page count is zero (default / when renderOnZeroPageCount is undefined)', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should render Previous / Next if page count is zero (default / when renderOnZeroPageCount is undefined)', async () => {
+    render(
       <PaginationBoxView
         pageCount={0}
         pageRangeDisplayed={0}
@@ -78,12 +87,14 @@ describe('Page count is zero', () => {
         breakLabel={null}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
     // Prev page, next
     expect(pageItems.length).toBe(2);
   });
-  it('should render nothing if page count is zero when renderOnZeroPageCount is null', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should render nothing if page count is zero when renderOnZeroPageCount is null', async () => {
+    render(
       <PaginationBoxView
         pageCount={0}
         pageRangeDisplayed={0}
@@ -92,26 +103,30 @@ describe('Page count is zero', () => {
         renderOnZeroPageCount={null}
       />
     );
+    const pagination = await screen.queryByRole('navigation');
+    expect(pagination).toBeNull();
     expect(ReactDOM.findDOMNode(pagination)).toBeNull();
   });
-  it('should render provided Component if page count is zero when renderOnZeroPageCount is not null', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should render provided Component if page count is zero when renderOnZeroPageCount is not null', async () => {
+    render(
       <PaginationBoxView
         pageCount={0}
         pageRangeDisplayed={0}
         marginPagesDisplayed={0}
         breakLabel={null}
-        renderOnZeroPageCount={() => <h2>Nothing</h2>}
+        renderOnZeroPageCount={() => <h2 role="note">Nothing</h2>}
       />
     );
+    const pagination = await screen.findByRole('note');
+    expect(pagination).toBeDefined();
     expect(ReactDOM.findDOMNode(pagination).textContent).toBe('Nothing');
   });
 });
 
 describe('Page count checks', () => {
-  it('should trigger a warning when a float is provided', () => {
+  it('should trigger a warning when a float is provided', async () => {
     const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
-    const pagination = ReactTestUtils.renderIntoDocument(
+    render(
       <PaginationBoxView
         pageCount={2.5}
         pageRangeDisplayed={0}
@@ -119,6 +134,8 @@ describe('Page count checks', () => {
         breakLabel={null}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
     // Prev page, next
     expect(pageItems.length).toBe(4);
@@ -157,50 +174,49 @@ describe('Page count checks', () => {
 });
 
 describe('Test clicks', () => {
-  it('test clicks on previous and next buttons', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('test clicks on previous and next buttons', async () => {
+    render(
       <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
-    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
-      pagination,
-      'a'
-    );
+    const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
     let previous = elmts[0];
     let next = elmts[elmts.length - 1];
 
-    ReactTestUtils.Simulate.click(next);
+    fireEvent.click(next);
 
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('2');
 
-    ReactTestUtils.Simulate.click(previous);
+    fireEvent.click(previous);
 
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('1');
   });
 
-  it('test click on a page item', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('test click on a page item', async () => {
+    render(
       <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
     );
-
-    ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const pageItem =
       ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
 
-    ReactTestUtils.Simulate.click(pageItem);
+    fireEvent.click(pageItem);
 
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('2');
   });
 
-  it('test click on the left break view', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('test click on the left break view', async () => {
+    render(
       <PaginationBoxView
         initialPage={0}
         pageCount={22}
@@ -208,18 +224,20 @@ describe('Test clicks', () => {
         pageRangeDisplayed={5}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     // The selected page is before the left break
     const rightBreakView =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.click(rightBreakView);
+    fireEvent.click(rightBreakView);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('6');
 
     const rightBreakView2 =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.click(rightBreakView2);
+    fireEvent.click(rightBreakView2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('11');
@@ -227,14 +245,14 @@ describe('Test clicks', () => {
     // The selected page is after the left break
     const leftBreakView2 =
       ReactDOM.findDOMNode(pagination).querySelectorAll('.break a')[0];
-    ReactTestUtils.Simulate.click(leftBreakView2);
+    fireEvent.click(leftBreakView2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('6');
   });
 
-  it('test click on the right break view', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('test click on the right break view', async () => {
+    render(
       <PaginationBoxView
         initialPage={10}
         pageCount={20}
@@ -242,11 +260,13 @@ describe('Test clicks', () => {
         pageRangeDisplayed={5}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     // The selected page is before the right break
     const rightBreak1 =
       ReactDOM.findDOMNode(pagination).querySelectorAll('.break a')[1];
-    ReactTestUtils.Simulate.click(rightBreak1);
+    fireEvent.click(rightBreak1);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('16');
@@ -254,7 +274,7 @@ describe('Test clicks', () => {
     // The selected page is after the right break
     const rightBreak2 =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.click(rightBreak2);
+    fireEvent.click(rightBreak2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('11');
@@ -262,56 +282,55 @@ describe('Test clicks', () => {
 });
 
 describe('Test custom event listener', () => {
-  it('test custom listener on previous and next buttons', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('test custom listener on previous and next buttons', async () => {
+    render(
       <PaginationBoxView
         pageCount={DEFAULT_PAGE_COUNT}
         eventListener="onMouseOver"
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
-    let elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
-      pagination,
-      'a'
-    );
+    const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
     let previous = elmts[0];
     let next = elmts[elmts.length - 1];
 
-    ReactTestUtils.Simulate.mouseOver(next);
+    fireEvent.mouseOver(next);
 
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('2');
 
-    ReactTestUtils.Simulate.mouseOver(previous);
+    fireEvent.mouseOver(previous);
 
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('1');
   });
 
-  it('test custom listener on a page item', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('test custom listener on a page item', async () => {
+    render(
       <PaginationBoxView
         pageCount={DEFAULT_PAGE_COUNT}
         eventListener="onMouseOver"
       />
     );
-
-    ReactTestUtils.findRenderedComponentWithType(pagination, PaginationBoxView);
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const pageItem =
       ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
 
-    ReactTestUtils.Simulate.mouseOver(pageItem);
+    fireEvent.mouseOver(pageItem);
 
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('2');
   });
 
-  it('test custom listener on the left break view', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('test custom listener on the left break view', async () => {
+    render(
       <PaginationBoxView
         initialPage={0}
         pageCount={20}
@@ -320,18 +339,20 @@ describe('Test custom event listener', () => {
         eventListener="onMouseOver"
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     // The selected page is before the left break
     const rightBreakView =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.mouseOver(rightBreakView);
+    fireEvent.mouseOver(rightBreakView);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('6');
 
     const rightBreakView2 =
       ReactDOM.findDOMNode(pagination).querySelector('.break a');
-    ReactTestUtils.Simulate.mouseOver(rightBreakView2);
+    fireEvent.mouseOver(rightBreakView2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('11');
@@ -339,7 +360,7 @@ describe('Test custom event listener', () => {
     // The selected page is after the left break
     const leftBreakView2 =
       ReactDOM.findDOMNode(pagination).querySelectorAll('.break a')[0];
-    ReactTestUtils.Simulate.mouseOver(leftBreakView2);
+    fireEvent.mouseOver(leftBreakView2);
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('6');
@@ -347,8 +368,8 @@ describe('Test custom event listener', () => {
 });
 
 describe('Test pagination behaviour', () => {
-  it('should display 2 elements to the left, 1 break element and 2 elements to the right', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should display 2 elements to the left, 1 break element and 2 elements to the right', async () => {
+    render(
       <PaginationBoxView
         initialPage={0}
         pageCount={20}
@@ -356,6 +377,8 @@ describe('Test pagination behaviour', () => {
         marginPagesDisplayed={1}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const previousElement =
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
@@ -391,8 +414,8 @@ describe('Test pagination behaviour', () => {
     expect(breakElements.length).toBe(1);
   });
 
-  it('should display 5 elements to the left, 1 break element and 2 elements to the right', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should display 5 elements to the left, 1 break element and 2 elements to the right', async () => {
+    render(
       <PaginationBoxView
         initialPage={0}
         pageCount={20}
@@ -400,6 +423,8 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const previousElement =
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
@@ -435,8 +460,8 @@ describe('Test pagination behaviour', () => {
     expect(breakElements.length).toBe(1);
   });
 
-  it('should display 7 elements to the left, 1 break element and 2 elements to the right', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should display 7 elements to the left, 1 break element and 2 elements to the right', async () => {
+    render(
       <PaginationBoxView
         initialPage={4}
         pageCount={20}
@@ -444,6 +469,8 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const previousElement =
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
@@ -479,8 +506,8 @@ describe('Test pagination behaviour', () => {
     expect(breakElements.length).toBe(1);
   });
 
-  it('should display 2 elements to the left, 5 elements in the middle, 2 elements to the right and 2 break elements', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should display 2 elements to the left, 5 elements in the middle, 2 elements to the right and 2 break elements', async () => {
+    render(
       <PaginationBoxView
         initialPage={7}
         pageCount={20}
@@ -488,6 +515,8 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const previousElement =
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
@@ -540,8 +569,8 @@ describe('Test pagination behaviour', () => {
     expect(breakElements.length).toBe(2);
   });
 
-  it('should display 2 elements to the left, 1 break element and 7 elements to the right', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should display 2 elements to the left, 1 break element and 7 elements to the right', async () => {
+    render(
       <PaginationBoxView
         initialPage={15}
         pageCount={20}
@@ -549,6 +578,8 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const previousElement =
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
@@ -584,8 +615,8 @@ describe('Test pagination behaviour', () => {
     expect(breakElements.length).toBe(1);
   });
 
-  it('should display 2 elements to the left, 1 break element and 6 elements to the right', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should display 2 elements to the left, 1 break element and 6 elements to the right', async () => {
+    render(
       <PaginationBoxView
         initialPage={16}
         pageCount={20}
@@ -593,6 +624,8 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const previousElement =
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
@@ -630,9 +663,9 @@ describe('Test pagination behaviour', () => {
 
   // 1 2 3 4 5 6 7 ... 9 10
   //         |
-  it('should not display a break containing only one page', () => {
+  it('should not display a break containing only one page', async () => {
     // should display 10 elements, 0 break element
-    const pagination = ReactTestUtils.renderIntoDocument(
+    render(
       <PaginationBoxView
         initialPage={5}
         pageCount={10}
@@ -640,6 +673,8 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     const previousElement =
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child');
@@ -743,10 +778,12 @@ describe('Test pagination behaviour', () => {
 
 describe('Test default props', () => {
   describe('default previousLabel/nextLabel', () => {
-    it('should use the default previousLabel/nextLabel', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the default previousLabel/nextLabel', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
           .textContent
@@ -759,10 +796,12 @@ describe('Test default props', () => {
   });
 
   describe('default breakLabel/breakClassName/breakLinkClassName', () => {
-    it('should use the default breakLabel/breakClassName/breakLinkClassName', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the default breakLabel/breakClassName/breakLinkClassName', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break').textContent
       ).toBe('...');
@@ -776,13 +815,15 @@ describe('Test default props', () => {
   });
 
   describe('default onPageChange', () => {
-    it('should not call any onPageChange callback if not defined but it should go to the next page', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not call any onPageChange callback if not defined but it should go to the next page', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       const nextItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a');
-      ReactTestUtils.Simulate.click(nextItem);
+      fireEvent.click(nextItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -792,10 +833,12 @@ describe('Test default props', () => {
   });
 
   describe('default initialPage/forcePage', () => {
-    it('should use the default initial selected page (0)', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the default initial selected page (0)', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
@@ -818,27 +861,31 @@ describe('Test default props', () => {
   });
 
   describe('default containerClassName', () => {
-    it('should not use any classname on the container by default', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not use any classname on the container by default', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual('');
     });
   });
 
   describe('default pageClassName/activeClassName', () => {
-    it('should not use any classname on page items and a default activeClassName', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not use any classname on page items and a default activeClassName', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           previousClassName="prev"
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const pageItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
-      ReactTestUtils.Simulate.click(pageItem);
+      fireEvent.click(pageItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
@@ -853,14 +900,16 @@ describe('Test default props', () => {
   });
 
   describe('default pageLinkClassName/activeLinkClassName', () => {
-    it('should not use any classname on selected links by default', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not use any classname on selected links by default', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           previousClassName="prev"
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
           'li:not(.selected):not(.prev):not(.next) a'
@@ -873,10 +922,12 @@ describe('Test default props', () => {
   });
 
   describe('default previousClassName/nextClassName', () => {
-    it('should use the default previousClassName/nextClassName', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the default previousClassName/nextClassName', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
           .className
@@ -889,10 +940,12 @@ describe('Test default props', () => {
   });
 
   describe('default previousLinkClassName/nextLinkClassName/disabledLinkClassName', () => {
-    it('should not use any classname on previous/next links by default', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not use any classname on previous/next links by default', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
           .className
@@ -905,10 +958,12 @@ describe('Test default props', () => {
   });
 
   describe('default disabledClassName', () => {
-    it('should use the default disabledClassName', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the default disabledClassName', async function () {
+      render(
         <PaginationBoxView initialPage={0} pageCount={1} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
           .className
@@ -945,14 +1000,16 @@ describe('Test default props', () => {
   });
 
   describe('default extraAriaContext', () => {
-    it('should use the default extraAriaContext', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the default extraAriaContext', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           previousClassName="prev"
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:not(.selected):not(.prev):not(.next) a')
@@ -967,10 +1024,12 @@ describe('Test default props', () => {
   });
 
   describe('default tabindex', () => {
-    it('should set the tabindex to 0 on all controls', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should set the tabindex to 0 on all controls', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={0} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-child(3) a')
@@ -997,26 +1056,30 @@ describe('Test default props', () => {
 
 describe('Test custom props', () => {
   describe('previousLabel/nextLabel', () => {
-    it('should use the previousLabel prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the previousLabel prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           previousLabel={'Custom previous label'}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
           .textContent
       ).toBe('Custom previous label');
     });
 
-    it('should use the nextLabel prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the nextLabel prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           nextLabel={'Custom next label'}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
           .textContent
@@ -1025,10 +1088,12 @@ describe('Test custom props', () => {
   });
 
   describe('breakLabel/breakClassName/breakLinkClassName', () => {
-    it('should use the breakLabel string prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the breakLabel string prop when defined', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} breakLabel={'...'} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break').firstChild
           .nodeType
@@ -1043,13 +1108,15 @@ describe('Test custom props', () => {
       ).toBe('...');
     });
 
-    it('should use the breakLabel node prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the breakLabel node prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           breakLabel={<span>...</span>}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break a').firstChild
           .nodeName
@@ -1060,25 +1127,29 @@ describe('Test custom props', () => {
       ).toBe('...');
     });
 
-    it('should use the breakClassName prop when defined', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the breakClassName prop when defined', async function () {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           breakClassName={'break-me'}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.break-me')
       ).not.toBe(null);
     });
 
-    it('should use the breakLinkClassName prop when defined', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the breakLinkClassName prop when defined', async function () {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           breakLinkClassName={'break-link'}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.break-link')
       ).not.toBe(null);
@@ -1086,36 +1157,40 @@ describe('Test custom props', () => {
   });
 
   describe('onPageChange', () => {
-    it('should use the onPageChange prop when defined', () => {
+    it('should use the onPageChange prop when defined', async () => {
       const myOnPageChangeMethod = jest.fn();
-      const pagination = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           onPageChange={myOnPageChangeMethod}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       const nextItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a');
-      ReactTestUtils.Simulate.click(nextItem);
+      fireEvent.click(nextItem);
 
       expect(myOnPageChangeMethod).toHaveBeenCalledWith({ selected: 1 });
     });
   });
 
   describe('onPageActive', () => {
-    it('should use the onPageActive prop when defined', () => {
+    it('should use the onPageActive prop when defined', async () => {
       const myOnPageActiveMethod = jest.fn();
       const myOnPageChangeMethod = jest.fn();
-      const pagination = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           onPageActive={myOnPageActiveMethod}
           onPageChange={myOnPageChangeMethod}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       const activeItem =
         ReactDOM.findDOMNode(pagination).querySelector('.selected a');
-      ReactTestUtils.Simulate.click(activeItem);
+      fireEvent.click(activeItem);
 
       expect(myOnPageActiveMethod).toHaveBeenCalledWith({ selected: 0 });
       expect(myOnPageChangeMethod).not.toHaveBeenCalled();
@@ -1123,10 +1198,12 @@ describe('Test custom props', () => {
   });
 
   describe('initialPage', () => {
-    it('should use the initialPage prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the initialPage prop when defined', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
@@ -1135,10 +1212,12 @@ describe('Test custom props', () => {
   });
 
   describe('forcePage', () => {
-    it('should use the forcePage prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the forcePage prop when defined', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
@@ -1182,15 +1261,17 @@ describe('Test custom props', () => {
       );
     });
 
-    it('should report a warning when using both initialPage and forcePage props', () => {
+    it('should report a warning when using both initialPage and forcePage props', async () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
-      const pagination = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={3}
           forcePage={2}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
@@ -1204,10 +1285,12 @@ describe('Test custom props', () => {
       consoleWarnMock.mockRestore();
     });
 
-    it('(observation) is not totally controlled when forcePage is provided', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('(observation) is not totally controlled when forcePage is provided', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1217,7 +1300,7 @@ describe('Test custom props', () => {
       const pageItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
 
-      ReactTestUtils.Simulate.click(pageItem);
+      fireEvent.click(pageItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1225,10 +1308,12 @@ describe('Test custom props', () => {
       ).toBe('2');
     });
 
-    it('(observation) is not totally controlled when forcePage is provided, even when it is 0', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('(observation) is not totally controlled when forcePage is provided, even when it is 0', async () => {
+      render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={0} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1238,7 +1323,7 @@ describe('Test custom props', () => {
       const pageItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
 
-      ReactTestUtils.Simulate.click(pageItem);
+      fireEvent.click(pageItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1263,38 +1348,44 @@ describe('Test custom props', () => {
   });
 
   describe('containerClassName', () => {
-    it('should use the containerClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the containerClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           containerClassName="my-pagination"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'
       );
     });
 
-    it('should use the className prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the className prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           className="my-pagination"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'
       );
     });
 
-    it('should use the className prop in priority from containerClassName', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the className prop in priority from containerClassName', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           className="my-pagination"
           containerClassName="another"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'
       );
@@ -1302,8 +1393,8 @@ describe('Test custom props', () => {
   });
 
   describe('pageClassName/activeClassName', () => {
-    it('should use the pageClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the pageClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           pageClassName={'page-item'}
@@ -1311,10 +1402,12 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const pageItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
-      ReactTestUtils.Simulate.click(pageItem);
+      fireEvent.click(pageItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
@@ -1327,8 +1420,8 @@ describe('Test custom props', () => {
       ).toBe('page-item selected');
     });
 
-    it('should use the activeClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the activeClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           activeClassName="active-page-item"
@@ -1336,10 +1429,12 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const pageItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
-      ReactTestUtils.Simulate.click(pageItem);
+      fireEvent.click(pageItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3)')
@@ -1347,8 +1442,8 @@ describe('Test custom props', () => {
       ).toBe('active-page-item');
     });
 
-    it('should use the activeClassName prop without overriding the defined pageClassName', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the activeClassName prop without overriding the defined pageClassName', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           pageClassName="page-item"
@@ -1357,10 +1452,12 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const pageItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
-      ReactTestUtils.Simulate.click(pageItem);
+      fireEvent.click(pageItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
@@ -1375,8 +1472,8 @@ describe('Test custom props', () => {
   });
 
   describe('pageLinkClassName/activeLinkClassName', () => {
-    it('should use the pageLinkClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the pageLinkClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           pageLinkClassName="page-item-link"
@@ -1384,6 +1481,8 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
@@ -1395,20 +1494,22 @@ describe('Test custom props', () => {
       ).toBe('page-item-link');
     });
 
-    it('should use the activeLinkClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the activeLinkClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           activeLinkClassName="active-page-item-link"
           pageCount={5}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a').className
       ).toBe('active-page-item-link');
     });
 
-    it('should use the activeLinkClassName prop without overriding the defined pageLinkClassName', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the activeLinkClassName prop without overriding the defined pageLinkClassName', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           pageLinkClassName="page-item-link"
@@ -1417,6 +1518,8 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
           'li:not(.selected):not(.prev):not(.next) a'
@@ -1429,28 +1532,32 @@ describe('Test custom props', () => {
   });
 
   describe('previousClassName/nextClassName', () => {
-    it('should use the previousClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the previousClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={2}
           previousClassName="custom-previous-classname"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
           .className
       ).toBe('custom-previous-classname');
     });
 
-    it('should use the nextClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the nextClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={2}
           nextClassName="custom-next-classname"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child')
           .className
@@ -1459,28 +1566,32 @@ describe('Test custom props', () => {
   });
 
   describe('previousLinkClassName/nextLinkClassName/disabledLinkClassName', () => {
-    it('should use the previousLinkClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the previousLinkClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={2}
           previousLinkClassName="custom-previous-link-classname"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
           .className
       ).toBe('custom-previous-link-classname');
     });
 
-    it('should use the nextLinkClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the nextLinkClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={2}
           nextLinkClassName="custom-next-link-classname"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
           .className
@@ -1603,14 +1714,16 @@ describe('Test custom props', () => {
   });
 
   describe('disabledClassName', () => {
-    it('should use the disabledClassName prop when defined', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the disabledClassName prop when defined', async () => {
+      render(
         <PaginationBoxView
           initialPage={0}
           pageCount={1}
           disabledClassName="custom-disabled-classname"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
           .className
@@ -1623,14 +1736,16 @@ describe('Test custom props', () => {
   });
 
   describe('hrefBuilder', () => {
-    it('should use the hrefBuilder prop when defined', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should use the hrefBuilder prop when defined', async function () {
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           initialPage={1}
           hrefBuilder={(page) => '/page/' + page}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1754,9 +1869,9 @@ describe('Test custom props', () => {
   });
 
   describe('extraAriaContext', () => {
-    it('should use the extraAriaContext prop when defined', () => {
+    it('should use the extraAriaContext prop when defined', async () => {
       const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
-      const pagination = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={DEFAULT_PAGE_COUNT}
           extraAriaContext="can be clicked"
@@ -1764,6 +1879,8 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:not(.selected):not(.prev):not(.next) a')
@@ -1783,10 +1900,12 @@ describe('Test custom props', () => {
   });
 
   describe('aria-disabled', () => {
-    it('should be true for previous link when link is disabled', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should be true for previous link when link is disabled', async () => {
+      render(
         <PaginationBoxView initialPage={0} pageCount={5} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:first-child a')
@@ -1799,10 +1918,12 @@ describe('Test custom props', () => {
       ).toBe('false');
     });
 
-    it('should be true for next link when link is disabled', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should be true for next link when link is disabled', async () => {
+      render(
         <PaginationBoxView initialPage={4} pageCount={5} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1817,10 +1938,12 @@ describe('Test custom props', () => {
     });
   });
 
-  it('should be true for both previous and next links when only one page', () => {
-    const pagination = ReactTestUtils.renderIntoDocument(
+  it('should be true for both previous and next links when only one page', async () => {
+    render(
       <PaginationBoxView initialPage={0} pageCount={1} />
     );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
 
     expect(
       ReactDOM.findDOMNode(pagination)
@@ -1873,7 +1996,7 @@ describe('Test custom props', () => {
   });
 
   describe('render custom page labels if defined', () => {
-    it('should use custom page labels', () => {
+    it('should use custom page labels', async () => {
       const data = [
         { name: 'Item 1' },
         { name: 'Item 2' },
@@ -1882,7 +2005,7 @@ describe('Test custom props', () => {
         { name: 'Item 5' },
       ];
 
-      const pagination = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           pageCount={data.length}
           pageLabelBuilder={(page) => {
@@ -1891,6 +2014,8 @@ describe('Test custom props', () => {
           }}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1899,14 +2024,16 @@ describe('Test custom props', () => {
     });
   });
   describe('prevPageRel/nextPageRel/selectedPageRel', () => {
-    it('should render default rel if not defined', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should render default rel if not defined', async function () {
+      render(
         <PaginationBoxView pageCount={4} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const activeItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
-      ReactTestUtils.Simulate.click(activeItem);
+      fireEvent.click(activeItem);
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1924,8 +2051,8 @@ describe('Test custom props', () => {
           .getAttribute('rel')
       ).toBe('next');
     });
-    it('should render custom rel if defined', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should render custom rel if defined', async function () {
+      render(
         <PaginationBoxView
           pageCount={4}
           prevPageRel="custom-prev-rel"
@@ -1933,10 +2060,12 @@ describe('Test custom props', () => {
           selectedPageRel="custom-selected-rel"
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const activeItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
-      ReactTestUtils.Simulate.click(activeItem);
+      fireEvent.click(activeItem);
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1954,8 +2083,8 @@ describe('Test custom props', () => {
           .getAttribute('rel')
       ).toBe('custom-next-rel');
     });
-    it('should not render rel if prePageRel, selectedPageRel and nextPageRel are null', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not render rel if prePageRel, selectedPageRel and nextPageRel are null', async function () {
+      render(
         <PaginationBoxView
           pageCount={4}
           prevPageRel={null}
@@ -1963,10 +2092,12 @@ describe('Test custom props', () => {
           selectedPageRel={null}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const activeItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-Child(3) a');
-      ReactTestUtils.Simulate.click(activeItem);
+      fireEvent.click(activeItem);
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1989,10 +2120,12 @@ describe('Test custom props', () => {
           .getAttribute('rel')
       ).toBe(null);
     });
-    it('should not render prevPageRel and nextPageRel if pageCount is 1', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not render prevPageRel and nextPageRel if pageCount is 1', async function () {
+      render(
         <PaginationBoxView pageCount={1} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -2020,10 +2153,12 @@ describe('Test custom props', () => {
           .getAttribute('aria-label')
       ).toBe('Next page');
     });
-    it('should not render prevPageRel if selected page is first', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not render prevPageRel if selected page is first', async function () {
+      render(
         <PaginationBoxView pageCount={4} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -2041,15 +2176,17 @@ describe('Test custom props', () => {
           .getAttribute('rel')
       ).toBe('next');
     });
-    it('should not render nextPageRel if selected page is last', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not render nextPageRel if selected page is last', async function () {
+      render(
         <PaginationBoxView pageCount={4} />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
         'li:nth-last-child(2) a'
       );
-      ReactTestUtils.Simulate.click(activeItem);
+      fireEvent.click(activeItem);
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -2067,18 +2204,20 @@ describe('Test custom props', () => {
           .getAttribute('rel')
       ).toBe('prev');
     });
-    it('should not render nextPageRel if the break page is present just after the selected page', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not render nextPageRel if the break page is present just after the selected page', async function () {
+      render(
         <PaginationBoxView
           pageCount={20}
           marginPagesDisplayed={2}
           pageRangeDisplayed={0}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const activeItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
-      ReactTestUtils.Simulate.click(activeItem);
+      fireEvent.click(activeItem);
 
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -2096,20 +2235,22 @@ describe('Test custom props', () => {
           .getAttribute('class')
       ).toBe('break');
     });
-    it('should not render prevPageRel if the break page is present just before the selected page', function () {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('should not render prevPageRel if the break page is present just before the selected page', async function () {
+      render(
         <PaginationBoxView
           pageCount={20}
           marginPagesDisplayed={2}
           pageRangeDisplayed={0}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
       const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
         'li:nth-last-child(3) a'
       );
 
-      ReactTestUtils.Simulate.click(activeItem);
+      fireEvent.click(activeItem);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-last-Child(2) a')
@@ -2129,8 +2270,8 @@ describe('Test custom props', () => {
   });
 
   describe('Prevent breaks for one page', () => {
-    it('test clicks on previous and next buttons', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('test clicks on previous and next buttons', async () => {
+      render(
         <PaginationBoxView
           pageRangeDisplayed={5}
           pageCount={12}
@@ -2138,15 +2279,14 @@ describe('Test custom props', () => {
           marginPagesDisplayed={1}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
-      const elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
-        pagination,
-        'a'
-      );
+      const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
       const previous = elmts[0];
       const next = elmts[elmts.length - 1];
 
-      ReactTestUtils.Simulate.click(next);
+      fireEvent.click(next);
       expect(
         ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
       ).toBe(1);
@@ -2157,7 +2297,7 @@ describe('Test custom props', () => {
 
       // Click to go to page 8.
       for (let i = 1; i < 7; i++) {
-        ReactTestUtils.Simulate.click(next);
+        fireEvent.click(next);
         expect(
           ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a')
             .length
@@ -2172,7 +2312,7 @@ describe('Test custom props', () => {
           .textContent
       ).toBe('8');
 
-      ReactTestUtils.Simulate.click(previous);
+      fireEvent.click(previous);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelectorAll('.selected a').length
@@ -2185,19 +2325,18 @@ describe('Test custom props', () => {
   });
 
   describe('Prevent breaks when only one active page', () => {
-    it('does not show break', () => {
-      const pagination = ReactTestUtils.renderIntoDocument(
+    it('does not show break', async () => {
+      render(
         <PaginationBoxView
           pageRangeDisplayed={0}
           pageCount={12}
           marginPagesDisplayed={0}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
 
-      const elmts = ReactTestUtils.scryRenderedDOMComponentsWithTag(
-        pagination,
-        'a'
-      );
+      const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
       const next = elmts[elmts.length - 1];
 
       expect(
@@ -2211,7 +2350,7 @@ describe('Test custom props', () => {
           .textContent
       ).toBe('1');
 
-      ReactTestUtils.Simulate.click(next);
+      fireEvent.click(next);
       expect(
         ReactDOM.findDOMNode(pagination).querySelectorAll('.break a').length
       ).toBe(0);
@@ -2226,9 +2365,9 @@ describe('Test custom props', () => {
   });
 
   describe('onClick', () => {
-    it('should use the onClick prop when defined', () => {
+    it('should use the onClick prop when defined', async () => {
       const myOnClick = jest.fn(() => false);
-      const pagination = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           onClick={myOnClick}
           initialPage={10}
@@ -2237,9 +2376,11 @@ describe('Test custom props', () => {
           pageRangeDisplayed={5}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
       const breakItem =
         ReactDOM.findDOMNode(pagination).querySelector('li.break a');
-      ReactTestUtils.Simulate.click(breakItem);
+      fireEvent.click(breakItem);
 
       expect(myOnClick).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -2260,9 +2401,9 @@ describe('Test custom props', () => {
       ).toBe('11');
     });
 
-    it('should use the return value from onClick to change page', () => {
+    it('should use the return value from onClick to change page', async () => {
       const myOnClick = () => 5;
-      const pagination = ReactTestUtils.renderIntoDocument(
+      render(
         <PaginationBoxView
           onClick={myOnClick}
           initialPage={10}
@@ -2271,9 +2412,15 @@ describe('Test custom props', () => {
           pageRangeDisplayed={5}
         />
       );
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('.selected a')
+          .textContent
+      ).toBe('11');
       const breakItem =
         ReactDOM.findDOMNode(pagination).querySelector('li.break a');
-      ReactTestUtils.Simulate.click(breakItem);
+      fireEvent.click(breakItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
