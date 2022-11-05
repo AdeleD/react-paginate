@@ -53,9 +53,12 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-  const isDevelopment = argv.mode !== 'production' && process.env.NODE_ENV !== 'production';
+  const isDevelopment =
+    argv.mode !== 'production' && process.env.NODE_ENV !== 'production';
   config.mode = isDevelopment ? 'development' : 'production';
-  config.plugins = [isDevelopment && new webpack.HotModuleReplacementPlugin()].filter(Boolean);
+  config.plugins = [
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+  ].filter(Boolean);
   if (argv.mode === 'production') {
     config.output.path = dir_dist;
   }

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const dir_demo_js = path.resolve(__dirname, 'js');
 const dir_demo_build = path.resolve(__dirname, 'build');
@@ -12,24 +13,41 @@ console.log(`Webpack demo ${isDevelopment ? 'dev' : 'prod'}`);
 
 module.exports = {
   target: 'node',
-  entry: path.resolve(dir_demo_js, 'demo.js'),
+  entry: [
+    'webpack-hot-middleware/client',
+    path.resolve(dir_demo_js, 'demo.js'),
+  ],
   output: {
     path: dir_demo_build,
     filename: 'demo.js',
     publicPath: 'build',
   },
   mode: isDevelopment ? 'development' : 'production',
-  plugins: [isDevelopment && new webpack.HotModuleReplacementPlugin()].filter(Boolean),
+  plugins: [
+    // isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
   devServer: {
     hot: true,
     contentBase: dir_demo_build,
   },
   module: {
     rules: [
-      // {
-      //   use: 'react-hot-loader/webpack',
-      //   test: dir_demo_js,
-      // },
+      {
+        test: dir_demo_js,
+        // test: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              plugins: [
+                isDevelopment && require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
+            },
+          },
+        ],
+      },
       {
         use: 'babel-loader',
         test: dir_demo_js,

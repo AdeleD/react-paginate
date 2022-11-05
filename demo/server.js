@@ -21,14 +21,16 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 app.use(serveStatic(ROOT_DIR));
 app.use(serveStatic(STYLES_DIR));
 
+const compiler = webpack(WebpackConfig);
 app.use(
-  webpackDevMiddleware(webpack(WebpackConfig), {
+  webpackDevMiddleware(compiler, {
     publicPath: '/build/',
     stats: {
       colors: true,
     },
   })
 );
+app.use(require('webpack-hot-middleware')(compiler));
 
 const ITEMS = JSON.parse(fs.readFileSync(DATA));
 

@@ -50,7 +50,8 @@
     "styled-components": "^5",
     "webpack": "^5",
     "webpack-cli": "^4",
-    "webpack-dev-middleware": "^5"
+    "webpack-dev-middleware": "^5",
+    "webpack-hot-middleware": "^2.25.2"
   },
   "scripts": {
     "test": "jest",
