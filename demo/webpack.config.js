@@ -24,7 +24,7 @@ module.exports = {
   },
   mode: isDevelopment ? 'development' : 'production',
   plugins: [
-    // isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
   devServer: {
@@ -35,7 +35,6 @@ module.exports = {
     rules: [
       {
         test: dir_demo_js,
-        // test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         use: [
           {
