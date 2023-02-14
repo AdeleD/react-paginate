@@ -223,7 +223,7 @@ export interface ReactPaginateProps {
    * A render function called when `pageCount` is zero. Let the Previous / Next buttons displayed by default (`undefined`).
    * Display nothing when `null` is provided.
    */
-  renderOnZeroPageCount?: (props: ReactPaginateProps) => void | null;
+  renderOnZeroPageCount?: ((props: ReactPaginateProps) => void) | null;
 
   /**
    * The `rel` propery on the `a` tag for the selected page.
