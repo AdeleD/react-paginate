@@ -563,7 +563,6 @@ export default class PaginationBoxView extends Component {
     const nextAriaDisabled = isNextDisabled ? 'true' : 'false';
 
     return (
-      alert('FTS alert3');
       <ul
         className={className || containerClassName}
         role=""
