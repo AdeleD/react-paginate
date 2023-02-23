@@ -386,12 +386,10 @@ export default class PaginationBoxView extends Component {
     const { selected } = this.state;
 
     if (pageCount <= pageRangeDisplayed) {
-      alert('FTS alert1');
       for (let index = 0; index < pageCount; index++) {
         items.push(this.getPageElement(index));
       }
     } else {
-      alert('FTS alert2');
       let leftSide = pageRangeDisplayed / 2;
       let rightSide = pageRangeDisplayed - leftSide;
 
