@@ -2,7 +2,7 @@
 
 ## How to use it
 
-Add the `theme/basic/react-paginatte.css` file to your HTML page. For eg., after downloading it and making it available on your server as `/assets/css/react-paginatte.css`:
+Add the `theme/basic/react-paginatte.css` file to your HTML page. For eg., after downloading it and making it available on your server as `/assets/css/react-paginate.css`:
 
 ```html
 <link href="/assets/css/react-paginate.css" rel="stylesheet" />
