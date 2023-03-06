@@ -23,11 +23,6 @@ const config = {
   },
   module: {
     rules: [
-      // {
-      //   use: 'react-hot-loader/webpack',
-      //   test: dir_js,
-      //   exclude: dir_node_modules,
-      // },
       {
         use: 'babel-loader',
         test: dir_js,
