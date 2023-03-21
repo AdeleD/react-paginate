@@ -215,6 +215,17 @@ export interface ReactPaginateProps {
   ariaLabelBuilder?(pageIndex: number, selectedPage: number): void;
 
   /**
+   * By default the pagination link will have an 'aria-label' attribute of 'Jump forward'
+   * when the break is after the current index, and an 'aria-label' attribute of 'Jump
+   * backward' when the break is before the current index. This optional prop can be used
+   * to provide alternative 'aria-label' attributes.
+   */
+  breakAriaLabels?: {
+    forward: string;
+    backward: string;
+  };
+
+  /**
    * The event to listen onto before changing the selected page. Default is: `onClick`.
    */
   eventListener?: string | undefined;

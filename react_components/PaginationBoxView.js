@@ -20,6 +20,10 @@ export default class PaginationBoxView extends Component {
     nextPageRel: PropTypes.string,
     nextRel: PropTypes.string,
     breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    breakAriaLabels: PropTypes.shape({
+      forward: PropTypes.string,
+      backward: PropTypes.string,
+    }),
     hrefBuilder: PropTypes.func,
     hrefAllControls: PropTypes.bool,
     onPageChange: PropTypes.func,
@@ -65,6 +69,7 @@ export default class PaginationBoxView extends Component {
     nextPageRel: 'next',
     nextRel: 'next',
     breakLabel: '...',
+    breakAriaLabels: { forward: 'Jump forward', backward: 'Jump backward' },
     disabledClassName: 'disabled',
     disableInitialCallback: false,
     pageLabelBuilder: (page) => page,
@@ -381,6 +386,7 @@ export default class PaginationBoxView extends Component {
       breakLabel,
       breakClassName,
       breakLinkClassName,
+      breakAriaLabels,
     } = this.props;
 
     const { selected } = this.state;
@@ -470,9 +476,14 @@ export default class PaginationBoxView extends Component {
           // We do not show break if only one active page is displayed.
           (pageRangeDisplayed > 0 || marginPagesDisplayed > 0)
         ) {
+          const useBreakAriaLabel =
+            index < selected
+              ? breakAriaLabels.backward
+              : breakAriaLabels.forward;
           breakView = (
             <BreakView
               key={index}
+              breakAriaLabel={useBreakAriaLabel}
               breakLabel={breakLabel}
               breakClassName={breakClassName}
               breakLinkClassName={breakLinkClassName}

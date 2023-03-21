@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 const BreakView = (props) => {
   const {
     breakLabel,
+    breakAriaLabel,
     breakClassName,
     breakLinkClassName,
     breakHandler,
@@ -19,6 +20,7 @@ const BreakView = (props) => {
         className={breakLinkClassName}
         role="button"
         tabIndex="0"
+        aria-label={breakAriaLabel}
         onKeyPress={breakHandler}
         {...getEventListener(breakHandler)}
       >
@@ -30,6 +32,7 @@ const BreakView = (props) => {
 
 BreakView.propTypes = {
   breakLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  breakAriaLabel: PropTypes.string,
   breakClassName: PropTypes.string,
   breakLinkClassName: PropTypes.string,
   breakHandler: PropTypes.func.isRequired,
