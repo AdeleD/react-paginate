@@ -2,6 +2,11 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.1.5
+
+- Fix the type of `renderOnZeroPageCount` in the type declaration file (https://github.com/AdeleD/react-paginate/pull/454).
+- Explain how to add CSS style to the component (https://github.com/AdeleD/react-paginate/pull/472).
+
 ## >= 8.1.4
 
 - Add an ARIA role [`navigation`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/navigation_role) to main `<ul>` tag
