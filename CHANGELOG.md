@@ -2,6 +2,11 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.2.0
+
+- Add an ARIA label for pagination break link with default props of `Jump forward` and `Jump backward` when index is before and after the break, respectively
+- Add an optional prop to PaginationBoxView `breakAriaLabels` allowing the above labels to be user defined.
+
 ## >= 8.1.5
 
 - Fix the type of `renderOnZeroPageCount` in the type declaration file (https://github.com/AdeleD/react-paginate/pull/454).

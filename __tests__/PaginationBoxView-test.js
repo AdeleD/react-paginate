@@ -752,6 +752,90 @@ describe('Test pagination behaviour', () => {
     );
     consoleWarnMock.mockRestore();
   });
+
+  it('should provide default forward aria-label for the break if breakAriaLabels is not provided and index is before the break', async () => {
+    render(
+      <PaginationBoxView
+        initialPage={0}
+        pageCount={22}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+      />
+    );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
+
+    // Aria label should be 'Jump forward' if selected page is before the break
+    const breakLinkAria = ReactDOM.findDOMNode(pagination)
+      .querySelector('.break a')
+      .getAttribute('aria-label');
+    expect(breakLinkAria).toBe('Jump forward');
+  });
+
+  it('should provide default backward aria-label for the break if breakAriaLabels is not provided and index is after the break', async () => {
+    render(
+      <PaginationBoxView
+        initialPage={21}
+        pageCount={22}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+      />
+    );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
+
+    // Aria label should be 'Jump backward' if selected page is after the break
+    const breakLinkAria = ReactDOM.findDOMNode(pagination)
+      .querySelector('.break a')
+      .getAttribute('aria-label');
+    expect(breakLinkAria).toBe('Jump backward');
+  });
+
+  it('should provide given forward aria-label for the break if breakAriaLabels is provided and index is before the break', async () => {
+    render(
+      <PaginationBoxView
+        initialPage={0}
+        pageCount={22}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        breakAriaLabels={{
+          forward: 'Skip forward',
+          backward: 'Skip backward',
+        }}
+      />
+    );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
+
+    // Aria label should be 'Skip forward' if selected page is before the break
+    const breakLinkAria = ReactDOM.findDOMNode(pagination)
+      .querySelector('.break a')
+      .getAttribute('aria-label');
+    expect(breakLinkAria).toBe('Skip forward');
+  });
+
+  it('should provide given backward aria-label for the break if breakAriaLabels is provided and index is after the break', async () => {
+    render(
+      <PaginationBoxView
+        initialPage={21}
+        pageCount={22}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        breakAriaLabels={{
+          forward: 'Skip forward',
+          backward: 'Skip backward',
+        }}
+      />
+    );
+    const pagination = await screen.findByRole('navigation');
+    expect(pagination).toBeDefined();
+
+    // Aria label should be 'Skip backward' if selected page is after the break
+    const breakLinkAria = ReactDOM.findDOMNode(pagination)
+      .querySelector('.break a')
+      .getAttribute('aria-label');
+    expect(breakLinkAria).toBe('Skip backward');
+  });
 });
 
 describe('Test default props', () => {
