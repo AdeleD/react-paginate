@@ -85,7 +85,7 @@ export default class PaginationBoxView extends Component {
     if (props.initialPage !== undefined && props.forcePage !== undefined) {
       console.warn(
         `(react-paginate): Both initialPage (${props.initialPage}) and forcePage (${props.forcePage}) props are provided, which is discouraged.` +
-          ' Use exclusively forcePage prop for a controlled component.\nSee https://reactjs.org/docs/forms.html#controlled-components'
+        ' Use exclusively forcePage prop for a controlled component.\nSee https://reactjs.org/docs/forms.html#controlled-components'
       );
     }
 
@@ -130,16 +130,14 @@ export default class PaginationBoxView extends Component {
 
     if (initialPage !== undefined && initialPage > pageCount - 1) {
       console.warn(
-        `(react-paginate): The initialPage prop provided is greater than the maximum page index from pageCount prop (${initialPage} > ${
-          pageCount - 1
+        `(react-paginate): The initialPage prop provided is greater than the maximum page index from pageCount prop (${initialPage} > ${pageCount - 1
         }).`
       );
     }
 
     if (forcePage !== undefined && forcePage > pageCount - 1) {
       console.warn(
-        `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${forcePage} > ${
-          pageCount - 1
+        `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${forcePage} > ${pageCount - 1
         }).`
       );
     }
@@ -152,8 +150,7 @@ export default class PaginationBoxView extends Component {
     ) {
       if (this.props.forcePage > this.props.pageCount - 1) {
         console.warn(
-          `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${
-            this.props.forcePage
+          `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${this.props.forcePage
           } > ${this.props.pageCount - 1}).`
         );
       }
@@ -474,7 +471,7 @@ export default class PaginationBoxView extends Component {
           pagesBreaking.length > 0 &&
           pagesBreaking[pagesBreaking.length - 1].display !== breakView &&
           // We do not show break if only one active page is displayed.
-          (pageRangeDisplayed > 0 || marginPagesDisplayed > 0)
+          (pageRangeDisplayed > 0 && marginPagesDisplayed > 0)
         ) {
           const useBreakAriaLabel =
             index < selected
@@ -554,19 +551,15 @@ export default class PaginationBoxView extends Component {
     const isPreviousDisabled = selected === 0;
     const isNextDisabled = selected === pageCount - 1;
 
-    const previousClasses = `${classNameIfDefined(previousClassName)}${
-      isPreviousDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
-    }`;
-    const nextClasses = `${classNameIfDefined(nextClassName)}${
-      isNextDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
-    }`;
+    const previousClasses = `${classNameIfDefined(previousClassName)}${isPreviousDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
+      }`;
+    const nextClasses = `${classNameIfDefined(nextClassName)}${isNextDisabled ? ` ${classNameIfDefined(disabledClassName)}` : ''
+      }`;
 
-    const previousLinkClasses = `${classNameIfDefined(previousLinkClassName)}${
-      isPreviousDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
-    }`;
-    const nextLinkClasses = `${classNameIfDefined(nextLinkClassName)}${
-      isNextDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
-    }`;
+    const previousLinkClasses = `${classNameIfDefined(previousLinkClassName)}${isPreviousDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
+      }`;
+    const nextLinkClasses = `${classNameIfDefined(nextLinkClassName)}${isNextDisabled ? ` ${classNameIfDefined(disabledLinkClassName)}` : ''
+      }`;
 
     const previousAriaDisabled = isPreviousDisabled ? 'true' : 'false';
     const nextAriaDisabled = isNextDisabled ? 'true' : 'false';
