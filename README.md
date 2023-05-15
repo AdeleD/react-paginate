@@ -155,16 +155,10 @@ Install dependencies:
 npm install
 ```
 
-Prepare the demo:
+Run the demo:
 
 ```console
-npm run demo
-```
-
-Run the server:
-
-```console
-npm run serve
+npm run start
 ```
 
 Open your browser and go to [http://localhost:3000/](http://localhost:3000/)
