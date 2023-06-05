@@ -72,7 +72,7 @@ export default class PaginationBoxView extends Component {
     breakAriaLabels: { forward: 'Jump forward', backward: 'Jump backward' },
     disabledClassName: 'disabled',
     disableInitialCallback: false,
-    pageLabelBuilder: (page) => page,
+    pageLabelBuilder: (page) => page.toLocaleString(),
     eventListener: 'onClick',
     renderOnZeroPageCount: undefined,
     selectedPageRel: 'canonical',
