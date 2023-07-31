@@ -2,6 +2,9 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.2.1 (WIP)
+- Remove incorrect ARIA role [`navigation`] (see: https://github.com/AdeleD/react-paginate/issues/459)
+
 ## >= 8.2.0
 
 - Add an ARIA label for pagination break link with default props of `Jump forward` and `Jump backward` when index is before and after the break, respectively

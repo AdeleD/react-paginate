@@ -18,7 +18,7 @@ describe('Test rendering', () => {
   it('should render a pagination component', async () => {
     render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
 
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     expect(ReactDOM.findDOMNode(pagination).nodeName).toEqual('UL');
@@ -50,7 +50,7 @@ describe('Test rendering', () => {
         breakLabel={null}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
@@ -69,7 +69,7 @@ describe('Page count is zero', () => {
         breakLabel={null}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
     // Prev page, next
@@ -85,7 +85,7 @@ describe('Page count is zero', () => {
         renderOnZeroPageCount={null}
       />
     );
-    const pagination = await screen.queryByRole('navigation');
+    const pagination = await screen.queryByRole('list');
     expect(pagination).toBeNull();
     expect(ReactDOM.findDOMNode(pagination)).toBeNull();
   });
@@ -116,7 +116,7 @@ describe('Page count checks', () => {
         breakLabel={null}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
     // Prev page, next
@@ -154,7 +154,7 @@ describe('Page count checks', () => {
 describe('Test clicks', () => {
   it('test clicks on previous and next buttons', async () => {
     render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
@@ -176,7 +176,7 @@ describe('Test clicks', () => {
 
   it('test click on a page item', async () => {
     render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const pageItem =
@@ -198,7 +198,7 @@ describe('Test clicks', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     // The selected page is before the left break
@@ -234,7 +234,7 @@ describe('Test clicks', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     // The selected page is before the right break
@@ -263,7 +263,7 @@ describe('Test custom event listener', () => {
         eventListener="onMouseOver"
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
@@ -290,7 +290,7 @@ describe('Test custom event listener', () => {
         eventListener="onMouseOver"
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const pageItem =
@@ -313,7 +313,7 @@ describe('Test custom event listener', () => {
         eventListener="onMouseOver"
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     // The selected page is before the left break
@@ -351,7 +351,7 @@ describe('Test pagination behaviour', () => {
         marginPagesDisplayed={1}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const previousElement =
@@ -397,7 +397,7 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const previousElement =
@@ -443,7 +443,7 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const previousElement =
@@ -489,7 +489,7 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const previousElement =
@@ -552,7 +552,7 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const previousElement =
@@ -598,7 +598,7 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const previousElement =
@@ -647,7 +647,7 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     const previousElement =
@@ -696,7 +696,7 @@ describe('Test pagination behaviour', () => {
         }
       />
     );
-    const linkedPagination = await screen.findByRole('navigation');
+    const linkedPagination = await screen.findByRole('list');
     expect(linkedPagination).toBeDefined();
     expect(
       ReactDOM.findDOMNode(linkedPagination)
@@ -729,7 +729,7 @@ describe('Test pagination behaviour', () => {
         extraAriaContext="foobar"
       />
     );
-    const linkedPagination = await screen.findByRole('navigation');
+    const linkedPagination = await screen.findByRole('list');
     expect(linkedPagination).toBeDefined();
     expect(
       ReactDOM.findDOMNode(linkedPagination)
@@ -762,7 +762,7 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     // Aria label should be 'Jump forward' if selected page is before the break
@@ -781,7 +781,7 @@ describe('Test pagination behaviour', () => {
         pageRangeDisplayed={5}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     // Aria label should be 'Jump backward' if selected page is after the break
@@ -804,7 +804,7 @@ describe('Test pagination behaviour', () => {
         }}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     // Aria label should be 'Skip forward' if selected page is before the break
@@ -827,7 +827,7 @@ describe('Test pagination behaviour', () => {
         }}
       />
     );
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     // Aria label should be 'Skip backward' if selected page is after the break
@@ -842,7 +842,7 @@ describe('Test default props', () => {
   describe('default previousLabel/nextLabel', () => {
     it('should use the default previousLabel/nextLabel', async () => {
       render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -858,7 +858,7 @@ describe('Test default props', () => {
   describe('default breakLabel/breakClassName/breakLinkClassName', () => {
     it('should use the default breakLabel/breakClassName/breakLinkClassName', async () => {
       render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break').textContent
@@ -875,7 +875,7 @@ describe('Test default props', () => {
   describe('default onPageChange', () => {
     it('should not call any onPageChange callback if not defined but it should go to the next page', async () => {
       render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       const nextItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a');
@@ -891,7 +891,7 @@ describe('Test default props', () => {
   describe('default initialPage/forcePage', () => {
     it('should use the default initial selected page (0)', async () => {
       render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -917,7 +917,7 @@ describe('Test default props', () => {
   describe('default containerClassName', () => {
     it('should not use any classname on the container by default', async () => {
       render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual('');
     });
@@ -932,7 +932,7 @@ describe('Test default props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const pageItem =
@@ -960,7 +960,7 @@ describe('Test default props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
@@ -978,7 +978,7 @@ describe('Test default props', () => {
       render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
@@ -996,7 +996,7 @@ describe('Test default props', () => {
       render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -1012,7 +1012,7 @@ describe('Test default props', () => {
   describe('default disabledClassName', () => {
     it('should use the default disabledClassName', async function () {
       render(<PaginationBoxView initialPage={0} pageCount={1} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
@@ -1028,7 +1028,7 @@ describe('Test default props', () => {
   describe('default hrefBuilder', () => {
     it('should not render href attributes on page items if hrefBuilder is not defined', async function () {
       render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
-      const linkedPagination = await screen.findByRole('navigation');
+      const linkedPagination = await screen.findByRole('list');
       expect(linkedPagination).toBeDefined();
 
       expect(
@@ -1058,7 +1058,7 @@ describe('Test default props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1078,7 +1078,7 @@ describe('Test default props', () => {
       render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={0} />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1113,7 +1113,7 @@ describe('Test custom props', () => {
           previousLabel={'Custom previous label'}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -1128,7 +1128,7 @@ describe('Test custom props', () => {
           nextLabel={'Custom next label'}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
@@ -1142,7 +1142,7 @@ describe('Test custom props', () => {
       render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} breakLabel={'...'} />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break').firstChild
@@ -1165,7 +1165,7 @@ describe('Test custom props', () => {
           breakLabel={<span>...</span>}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li.break a').firstChild
@@ -1184,7 +1184,7 @@ describe('Test custom props', () => {
           breakClassName={'break-me'}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.break-me')
@@ -1198,7 +1198,7 @@ describe('Test custom props', () => {
           breakLinkClassName={'break-link'}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.break-link')
@@ -1215,7 +1215,7 @@ describe('Test custom props', () => {
           onPageChange={myOnPageChangeMethod}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       const nextItem =
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a');
@@ -1236,7 +1236,7 @@ describe('Test custom props', () => {
           onPageChange={myOnPageChangeMethod}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       const activeItem =
         ReactDOM.findDOMNode(pagination).querySelector('.selected a');
@@ -1252,7 +1252,7 @@ describe('Test custom props', () => {
       render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} initialPage={2} />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1266,7 +1266,7 @@ describe('Test custom props', () => {
       render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1320,7 +1320,7 @@ describe('Test custom props', () => {
           forcePage={2}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1339,7 +1339,7 @@ describe('Test custom props', () => {
       render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={2} />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       expect(
@@ -1362,7 +1362,7 @@ describe('Test custom props', () => {
       render(
         <PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} forcePage={0} />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       expect(
@@ -1405,7 +1405,7 @@ describe('Test custom props', () => {
           containerClassName="my-pagination"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'
@@ -1419,7 +1419,7 @@ describe('Test custom props', () => {
           className="my-pagination"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'
@@ -1434,7 +1434,7 @@ describe('Test custom props', () => {
           containerClassName="another"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(ReactDOM.findDOMNode(pagination).className).toEqual(
         'my-pagination'
@@ -1452,7 +1452,7 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const pageItem =
@@ -1479,7 +1479,7 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const pageItem =
@@ -1502,7 +1502,7 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const pageItem =
@@ -1531,7 +1531,7 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       expect(
@@ -1551,7 +1551,7 @@ describe('Test custom props', () => {
           pageCount={5}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a').className
@@ -1568,7 +1568,7 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector(
@@ -1590,7 +1590,7 @@ describe('Test custom props', () => {
           previousClassName="custom-previous-classname"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
@@ -1606,7 +1606,7 @@ describe('Test custom props', () => {
           nextClassName="custom-next-classname"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child')
@@ -1624,7 +1624,7 @@ describe('Test custom props', () => {
           previousLinkClassName="custom-previous-link-classname"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
@@ -1640,7 +1640,7 @@ describe('Test custom props', () => {
           nextLinkClassName="custom-next-link-classname"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
@@ -1656,7 +1656,7 @@ describe('Test custom props', () => {
           disabledLinkClassName="custom-disabled-link-classname"
         />
       );
-      const paginationFirst = await screen.findByRole('navigation');
+      const paginationFirst = await screen.findByRole('list');
       expect(paginationFirst).toBeDefined();
       expect(
         ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
@@ -1674,7 +1674,7 @@ describe('Test custom props', () => {
           disabledLinkClassName="custom-disabled-link-classname"
         />
       );
-      const paginationLast = (await screen.findAllByRole('navigation'))[1];
+      const paginationLast = (await screen.findAllByRole('list'))[1];
       expect(paginationLast).toBeDefined();
       expect(
         ReactDOM.findDOMNode(paginationLast).querySelector('li:first-child a')
@@ -1696,7 +1696,7 @@ describe('Test custom props', () => {
           disabledLinkClassName="custom-disabled-link-classname"
         />
       );
-      const paginationFirst = await screen.findByRole('navigation');
+      const paginationFirst = await screen.findByRole('list');
       expect(paginationFirst).toBeDefined();
       expect(
         ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
@@ -1718,7 +1718,7 @@ describe('Test custom props', () => {
           disabledLinkClassName="custom-disabled-link-classname"
         />
       );
-      const paginationFirst = await screen.findByRole('navigation');
+      const paginationFirst = await screen.findByRole('list');
       expect(paginationFirst).toBeDefined();
       expect(
         ReactDOM.findDOMNode(paginationFirst).querySelector('li:first-child a')
@@ -1734,7 +1734,7 @@ describe('Test custom props', () => {
   describe('prevRel/nextRel', () => {
     it('should render default rel if they are not specified', async function () {
       render(<PaginationBoxView pageCount={3} />);
-      const linkedPagination = await screen.findByRole('navigation');
+      const linkedPagination = await screen.findByRole('list');
       expect(linkedPagination).toBeDefined();
 
       expect(
@@ -1757,7 +1757,7 @@ describe('Test custom props', () => {
           prevRel={'nofollow noreferrer'}
         />
       );
-      const linkedPagination = await screen.findByRole('navigation');
+      const linkedPagination = await screen.findByRole('list');
       expect(linkedPagination).toBeDefined();
 
       expect(
@@ -1782,7 +1782,7 @@ describe('Test custom props', () => {
           disabledClassName="custom-disabled-classname"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child')
@@ -1804,7 +1804,7 @@ describe('Test custom props', () => {
           hrefBuilder={(page) => '/page/' + page}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       expect(
@@ -1832,7 +1832,7 @@ describe('Test custom props', () => {
           hrefBuilder={(page) => '/page/' + page}
         />
       );
-      const paginationFirst = await screen.findByRole('navigation');
+      const paginationFirst = await screen.findByRole('list');
       expect(paginationFirst).toBeDefined();
 
       expect(
@@ -1858,7 +1858,7 @@ describe('Test custom props', () => {
           hrefBuilder={(page) => '/page/' + page}
         />
       );
-      const paginationLast = (await screen.findAllByRole('navigation'))[1];
+      const paginationLast = (await screen.findAllByRole('list'))[1];
       expect(paginationLast).toBeDefined();
 
       expect(
@@ -1889,7 +1889,7 @@ describe('Test custom props', () => {
           hrefAllControls
         />
       );
-      const paginationFirst = await screen.findByRole('navigation');
+      const paginationFirst = await screen.findByRole('list');
       expect(paginationFirst).toBeDefined();
 
       expect(
@@ -1915,7 +1915,7 @@ describe('Test custom props', () => {
           hrefBuilder={(page) => '/page/' + page}
         />
       );
-      const paginationLast = (await screen.findAllByRole('navigation'))[1];
+      const paginationLast = (await screen.findAllByRole('list'))[1];
       expect(paginationLast).toBeDefined();
 
       expect(
@@ -1947,7 +1947,7 @@ describe('Test custom props', () => {
           nextClassName="next"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1970,7 +1970,7 @@ describe('Test custom props', () => {
   describe('aria-disabled', () => {
     it('should be true for previous link when link is disabled', async () => {
       render(<PaginationBoxView initialPage={0} pageCount={5} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
@@ -1986,7 +1986,7 @@ describe('Test custom props', () => {
 
     it('should be true for next link when link is disabled', async () => {
       render(<PaginationBoxView initialPage={4} pageCount={5} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       expect(
@@ -2004,7 +2004,7 @@ describe('Test custom props', () => {
 
   it('should be true for both previous and next links when only one page', async () => {
     render(<PaginationBoxView initialPage={0} pageCount={1} />);
-    const pagination = await screen.findByRole('navigation');
+    const pagination = await screen.findByRole('list');
     expect(pagination).toBeDefined();
 
     expect(
@@ -2021,7 +2021,7 @@ describe('Test custom props', () => {
 
   it('should render default aria labels if they are not specified', async function () {
     render(<PaginationBoxView pageCount={3} />);
-    const linkedPagination = await screen.findByRole('navigation');
+    const linkedPagination = await screen.findByRole('list');
     expect(linkedPagination).toBeDefined();
 
     expect(
@@ -2044,7 +2044,7 @@ describe('Test custom props', () => {
         previousAriaLabel={'Go to the previous page'}
       />
     );
-    const linkedPagination = await screen.findByRole('navigation');
+    const linkedPagination = await screen.findByRole('list');
     expect(linkedPagination).toBeDefined();
 
     expect(
@@ -2078,7 +2078,7 @@ describe('Test custom props', () => {
           }}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       expect(
@@ -2090,7 +2090,7 @@ describe('Test custom props', () => {
   describe('prevPageRel/nextPageRel/selectedPageRel', () => {
     it('should render default rel if not defined', async function () {
       render(<PaginationBoxView pageCount={4} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const activeItem =
@@ -2122,7 +2122,7 @@ describe('Test custom props', () => {
           selectedPageRel="custom-selected-rel"
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const activeItem =
@@ -2154,7 +2154,7 @@ describe('Test custom props', () => {
           selectedPageRel={null}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const activeItem =
@@ -2184,7 +2184,7 @@ describe('Test custom props', () => {
     });
     it('should not render prevPageRel and nextPageRel if pageCount is 1', async function () {
       render(<PaginationBoxView pageCount={1} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       expect(
@@ -2215,7 +2215,7 @@ describe('Test custom props', () => {
     });
     it('should not render prevPageRel if selected page is first', async function () {
       render(<PaginationBoxView pageCount={4} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       expect(
@@ -2236,7 +2236,7 @@ describe('Test custom props', () => {
     });
     it('should not render nextPageRel if selected page is last', async function () {
       render(<PaginationBoxView pageCount={4} />);
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
@@ -2268,7 +2268,7 @@ describe('Test custom props', () => {
           pageRangeDisplayed={0}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const activeItem =
@@ -2299,7 +2299,7 @@ describe('Test custom props', () => {
           pageRangeDisplayed={0}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
@@ -2335,7 +2335,7 @@ describe('Test custom props', () => {
           marginPagesDisplayed={1}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
@@ -2389,7 +2389,7 @@ describe('Test custom props', () => {
           marginPagesDisplayed={0}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
 
       const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
@@ -2432,7 +2432,7 @@ describe('Test custom props', () => {
           pageRangeDisplayed={5}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       const breakItem =
         ReactDOM.findDOMNode(pagination).querySelector('li.break a');
@@ -2468,7 +2468,7 @@ describe('Test custom props', () => {
           pageRangeDisplayed={5}
         />
       );
-      const pagination = await screen.findByRole('navigation');
+      const pagination = await screen.findByRole('list');
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
