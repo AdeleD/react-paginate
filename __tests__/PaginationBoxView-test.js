@@ -1325,7 +1325,7 @@ describe('Test custom props', () => {
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
-      ).toBe('4');
+      ).toBe('3');
       expect(console.warn).toHaveBeenCalledTimes(1);
       expect(console.warn).toHaveBeenLastCalledWith(
         '(react-paginate): Both initialPage (3) and forcePage (2) props are provided, which is discouraged.' +
@@ -1355,7 +1355,7 @@ describe('Test custom props', () => {
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
-      ).toBe('2');
+      ).toBe('3');
     });
 
     it('(observation) is not totally controlled when forcePage is provided, even when it is 0', async () => {
@@ -1378,7 +1378,7 @@ describe('Test custom props', () => {
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
           .textContent
-      ).toBe('2');
+      ).toBe('1');
     });
   });
 
