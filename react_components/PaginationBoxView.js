@@ -92,8 +92,6 @@ export default class PaginationBoxView extends Component {
     let initialSelected;
     if (props.initialPage) {
       initialSelected = props.initialPage;
-    } else if (props.forcePage) {
-      initialSelected = props.forcePage;
     } else {
       initialSelected = 0;
     }
@@ -101,6 +99,12 @@ export default class PaginationBoxView extends Component {
     this.state = {
       selected: initialSelected,
     };
+  }
+
+  selectedPage() {
+    return typeof this.props.forcePage === 'number'
+      ? this.props.forcePage
+      : this.state.selected;
   }
 
   componentDidMount() {
@@ -147,21 +151,6 @@ export default class PaginationBoxView extends Component {
 
   componentDidUpdate(prevProps) {
     if (
-      this.props.forcePage !== undefined &&
-      this.props.forcePage !== prevProps.forcePage
-    ) {
-      if (this.props.forcePage > this.props.pageCount - 1) {
-        console.warn(
-          `(react-paginate): The forcePage prop provided is greater than the maximum page index from pageCount prop (${
-            this.props.forcePage
-          } > ${this.props.pageCount - 1}).`
-        );
-      }
-
-      this.setState({ selected: this.props.forcePage });
-    }
-
-    if (
       Number.isInteger(prevProps.pageCount) &&
       !Number.isInteger(this.props.pageCount)
     ) {
@@ -172,7 +161,7 @@ export default class PaginationBoxView extends Component {
   }
 
   handlePreviousPage = (event) => {
-    const { selected } = this.state;
+    const selected = this.selectedPage();
 
     this.handleClick(event, null, selected > 0 ? selected - 1 : undefined, {
       isPrevious: true,
@@ -180,7 +169,7 @@ export default class PaginationBoxView extends Component {
   };
 
   handleNextPage = (event) => {
-    const { selected } = this.state;
+    const selected = this.selectedPage();
     const { pageCount } = this.props;
 
     this.handleClick(
@@ -192,7 +181,7 @@ export default class PaginationBoxView extends Component {
   };
 
   handlePageSelected = (selected, event) => {
-    if (this.state.selected === selected) {
+    if (this.selectedPage() === selected) {
       this.callActiveCallback(selected);
       this.handleClick(event, null, undefined, { isActive: true });
       return;
@@ -202,12 +191,13 @@ export default class PaginationBoxView extends Component {
   };
 
   handlePageChange = (selected) => {
-    if (this.state.selected === selected) {
+    if (this.selectedPage() === selected) {
       return;
     }
-    this.setState({ selected });
 
-    // Call the callback with the new selected item:
+    if (this.props.forcePage === undefined) {
+      this.setState({ selected });
+    }
     this.callCallback(selected);
   };
 
@@ -219,7 +209,7 @@ export default class PaginationBoxView extends Component {
   };
 
   getForwardJump() {
-    const { selected } = this.state;
+    const selected = this.selectedPage();
     const { pageCount, pageRangeDisplayed } = this.props;
 
     const forwardJump = selected + pageRangeDisplayed;
@@ -227,7 +217,7 @@ export default class PaginationBoxView extends Component {
   }
 
   getBackwardJump() {
-    const { selected } = this.state;
+    const selected = this.selectedPage();
     const { pageRangeDisplayed } = this.props;
 
     const backwardJump = selected - pageRangeDisplayed;
@@ -246,7 +236,7 @@ export default class PaginationBoxView extends Component {
     } = {}
   ) => {
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    const { selected } = this.state;
+    const selected = this.selectedPage();
     const { onClick } = this.props;
 
     let newPage = nextSelectedPage;
@@ -279,7 +269,7 @@ export default class PaginationBoxView extends Component {
   };
 
   handleBreakClick = (index, event) => {
-    const { selected } = this.state;
+    const selected = this.selectedPage();
 
     this.handleClick(
       event,
@@ -293,12 +283,12 @@ export default class PaginationBoxView extends Component {
     const { hrefBuilder, pageCount, hrefAllControls } = this.props;
     if (!hrefBuilder) return;
     if (hrefAllControls || (pageIndex >= 0 && pageIndex < pageCount)) {
-      return hrefBuilder(pageIndex + 1, pageCount, this.state.selected);
+      return hrefBuilder(pageIndex + 1, pageCount, this.selectedPage());
     }
   }
 
   ariaLabelBuilder(pageIndex) {
-    const selected = pageIndex === this.state.selected;
+    const selected = pageIndex === this.selectedPage();
     if (
       this.props.ariaLabelBuilder &&
       pageIndex >= 0 &&
@@ -333,7 +323,7 @@ export default class PaginationBoxView extends Component {
   };
 
   getElementPageRel = (index) => {
-    const { selected } = this.state;
+    const selected = this.selectedPage();
     const { nextPageRel, prevPageRel, selectedPageRel } = this.props;
 
     if (selected - 1 === index) {
@@ -347,7 +337,7 @@ export default class PaginationBoxView extends Component {
   };
 
   getPageElement(index) {
-    const { selected } = this.state;
+    const selected = this.selectedPage();
     const {
       pageClassName,
       pageLinkClassName,
@@ -389,7 +379,7 @@ export default class PaginationBoxView extends Component {
       breakAriaLabels,
     } = this.props;
 
-    const { selected } = this.state;
+    const selected = this.selectedPage();
 
     if (pageCount <= pageRangeDisplayed) {
       for (let index = 0; index < pageCount; index++) {
@@ -549,7 +539,7 @@ export default class PaginationBoxView extends Component {
       nextRel,
     } = this.props;
 
-    const { selected } = this.state;
+    const selected = this.selectedPage();
 
     const isPreviousDisabled = selected === 0;
     const isNextDisabled = selected === pageCount - 1;
