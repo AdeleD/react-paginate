@@ -26,18 +26,18 @@ describe('Test rendering', () => {
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
         .textContent
-    ).toBe('Previous');
+    ).toBe('««');
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('.selected a').textContent
     ).toBe('1');
     expect(
       ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
         .textContent
-    ).toBe('Next');
+    ).toBe('»»');
 
     const pages = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
     // 3 * 2 margins + 1 break label + previous & next buttons == 9:
-    expect(pages.length).toEqual(9);
+    expect(pages.length).toEqual(11);
   });
 
   it('test rendering only active page item', async function () {
@@ -54,13 +54,13 @@ describe('Test rendering', () => {
     expect(pagination).toBeDefined();
 
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
-    // Prev, selected page, next
-    expect(pageItems.length).toBe(3);
+    // Prev, selected page, next ,last page , first page
+    expect(pageItems.length).toBe(5);
   });
 });
 
 describe('Page count is zero', () => {
-  it('should render Previous / Next if page count is zero (default / when renderOnZeroPageCount is undefined)', async () => {
+  it('should render Previous ,Dobule arrow back/ Next  double arrow front if page count is zero (default / when renderOnZeroPageCount is undefined)', async () => {
     render(
       <PaginationBoxView
         pageCount={0}
@@ -73,7 +73,7 @@ describe('Page count is zero', () => {
     expect(pagination).toBeDefined();
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
     // Prev page, next
-    expect(pageItems.length).toBe(2);
+    expect(pageItems.length).toBe(4);
   });
   it('should render nothing if page count is zero when renderOnZeroPageCount is null', async () => {
     render(
@@ -120,7 +120,7 @@ describe('Page count checks', () => {
     expect(pagination).toBeDefined();
     const pageItems = ReactDOM.findDOMNode(pagination).querySelectorAll('li');
     // Prev page, next
-    expect(pageItems.length).toBe(4);
+    expect(pageItems.length).toBe(6);
     expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.warn).toHaveBeenLastCalledWith(
       '(react-paginate): The pageCount prop value provided is not an integer (2.5). Did you forget a Math.ceil()?'
@@ -158,8 +158,8 @@ describe('Test clicks', () => {
     expect(pagination).toBeDefined();
 
     const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
-    let previous = elmts[0];
-    let next = elmts[elmts.length - 1];
+    let previous = elmts[1];
+    let next = elmts[elmts.length - 2];
 
     fireEvent.click(next);
 
@@ -180,7 +180,7 @@ describe('Test clicks', () => {
     expect(pagination).toBeDefined();
 
     const pageItem =
-      ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+      ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(4) a');
 
     fireEvent.click(pageItem);
 
@@ -267,8 +267,8 @@ describe('Test custom event listener', () => {
     expect(pagination).toBeDefined();
 
     const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
-    let previous = elmts[0];
-    let next = elmts[elmts.length - 1];
+    let previous = elmts[1];
+    let next = elmts[elmts.length - 2];
 
     fireEvent.mouseOver(next);
 
@@ -294,7 +294,7 @@ describe('Test custom event listener', () => {
     expect(pagination).toBeDefined();
 
     const pageItem =
-      ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+      ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(4) a');
 
     fireEvent.mouseOver(pageItem);
 
@@ -700,12 +700,12 @@ describe('Test pagination behaviour', () => {
     expect(linkedPagination).toBeDefined();
     expect(
       ReactDOM.findDOMNode(linkedPagination)
-        .querySelector('li:nth-last-child(2) a')
+        .querySelector('li:nth-last-child(3) a')
         .getAttribute('aria-label')
     ).toBe('Goto page 3');
     expect(
       ReactDOM.findDOMNode(linkedPagination)
-        .querySelector('li:nth-child(2) a')
+        .querySelector('li:nth-child(3) a')
         .getAttribute('aria-label')
     ).toBe('Goto page 1');
     expect(
@@ -733,12 +733,12 @@ describe('Test pagination behaviour', () => {
     expect(linkedPagination).toBeDefined();
     expect(
       ReactDOM.findDOMNode(linkedPagination)
-        .querySelector('li:nth-last-child(2) a')
+        .querySelector('li:nth-last-child(3) a')
         .getAttribute('aria-label')
     ).toBe('Goto page 3 foobar');
     expect(
       ReactDOM.findDOMNode(linkedPagination)
-        .querySelector('li:nth-child(2) a')
+        .querySelector('li:nth-child(3) a')
         .getAttribute('aria-label')
     ).toBe('Goto page 1 foobar');
     expect(
@@ -847,11 +847,11 @@ describe('Test default props', () => {
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
           .textContent
-      ).toBe('Previous');
+      ).toBe('««');
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
           .textContent
-      ).toBe('Next');
+      ).toBe('»»');
     });
   });
 
@@ -878,8 +878,8 @@ describe('Test default props', () => {
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       const nextItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:last-child a');
-      fireEvent.click(nextItem);
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-last-child(2) a')
+        fireEvent.click(nextItem);
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelector('.selected a')
@@ -1082,7 +1082,7 @@ describe('Test default props', () => {
       expect(pagination).toBeDefined();
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-child(3) a')
+          .querySelector('li:nth-child(4) a')
           .getAttribute('tabindex')
       ).toBe('0');
       expect(
@@ -1116,7 +1116,7 @@ describe('Test custom props', () => {
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       expect(
-        ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(2) a')
           .textContent
       ).toBe('Custom previous label');
     });
@@ -1131,7 +1131,7 @@ describe('Test custom props', () => {
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
       expect(
-        ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-last-child(2) a')
           .textContent
       ).toBe('Custom next label');
     });
@@ -1217,14 +1217,19 @@ describe('Test custom props', () => {
       );
       const pagination = await screen.findByRole('navigation');
       expect(pagination).toBeDefined();
-      const nextItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:last-child a');
-      fireEvent.click(nextItem);
-
-      expect(myOnPageChangeMethod).toHaveBeenCalledWith({ selected: 1 });
+  
+      // Find and click the "Next" button multiple times
+      for (let i = 2; i <= DEFAULT_PAGE_COUNT; i++) {
+        const nextButton = ReactDOM.findDOMNode(pagination).querySelector(
+          'li:nth-last-child(2) a'
+          );
+        fireEvent.click(nextButton);
+  
+        // Expect onPageChange to be called with the correct selected page index
+        expect(myOnPageChangeMethod).toHaveBeenCalledWith({ selected: i-1 });
+      }
     });
   });
-
   describe('onPageActive', () => {
     it('should use the onPageActive prop when defined', async () => {
       const myOnPageActiveMethod = jest.fn();
@@ -1348,7 +1353,7 @@ describe('Test custom props', () => {
       ).toBe('3');
 
       const pageItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(4) a');
 
       fireEvent.click(pageItem);
 
@@ -1371,7 +1376,7 @@ describe('Test custom props', () => {
       ).toBe('1');
 
       const pageItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(4) a');
 
       fireEvent.click(pageItem);
 
@@ -1506,7 +1511,7 @@ describe('Test custom props', () => {
       expect(pagination).toBeDefined();
 
       const pageItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(4) a');
       fireEvent.click(pageItem);
 
       expect(
@@ -1515,7 +1520,7 @@ describe('Test custom props', () => {
         ).className
       ).toBe('page-item');
       expect(
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3)')
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(4)')
           .className
       ).toBe('page-item active-page-item');
     });
@@ -2126,22 +2131,22 @@ describe('Test custom props', () => {
       expect(pagination).toBeDefined();
 
       const activeItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(4) a');
       fireEvent.click(activeItem);
 
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-child(3) a')
+          .querySelector('li:nth-child(4) a')
           .getAttribute('rel')
       ).toBe('custom-selected-rel');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-child(2) a')
+          .querySelector('li:nth-child(3) a')
           .getAttribute('rel')
       ).toBe('custom-prev-rel');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-child(4) a')
+          .querySelector('li:nth-child(5) a')
           .getAttribute('rel')
       ).toBe('custom-next-rel');
     });
@@ -2158,12 +2163,12 @@ describe('Test custom props', () => {
       expect(pagination).toBeDefined();
 
       const activeItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-Child(3) a');
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-Child(4) a');
       fireEvent.click(activeItem);
 
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-child(2) a')
+          .querySelector('li:nth-child(3) a')
           .getAttribute('rel')
       ).toBe(null);
       expect(
@@ -2194,7 +2199,7 @@ describe('Test custom props', () => {
       ).toBe('Previous page');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-Child(2) a')
+          .querySelector('li:nth-Child(3) a')
           .getAttribute('rel')
       ).toBe('canonical');
       expect(
@@ -2204,7 +2209,7 @@ describe('Test custom props', () => {
       ).toBe('canonical');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-last-Child(2) a')
+          .querySelector('li:nth-last-Child(3) a')
           .getAttribute('rel')
       ).toBe('canonical');
       expect(
@@ -2225,12 +2230,12 @@ describe('Test custom props', () => {
       ).toBe('Previous page');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-Child(2) a')
+          .querySelector('li:nth-Child(3) a')
           .getAttribute('rel')
       ).toBe('canonical');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-Child(3) a')
+          .querySelector('li:nth-Child(4) a')
           .getAttribute('rel')
       ).toBe('next');
     });
@@ -2240,7 +2245,7 @@ describe('Test custom props', () => {
       expect(pagination).toBeDefined();
 
       const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
-        'li:nth-last-child(2) a'
+        'li:nth-last-child(3) a'
       );
       fireEvent.click(activeItem);
 
@@ -2251,12 +2256,12 @@ describe('Test custom props', () => {
       ).toBe('Next page');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-last-Child(2) a')
+          .querySelector('li:nth-last-Child(3) a')
           .getAttribute('rel')
       ).toBe('canonical');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-last-Child(3) a')
+          .querySelector('li:nth-last-Child(4) a')
           .getAttribute('rel')
       ).toBe('prev');
     });
@@ -2272,22 +2277,22 @@ describe('Test custom props', () => {
       expect(pagination).toBeDefined();
 
       const activeItem =
-        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(3) a');
+        ReactDOM.findDOMNode(pagination).querySelector('li:nth-child(4) a');
       fireEvent.click(activeItem);
 
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-Child(2) a')
+          .querySelector('li:nth-Child(3) a')
           .getAttribute('rel')
       ).toBe('prev');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-Child(3) a')
+          .querySelector('li:nth-Child(4) a')
           .getAttribute('rel')
       ).toBe('canonical');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-Child(4)')
+          .querySelector('li:nth-Child(5)')
           .getAttribute('class')
       ).toBe('break');
     });
@@ -2303,23 +2308,23 @@ describe('Test custom props', () => {
       expect(pagination).toBeDefined();
 
       const activeItem = ReactDOM.findDOMNode(pagination).querySelector(
-        'li:nth-last-child(3) a'
+        'li:nth-last-child(4) a'
       );
 
       fireEvent.click(activeItem);
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-last-Child(2) a')
+          .querySelector('li:nth-last-Child(3) a')
           .getAttribute('rel')
       ).toBe('next');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-last-Child(3) a')
+          .querySelector('li:nth-last-Child(4) a')
           .getAttribute('rel')
       ).toBe('canonical');
       expect(
         ReactDOM.findDOMNode(pagination)
-          .querySelector('li:nth-last-Child(4)')
+          .querySelector('li:nth-last-Child(5)')
           .getAttribute('class')
       ).toBe('break');
     });
@@ -2339,8 +2344,8 @@ describe('Test custom props', () => {
       expect(pagination).toBeDefined();
 
       const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
-      const previous = elmts[0];
-      const next = elmts[elmts.length - 1];
+      const previous = elmts[1];
+      const next = elmts[elmts.length - 2];
 
       fireEvent.click(next);
       expect(
@@ -2393,7 +2398,7 @@ describe('Test custom props', () => {
       expect(pagination).toBeDefined();
 
       const elmts = ReactDOM.findDOMNode(pagination).querySelectorAll('a');
-      const next = elmts[elmts.length - 1];
+      const next = elmts[elmts.length - 2];
 
       expect(
         ReactDOM.findDOMNode(pagination).querySelectorAll('.break a').length
