@@ -49,8 +49,8 @@
     "serve-static": "^1",
     "styled-components": "^5",
     "webpack": "^5",
-    "webpack-cli": "^4",
-    "webpack-dev-middleware": "^5",
+    "webpack-cli": "^5",
+    "webpack-dev-middleware": "^6",
     "webpack-hot-middleware": "^2.25.2"
   },
   "scripts": {

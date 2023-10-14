@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const dir_js = path.resolve(__dirname, 'react_components');
 const dir_build = path.resolve(__dirname, 'build');
@@ -45,6 +46,18 @@ const config = {
   },
   devtool: 'source-map',
   mode: 'development',
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+          compress: {
+            passes: 1,
+          },
+        },
+      }),
+    ],
+  },
 };
 
 module.exports = (env, argv) => {
