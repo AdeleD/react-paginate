@@ -25,6 +25,11 @@ export interface ReactPaginateProps {
    */
   previousLabel?: string | React.ReactNode | undefined;
 
+    /**
+   * Remove `previous` button and it's related li tag.
+   */
+    hidePrevious?: boolean | undefined;
+
   /**
    * Aria label for the `previous` button.
    */
@@ -46,6 +51,11 @@ export interface ReactPaginateProps {
    * Label for the `next` button.
    */
   nextLabel?: string | React.ReactNode | undefined;
+
+  /**
+   * Remove `next` button and it's related li tag.
+   */
+  hideNext?: boolean | undefined;
 
   /**
    * Aria label for the `next` button.

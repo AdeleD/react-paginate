@@ -855,6 +855,22 @@ describe('Test default props', () => {
     });
   });
 
+  describe('hide previousLabel/nextLabel', () => {
+    it('should remove previousLabel/nextLabel', async () => {
+      render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} hideNext hidePrevious />);
+      const pagination = await screen.findByRole('navigation');
+      expect(pagination).toBeDefined();
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('li:first-child a')
+          .textContent
+      ).not.toBe('Previous');
+      expect(
+        ReactDOM.findDOMNode(pagination).querySelector('li:last-child a')
+          .textContent
+      ).not.toBe('Next');
+    });
+  });
+
   describe('default breakLabel/breakClassName/breakLinkClassName', () => {
     it('should use the default breakLabel/breakClassName/breakLinkClassName', async () => {
       render(<PaginationBoxView pageCount={DEFAULT_PAGE_COUNT} />);
@@ -1329,8 +1345,8 @@ describe('Test custom props', () => {
       expect(console.warn).toHaveBeenCalledTimes(1);
       expect(console.warn).toHaveBeenLastCalledWith(
         '(react-paginate): Both initialPage (3) and forcePage (2) props are provided, which is discouraged.' +
-          ' Use exclusively forcePage prop for a controlled component.\n' +
-          'See https://reactjs.org/docs/forms.html#controlled-components'
+        ' Use exclusively forcePage prop for a controlled component.\n' +
+        'See https://reactjs.org/docs/forms.html#controlled-components'
       );
       consoleWarnMock.mockRestore();
     });
