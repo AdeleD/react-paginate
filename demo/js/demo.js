@@ -9,21 +9,25 @@ import $ from 'jquery';
 // thanks to styled-components.
 // Use inner class names to style the controls.
 const MyPaginate = styled(ReactPaginate).attrs({
-  // You can redefine classes here, if you want.
+  // You can redefine classes here, if you   want.
   activeClassName: 'active', // default to "selected"
 })`
   margin-bottom: 2rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   list-style-type: none;
   padding: 0 5rem;
 
   li a {
-    border-radius: 7px;
-    padding: 0.1rem 1rem;
-    border: gray 1px solid;
-    cursor: pointer;
+    position: relative;
+    display: block;
+    color: #0d6efd;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
   li.previous a,
   li.next a,
@@ -128,6 +132,21 @@ export class App extends Component {
           pageCount={20}
           onPageChange={this.handlePageClick}
           forcePage={currentPage}
+          previousLabel="previous"
+          nextLabel="next"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          pageRangeDisplayed={4}
+          marginPagesDisplayed={2}
+          containerClassName="pagination justify-content-center"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          activeClassName="active"
         />
         <CommentList data={this.state.data} />
         {/* Here the pagination component is styled thanks to Bootstrap
