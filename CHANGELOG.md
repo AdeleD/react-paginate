@@ -2,6 +2,10 @@
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
+## >= 8.3.0
+
+- Add React 19 to peer dependencies.
+
 ## >= 8.2.0
 
 - Add an ARIA label for pagination break link with default props of `Jump forward` and `Jump backward` when index is before and after the break, respectively
