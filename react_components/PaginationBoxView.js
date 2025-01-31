@@ -52,6 +52,8 @@ export default class PaginationBoxView extends Component {
     eventListener: PropTypes.string,
     renderOnZeroPageCount: PropTypes.func,
     selectedPageRel: PropTypes.string,
+    firstPageLabel: PropTypes.node,
+    lastPageLabel: PropTypes.node,
   };
 
   static defaultProps = {
@@ -77,6 +79,8 @@ export default class PaginationBoxView extends Component {
     renderOnZeroPageCount: undefined,
     selectedPageRel: 'canonical',
     hrefAllControls: false,
+    firstPageLabel: '««',
+    lastPageLabel: '»»',
   };
 
   constructor(props) {
@@ -189,6 +193,14 @@ export default class PaginationBoxView extends Component {
       selected < pageCount - 1 ? selected + 1 : undefined,
       { isNext: true }
     );
+  };
+  handleLastPage = (event) => {
+    const { pageCount } = this.props;
+    this.handlePageChange(pageCount - 1);
+  };
+
+  handleFirstPage = (event) => {
+    this.handlePageChange(0);
   };
 
   handlePageSelected = (selected, event) => {
@@ -547,6 +559,8 @@ export default class PaginationBoxView extends Component {
       nextLinkClassName,
       nextAriaLabel,
       nextRel,
+      lastPageLabel,
+      firstPageLabel,
     } = this.props;
 
     const { selected } = this.state;
@@ -583,6 +597,23 @@ export default class PaginationBoxView extends Component {
             href={this.getElementHref(selected - 1)}
             tabIndex={isPreviousDisabled ? '-1' : '0'}
             role="button"
+            onKeyPress={this.handleFirstPage}
+            aria-disabled={previousAriaDisabled}
+            aria-label={previousAriaLabel}
+            rel={prevRel}
+            {...this.getEventListener(this.handleFirstPage)}
+
+
+          >
+            {firstPageLabel}
+          </a>
+        </li>
+        <li className={previousClasses}>
+          <a
+            className={previousLinkClasses}
+            href={this.getElementHref(selected - 1)}
+            tabIndex={isPreviousDisabled ? '-1' : '0'}
+            role="button"
             onKeyPress={this.handlePreviousPage}
             aria-disabled={previousAriaDisabled}
             aria-label={previousAriaLabel}
@@ -610,6 +641,22 @@ export default class PaginationBoxView extends Component {
             {nextLabel}
           </a>
         </li>
+        <li className={nextClasses}>
+        <a
+            className={nextLinkClasses}
+            href={this.getElementHref(selected + 1)}
+            tabIndex={isNextDisabled ? '-1' : '0'}
+            role="button"
+            onKeyPress={this.handleLastPage}
+            aria-disabled={nextAriaDisabled}
+            aria-label={nextAriaLabel}
+            rel={nextRel}
+            {...this.getEventListener(this.handleLastPage)}
+          >
+            {lastPageLabel}
+          </a>
+        </li>
+       
       </ul>
     );
   }
