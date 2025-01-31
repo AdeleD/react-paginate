@@ -574,7 +574,6 @@ export default class PaginationBoxView extends Component {
     return (
       <ul
         className={className || containerClassName}
-        role="navigation"
         aria-label="Pagination"
       >
         <li className={previousClasses}>
