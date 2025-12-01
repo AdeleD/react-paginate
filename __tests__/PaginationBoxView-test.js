@@ -2101,7 +2101,7 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-child(3) a')
           .getAttribute('rel')
-      ).toBe('canonical');
+      ).toBe(null);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-child(2) a')
@@ -2196,17 +2196,17 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-Child(2) a')
           .getAttribute('rel')
-      ).toBe('canonical');
+      ).toBe(null);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('.selected a')
           .getAttribute('rel')
-      ).toBe('canonical');
+      ).toBe(null);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-last-Child(2) a')
           .getAttribute('rel')
-      ).toBe('canonical');
+      ).toBe(null);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:last-child a')
@@ -2227,7 +2227,7 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-Child(2) a')
           .getAttribute('rel')
-      ).toBe('canonical');
+      ).toBe(null);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-Child(3) a')
@@ -2253,7 +2253,7 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-last-Child(2) a')
           .getAttribute('rel')
-      ).toBe('canonical');
+      ).toBe(null);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-last-Child(3) a')
@@ -2284,7 +2284,7 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-Child(3) a')
           .getAttribute('rel')
-      ).toBe('canonical');
+      ).toBe(null);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-Child(4)')
@@ -2316,7 +2316,7 @@ describe('Test custom props', () => {
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-last-Child(3) a')
           .getAttribute('rel')
-      ).toBe('canonical');
+      ).toBe(null);
       expect(
         ReactDOM.findDOMNode(pagination)
           .querySelector('li:nth-last-Child(4)')
