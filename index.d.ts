@@ -238,7 +238,7 @@ export interface ReactPaginateProps {
 
   /**
    * The `rel` propery on the `a` tag for the selected page.
-   * Default value `canonical`. Set to `null` to disable.
+   * Default value `null`. Set to `null` to disable.
    */
   selectedPageRel?: string | null | undefined;
 }

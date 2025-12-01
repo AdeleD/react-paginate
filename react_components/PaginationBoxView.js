@@ -75,7 +75,7 @@ export default class PaginationBoxView extends Component {
     pageLabelBuilder: (page) => page,
     eventListener: 'onClick',
     renderOnZeroPageCount: undefined,
-    selectedPageRel: 'canonical',
+    selectedPageRel: null,
     hrefAllControls: false,
   };
 
