@@ -192,7 +192,6 @@
 ## >= 4.0.0
 
 - Some variable have been renamed:
-
   - `clickCallback` -> `onPageChange`
   - `initialSelected` -> `initialPage`
   - `forceSelected` -> `forcePage`

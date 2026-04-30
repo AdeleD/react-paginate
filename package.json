@@ -2,7 +2,14 @@
   "name": "react-paginate",
   "version": "8.3.0",
   "description": "A ReactJS component that creates a pagination.",
-  "main": "./dist/react-paginate.js",
+  "main": "./dist/react-paginate.umd.js",
+  "module": "./dist/react-paginate.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/react-paginate.es.js",
+      "require": "./dist/react-paginate.cjs.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AdeleD/react-paginate"
@@ -16,49 +23,41 @@
   "author": {
     "name": "Adèle Delamarche"
   },
+  "type": "module",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/AdeleD/react-paginate/issues"
   },
   "dependencies": {
+    "jquery": "^4.0.0",
     "prop-types": "^15"
   },
   "peerDependencies": {
     "react": "^16 || ^17 || ^18 || ^19"
   },
   "devDependencies": {
-    "@babel/core": "^7",
-    "@babel/eslint-parser": "^7",
-    "@babel/preset-env": "^7",
-    "@babel/preset-react": "^7",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.8",
-    "@testing-library/react": "^13",
-    "babel-loader": "^9",
+    "@eslint/js": "^9",
+    "@testing-library/react": "^16",
+    "@vitejs/plugin-react": "^6",
     "core-js": "^3",
-    "eslint": "^7",
-    "eslint-plugin-react": "^7",
-    "express": "^4",
-    "husky": "^8",
-    "jest-cli": "^29",
-    "jest-environment-jsdom": "^29.2.2",
-    "jquery": "^3.6",
-    "prettier": "^2.7",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-refresh": "^0.14.0",
-    "serve-static": "^1",
-    "styled-components": "^5",
-    "webpack": "^5",
-    "webpack-cli": "^4",
-    "webpack-dev-middleware": "^5",
-    "webpack-hot-middleware": "^2.25.2"
+    "eslint": "^9",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17",
+    "husky": "^9",
+    "jsdom": "^29",
+    "prettier": "^3.8",
+    "react": "^19",
+    "react-dom": "^19",
+    "styled-components": "^6",
+    "vite": "^8",
+    "vitest": "^4"
   },
   "scripts": {
-    "test": "jest",
-    "test-watch": "jest --watch",
-    "build": "webpack --config webpack.config.js --mode=production",
-    "demo": "node demo/data.js && node demo/server.js",
-    "start": "npm run demo",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "build": "vite build",
+    "demo:build": "vite build --config demo/vite.config.js",
+    "start": "vite --config demo/vite.config.js",
     "format": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

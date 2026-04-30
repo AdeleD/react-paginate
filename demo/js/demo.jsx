@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { createRoot } from 'react-dom/client';
+import $ from 'jquery';
 import PropTypes from 'prop-types';
+import { Component } from 'react';
+import { createRoot } from 'react-dom/client';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
-import $ from 'jquery';
 
 // You can style your pagination component
 // thanks to styled-components.
@@ -101,7 +101,7 @@ export class App extends Component {
       },
 
       error: (xhr, status, err) => {
-        console.error(this.props.url, status, err.toString()); // eslint-disable-line
+        console.error(this.props.url, status, err.toString());
       },
     });
   }

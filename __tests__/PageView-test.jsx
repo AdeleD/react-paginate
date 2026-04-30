@@ -14,8 +14,8 @@ describe('PageView', () => {
       render(
         <PageView
           pageLabelBuilder={labelBuilder}
-          getEventListener={() => jest.fn}
-          pageSelectedHandler={jest.fn}
+          getEventListener={() => vi.fn()}
+          pageSelectedHandler={vi.fn()}
           page={1}
           selected={false}
         />
@@ -29,8 +29,8 @@ describe('PageView', () => {
       render(
         <PageView
           pageLabelBuilder={labelBuilder}
-          getEventListener={() => jest.fn}
-          pageSelectedHandler={jest.fn}
+          getEventListener={() => vi.fn()}
+          pageSelectedHandler={vi.fn()}
           page={1}
           selected={false}
           href="page/1"
