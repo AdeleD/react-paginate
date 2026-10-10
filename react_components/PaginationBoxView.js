@@ -31,6 +31,7 @@ export default class PaginationBoxView extends Component {
     onClick: PropTypes.func,
     initialPage: PropTypes.number,
     forcePage: PropTypes.number,
+    resetOnPageCountChange: PropTypes.bool,
     disableInitialCallback: PropTypes.bool,
     containerClassName: PropTypes.string,
     className: PropTypes.string,
@@ -71,6 +72,7 @@ export default class PaginationBoxView extends Component {
     breakLabel: '...',
     breakAriaLabels: { forward: 'Jump forward', backward: 'Jump backward' },
     disabledClassName: 'disabled',
+    resetOnPageCountChange: false,
     disableInitialCallback: false,
     pageLabelBuilder: (page) => page,
     eventListener: 'onClick',
@@ -168,6 +170,17 @@ export default class PaginationBoxView extends Component {
       console.warn(
         `(react-paginate): The pageCount prop value provided is not an integer (${this.props.pageCount}). Did you forget a Math.ceil()?`
       );
+    }
+
+    if (
+      this.props.resetOnPageCountChange &&
+      this.props.forcePage === undefined &&
+      this.props.pageCount !== prevProps.pageCount &&
+      Number.isInteger(this.props.pageCount) &&
+      this.props.pageCount > 0 &&
+      this.state.selected >= this.props.pageCount
+    ) {
+      this.handlePageChange(0);
     }
   }
 

@@ -116,6 +116,15 @@ export interface ReactPaginateProps {
   forcePage?: number | undefined;
 
   /**
+   * Reset an out-of-range selection to the first page when pageCount changes
+   * to a positive integer, and call onPageChange with { selected: 0 }.
+   * Preserves valid selections and is ignored when forcePage is provided.
+   * No reset occurs at zero pages; recovery is checked when pages return.
+   * Default: false.
+   */
+  resetOnPageCountChange?: boolean | undefined;
+
+  /**
    * Disable onPageChange callback with initial page.
    * Default: false
    */

@@ -1,5 +1,6 @@
 ## >= 9.0.0 (WIP)
 
+- Add opt-in `resetOnPageCountChange` to recover an out-of-range selection in uncontrolled mode when the page count changes. Valid selections and controlled components are preserved; recovery calls `onPageChange` with `{ selected: 0 }` only when a positive page range exists.
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
 ## >= 8.3.0

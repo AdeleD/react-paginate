@@ -96,6 +96,50 @@ You can also read the code of [demo/js/demo.js](https://github.com/AdeleD/react-
 
 Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)**, with features fetching sample code (using GitHub API) and two synchronized pagination widgets.
 
+### Recovering when filtering removes the selected page
+
+For an uncontrolled component, `resetOnPageCountChange` optionally returns to
+the first page if a change in `pageCount` leaves the selected page out of range.
+For example, filtering 100 items down to 50 with 10 items per page makes page 9
+unavailable. The component selects page 1 and calls `onPageChange` with
+`{ selected: 0 }`, so the parent can update its displayed results.
+
+```jsx
+import React, { useState } from 'react';
+import ReactPaginate from 'react-paginate';
+
+function FilterableItems() {
+  const [itemCount, setItemCount] = useState(100);
+  const [selected, setSelected] = useState(0);
+  const items = Array.from({ length: itemCount }, (_, i) => i + 1);
+  const currentItems = items.slice(selected * 10, (selected + 1) * 10);
+
+  return (
+    <>
+      <button onClick={() => setItemCount(50)}>Filter to 50 items</button>
+      <ul>
+        {currentItems.map((item) => (
+          <li key={item}>Item {item}</li>
+        ))}
+      </ul>
+      <ReactPaginate
+        pageCount={Math.ceil(items.length / 10)}
+        resetOnPageCountChange
+        onPageChange={({ selected }) => setSelected(selected)}
+        renderOnZeroPageCount={null}
+      />
+    </>
+  );
+}
+```
+
+Select page 9, then click **Filter to 50 items** to see the recovery. A still-valid
+selection stays unchanged: page 3 remains selected if five pages become four.
+The option defaults to `false` and is ignored when `forcePage` is supplied;
+controlled applications continue to choose their own recovery policy. Zero
+results do not trigger a reset or callback because no valid page exists. When
+`pageCount` becomes a positive integer again, an out-of-range selection recovers.
+
 ## Props
 
 | Name                     | Type       | Description                                                                                                                                                            |
@@ -114,6 +158,7 @@ Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)
 | `onPageActive`           | `Function` | The method to call when an active page is clicked. Exposes the active page object as an argument.                                                                      |
 | `initialPage`            | `Number`   | The initial page selected, in [uncontrolled mode](https://reactjs.org/docs/uncontrolled-components.html). Do not use with `forcePage` at the same time.                |
 | `forcePage`              | `Number`   | To override selected page with parent prop. Use this if you want to [control](https://reactjs.org/docs/forms.html#controlled-components) the page from your app state. |
+| `resetOnPageCountChange` | `boolean` | Reset an out-of-range selection to page 1 when `pageCount` changes to a positive integer, calling `onPageChange` with `{ selected: 0 }`. Valid selections are preserved. Ignored when `forcePage` is provided. Default: `false`. |
 | `disableInitialCallback` | `boolean`  | Disable `onPageChange` callback with initial page. Default: `false`                                                                                                    |
 | `containerClassName`     | `String`   | The classname of the pagination container.                                                                                                                             |
 | `className`              | `String`   | Same as `containerClassName`. For use with [styled-components](https://styled-components.com/) & other CSS-in-JS.                                                      |
