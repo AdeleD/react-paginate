@@ -100,7 +100,7 @@ Finally there is this **[CodePen demo](https://codepen.io/monsieurv/pen/yLoMxYQ)
 
 | Name                     | Type       | Description                                                                                                                                                            |
 | ------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pageCount`              | `Number`   | **Required.** The total number of pages.                                                                                                                               |
+| `pageCount`              | `Number`   | **Required.** The total number of pages. Non-finite values (`Infinity`, `-Infinity`, `NaN`) render nothing and emit a warning until a finite value is provided.                                                                                                                               |
 | `pageRangeDisplayed`     | `Number`   | The range of pages displayed.                                                                                                                                          |
 | `marginPagesDisplayed`   | `Number`   | The number of pages to display for margins.                                                                                                                            |
 | `previousLabel`          | `Node`     | Label for the `previous` button.                                                                                                                                       |

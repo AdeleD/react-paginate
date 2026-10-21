@@ -106,6 +106,116 @@ describe('Page count is zero', () => {
 });
 
 describe('Page count checks', () => {
+  describe('non-finite page counts', () => {
+    let consoleWarnMock;
+
+    beforeEach(() => {
+      consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+    });
+
+    afterEach(() => {
+      consoleWarnMock.mockRestore();
+    });
+
+    it.each([Infinity, -Infinity, NaN])(
+      'should render nothing and warn when pageCount is %s',
+      (pageCount) => {
+        const pageLabelBuilder = jest.fn();
+        const hrefBuilder = jest.fn();
+        const { container } = render(
+          <PaginationBoxView
+            pageCount={pageCount}
+            pageLabelBuilder={pageLabelBuilder}
+            hrefBuilder={hrefBuilder}
+          />
+        );
+
+        expect(container.innerHTML).toBe('');
+        expect(pageLabelBuilder).not.toHaveBeenCalled();
+        expect(hrefBuilder).not.toHaveBeenCalled();
+        expect(consoleWarnMock).toHaveBeenCalledTimes(1);
+        expect(consoleWarnMock).toHaveBeenCalledWith(
+          `(react-paginate): The pageCount prop must be a finite number (${pageCount}).`
+        );
+      }
+    );
+
+    it.each([Infinity, -Infinity, NaN])(
+      'should recover from pageCount %s and allow page changes',
+      (pageCount) => {
+        const onPageChange = jest.fn();
+        const { rerender } = render(
+          <PaginationBoxView
+            pageCount={pageCount}
+            onPageChange={onPageChange}
+          />
+        );
+
+        rerender(
+          <PaginationBoxView pageCount={5} onPageChange={onPageChange} />
+        );
+        fireEvent.click(screen.getByText('2'));
+
+        expect(screen.getByText('2').getAttribute('aria-current')).toBe('page');
+        expect(onPageChange).toHaveBeenCalledTimes(1);
+        expect(onPageChange).toHaveBeenCalledWith({ selected: 1 });
+        expect(consoleWarnMock).toHaveBeenCalledTimes(1);
+      }
+    );
+
+    it.each([Infinity, -Infinity, NaN])(
+      'should hide pagination on update to %s and preserve the selection on recovery',
+      (pageCount) => {
+        const { container, rerender } = render(
+          <PaginationBoxView pageCount={5} />
+        );
+        fireEvent.click(screen.getByText('3'));
+
+        rerender(<PaginationBoxView pageCount={pageCount} />);
+        expect(container.innerHTML).toBe('');
+        expect(consoleWarnMock).toHaveBeenCalledTimes(1);
+
+        rerender(<PaginationBoxView pageCount={5} />);
+        expect(screen.getByText('3').getAttribute('aria-current')).toBe('page');
+        expect(consoleWarnMock).toHaveBeenCalledTimes(1);
+      }
+    );
+
+    it('should warn for each changed non-finite value, but not unrelated updates', () => {
+      const { rerender } = render(<PaginationBoxView pageCount={Infinity} />);
+      rerender(<PaginationBoxView pageCount={-Infinity} />);
+      rerender(<PaginationBoxView pageCount={NaN} />);
+      rerender(<PaginationBoxView pageCount={NaN} className="pagination" />);
+
+      expect(consoleWarnMock).toHaveBeenCalledTimes(3);
+      expect(consoleWarnMock).toHaveBeenLastCalledWith(
+        '(react-paginate): The pageCount prop must be a finite number (NaN).'
+      );
+    });
+
+    it('should not treat a non-finite count as zero pages', () => {
+      const renderOnZeroPageCount = jest.fn(() => <p>No pages</p>);
+      const { container, rerender } = render(
+        <PaginationBoxView
+          pageCount={Infinity}
+          renderOnZeroPageCount={renderOnZeroPageCount}
+        />
+      );
+
+      expect(container.innerHTML).toBe('');
+      expect(renderOnZeroPageCount).not.toHaveBeenCalled();
+
+      rerender(
+        <PaginationBoxView
+          pageCount={0}
+          renderOnZeroPageCount={renderOnZeroPageCount}
+        />
+      );
+      expect(screen.getByText('No pages')).toBeDefined();
+      expect(renderOnZeroPageCount).toHaveBeenCalledTimes(1);
+    });
+  });
+
   it('should trigger a warning when a float is provided', async () => {
     const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
     render(

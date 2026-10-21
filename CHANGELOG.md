@@ -1,5 +1,6 @@
 ## >= 9.0.0 (WIP)
 
+- Prevent non-finite `pageCount` values from freezing rendering. Render nothing and warn until a finite count is provided (fixes #515).
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
 ## >= 8.3.0

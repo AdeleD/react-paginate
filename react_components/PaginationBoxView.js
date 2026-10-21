@@ -122,11 +122,7 @@ export default class PaginationBoxView extends Component {
       );
     }
 
-    if (!Number.isInteger(pageCount)) {
-      console.warn(
-        `(react-paginate): The pageCount prop value provided is not an integer (${pageCount}). Did you forget a Math.ceil()?`
-      );
-    }
+    this.checkPageCount();
 
     if (initialPage !== undefined && initialPage > pageCount - 1) {
       console.warn(
@@ -161,12 +157,20 @@ export default class PaginationBoxView extends Component {
       this.setState({ selected: this.props.forcePage });
     }
 
-    if (
-      Number.isInteger(prevProps.pageCount) &&
-      !Number.isInteger(this.props.pageCount)
-    ) {
+    if (!Object.is(prevProps.pageCount, this.props.pageCount)) {
+      this.checkPageCount();
+    }
+  }
+
+  checkPageCount() {
+    const { pageCount } = this.props;
+    if (!Number.isFinite(pageCount)) {
       console.warn(
-        `(react-paginate): The pageCount prop value provided is not an integer (${this.props.pageCount}). Did you forget a Math.ceil()?`
+        `(react-paginate): The pageCount prop must be a finite number (${pageCount}).`
+      );
+    } else if (!Number.isInteger(pageCount)) {
+      console.warn(
+        `(react-paginate): The pageCount prop value provided is not an integer (${pageCount}). Did you forget a Math.ceil()?`
       );
     }
   }
@@ -525,6 +529,12 @@ export default class PaginationBoxView extends Component {
   };
 
   render() {
+    // Guard before creating links or entering the page loop. Infinity would
+    // otherwise prevent rendering (and the lifecycle warning) from completing.
+    if (!Number.isFinite(this.props.pageCount)) {
+      return null;
+    }
+
     const { renderOnZeroPageCount } = this.props;
     if (this.props.pageCount === 0 && renderOnZeroPageCount !== undefined) {
       return renderOnZeroPageCount

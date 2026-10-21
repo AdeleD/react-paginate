@@ -4,7 +4,8 @@ import * as React from 'react';
 
 export interface ReactPaginateProps {
   /**
-   * The total number of pages.
+   * The total number of pages. Must be finite; non-finite values render nothing
+   * and produce a warning until a finite value is provided.
    */
   pageCount: number;
 
