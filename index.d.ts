@@ -194,7 +194,7 @@ export interface ReactPaginateProps {
     pageIndex: number,
     pageCount: number,
     selectedPage: number
-  ): void;
+  ): string;
 
   /**
    * By default the `hrefBuilder` add `href` only to active controls.

@@ -1,5 +1,6 @@
 ## >= 9.0.0 (WIP)
 
+- Fix the TypeScript return type of `hrefBuilder` from `void` to `string`.
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
 
 ## >= 8.3.0
