@@ -210,9 +210,10 @@ export interface ReactPaginateProps {
   extraAriaContext?: string | undefined;
 
   /**
-   * The method is called to generate the `aria-label` attribute value on each page link
+   * The method is called to generate the `aria-label` attribute value on each page link.
+   * Receives the 1-based page number and whether that page is the selected one.
    */
-  ariaLabelBuilder?(pageIndex: number, selectedPage: number): void;
+  ariaLabelBuilder?(pageNumber: number, isSelected: boolean): string;
 
   /**
    * By default the pagination link will have an 'aria-label' attribute of 'Jump forward'

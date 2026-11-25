@@ -1,6 +1,7 @@
 ## >= 9.0.0 (WIP)
 
 - Removed support for depecrated `extraAriaContext` (please use `ariaLabelBuilder` instead)
+- Fix the type of `ariaLabelBuilder` in the type declaration file: it receives the 1-based page number and a boolean for the selected page, and returns the label string.
 
 ## >= 8.3.0
 
